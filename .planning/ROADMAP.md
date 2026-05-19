@@ -30,12 +30,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. WebSearch returns real search results from Perplexity API using the PPLX_API_KEY environment variable
   4. Errors and diagnostic messages go to stderr while search results go to stdout -- no cross-contamination
   5. Script accepts JSON on stdin matching Claude Code's exact WebSearch tool schema
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: Plugin scaffolding -- directory structure, plugin.json manifest, SKILL.md files, package.json
-- [ ] 01-02: Shared utilities -- input parser (JSON stdin with Zod validation), output formatter (`<search_results>` XML), stderr logger
-- [ ] 01-03: Perplexity provider -- Sonar Chat Completions API integration, citation extraction, result normalization
+- [ ] 01-01: Plugin scaffold -- manifest, skill definitions, shared libraries (input/output/logger), build pipeline, WebFetch stub
+- [ ] 01-02: Perplexity integration -- API client wrapper, WebSearch entry point, API key configuration, end-to-end wiring
 
 ### Phase 2: Search Resilience
 **Goal**: WebSearch gracefully degrades when Perplexity is unavailable and supports domain filtering matching Claude Code's interface
@@ -93,7 +92,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Plugin Foundation and Primary Search | 0/3 | Not started | - |
+| 1. Plugin Foundation and Primary Search | 0/2 | Planning complete | - |
 | 2. Search Resilience | 0/3 | Not started | - |
 | 3. WebFetch Content Pipeline | 0/2 | Not started | - |
 | 4. Config File and Logging | 0/1 | Not started | - |
