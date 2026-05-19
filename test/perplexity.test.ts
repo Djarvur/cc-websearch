@@ -5,13 +5,13 @@ const mockCreate = vi.fn();
 
 vi.mock('@perplexity-ai/perplexity_ai', () => {
   return {
-    default: vi.fn().mockImplementation(({ apiKey }: { apiKey: string }) => ({
-      chat: {
+    default: vi.fn().mockImplementation(function(this: any, { apiKey }: { apiKey: string }) {
+      this.chat = {
         completions: {
           create: mockCreate,
         },
-      },
-    })),
+      };
+    }),
   };
 });
 
