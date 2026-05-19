@@ -578,19 +578,19 @@ export const logger = {
 | A7 | The `search_results` field in Perplexity response has `{title, url, snippet, date}` | Code Examples | Low -- verified from Perplexity OpenAPI spec (`ApiPublicSearchResult` schema) |
 | A8 | The `PERPLEXITY_API_KEY` env var (not `PPLX_API_KEY`) is the official SDK default | CONF-01 | High -- REQUIREMENTS.md uses `PPLX_API_KEY` which will NOT auto-detect with the SDK. Must be resolved. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **API Key Environment Variable Name**
+1. **API Key Environment Variable Name** (RESOLVED: support both -- PPLX_API_KEY primary, fallback to PERPLEXITY_API_KEY)
    - What we know: REQUIREMENTS.md specifies `PPLX_API_KEY`. The official Perplexity SDK reads `PERPLEXITY_API_KEY`. The SDK accepts an explicit `apiKey` parameter that overrides the env var.
    - What's unclear: Which name should the plugin standardize on? Supporting both is simple but adds confusion.
    - Recommendation: Read `PPLX_API_KEY` first (per REQUIREMENTS.md), fall back to `PERPLEXITY_API_KEY`. Pass the resolved value explicitly to the SDK constructor. Document both in README.
 
-2. **Exact Claude Code WebSearch Output Format**
+2. **Exact Claude Code WebSearch Output Format** (RESOLVED: use <search_results> XML per REQUIREMENTS.md)
    - What we know: Claude Code's internal WebSearch tool returns a plain-text format like `Web search results for query: "..." \n Links: [{title, url}]`. But REQUIREMENTS.md specifies `<search_results>` XML with `<result>`, `<title>`, `<url>` tags.
    - What's unclear: Is the XML format the exact format that Claude Code's built-in WebSearch returns, or is it a format that this plugin must produce to be compatible with how Claude Code processes tool results?
    - Recommendation: The mikhail.io analysis shows Claude Code receives results in a different format internally (JSON-style `Links: [{title, url}]`). Since this is a plugin that replaces the built-in tool via a skill, the output format must be something Claude can understand. Use the `<search_results>` XML format specified in REQUIREMENTS.md -- this is the contract this plugin defines. Runtime verification against actual Claude Code behavior during implementation would be ideal.
 
-3. **Zod v4 Compatibility**
+3. **Zod v4 Compatibility** (RESOLVED: use Zod 4.4.3, basic API compatible)
    - What we know: CLAUDE.md says Zod 3.x but npm shows 4.4.3. Zod v4 has some breaking changes from v3.
    - What's unclear: Whether all the patterns in CLAUDE.md (which assumed Zod 3) work with Zod 4.
    - Recommendation: Use Zod 4.4.3 (current). The basic `z.object()`, `z.string()`, `z.array()`, `.optional()`, `.parse()` API is compatible. The planner should note this version difference.
