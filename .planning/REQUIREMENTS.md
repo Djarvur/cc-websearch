@@ -68,34 +68,34 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLUG-01 | — | Pending |
-| PLUG-02 | — | Pending |
-| PLUG-03 | — | Pending |
-| PLUG-04 | — | Pending |
-| PLUG-05 | — | Pending |
-| SRCH-01 | — | Pending |
-| SRCH-02 | — | Pending |
-| SRCH-03 | — | Pending |
-| SRCH-04 | — | Pending |
-| SRCH-05 | — | Pending |
-| SRCH-06 | — | Pending |
-| SRCH-07 | — | Pending |
-| SRCH-08 | — | Pending |
-| FTEC-01 | — | Pending |
-| FTEC-02 | — | Pending |
-| FTEC-03 | — | Pending |
-| FTEC-04 | — | Pending |
-| FTEC-05 | — | Pending |
-| CONF-01 | — | Pending |
-| CONF-02 | — | Pending |
-| CONF-03 | — | Pending |
-| CONF-04 | — | Pending |
+| PLUG-01 | Phase 1 | Pending |
+| PLUG-02 | Phase 1 | Pending |
+| PLUG-03 | Phase 1 | Pending |
+| PLUG-04 | Phase 1 | Pending |
+| PLUG-05 | Phase 1 | Pending |
+| SRCH-01 | Phase 1 | Pending |
+| SRCH-02 | Phase 1 | Pending |
+| SRCH-03 | Phase 2 | Pending |
+| SRCH-04 | Phase 1 | Pending |
+| SRCH-05 | Phase 2 | Pending |
+| SRCH-06 | Phase 2 | Pending |
+| SRCH-07 | Phase 2 | Pending |
+| SRCH-08 | Phase 2 | Pending |
+| FTEC-01 | Phase 3 | Pending |
+| FTEC-02 | Phase 3 | Pending |
+| FTEC-03 | Phase 3 | Pending |
+| FTEC-04 | Phase 3 | Pending |
+| FTEC-05 | Phase 3 | Pending |
+| CONF-01 | Phase 1 | Pending |
+| CONF-02 | Phase 4 | Pending |
+| CONF-03 | Phase 4 | Pending |
+| CONF-04 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 22 total
-- Mapped to phases: 0
-- Unmapped: 22 ⚠️
+- Mapped to phases: 22
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-05-20*
-*Last updated: 2026-05-20 after initial definition*
+*Last updated: 2026-05-20 after roadmap creation*
