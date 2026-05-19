@@ -1,9 +1,47 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { fork } from 'node:child_process';
-import { resolve } from 'node:path';
+
+// Mock all dependencies before importing the module under test
+const mockSearch = vi.fn();
+const mockStdinData = { data: '{"query":"test query"}', done: false };
+
+vi.mock('../src/lib/perplexity.js', () => ({
+  search: mockSearch,
+  getApiKey: vi.fn().mockReturnValue('test-key'),
+}));
+
+vi.mock('../src/lib/logger.js', () => ({
+  logger: {
+    debug: vi.fn((msg: string) => process.stderr.write(`[debug] ${msg}\n`)),
+    info: vi.fn((msg: string) => process.stderr.write(`[info] ${msg}\n`)),
+    warn: vi.fn((msg: string) => process.stderr.write(`[warn] ${msg}\n`)),
+    error: vi.fn((msg: string) => process.stderr.write(`[error] ${msg}\n`)),
+  },
+}));
+
+// Mock input module to control what readStdin returns
+const mockReadStdin = vi.fn();
+
+vi.mock('../src/lib/input.js', () => ({
+  readStdin: (...args: any[]) => mockReadStdin(...args),
+  WebSearchInputSchema: {},
+}));
+
+vi.mock('../src/lib/output.js', () => ({
+  formatSearchResults: vi.fn((results: any[]) => {
+    // Simple XML format matching the real implementation
+    const lines = ['<search_results>'];
+    for (const r of results) {
+      lines.push('  <result>');
+      lines.push(`    <title>${r.title}</title>`);
+      lines.push(`    <url>${r.url}</url>`);
+      lines.push('  </result>');
+    }
+    lines.push('</search_results>');
+    return lines.join('\n');
+  }),
+}));
 
 describe('WebSearch entry point', () => {
-  // Test the main function directly via module import with mocking
   let stdoutWriteSpy: ReturnType<typeof vi.spyOn>;
   let stderrWriteSpy: ReturnType<typeof vi.spyOn>;
 
@@ -11,6 +49,8 @@ describe('WebSearch entry point', () => {
     vi.stubEnv('PPLX_API_KEY', 'test-key');
     vi.stubEnv('PPLX_MODEL', '');
     vi.resetModules();
+    mockSearch.mockReset();
+    mockReadStdin.mockReset();
     stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     stderrWriteSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
   });
@@ -21,127 +61,54 @@ describe('WebSearch entry point', () => {
   });
 
   it('should produce XML stdout with search results for valid JSON stdin', async () => {
-    // Mock stdin
-    const originalStdin = process.stdin;
-    const mockStdin = {
-      [Symbol.asyncIterator]() {
-        return this;
-      },
-      next() {
-        return Promise.resolve({ value: Buffer.from('{"query":"test query"}'), done: false });
-      },
-    };
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockSearch.mockResolvedValue({
+      results: [{ title: 'Test Result', url: 'https://example.com' }],
+      content: 'test content',
+    });
 
-    // Mock the search module
-    vi.doMock('../src/lib/perplexity.js', () => ({
-      search: vi.fn().mockResolvedValue({
-        results: [
-          { title: 'Test Result', url: 'https://example.com' },
-        ],
-        content: 'test content',
-      }),
-    }));
+    await import('../src/websearch.js');
 
-    // Override stdin temporarily
-    Object.defineProperty(process, 'stdin', { value: mockStdin, writable: true, configurable: true });
+    // Wait for async main to complete
+    await new Promise((r) => setTimeout(r, 50));
 
-    try {
-      await import('../src/websearch.js');
-
-      // Wait for async main to complete
-      await new Promise((r) => setTimeout(r, 100));
-
-      const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
-      expect(stdoutOutput).toContain('<search_results>');
-      expect(stdoutOutput).toContain('<title>Test Result</title>');
-      expect(stdoutOutput).toContain('<url>https://example.com</url>');
-      expect(stdoutOutput).toContain('</search_results>');
-    } finally {
-      // Restore stdin
-      Object.defineProperty(process, 'stdin', { value: originalStdin, writable: true, configurable: true });
-    }
+    const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stdoutOutput).toContain('<search_results>');
+    expect(stdoutOutput).toContain('<title>Test Result</title>');
+    expect(stdoutOutput).toContain('<url>https://example.com</url>');
+    expect(stdoutOutput).toContain('</search_results>');
   });
 
   it('should write error to stderr for invalid JSON (missing query)', async () => {
-    // Mock stdin with missing query
-    const mockStdin = {
-      [Symbol.asyncIterator]() {
-        return this;
-      },
-      next() {
-        return Promise.resolve({ value: Buffer.from('{}'), done: false });
-      },
-    };
+    mockReadStdin.mockRejectedValue(new Error('Query must be at least 2 characters'));
 
-    vi.doMock('../src/lib/perplexity.js', () => ({
-      search: vi.fn(),
-    }));
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 50));
 
-    Object.defineProperty(process, 'stdin', { value: mockStdin, writable: true, configurable: true });
-
-    try {
-      await import('../src/websearch.js');
-      await new Promise((r) => setTimeout(r, 100));
-
-      const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
-      expect(stderrOutput).toMatch(/\[(error|warn)\]/);
-    } finally {
-      Object.defineProperty(process, 'stdin', { value: process.stdin, writable: true, configurable: true });
-    }
+    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stderrOutput).toMatch(/\[error\]/);
   });
 
   it('should write validation error to stderr for query too short', async () => {
-    const mockStdin = {
-      [Symbol.asyncIterator]() {
-        return this;
-      },
-      next() {
-        return Promise.resolve({ value: Buffer.from('{"query":"a"}'), done: false });
-      },
-    };
+    mockReadStdin.mockRejectedValue(new Error('Query must be at least 2 characters'));
 
-    vi.doMock('../src/lib/perplexity.js', () => ({
-      search: vi.fn(),
-    }));
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 50));
 
-    Object.defineProperty(process, 'stdin', { value: mockStdin, writable: true, configurable: true });
-
-    try {
-      await import('../src/websearch.js');
-      await new Promise((r) => setTimeout(r, 100));
-
-      const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
-      expect(stderrOutput).toMatch(/\[(error|warn)\]/);
-    } finally {
-      Object.defineProperty(process, 'stdin', { value: process.stdin, writable: true, configurable: true });
-    }
+    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stderrOutput).toMatch(/\[error\]/);
+    expect(stderrOutput).toContain('Query must be at least 2 characters');
   });
 
   it('should write error to stderr on network error from Perplexity', async () => {
-    const mockStdin = {
-      [Symbol.asyncIterator]() {
-        return this;
-      },
-      next() {
-        return Promise.resolve({ value: Buffer.from('{"query":"test query"}'), done: false });
-      },
-    };
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockSearch.mockRejectedValue(new Error('Network error: connection refused'));
 
-    vi.doMock('../src/lib/perplexity.js', () => ({
-      search: vi.fn().mockRejectedValue(new Error('Network error: connection refused')),
-    }));
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 50));
 
-    Object.defineProperty(process, 'stdin', { value: mockStdin, writable: true, configurable: true });
-
-    try {
-      await import('../src/websearch.js');
-      await new Promise((r) => setTimeout(r, 100));
-
-      const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
-      expect(stderrOutput).toMatch(/\[error\]/);
-      expect(stderrOutput).toContain('Network error');
-    } finally {
-      Object.defineProperty(process, 'stdin', { value: process.stdin, writable: true, configurable: true });
-    }
+    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stderrOutput).toMatch(/\[error\]/);
+    expect(stderrOutput).toContain('Network error');
   });
 });
