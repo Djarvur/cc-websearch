@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: Plugin scaffold -- manifest, skill definitions, shared libraries (input/output/logger), build pipeline, WebFetch stub
+- [x] 01-01: Plugin scaffold -- manifest, skill definitions, shared libraries (input/output/logger), build pipeline, WebFetch stub
 - [ ] 01-02: Perplexity integration -- API client wrapper, WebSearch entry point, API key configuration, end-to-end wiring
 
 ### Phase 2: Search Resilience
@@ -92,7 +92,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Plugin Foundation and Primary Search | 0/2 | Planning complete | - |
+| 1. Plugin Foundation and Primary Search | 1/2 | In Progress|  |
 | 2. Search Resilience | 0/3 | Not started | - |
 | 3. WebFetch Content Pipeline | 0/2 | Not started | - |
 | 4. Config File and Logging | 0/1 | Not started | - |
