@@ -12,7 +12,7 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Plugin Foundation and Primary Search** - Installable plugin with Perplexity-powered WebSearch producing Claude Code output format
+- [x] **Phase 1: Plugin Foundation and Primary Search** - Installable plugin with Perplexity-powered WebSearch producing Claude Code output format (completed 2026-05-19)
 - [ ] **Phase 2: Search Resilience** - DuckDuckGo fallback, domain filtering, and retry logic for rate limits
 - [ ] **Phase 3: WebFetch Content Pipeline** - Page fetching, content extraction, markdown conversion, and LLM summarization
 - [ ] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels
@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01: Plugin scaffold -- manifest, skill definitions, shared libraries (input/output/logger), build pipeline, WebFetch stub
-- [ ] 01-02: Perplexity integration -- API client wrapper, WebSearch entry point, API key configuration, end-to-end wiring
+- [x] 01-02: Perplexity integration -- API client wrapper, WebSearch entry point, API key configuration, end-to-end wiring
 
 ### Phase 2: Search Resilience
 **Goal**: WebSearch gracefully degrades when Perplexity is unavailable and supports domain filtering matching Claude Code's interface
@@ -92,7 +92,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Plugin Foundation and Primary Search | 1/2 | In Progress|  |
+| 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
 | 2. Search Resilience | 0/3 | Not started | - |
 | 3. WebFetch Content Pipeline | 0/2 | Not started | - |
 | 4. Config File and Logging | 0/1 | Not started | - |
