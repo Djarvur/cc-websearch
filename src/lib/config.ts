@@ -135,7 +135,7 @@ export function loadConfig(): ResolvedConfig {
 
   return {
     perplexity: {
-      apiKey: resolve('perplexity.apiKey', fileConfig.perplexity?.apiKey, DEFAULTS.perplexity.model) as string | undefined,
+      apiKey: resolve<string | undefined>('perplexity.apiKey', fileConfig.perplexity?.apiKey, undefined),
       model: resolve('perplexity.model', fileConfig.perplexity?.model, DEFAULTS.perplexity.model),
     },
     retry: {
