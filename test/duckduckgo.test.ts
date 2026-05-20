@@ -8,12 +8,13 @@ vi.mock('duck-duck-scrape', () => ({
 }));
 
 vi.mock('../src/lib/logger.js', () => ({
-  logger: {
+  createLogger: vi.fn(() => ({
     debug: vi.fn(),
     info: vi.fn(),
     warn: vi.fn(),
     error: vi.fn(),
-  },
+    setLevel: vi.fn(),
+  })),
 }));
 
 describe('searchDDG', () => {

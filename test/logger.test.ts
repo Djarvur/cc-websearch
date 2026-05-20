@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-// We need to re-import the logger for each test since it reads env at module load
-describe('logger', () => {
+describe('createLogger', () => {
   let stderrWriteSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
@@ -10,34 +9,59 @@ describe('logger', () => {
 
   afterEach(() => {
     stderrWriteSpy.mockRestore();
-    vi.unstubAllEnvs();
   });
 
-  async function getFreshLogger() {
-    // Use dynamic import with cache busting to get fresh module
-    vi.resetModules();
-    const { logger } = await import('../src/lib/logger.js');
-    return logger;
-  }
+  it('should output info message with timestamp and module prefix', async () => {
+    const { createLogger } = await import('../src/lib/logger.js');
+    const logger = createLogger('test', 'info');
+    logger.info('hello');
 
-  it('should write info message to stderr when LOG_LEVEL is info or debug', async () => {
-    vi.stubEnv('LOG_LEVEL', 'info');
-    const logger = await getFreshLogger();
-    logger.info('test message');
-    expect(stderrWriteSpy).toHaveBeenCalledWith('[info] test message\n');
+    expect(stderrWriteSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/\[\d{4}-\d{2}-\d{2}T.*\] \[info:test\] hello\n/),
+    );
   });
 
-  it('should suppress debug messages when LOG_LEVEL is info', async () => {
-    vi.stubEnv('LOG_LEVEL', 'info');
-    const logger = await getFreshLogger();
-    logger.debug('debug message');
+  it('should suppress info messages when level is warn', async () => {
+    const { createLogger } = await import('../src/lib/logger.js');
+    const logger = createLogger('test', 'warn');
+    logger.info('hello');
+
     expect(stderrWriteSpy).not.toHaveBeenCalled();
   });
 
-  it('should always write error messages regardless of LOG_LEVEL', async () => {
-    vi.stubEnv('LOG_LEVEL', 'error');
-    const logger = await getFreshLogger();
-    logger.error('error message');
-    expect(stderrWriteSpy).toHaveBeenCalledWith('[error] error message\n');
+  it('should always output error messages regardless of level', async () => {
+    const { createLogger } = await import('../src/lib/logger.js');
+    const logger = createLogger('test', 'error');
+    logger.error('fail');
+
+    expect(stderrWriteSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/\[\d{4}-\d{2}-\d{2}T.*\] \[error:test\] fail\n/),
+    );
+  });
+
+  it('should output debug messages after setLevel to debug', async () => {
+    const { createLogger } = await import('../src/lib/logger.js');
+    const logger = createLogger('test', 'info');
+
+    // debug should be suppressed at info level
+    logger.debug('before');
+    expect(stderrWriteSpy).not.toHaveBeenCalled();
+
+    // after setLevel, debug should output
+    logger.setLevel('debug');
+    logger.debug('after');
+    expect(stderrWriteSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/\[\d{4}-\d{2}-\d{2}T.*\] \[debug:test\] after\n/),
+    );
+  });
+
+  it('should include module name in output prefix', async () => {
+    const { createLogger } = await import('../src/lib/logger.js');
+    const logger = createLogger('perplexity', 'info');
+    logger.info('testing');
+
+    expect(stderrWriteSpy).toHaveBeenCalledWith(
+      expect.stringContaining('[info:perplexity]'),
+    );
   });
 });

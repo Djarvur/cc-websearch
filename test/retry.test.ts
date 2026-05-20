@@ -1,13 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 vi.mock('../src/lib/logger.js', () => ({
-  logger: {
+  createLogger: vi.fn(() => ({
     debug: vi.fn(),
     info: vi.fn(),
     warn: vi.fn(),
     error: vi.fn(),
-  },
+    setLevel: vi.fn(),
+  })),
 }));
+
+import type { ResolvedConfig } from '../src/lib/config.js';
 
 describe('retryWithBackoff', () => {
   beforeEach(() => {
@@ -70,33 +73,44 @@ describe('retryWithBackoff', () => {
     // 1 initial + 2 retries = 3 total calls
     expect(fn).toHaveBeenCalledTimes(3);
   });
+});
 
-  it('should read retry config from env vars with correct defaults', async () => {
-    const { getRetryConfig } = await import('../src/lib/retry.js');
-    const config = getRetryConfig();
-
-    expect(config.maxRetries).toBe(4);
-    expect(config.baseDelay).toBe(1000);
-    expect(config.maxDelay).toBe(16000);
-    expect(config.timeout).toBe(30000);
+describe('getRetryConfig', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
-  it('should override defaults with env vars', async () => {
-    vi.stubEnv('RETRY_MAX_RETRIES', '6');
-    vi.stubEnv('RETRY_BASE_DELAY', '500');
-    vi.stubEnv('RETRY_MAX_DELAY', '8000');
-    vi.stubEnv('RETRY_TIMEOUT', '60000');
+  it('should return values from ResolvedConfig', async () => {
+    const config: ResolvedConfig = {
+      perplexity: { apiKey: undefined, model: 'sonar' },
+      retry: { maxRetries: 6, baseDelay: 500, maxDelay: 8000, timeout: 60000 },
+      logging: { level: 'info' },
+    };
 
-    vi.resetModules();
     const { getRetryConfig } = await import('../src/lib/retry.js');
-    const config = getRetryConfig();
+    const retryConfig = getRetryConfig(config);
 
-    expect(config.maxRetries).toBe(6);
-    expect(config.baseDelay).toBe(500);
-    expect(config.maxDelay).toBe(8000);
-    expect(config.timeout).toBe(60000);
+    expect(retryConfig.maxRetries).toBe(6);
+    expect(retryConfig.baseDelay).toBe(500);
+    expect(retryConfig.maxDelay).toBe(8000);
+    expect(retryConfig.timeout).toBe(60000);
+  });
 
-    vi.unstubAllEnvs();
+  it('should return defaults when config has default values', async () => {
+    const config: ResolvedConfig = {
+      perplexity: { apiKey: undefined, model: 'sonar' },
+      retry: { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 },
+      logging: { level: 'info' },
+    };
+
+    const { getRetryConfig } = await import('../src/lib/retry.js');
+    const retryConfig = getRetryConfig(config);
+
+    expect(retryConfig.maxRetries).toBe(4);
+    expect(retryConfig.baseDelay).toBe(1000);
+    expect(retryConfig.maxDelay).toBe(16000);
+    expect(retryConfig.timeout).toBe(30000);
   });
 });
 
