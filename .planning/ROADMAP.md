@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Plugin Foundation and Primary Search** - Installable plugin with Perplexity-powered WebSearch producing Claude Code output format (completed 2026-05-19)
 - [x] **Phase 2: Search Resilience** - DuckDuckGo fallback, domain filtering, and retry logic for rate limits (completed 2026-05-20)
-- [ ] **Phase 3: WebFetch Content Pipeline** - Page fetching, content extraction, markdown conversion, and LLM summarization
+- [x] **Phase 3: WebFetch Content Pipeline** - Page fetching, content extraction, markdown conversion, and LLM summarization (completed 2026-05-20)
 - [ ] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels
 
 ## Phase Details
@@ -97,7 +97,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 03-02: Content extraction (Readability + Turndown with null fallback), Perplexity summarization (disable_search), raw markdown degradation
+- [x] 03-02: Content extraction (Readability + Turndown with null fallback), Perplexity summarization (disable_search), raw markdown degradation (completed 2026-05-20)
 
 ### Phase 4: Config File and Logging
 
@@ -126,5 +126,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
 | 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
-| 3. WebFetch Content Pipeline | 1/2 | In Progress|  |
+| 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
 | 4. Config File and Logging | 0/1 | Not started | - |

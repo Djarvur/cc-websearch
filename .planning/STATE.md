@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 Plan 01 complete
-last_updated: "2026-05-20T14:22:11.809Z"
-last_activity: 2026-05-20 -- Phase 3 Plan 01 (HTTP fetch pipeline) complete
+stopped_at: Phase 3 Plan 02 complete
+last_updated: "2026-05-20T14:32:09Z"
+last_activity: 2026-05-20 -- Phase 3 Plan 02 (content extraction and summarization) complete
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 7
-  completed_plans: 6
-  percent: 50
+  completed_plans: 7
+  percent: 100
 ---
 
 # Project State
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-20)
 
 **Core value:** Exact drop-in replacement for Claude Code's WebSearch and WebFetch -- same interface, same output format, no behavior changes for the user.
-**Current focus:** Phase 3 — webfetch content pipeline
+**Current focus:** Phase 3 complete -- ready for Phase 4
 
 ## Current Position
 
 Phase: 3
-Plan: 01 complete
-Status: Ready for Plan 02
-Last activity: 2026-05-20 -- Phase 3 Plan 01 (HTTP fetch pipeline) complete
+Plan: 02 complete
+Status: Phase 3 complete, ready for Phase 4
+Last activity: 2026-05-20 -- Phase 3 Plan 02 (content extraction and summarization) complete
 
-Progress: [█████████░] 86%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: -
 - Total execution time: 0 hours
 
@@ -46,6 +46,7 @@ Progress: [█████████░] 86%
 |-------|-------|-------|----------|
 | 01 | 2 | - | - |
 | 02 | 3 | 24min | 8min |
+| 03 | 2 | - | - |
 | 2 | 3 | - | - |
 
 **Recent Trend:**
@@ -68,6 +69,11 @@ Recent decisions affecting current work:
 - fetchWithRedirects uses native fetch with redirect:manual for custom redirect logic
 - CrossHostRedirectError written to stdout (not stderr) per D-10
 - HTTP URLs auto-upgraded to HTTPS via normalizeUrl
+- Readability extracts article.content; h1 title is stripped from content (moved to article.title)
+- Turndown configured with ATX headings, fenced code blocks, GFM plugin for tables
+- 100KB truncation with marker suffix before sending to Perplexity
+- summarize() uses disable_search:true with system=userPrompt, user=content message structure
+- No API key path writes raw markdown directly to stdout
 
 ### Pending Todos
 
@@ -85,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-20T14:22:11.809Z
-Stopped at: Phase 3 Plan 01 complete
-Resume file: .planning/phases/03-webfetch-content-pipeline/03-01-SUMMARY.md
+Last session: 2026-05-20T14:32:09Z
+Stopped at: Phase 3 Plan 02 complete
+Resume file: .planning/phases/03-webfetch-content-pipeline/03-02-SUMMARY.md

@@ -28,8 +28,8 @@
 
 - [x] **FTEC-01**: Script accepts `{url: string (required), prompt: string (required)}`
 - [x] **FTEC-02**: URL normalization: HTTP auto-upgraded to HTTPS
-- [ ] **FTEC-03**: HTML-to-Markdown conversion using Readability (content extraction) + Turndown (HTML→MD), with fallback to raw Turndown when Readability returns null
-- [ ] **FTEC-04**: LLM summarization via Perplexity Chat Completions — sends extracted markdown + user prompt, returns summarized answer (not raw content)
+- [x] **FTEC-03**: HTML-to-Markdown conversion using Readability (content extraction) + Turndown (HTML→MD), with fallback to raw Turndown when Readability returns null
+- [x] **FTEC-04**: LLM summarization via Perplexity Chat Completions — sends extracted markdown + user prompt, returns summarized answer (not raw content)
 - [x] **FTEC-05**: Same-host redirects followed automatically; cross-host redirects return redirect metadata instead of following
 
 ### Config & Infrastructure
@@ -83,8 +83,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SRCH-08 | Phase 2 | Complete |
 | FTEC-01 | Phase 3 | Done |
 | FTEC-02 | Phase 3 | Done |
-| FTEC-03 | Phase 3 | Pending |
-| FTEC-04 | Phase 3 | Pending |
+| FTEC-03 | Phase 3 | Done |
+| FTEC-04 | Phase 3 | Done |
 | FTEC-05 | Phase 3 | Done |
 | CONF-01 | Phase 1 | Pending |
 | CONF-02 | Phase 4 | Pending |
