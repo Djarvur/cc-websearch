@@ -88,12 +88,16 @@ Plans:
   4. Non-article pages (where Readability returns null) still produce usable markdown via raw Turndown fallback
   5. Same-host redirects are followed automatically; cross-host redirects return redirect metadata instead of following
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
+**Wave 1**
 
-- [ ] 03-01: WebFetch script skeleton -- input parsing for `{url, prompt}`, URL normalization, HTTP fetching with redirect handling
-- [ ] 03-02: Content extraction pipeline -- Readability + Turndown with null fallback, Perplexity LLM summarization
+- [ ] 03-01: Input schema, URL normalization, HTTP fetch with manual redirect handling, error paths, SKILL.md update
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 03-02: Content extraction (Readability + Turndown with null fallback), Perplexity summarization (disable_search), raw markdown degradation
 
 ### Phase 4: Config File and Logging
 
@@ -121,6 +125,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
-| 2. Search Resilience | 3/3 | Complete   | 2026-05-20 |
+| 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
 | 3. WebFetch Content Pipeline | 0/2 | Not started | - |
 | 4. Config File and Logging | 0/1 | Not started | - |
