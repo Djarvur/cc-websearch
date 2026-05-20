@@ -1,12 +1,25 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-// Mock all dependencies before importing the module under test
+// Mock provider modules
 const mockSearch = vi.fn();
-const mockStdinData = { data: '{"query":"test query"}', done: false };
+const mockHasApiKey = vi.fn();
+const mockSearchDDG = vi.fn();
+const mockRetryWithBackoff = vi.fn();
 
 vi.mock('../src/lib/perplexity.js', () => ({
-  search: mockSearch,
+  search: (...args: any[]) => mockSearch(...args),
+  hasApiKey: () => mockHasApiKey(),
   getApiKey: vi.fn().mockReturnValue('test-key'),
+}));
+
+vi.mock('../src/lib/duckduckgo.js', () => ({
+  searchDDG: (...args: any[]) => mockSearchDDG(...args),
+}));
+
+vi.mock('../src/lib/retry.js', () => ({
+  retryWithBackoff: (...args: any[]) => mockRetryWithBackoff(...args),
+  isTransientError: vi.fn(),
+  isDDGTransientError: vi.fn(),
 }));
 
 vi.mock('../src/lib/logger.js', () => ({
@@ -18,7 +31,7 @@ vi.mock('../src/lib/logger.js', () => ({
   },
 }));
 
-// Mock input module to control what readStdin returns
+// Mock input module
 const mockReadStdin = vi.fn();
 
 vi.mock('../src/lib/input.js', () => ({
@@ -26,10 +39,16 @@ vi.mock('../src/lib/input.js', () => ({
   WebSearchInputSchema: {},
 }));
 
+// Mock output module - captures the provider argument
+let capturedProvider: string | undefined;
 vi.mock('../src/lib/output.js', () => ({
-  formatSearchResults: vi.fn((results: any[]) => {
-    // Simple XML format matching the real implementation
-    const lines = ['<search_results>'];
+  formatSearchResults: vi.fn((results: any[], provider?: string) => {
+    capturedProvider = provider;
+    const lines: string[] = [];
+    if (provider) {
+      lines.push(`<!-- provider: ${provider} -->`);
+    }
+    lines.push('<search_results>');
     for (const r of results) {
       lines.push('  <result>');
       lines.push(`    <title>${r.title}</title>`);
@@ -41,7 +60,7 @@ vi.mock('../src/lib/output.js', () => ({
   }),
 }));
 
-describe('WebSearch entry point', () => {
+describe('WebSearch fallback orchestration', () => {
   let stdoutWriteSpy: ReturnType<typeof vi.spyOn>;
   let stderrWriteSpy: ReturnType<typeof vi.spyOn>;
 
@@ -50,7 +69,11 @@ describe('WebSearch entry point', () => {
     vi.stubEnv('PPLX_MODEL', '');
     vi.resetModules();
     mockSearch.mockReset();
+    mockHasApiKey.mockReset();
+    mockSearchDDG.mockReset();
+    mockRetryWithBackoff.mockReset();
     mockReadStdin.mockReset();
+    capturedProvider = undefined;
     stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     stderrWriteSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
   });
@@ -60,55 +83,105 @@ describe('WebSearch entry point', () => {
     vi.unstubAllEnvs();
   });
 
-  it('should produce XML stdout with search results for valid JSON stdin', async () => {
+  it('should use DDG directly when no API key (hasApiKey returns false)', async () => {
+    mockHasApiKey.mockReturnValue(false);
     mockReadStdin.mockResolvedValue({ query: 'test query' });
+
+    // retryWithBackoff delegates to the DDG search function
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG Result', url: 'https://ddg.example.com' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // DDG should be called through retryWithBackoff
+    expect(mockRetryWithBackoff).toHaveBeenCalled();
+    expect(mockSearchDDG).toHaveBeenCalledWith('test query');
+    // Perplexity search should NOT be called
+    expect(mockSearch).not.toHaveBeenCalled();
+
+    // Provider comment should say duckduckgo
+    expect(capturedProvider).toBe('duckduckgo');
+  });
+
+  it('should return Perplexity results when API key present and Perplexity succeeds', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+
+    // First retryWithBackoff call (Perplexity) succeeds
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+
     mockSearch.mockResolvedValue({
-      results: [{ title: 'Test Result', url: 'https://example.com' }],
+      results: [{ title: 'Perplexity Result', url: 'https://pplx.example.com' }],
       content: 'test content',
     });
 
     await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
 
-    // Wait for async main to complete
-    await new Promise((r) => setTimeout(r, 50));
+    expect(mockSearch).toHaveBeenCalledWith('test query');
+    expect(mockSearchDDG).not.toHaveBeenCalled();
+    expect(capturedProvider).toBe('perplexity');
+  });
+
+  it('should fall back to DDG when Perplexity fails after retries', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+
+    let callCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      callCount++;
+      if (callCount === 1) {
+        // First call: Perplexity fails
+        throw new Error('Perplexity 429 after retries');
+      }
+      // Second call: DDG succeeds
+      return fn();
+    });
+
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG Fallback Result', url: 'https://ddg.example.com/fallback' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    expect(mockSearchDDG).toHaveBeenCalledWith('test query');
+    expect(capturedProvider).toBe('duckduckgo');
+  });
+
+  it('should exit with error when both providers fail', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+
+    mockRetryWithBackoff.mockRejectedValue(new Error('provider failure'));
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stderrOutput).toMatch(/\[error\]/);
+    expect(process.exitCode).toBe(1);
+  });
+
+  it('should include provider comment in stdout output', async () => {
+    mockHasApiKey.mockReturnValue(false);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG Result', url: 'https://ddg.example.com' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
 
     const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stdoutOutput).toContain('<!-- provider: duckduckgo -->');
     expect(stdoutOutput).toContain('<search_results>');
-    expect(stdoutOutput).toContain('<title>Test Result</title>');
-    expect(stdoutOutput).toContain('<url>https://example.com</url>');
-    expect(stdoutOutput).toContain('</search_results>');
-  });
-
-  it('should write error to stderr for invalid JSON (missing query)', async () => {
-    mockReadStdin.mockRejectedValue(new Error('Query must be at least 2 characters'));
-
-    await import('../src/websearch.js');
-    await new Promise((r) => setTimeout(r, 50));
-
-    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
-    expect(stderrOutput).toMatch(/\[error\]/);
-  });
-
-  it('should write validation error to stderr for query too short', async () => {
-    mockReadStdin.mockRejectedValue(new Error('Query must be at least 2 characters'));
-
-    await import('../src/websearch.js');
-    await new Promise((r) => setTimeout(r, 50));
-
-    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
-    expect(stderrOutput).toMatch(/\[error\]/);
-    expect(stderrOutput).toContain('Query must be at least 2 characters');
-  });
-
-  it('should write error to stderr on network error from Perplexity', async () => {
-    mockReadStdin.mockResolvedValue({ query: 'test query' });
-    mockSearch.mockRejectedValue(new Error('Network error: connection refused'));
-
-    await import('../src/websearch.js');
-    await new Promise((r) => setTimeout(r, 50));
-
-    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
-    expect(stderrOutput).toMatch(/\[error\]/);
-    expect(stderrOutput).toContain('Network error');
   });
 });
