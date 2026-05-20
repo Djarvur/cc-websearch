@@ -18,6 +18,32 @@ vi.mock('../src/lib/fetch.js', () => ({
   CrossHostRedirectError: MockCrossHostRedirectError,
 }));
 
+// Mock content module
+const mockExtractMarkdown = vi.fn();
+
+vi.mock('../src/lib/content.js', () => ({
+  extractMarkdown: (...args: any[]) => mockExtractMarkdown(...args),
+}));
+
+// Mock perplexity module
+const mockHasApiKey = vi.fn();
+const mockSummarize = vi.fn();
+
+vi.mock('../src/lib/perplexity.js', () => ({
+  hasApiKey: () => mockHasApiKey(),
+  summarize: (...args: any[]) => mockSummarize(...args),
+  getApiKey: vi.fn().mockReturnValue('test-key'),
+  search: vi.fn(),
+}));
+
+// Mock retry module
+const mockRetryWithBackoff = vi.fn();
+
+vi.mock('../src/lib/retry.js', () => ({
+  retryWithBackoff: (...args: any[]) => mockRetryWithBackoff(...args),
+  isTransientError: vi.fn(),
+}));
+
 // Mock logger
 vi.mock('../src/lib/logger.js', () => ({
   logger: {
@@ -47,6 +73,10 @@ describe('WebFetch pipeline', () => {
     mockFetchWithRedirects.mockReset();
     mockNormalizeUrl.mockReset();
     mockReadStdin.mockReset();
+    mockExtractMarkdown.mockReset();
+    mockHasApiKey.mockReset();
+    mockSummarize.mockReset();
+    mockRetryWithBackoff.mockReset();
     stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     stderrWriteSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
   });
@@ -68,6 +98,8 @@ describe('WebFetch pipeline', () => {
       response: mockResponse,
       finalUrl: testUrl,
     });
+    mockExtractMarkdown.mockReturnValue('Hello World');
+    mockHasApiKey.mockReturnValue(false);
 
     await import('../src/webfetch.js');
     await new Promise((r) => setTimeout(r, 100));
@@ -124,5 +156,104 @@ describe('WebFetch pipeline', () => {
     const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
     expect(stderrOutput).toMatch(/\[error\]/);
     expect(process.exitCode).toBe(1);
+  });
+
+  // Plan 02 tests: summarize and raw markdown paths
+
+  it('should write summarize result to stdout when hasApiKey is true (D-07)', async () => {
+    const testUrl = new URL('https://example.com/');
+    mockReadStdin.mockResolvedValue({ url: 'https://example.com/', prompt: 'What is this about?' });
+    mockNormalizeUrl.mockReturnValue(testUrl);
+
+    const mockResponse = {
+      text: vi.fn().mockResolvedValue('<html><body>Article content here.</body></html>'),
+    };
+    mockFetchWithRedirects.mockResolvedValue({
+      response: mockResponse,
+      finalUrl: testUrl,
+    });
+    mockExtractMarkdown.mockReturnValue('Article content here.');
+    mockHasApiKey.mockReturnValue(true);
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+    mockSummarize.mockResolvedValue('This page is about a topic.');
+
+    await import('../src/webfetch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stdoutOutput).toBe('This page is about a topic.');
+  });
+
+  it('should write raw markdown to stdout when hasApiKey is false (D-08)', async () => {
+    const testUrl = new URL('https://example.com/');
+    mockReadStdin.mockResolvedValue({ url: 'https://example.com/', prompt: 'summarize' });
+    mockNormalizeUrl.mockReturnValue(testUrl);
+
+    const mockResponse = {
+      text: vi.fn().mockResolvedValue('<html><body>Raw HTML content.</body></html>'),
+    };
+    mockFetchWithRedirects.mockResolvedValue({
+      response: mockResponse,
+      finalUrl: testUrl,
+    });
+    mockExtractMarkdown.mockReturnValue('# Raw Markdown\n\nContent here.');
+    mockHasApiKey.mockReturnValue(false);
+
+    await import('../src/webfetch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stdoutOutput).toContain('# Raw Markdown');
+    expect(stdoutOutput).toContain('Content here.');
+    // summarize should NOT have been called
+    expect(mockSummarize).not.toHaveBeenCalled();
+  });
+
+  it('should write error to stderr and set exitCode 1 when summarize fails after retries', async () => {
+    const testUrl = new URL('https://example.com/');
+    mockReadStdin.mockResolvedValue({ url: 'https://example.com/', prompt: 'What is this?' });
+    mockNormalizeUrl.mockReturnValue(testUrl);
+
+    const mockResponse = {
+      text: vi.fn().mockResolvedValue('<html><body>Content</body></html>'),
+    };
+    mockFetchWithRedirects.mockResolvedValue({
+      response: mockResponse,
+      finalUrl: testUrl,
+    });
+    mockExtractMarkdown.mockReturnValue('Content');
+    mockHasApiKey.mockReturnValue(true);
+    mockRetryWithBackoff.mockRejectedValue(new Error('Perplexity API 429 after retries'));
+
+    await import('../src/webfetch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stderrOutput).toMatch(/\[error\]/);
+    expect(process.exitCode).toBe(1);
+  });
+
+  it('should call summarize with extracted markdown and user prompt (D-05)', async () => {
+    const testUrl = new URL('https://example.com/article');
+    mockReadStdin.mockResolvedValue({ url: 'https://example.com/article', prompt: 'Summarize the key points' });
+    mockNormalizeUrl.mockReturnValue(testUrl);
+
+    const mockResponse = {
+      text: vi.fn().mockResolvedValue('<html><body>Article body text.</body></html>'),
+    };
+    mockFetchWithRedirects.mockResolvedValue({
+      response: mockResponse,
+      finalUrl: testUrl,
+    });
+    mockExtractMarkdown.mockReturnValue('Article body text.');
+    mockHasApiKey.mockReturnValue(true);
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+    mockSummarize.mockResolvedValue('Key points summary.');
+
+    await import('../src/webfetch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // summarize should be called with (markdown, userPrompt)
+    expect(mockSummarize).toHaveBeenCalledWith('Article body text.', 'Summarize the key points');
   });
 });
