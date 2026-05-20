@@ -35,8 +35,8 @@
 ### Config & Infrastructure
 
 - [ ] **CONF-01**: API keys read from environment variables (`PPLX_API_KEY`, etc.) as primary config source
-- [ ] **CONF-02**: Config file at `~/.config/websearch/config.json` with env variable override (env > file > defaults)
-- [ ] **CONF-03**: Config file supports: API keys, retry params (max retries, base delay, max delay), Perplexity model selection, log level
+- [x] **CONF-02**: Config file at `~/.config/websearch/config.json` with env variable override (env > file > defaults)
+- [x] **CONF-03**: Config file supports: API keys, retry params (max retries, base delay, max delay), Perplexity model selection, log level
 - [ ] **CONF-04**: Configurable logging levels (debug, info, warn, error) output to stderr
 
 ## v2 Requirements
@@ -87,8 +87,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FTEC-04 | Phase 3 | Done |
 | FTEC-05 | Phase 3 | Done |
 | CONF-01 | Phase 1 | Pending |
-| CONF-02 | Phase 4 | Pending |
-| CONF-03 | Phase 4 | Pending |
+| CONF-02 | Phase 4 | Done |
+| CONF-03 | Phase 4 | Done |
 | CONF-04 | Phase 1 | Pending |
 
 **Coverage:**

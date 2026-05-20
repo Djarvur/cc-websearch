@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Plugin Foundation and Primary Search** - Installable plugin with Perplexity-powered WebSearch producing Claude Code output format (completed 2026-05-19)
 - [x] **Phase 2: Search Resilience** - DuckDuckGo fallback, domain filtering, and retry logic for rate limits (completed 2026-05-20)
 - [x] **Phase 3: WebFetch Content Pipeline** - Page fetching, content extraction, markdown conversion, and LLM summarization (completed 2026-05-20)
-- [ ] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels
+- [x] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels (completed 2026-05-20)
 
 ## Phase Details
 
@@ -116,15 +116,15 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 04-01: Config loader -- Zod schema, file reading, env var precedence (WEBSEARCH_*), warning output, comprehensive tests
+- [x] 04-01: Config loader -- Zod schema, file reading, env var precedence (WEBSEARCH_*), warning output, comprehensive tests (completed 2026-05-20)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 04-02: Logger factory and lib module refactors -- createLogger with timestamps and module prefixes, refactor retry/perplexity to accept config, update duckduckgo/fetch logger imports, update lib module tests
+- [x] 04-02: Logger factory and lib module refactors -- createLogger with timestamps and module prefixes, refactor retry/perplexity to accept config, update duckduckgo/fetch logger imports, update lib module tests (completed 2026-05-20)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 04-03: Entry point wiring and bundle rebuild -- update websearch.ts/webfetch.ts to load config at startup, update entry point tests, rebuild bundles
+- [x] 04-03: Entry point wiring and bundle rebuild -- update websearch.ts/webfetch.ts to load config at startup, update entry point tests, rebuild bundles (completed 2026-05-20)
 
 ## Progress
 
@@ -136,4 +136,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
 | 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
 | 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
-| 4. Config File and Logging | 0/3 | Not started | - |
+| 4. Config File and Logging | 3/3 | Complete | 2026-05-20 |
