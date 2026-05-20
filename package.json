@@ -12,6 +12,7 @@
   "dependencies": {
     "@perplexity-ai/perplexity_ai": "0.29.0",
     "commander": "14.0.3",
+    "duck-duck-scrape": "^2.2.7",
     "zod": "4.4.3"
   },
   "devDependencies": {

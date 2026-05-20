@@ -48,3 +48,49 @@ describe('getApiKey', () => {
     );
   });
 });
+
+describe('hasApiKey', () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('should return true when PPLX_API_KEY is set', async () => {
+    vi.stubEnv('PPLX_API_KEY', 'test-key');
+    vi.stubEnv('PERPLEXITY_API_KEY', '');
+
+    const { hasApiKey } = await import('../src/lib/perplexity.js');
+
+    expect(hasApiKey()).toBe(true);
+  });
+
+  it('should return true when PERPLEXITY_API_KEY is set', async () => {
+    vi.stubEnv('PPLX_API_KEY', '');
+    vi.stubEnv('PERPLEXITY_API_KEY', 'test-key');
+
+    const { hasApiKey } = await import('../src/lib/perplexity.js');
+
+    expect(hasApiKey()).toBe(true);
+  });
+
+  it('should return false when neither env var is set', async () => {
+    vi.stubEnv('PPLX_API_KEY', '');
+    vi.stubEnv('PERPLEXITY_API_KEY', '');
+
+    const { hasApiKey } = await import('../src/lib/perplexity.js');
+
+    expect(hasApiKey()).toBe(false);
+  });
+
+  it('should not throw when API key is missing', async () => {
+    vi.stubEnv('PPLX_API_KEY', '');
+    vi.stubEnv('PERPLEXITY_API_KEY', '');
+
+    const { hasApiKey } = await import('../src/lib/perplexity.js');
+
+    expect(() => hasApiKey()).not.toThrow();
+  });
+});

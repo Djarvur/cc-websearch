@@ -40,4 +40,49 @@ describe('formatSearchResults', () => {
     const resultCount = (result.match(/<result>/g) || []).length;
     expect(resultCount).toBe(2);
   });
+
+  it('should include provider comment when provider argument is given', () => {
+    const result = formatSearchResults(
+      [{ title: 'Test', url: 'https://example.com' }],
+      'perplexity',
+    );
+    expect(result).toContain('<!-- provider: perplexity -->');
+    expect(result).toContain('<search_results>');
+    expect(result).toContain('<title>Test</title>');
+  });
+
+  it('should include duckduckgo provider comment', () => {
+    const result = formatSearchResults(
+      [{ title: 'DDG', url: 'https://ddg.example.com' }],
+      'duckduckgo',
+    );
+    expect(result).toContain('<!-- provider: duckduckgo -->');
+    expect(result).toContain('<search_results>');
+  });
+
+  it('should NOT include provider comment when provider is undefined', () => {
+    const result = formatSearchResults(
+      [{ title: 'Test', url: 'https://example.com' }],
+    );
+    expect(result).not.toContain('<!-- provider:');
+    expect(result).toContain('<search_results>');
+  });
+
+  it('should NOT include provider comment when provider is empty string', () => {
+    const result = formatSearchResults(
+      [{ title: 'Test', url: 'https://example.com' }],
+      '',
+    );
+    expect(result).not.toContain('<!-- provider:');
+  });
+
+  it('should place provider comment before search_results tag', () => {
+    const result = formatSearchResults(
+      [{ title: 'Test', url: 'https://example.com' }],
+      'perplexity',
+    );
+    const commentIdx = result.indexOf('<!-- provider: perplexity -->');
+    const resultsIdx = result.indexOf('<search_results>');
+    expect(commentIdx).toBeLessThan(resultsIdx);
+  });
 });
