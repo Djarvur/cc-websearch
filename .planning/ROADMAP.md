@@ -111,7 +111,7 @@ Plans:
   2. Environment variables override config file values, which override defaults (env > file > defaults)
   3. Config file supports API keys, retry parameters (max retries, base delay, max delay), Perplexity model selection, and log level
 
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
 **Wave 1**
@@ -120,7 +120,11 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 04-02: Logger factory and consumer wiring -- createLogger with timestamps and module prefixes, refactor all lib modules to accept config, update entry points and all tests, rebuild bundles
+- [ ] 04-02: Logger factory and lib module refactors -- createLogger with timestamps and module prefixes, refactor retry/perplexity to accept config, update duckduckgo/fetch logger imports, update lib module tests
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 04-03: Entry point wiring and bundle rebuild -- update websearch.ts/webfetch.ts to load config at startup, update entry point tests, rebuild bundles
 
 ## Progress
 
@@ -132,4 +136,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
 | 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
 | 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
-| 4. Config File and Logging | 0/2 | Not started | - |
+| 4. Config File and Logging | 0/3 | Not started | - |
