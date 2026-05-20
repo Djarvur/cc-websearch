@@ -47,12 +47,12 @@ Plans:
   3. User can pass `allowed_domains` or `blocked_domains` and results are filtered accordingly -- but passing both returns an error
   4. Rate-limited responses trigger exponential backoff with jitter before retry, not immediate re-attempts
   5. When both providers fail, the script exits cleanly with a descriptive error on stderr (no crash, no hang)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: DDG Lite provider -- HTML scraping with cheerio, structural selectors, result normalization
-- [ ] 02-02: Domain filtering -- allowed_domains, blocked_domains validation and post-result filtering
-- [ ] 02-03: Retry and fallback orchestration -- exponential backoff with jitter, two-tier fallback chain, clean failure handling
+- [ ] 02-01: DDG fallback and retry -- install duck-duck-scrape, create DDG provider, exponential backoff module, two-tier fallback orchestration, provider comment output
+- [ ] 02-02: Domain filtering -- filter module with normalization and subdomain matching, mutual exclusivity validation, Perplexity search_domain_filter integration
+- [ ] 02-03: Partial merge and error polish -- partial result merging with URL deduplication, detailed failure messages, edge case tests
 
 ### Phase 3: WebFetch Content Pipeline
 **Goal**: Users can fetch web pages and receive summarized markdown content matching Claude Code's WebFetch behavior
