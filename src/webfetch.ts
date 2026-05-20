@@ -1,6 +1,9 @@
 import { readStdin, WebFetchInputSchema } from './lib/input.js';
 import { logger } from './lib/logger.js';
 import { normalizeUrl, fetchWithRedirects, CrossHostRedirectError } from './lib/fetch.js';
+import { extractMarkdown } from './lib/content.js';
+import { hasApiKey, summarize } from './lib/perplexity.js';
+import { retryWithBackoff, isTransientError } from './lib/retry.js';
 
 async function main(): Promise<void> {
   try {
@@ -9,10 +12,24 @@ async function main(): Promise<void> {
 
     const url = normalizeUrl(input.url);
 
-    const { response } = await fetchWithRedirects(url);
+    const { response, finalUrl } = await fetchWithRedirects(url);
 
+    // Extract content from HTML (FTEC-03)
     const html = await response.text();
-    process.stdout.write(html);
+    const markdown = extractMarkdown(html, finalUrl.href);
+
+    // D-07/D-08: If no API key, return raw markdown
+    if (!hasApiKey()) {
+      process.stdout.write(markdown);
+      return;
+    }
+
+    // Summarize via Perplexity (FTEC-04)
+    const summary = await retryWithBackoff(
+      () => summarize(markdown, input.prompt),
+      isTransientError,
+    );
+    process.stdout.write(summary);
   } catch (err) {
     if (err instanceof CrossHostRedirectError) {
       // D-10: Cross-host redirect message to stdout

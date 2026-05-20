@@ -68,3 +68,32 @@ export async function search(query: string, domainFilter?: string[]): Promise<{
 
   return { results, content };
 }
+
+/**
+ * Summarize content using Perplexity Chat Completions with disable_search: true.
+ * User prompt is sent as system instruction, content as user message (D-05).
+ * Returns raw answer text with citations naturally embedded (D-02, D-03).
+ */
+export async function summarize(content: string, userPrompt: string): Promise<string> {
+  const apiKey = getApiKey();
+  const model = process.env.PPLX_MODEL || 'sonar';
+
+  const client = new Perplexity({ apiKey });
+
+  const response = await client.chat.completions.create({
+    model,
+    disable_search: true, // Prevent web search -- summarize provided content (D-04)
+    messages: [
+      {
+        role: 'system',
+        content: userPrompt, // D-05: user's prompt as system instruction
+      },
+      {
+        role: 'user',
+        content: content, // D-05: page content as user message
+      },
+    ],
+  });
+
+  return response.choices?.[0]?.message?.content ?? ''; // D-03: raw answer text
+}
