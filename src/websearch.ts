@@ -1,15 +1,23 @@
-import { readStdin, WebSearchInputSchema } from './lib/input.js';
+import { readStdin, WebSearchInputSchema, validateDomainExclusivity } from './lib/input.js';
 import { formatSearchResults } from './lib/output.js';
 import { logger } from './lib/logger.js';
 import { hasApiKey, search } from './lib/perplexity.js';
 import { searchDDG } from './lib/duckduckgo.js';
 import { retryWithBackoff, isTransientError, isDDGTransientError } from './lib/retry.js';
+import { filterByDomains, buildPerplexityDomainFilter } from './lib/filter.js';
 import type { SearchResult } from './types.js';
 
 async function main(): Promise<void> {
   try {
     const parsed = await readStdin(WebSearchInputSchema);
     logger.info(`Searching for: ${parsed.query}`);
+
+    // Validate mutual exclusivity of allowed/block domains (SRCH-03)
+    validateDomainExclusivity(parsed);
+
+    // Build Perplexity domain filter from user input
+    const domainFilter = buildPerplexityDomainFilter(parsed.allowed_domains, parsed.blocked_domains);
+    const hasDomainFilter = !!(parsed.allowed_domains?.length || parsed.blocked_domains?.length);
 
     let results: SearchResult[];
     let provider: string;
@@ -18,22 +26,29 @@ async function main(): Promise<void> {
       // Primary: Perplexity with retries
       try {
         const pplxResult = await retryWithBackoff(
-          () => search(parsed.query),
+          () => search(parsed.query, domainFilter),
           isTransientError,
         );
         results = pplxResult.results;
         provider = 'perplexity';
         logger.debug(`Perplexity content: ${pplxResult.content}`);
+
+        // Safety net: post-filter Perplexity results for blocked domains
+        if (parsed.blocked_domains && parsed.blocked_domains.length > 0) {
+          results = filterByDomains(results, undefined, parsed.blocked_domains);
+        }
       } catch (pplxErr) {
         const pplxErrorMsg = pplxErr instanceof Error ? pplxErr.message : String(pplxErr);
         logger.debug(`Perplexity failed, falling back to DDG: ${pplxErrorMsg}`);
 
         // Fallback: DDG with retries
         try {
-          results = await retryWithBackoff(
+          const ddgResults = await retryWithBackoff(
             () => searchDDG(parsed.query),
             isDDGTransientError,
           );
+          // Post-filter DDG results with subdomain-inclusive matching
+          results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
           provider = 'duckduckgo';
         } catch (ddgErr) {
           const ddgErrorMsg = ddgErr instanceof Error ? ddgErr.message : String(ddgErr);
@@ -44,10 +59,12 @@ async function main(): Promise<void> {
       }
     } else {
       // No API key: use DDG directly (first-class, D-04)
-      results = await retryWithBackoff(
+      const ddgResults = await retryWithBackoff(
         () => searchDDG(parsed.query),
         isDDGTransientError,
       );
+      // Post-filter DDG results with subdomain-inclusive matching
+      results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
       provider = 'duckduckgo';
     }
 

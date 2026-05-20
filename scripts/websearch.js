@@ -22368,6 +22368,13 @@ async function readStdin(schema) {
   const parsed = JSON.parse(raw);
   return schema.parse(parsed);
 }
+function validateDomainExclusivity(input) {
+  const hasAllowed = input.allowed_domains && input.allowed_domains.length > 0;
+  const hasBlocked = input.blocked_domains && input.blocked_domains.length > 0;
+  if (hasAllowed && hasBlocked) {
+    throw new Error("Cannot specify both allowed_domains and blocked_domains in the same request.");
+  }
+}
 
 // src/lib/output.ts
 function escapeXml(str) {
@@ -24251,30 +24258,72 @@ async function retryWithBackoff(fn, isTransient, options) {
   throw lastError;
 }
 
+// src/lib/filter.ts
+function normalizeDomain(input) {
+  return input.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").toLowerCase();
+}
+function matchesDomain(url2, domain2) {
+  const urlHost = normalizeDomain(new URL(url2).hostname);
+  const normalizedDomain = normalizeDomain(domain2);
+  return urlHost === normalizedDomain || urlHost.endsWith("." + normalizedDomain);
+}
+function filterByDomains(results, allowedDomains, blockedDomains) {
+  if ((!allowedDomains || allowedDomains.length === 0) && (!blockedDomains || blockedDomains.length === 0)) {
+    return results;
+  }
+  if (allowedDomains && allowedDomains.length > 0) {
+    return results.filter(
+      (result) => allowedDomains.some((domain2) => matchesDomain(result.url, domain2))
+    );
+  }
+  if (blockedDomains && blockedDomains.length > 0) {
+    return results.filter(
+      (result) => !blockedDomains.some((domain2) => matchesDomain(result.url, domain2))
+    );
+  }
+  return results;
+}
+function buildPerplexityDomainFilter(allowedDomains, blockedDomains) {
+  if (allowedDomains && allowedDomains.length > 0) {
+    return allowedDomains.slice(0, 20).map((d) => normalizeDomain(d));
+  }
+  if (blockedDomains && blockedDomains.length > 0) {
+    return blockedDomains.slice(0, 20).map((d) => "-" + normalizeDomain(d));
+  }
+  return void 0;
+}
+
 // src/websearch.ts
 async function main() {
   try {
     const parsed = await readStdin(WebSearchInputSchema);
     logger.info(`Searching for: ${parsed.query}`);
+    validateDomainExclusivity(parsed);
+    const domainFilter = buildPerplexityDomainFilter(parsed.allowed_domains, parsed.blocked_domains);
+    const hasDomainFilter = !!(parsed.allowed_domains?.length || parsed.blocked_domains?.length);
     let results;
     let provider;
     if (hasApiKey()) {
       try {
         const pplxResult = await retryWithBackoff(
-          () => search(parsed.query),
+          () => search(parsed.query, domainFilter),
           isTransientError
         );
         results = pplxResult.results;
         provider = "perplexity";
         logger.debug(`Perplexity content: ${pplxResult.content}`);
+        if (parsed.blocked_domains && parsed.blocked_domains.length > 0) {
+          results = filterByDomains(results, void 0, parsed.blocked_domains);
+        }
       } catch (pplxErr) {
         const pplxErrorMsg = pplxErr instanceof Error ? pplxErr.message : String(pplxErr);
         logger.debug(`Perplexity failed, falling back to DDG: ${pplxErrorMsg}`);
         try {
-          results = await retryWithBackoff(
+          const ddgResults = await retryWithBackoff(
             () => searchDDG(parsed.query),
             isDDGTransientError
           );
+          results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
           provider = "duckduckgo";
         } catch (ddgErr) {
           const ddgErrorMsg = ddgErr instanceof Error ? ddgErr.message : String(ddgErr);
@@ -24284,10 +24333,11 @@ async function main() {
         }
       }
     } else {
-      results = await retryWithBackoff(
+      const ddgResults = await retryWithBackoff(
         () => searchDDG(parsed.query),
         isDDGTransientError
       );
+      results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
       provider = "duckduckgo";
     }
     process.stdout.write(formatSearchResults(results, provider));

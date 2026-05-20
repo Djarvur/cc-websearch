@@ -34,6 +34,12 @@ const mockReadStdin = vi.fn();
 vi.mock('../src/lib/input.js', () => ({
   readStdin: (...args: any[]) => mockReadStdin(...args),
   WebSearchInputSchema: {},
+  validateDomainExclusivity: vi.fn(),
+}));
+
+vi.mock('../src/lib/filter.js', () => ({
+  buildPerplexityDomainFilter: vi.fn().mockReturnValue(undefined),
+  filterByDomains: vi.fn((results: any[]) => results),
 }));
 
 vi.mock('../src/lib/output.js', () => ({
