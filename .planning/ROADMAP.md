@@ -111,11 +111,16 @@ Plans:
   2. Environment variables override config file values, which override defaults (env > file > defaults)
   3. Config file supports API keys, retry parameters (max retries, base delay, max delay), Perplexity model selection, and log level
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
+**Wave 1**
 
-- [ ] 04-01: Config file loader -- read `~/.config/websearch/config.json`, merge with env vars and defaults, validate schema
+- [ ] 04-01: Config loader -- Zod schema, file reading, env var precedence (WEBSEARCH_*), warning output, comprehensive tests
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 04-02: Logger factory and consumer wiring -- createLogger with timestamps and module prefixes, refactor all lib modules to accept config, update entry points and all tests, rebuild bundles
 
 ## Progress
 
@@ -127,4 +132,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
 | 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
 | 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
-| 4. Config File and Logging | 0/1 | Not started | - |
+| 4. Config File and Logging | 0/2 | Not started | - |
