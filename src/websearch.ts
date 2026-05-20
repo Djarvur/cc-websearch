@@ -7,6 +7,16 @@ import { retryWithBackoff, isTransientError, isDDGTransientError } from './lib/r
 import { filterByDomains, buildPerplexityDomainFilter } from './lib/filter.js';
 import type { SearchResult } from './types.js';
 
+/**
+ * Deduplicate and merge results: Perplexity results first, DDG appended.
+ * Removes DDG results whose URL already exists in Perplexity results (D-18).
+ */
+function dedupeAndMerge(pplxResults: SearchResult[], ddgResults: SearchResult[]): SearchResult[] {
+  const pplxUrls = new Set(pplxResults.map((r) => r.url));
+  const uniqueDdg = ddgResults.filter((r) => !pplxUrls.has(r.url));
+  return [...pplxResults, ...uniqueDdg];
+}
+
 async function main(): Promise<void> {
   try {
     const parsed = await readStdin(WebSearchInputSchema);
@@ -24,9 +34,19 @@ async function main(): Promise<void> {
 
     if (hasApiKey()) {
       // Primary: Perplexity with retries
+      // Capture partial results in case retry wrapper fails after a successful call (D-17)
+      let pplxPartial: SearchResult[] = [];
+
       try {
         const pplxResult = await retryWithBackoff(
-          () => search(parsed.query, domainFilter),
+          // Wrap search to capture partial results from any successful attempt
+          async () => {
+            const result = await search(parsed.query, domainFilter);
+            if (result.results.length > 0) {
+              pplxPartial = result.results;
+            }
+            return result;
+          },
           isTransientError,
         );
         results = pplxResult.results;
@@ -39,7 +59,7 @@ async function main(): Promise<void> {
         }
       } catch (pplxErr) {
         const pplxErrorMsg = pplxErr instanceof Error ? pplxErr.message : String(pplxErr);
-        logger.debug(`Perplexity failed, falling back to DDG: ${pplxErrorMsg}`);
+        logger.debug(`Perplexity failed, falling back to DDG: ${pplxPartial.length > 0 ? `(preserving ${pplxPartial.length} partial results) ` : ''}${pplxErrorMsg}`);
 
         // Fallback: DDG with retries
         try {
@@ -48,8 +68,11 @@ async function main(): Promise<void> {
             isDDGTransientError,
           );
           // Post-filter DDG results with subdomain-inclusive matching
-          results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
-          provider = 'duckduckgo';
+          const filteredDdg = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
+
+          // Merge partial Perplexity results with DDG results (D-17, D-18)
+          results = dedupeAndMerge(pplxPartial, filteredDdg);
+          provider = pplxPartial.length > 0 ? 'perplexity+duckduckgo' : 'duckduckgo';
         } catch (ddgErr) {
           const ddgErrorMsg = ddgErr instanceof Error ? ddgErr.message : String(ddgErr);
           throw new Error(

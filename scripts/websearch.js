@@ -24294,6 +24294,11 @@ function buildPerplexityDomainFilter(allowedDomains, blockedDomains) {
 }
 
 // src/websearch.ts
+function dedupeAndMerge(pplxResults, ddgResults) {
+  const pplxUrls = new Set(pplxResults.map((r) => r.url));
+  const uniqueDdg = ddgResults.filter((r) => !pplxUrls.has(r.url));
+  return [...pplxResults, ...uniqueDdg];
+}
 async function main() {
   try {
     const parsed = await readStdin(WebSearchInputSchema);
@@ -24304,9 +24309,17 @@ async function main() {
     let results;
     let provider;
     if (hasApiKey()) {
+      let pplxPartial = [];
       try {
         const pplxResult = await retryWithBackoff(
-          () => search(parsed.query, domainFilter),
+          // Wrap search to capture partial results from any successful attempt
+          async () => {
+            const result = await search(parsed.query, domainFilter);
+            if (result.results.length > 0) {
+              pplxPartial = result.results;
+            }
+            return result;
+          },
           isTransientError
         );
         results = pplxResult.results;
@@ -24317,14 +24330,15 @@ async function main() {
         }
       } catch (pplxErr) {
         const pplxErrorMsg = pplxErr instanceof Error ? pplxErr.message : String(pplxErr);
-        logger.debug(`Perplexity failed, falling back to DDG: ${pplxErrorMsg}`);
+        logger.debug(`Perplexity failed, falling back to DDG: ${pplxPartial.length > 0 ? `(preserving ${pplxPartial.length} partial results) ` : ""}${pplxErrorMsg}`);
         try {
           const ddgResults = await retryWithBackoff(
             () => searchDDG(parsed.query),
             isDDGTransientError
           );
-          results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
-          provider = "duckduckgo";
+          const filteredDdg = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
+          results = dedupeAndMerge(pplxPartial, filteredDdg);
+          provider = pplxPartial.length > 0 ? "perplexity+duckduckgo" : "duckduckgo";
         } catch (ddgErr) {
           const ddgErrorMsg = ddgErr instanceof Error ? ddgErr.message : String(ddgErr);
           throw new Error(

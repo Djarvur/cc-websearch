@@ -377,17 +377,16 @@ describe('WebSearch fallback orchestration', () => {
     mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
     mockFilterByDomains.mockImplementation((results: any[]) => results);
 
-    // First retryWithBackoff call: Perplexity returns partial results, then fails on retry
+    // First retryWithBackoff call: call fn() to capture partial results, then throw
+    // Simulates: Perplexity returned partial results, then retry exhausted
     let pplxCallCount = 0;
     mockRetryWithBackoff.mockImplementation(async (fn: any) => {
       pplxCallCount++;
       if (pplxCallCount === 1) {
-        // Perplexity attempt: capture partial results via fn(), then throw
-        try {
-          return await fn();
-        } catch {
-          throw new Error('Perplexity 429 after retries');
-        }
+        // Call fn() so the wrapper captures partial results into pplxPartial
+        await fn();
+        // Then throw to simulate retry exhaustion after partial success
+        throw new Error('Perplexity 429 after retries');
       }
       // DDG fallback: succeed
       return fn();
@@ -425,11 +424,8 @@ describe('WebSearch fallback orchestration', () => {
     mockRetryWithBackoff.mockImplementation(async (fn: any) => {
       pplxCallCount++;
       if (pplxCallCount === 1) {
-        try {
-          return await fn();
-        } catch {
-          throw new Error('Perplexity failed after retries');
-        }
+        await fn();
+        throw new Error('Perplexity failed after retries');
       }
       return fn();
     });
@@ -463,11 +459,8 @@ describe('WebSearch fallback orchestration', () => {
     mockRetryWithBackoff.mockImplementation(async (fn: any) => {
       pplxCallCount++;
       if (pplxCallCount === 1) {
-        try {
-          return await fn();
-        } catch {
-          throw new Error('Perplexity failed');
-        }
+        await fn();
+        throw new Error('Perplexity failed');
       }
       return fn();
     });
@@ -506,11 +499,8 @@ describe('WebSearch fallback orchestration', () => {
     mockRetryWithBackoff.mockImplementation(async (fn: any) => {
       pplxCallCount++;
       if (pplxCallCount === 1) {
-        try {
-          return await fn();
-        } catch {
-          throw new Error('Perplexity failed');
-        }
+        await fn();
+        throw new Error('Perplexity failed');
       }
       return fn();
     });
