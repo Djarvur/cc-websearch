@@ -17,10 +17,10 @@
 
 - [ ] **SRCH-01**: Script accepts `{query: string (required, >= 2 chars), allowed_domains?: string[], blocked_domains?: string[]}`
 - [ ] **SRCH-02**: Script outputs `<search_results>` XML format with `<result>`, `<title>`, `<url>` tags matching Claude Code exactly
-- [ ] **SRCH-03**: `allowed_domains` and `blocked_domains` cannot be combined in same call — returns error if both provided
+- [x] **SRCH-03**: `allowed_domains` and `blocked_domains` cannot be combined in same call — returns error if both provided
 - [ ] **SRCH-04**: Perplexity Chat Completions API as primary search provider — extracts results from response citations and content
 - [ ] **SRCH-05**: DuckDuckGo Lite HTML scraping as fallback when Perplexity unavailable, no API key, or credits exhausted
-- [ ] **SRCH-06**: Domain filtering applied post-results for DDG, via `search_domain_filter` API param for Perplexity
+- [x] **SRCH-06**: Domain filtering applied post-results for DDG, via `search_domain_filter` API param for Perplexity
 - [ ] **SRCH-07**: Exponential backoff with full jitter retry on rate limit (429) responses from either provider
 - [ ] **SRCH-08**: Two-tier fallback: Perplexity → DDG → fail cleanly with error message to stderr
 
@@ -75,10 +75,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PLUG-05 | Phase 1 | Pending |
 | SRCH-01 | Phase 1 | Pending |
 | SRCH-02 | Phase 1 | Pending |
-| SRCH-03 | Phase 2 | Pending |
+| SRCH-03 | Phase 2 | Done |
 | SRCH-04 | Phase 1 | Pending |
 | SRCH-05 | Phase 2 | Pending |
-| SRCH-06 | Phase 2 | Pending |
+| SRCH-06 | Phase 2 | Done |
 | SRCH-07 | Phase 2 | Pending |
 | SRCH-08 | Phase 2 | Pending |
 | FTEC-01 | Phase 3 | Pending |

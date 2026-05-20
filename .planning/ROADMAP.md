@@ -64,7 +64,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-02: Domain filtering -- filter module with normalization and subdomain matching, mutual exclusivity validation, Perplexity search_domain_filter integration
+- [x] 02-02: Domain filtering -- filter module with normalization and subdomain matching, mutual exclusivity validation, Perplexity search_domain_filter integration (completed 2026-05-20)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -121,6 +121,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
-| 2. Search Resilience | 1/3 | In progress | - |
+| 2. Search Resilience | 2/3 | In progress | - |
 | 3. WebFetch Content Pipeline | 0/2 | Not started | - |
 | 4. Config File and Logging | 0/1 | Not started | - |

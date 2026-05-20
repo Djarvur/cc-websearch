@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 Plan 01 complete
-last_updated: "2026-05-20T09:21:21Z"
-last_activity: 2026-05-20 -- Phase 02 Plan 01 complete
+stopped_at: Phase 2 Plan 02 complete
+last_updated: "2026-05-20T09:34:15Z"
+last_activity: 2026-05-20 -- Phase 02 Plan 02 complete
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 5
-  completed_plans: 3
-  percent: 30
+  completed_plans: 4
+  percent: 40
 ---
 
 # Project State
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-20)
 
 **Core value:** Exact drop-in replacement for Claude Code's WebSearch and WebFetch -- same interface, same output format, no behavior changes for the user.
-**Current focus:** Phase 2 — search resilience
+**Current focus:** Phase 2 -- search resilience
 
 ## Current Position
 
 Phase: 2
-Plan: 02-01 complete
-Status: Plan 01 done, ready for Plan 02
-Last activity: 2026-05-20 -- Phase 02 Plan 01 complete
+Plan: 02-02 complete
+Status: Plan 02 done, ready for Plan 03
+Last activity: 2026-05-20 -- Phase 02 Plan 02 complete
 
-Progress: [░░░░░░░░░░] 33%
+Progress: [░░░░░░░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 3
+- Total plans completed: 4
 - Average duration: -
 - Total execution time: 0 hours
 
@@ -45,7 +45,7 @@ Progress: [░░░░░░░░░░] 33%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 2 | - | - |
-| 02 | 1 | 12min | 12min |
+| 02 | 2 | 18min | 9min |
 
 **Recent Trend:**
 
@@ -61,7 +61,9 @@ Progress: [░░░░░░░░░░] 33%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-None yet.
+- filterByDomains returns original array when no filters specified (no-copy optimization)
+- Perplexity results get post-filter safety net only for blocked_domains, not allowed_domains
+- buildPerplexityDomainFilter returns undefined for empty arrays, triggering no API parameter
 
 ### Pending Todos
 
@@ -79,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-20T09:21:21Z
-Stopped at: Phase 2 Plan 01 complete
-Resume file: .planning/phases/02-search-resilience/02-01-SUMMARY.md
+Last session: 2026-05-20T09:34:15Z
+Stopped at: Phase 2 Plan 02 complete
+Resume file: .planning/phases/02-search-resilience/02-02-SUMMARY.md
