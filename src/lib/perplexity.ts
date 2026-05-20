@@ -18,7 +18,11 @@ export function getApiKey(): string {
   throw new Error('No API key found. Set PPLX_API_KEY or PERPLEXITY_API_KEY environment variable.');
 }
 
-export async function search(query: string): Promise<{
+export function hasApiKey(): boolean {
+  return !!(process.env.PPLX_API_KEY || process.env.PERPLEXITY_API_KEY);
+}
+
+export async function search(query: string, domainFilter?: string[]): Promise<{
   results: Array<{ title: string; url: string }>;
   content: string;
 }> {
@@ -27,10 +31,16 @@ export async function search(query: string): Promise<{
 
   const client = new Perplexity({ apiKey });
 
-  const response = await client.chat.completions.create({
+  const params: Record<string, unknown> = {
     model,
     messages: [{ role: 'user', content: query }],
-  });
+  };
+
+  if (domainFilter && domainFilter.length > 0) {
+    params.search_domain_filter = domainFilter;
+  }
+
+  const response = await client.chat.completions.create(params);
 
   // Extract results from search_results array (preferred)
   const searchResults = (response as any).search_results;

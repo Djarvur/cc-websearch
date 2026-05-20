@@ -8,8 +8,12 @@ function escapeXml(str: string): string {
     .replace(/"/g, '&quot;');
 }
 
-export function formatSearchResults(results: SearchResult[]): string {
-  const lines: string[] = ['<search_results>'];
+export function formatSearchResults(results: SearchResult[], provider?: string): string {
+  const lines: string[] = [];
+  if (provider) {
+    lines.push(`<!-- provider: ${provider} -->`);
+  }
+  lines.push('<search_results>');
   for (const result of results) {
     lines.push('  <result>');
     lines.push(`    <title>${escapeXml(result.title)}</title>`);

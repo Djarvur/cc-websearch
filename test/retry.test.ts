@@ -59,17 +59,14 @@ describe('retryWithBackoff', () => {
   });
 
   it('should throw after max retries exhausted on transient errors', async () => {
-    vi.useFakeTimers();
     const transientErr = new Error('keep failing');
     const fn = vi.fn().mockRejectedValue(transientErr);
 
     const { retryWithBackoff } = await import('../src/lib/retry.js');
-    const promise = retryWithBackoff(fn, () => true, { maxRetries: 2, baseDelay: 10, maxDelay: 100 });
 
-    // Advance through all retry delays
-    await vi.advanceTimersByTimeAsync(500);
-
-    await expect(promise).rejects.toThrow('keep failing');
+    await expect(
+      retryWithBackoff(fn, () => true, { maxRetries: 2, baseDelay: 1, maxDelay: 2 }),
+    ).rejects.toThrow('keep failing');
     // 1 initial + 2 retries = 3 total calls
     expect(fn).toHaveBeenCalledTimes(3);
   });
