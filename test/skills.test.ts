@@ -53,9 +53,15 @@ describe('WebFetch SKILL.md', () => {
     expect(frontmatter['description'].length).toBeGreaterThan(0);
   });
 
-  it('should contain "not yet implemented" (case-insensitive)', () => {
+  it('should contain usage instructions with node and CLAUDE_PLUGIN_ROOT', () => {
     const content = readFileSync(skillPath, 'utf8');
-    expect(content.toLowerCase()).toContain('not yet implemented');
+    expect(content).toContain('node');
+    expect(content).toContain('${CLAUDE_PLUGIN_ROOT}');
+  });
+
+  it('should NOT contain "not yet implemented"', () => {
+    const content = readFileSync(skillPath, 'utf8');
+    expect(content.toLowerCase()).not.toContain('not yet implemented');
   });
 });
 

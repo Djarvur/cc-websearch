@@ -8,6 +8,13 @@ export const WebSearchInputSchema = z.strictObject({
 
 export type WebSearchInput = z.infer<typeof WebSearchInputSchema>;
 
+export const WebFetchInputSchema = z.strictObject({
+  url: z.string().url('Invalid URL format'),
+  prompt: z.string().min(1, 'Prompt is required'),
+});
+
+export type WebFetchInput = z.infer<typeof WebFetchInputSchema>;
+
 export async function readStdin<T>(schema: z.ZodType<T>): Promise<T> {
   const chunks: Buffer[] = [];
   for await (const chunk of process.stdin) {
