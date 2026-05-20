@@ -60,7 +60,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 02-01: DDG fallback and retry -- install duck-duck-scrape, create DDG provider, exponential backoff module, two-tier fallback orchestration, provider comment output
+- [x] 02-01: DDG fallback and retry -- install duck-duck-scrape, create DDG provider, exponential backoff module, two-tier fallback orchestration, provider comment output (completed 2026-05-20)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -121,6 +121,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
-| 2. Search Resilience | 0/3 | Not started | - |
+| 2. Search Resilience | 1/3 | In progress | - |
 | 3. WebFetch Content Pipeline | 0/2 | Not started | - |
 | 4. Config File and Logging | 0/1 | Not started | - |
