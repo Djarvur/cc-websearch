@@ -26,7 +26,7 @@ export async function fetchWithRedirects(
   let currentUrl = url;
   const originalHost = url.hostname;
 
-  for (let hop = 0; hop <= maxHops; hop++) {
+  for (let hop = 0; hop < maxHops; hop++) {
     const response = await fetch(currentUrl.toString(), {
       redirect: 'manual',
     });
@@ -47,11 +47,6 @@ export async function fetchWithRedirects(
       // D-10: Cross-host redirect -> message, don't follow
       if (targetUrl.hostname !== originalHost) {
         throw new CrossHostRedirectError(currentUrl.href, targetUrl.href);
-      }
-
-      // D-11: Too many hops
-      if (hop === maxHops) {
-        throw new Error(`Too many redirects (>${maxHops}) starting from ${url.href}`);
       }
 
       logger.debug(`Redirect hop ${hop + 1}: ${currentUrl.href} -> ${targetUrl.href}`);
