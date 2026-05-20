@@ -33,16 +33,29 @@ vi.mock('../src/lib/logger.js', () => ({
 
 // Mock input module
 const mockReadStdin = vi.fn();
+const mockValidateDomainExclusivity = vi.fn();
 
 vi.mock('../src/lib/input.js', () => ({
   readStdin: (...args: any[]) => mockReadStdin(...args),
   WebSearchInputSchema: {},
+  validateDomainExclusivity: (...args: any[]) => mockValidateDomainExclusivity(...args),
+}));
+
+// Mock filter module
+const mockBuildPerplexityDomainFilter = vi.fn();
+const mockFilterByDomains = vi.fn();
+
+vi.mock('../src/lib/filter.js', () => ({
+  buildPerplexityDomainFilter: (...args: any[]) => mockBuildPerplexityDomainFilter(...args),
+  filterByDomains: (...args: any[]) => mockFilterByDomains(...args),
 }));
 
 // Mock output module - captures the provider argument
 let capturedProvider: string | undefined;
+let capturedResults: any[] = [];
 vi.mock('../src/lib/output.js', () => ({
   formatSearchResults: vi.fn((results: any[], provider?: string) => {
+    capturedResults = results;
     capturedProvider = provider;
     const lines: string[] = [];
     if (provider) {
@@ -73,7 +86,11 @@ describe('WebSearch fallback orchestration', () => {
     mockSearchDDG.mockReset();
     mockRetryWithBackoff.mockReset();
     mockReadStdin.mockReset();
+    mockValidateDomainExclusivity.mockReset();
+    mockBuildPerplexityDomainFilter.mockReset();
+    mockFilterByDomains.mockReset();
     capturedProvider = undefined;
+    capturedResults = [];
     stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     stderrWriteSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
   });
@@ -93,6 +110,9 @@ describe('WebSearch fallback orchestration', () => {
     mockSearchDDG.mockResolvedValue([
       { title: 'DDG Result', url: 'https://ddg.example.com' },
     ]);
+
+    // filterByDomains passes through when no domains
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
 
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 100));
@@ -119,10 +139,12 @@ describe('WebSearch fallback orchestration', () => {
       content: 'test content',
     });
 
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 100));
 
-    expect(mockSearch).toHaveBeenCalledWith('test query');
+    expect(mockSearch).toHaveBeenCalledWith('test query', undefined);
     expect(mockSearchDDG).not.toHaveBeenCalled();
     expect(capturedProvider).toBe('perplexity');
   });
@@ -146,6 +168,9 @@ describe('WebSearch fallback orchestration', () => {
       { title: 'DDG Fallback Result', url: 'https://ddg.example.com/fallback' },
     ]);
 
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 100));
 
@@ -158,6 +183,7 @@ describe('WebSearch fallback orchestration', () => {
     mockReadStdin.mockResolvedValue({ query: 'test query' });
 
     mockRetryWithBackoff.mockRejectedValue(new Error('provider failure'));
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
 
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 100));
@@ -177,11 +203,169 @@ describe('WebSearch fallback orchestration', () => {
       { title: 'DDG Result', url: 'https://ddg.example.com' },
     ]);
 
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 100));
 
     const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
     expect(stdoutOutput).toContain('<!-- provider: duckduckgo -->');
     expect(stdoutOutput).toContain('<search_results>');
+  });
+
+  // Domain filtering integration tests
+
+  it('should call validateDomainExclusivity with parsed input', async () => {
+    mockHasApiKey.mockReturnValue(false);
+    mockReadStdin.mockResolvedValue({ query: 'test query', allowed_domains: ['github.com'] });
+
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+    mockSearchDDG.mockResolvedValue([{ title: 'GH', url: 'https://github.com/test' }]);
+    mockBuildPerplexityDomainFilter.mockReturnValue(['github.com']);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    expect(mockValidateDomainExclusivity).toHaveBeenCalledWith({
+      query: 'test query',
+      allowed_domains: ['github.com'],
+    });
+  });
+
+  it('should exit with error when both allowed and blocked domains provided (SRCH-03)', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({
+      query: 'test query',
+      allowed_domains: ['github.com'],
+      blocked_domains: ['reddit.com'],
+    });
+
+    // validateDomainExclusivity throws
+    mockValidateDomainExclusivity.mockImplementation(() => {
+      throw new Error('Cannot specify both allowed_domains and blocked_domains in the same request.');
+    });
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stderrOutput).toMatch(/Cannot specify both allowed_domains and blocked_domains/);
+    expect(process.exitCode).toBe(1);
+  });
+
+  it('should pass allowed_domains domain filter to Perplexity search', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query', allowed_domains: ['github.com'] });
+
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+    mockSearch.mockResolvedValue({
+      results: [{ title: 'GH Result', url: 'https://github.com/test' }],
+      content: 'content',
+    });
+    mockBuildPerplexityDomainFilter.mockReturnValue(['github.com']);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // Perplexity search should be called with domain filter
+    expect(mockSearch).toHaveBeenCalledWith('test query', ['github.com']);
+    // buildPerplexityDomainFilter should be called with the domains
+    expect(mockBuildPerplexityDomainFilter).toHaveBeenCalledWith(['github.com'], undefined);
+  });
+
+  it('should pass blocked_domains filter with -prefix to Perplexity search', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query', blocked_domains: ['reddit.com'] });
+
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+    mockSearch.mockResolvedValue({
+      results: [{ title: 'Result', url: 'https://example.com' }],
+      content: 'content',
+    });
+    mockBuildPerplexityDomainFilter.mockReturnValue(['-reddit.com']);
+    // Safety net filter for blocked domains
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    expect(mockSearch).toHaveBeenCalledWith('test query', ['-reddit.com']);
+    expect(mockBuildPerplexityDomainFilter).toHaveBeenCalledWith(undefined, ['reddit.com']);
+    // Safety net filter should be applied for blocked domains
+    expect(mockFilterByDomains).toHaveBeenCalled();
+  });
+
+  it('should apply filterByDomains to DDG results after fallback', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query', allowed_domains: ['github.com'] });
+
+    let callCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      callCount++;
+      if (callCount === 1) throw new Error('Perplexity failed');
+      return fn();
+    });
+
+    mockSearchDDG.mockResolvedValue([
+      { title: 'GH', url: 'https://github.com/guide' },
+      { title: 'Other', url: 'https://other.com/page' },
+    ]);
+
+    mockBuildPerplexityDomainFilter.mockReturnValue(['github.com']);
+    mockFilterByDomains.mockImplementation((results: any[]) =>
+      results.filter((r: any) => r.url.includes('github.com')),
+    );
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // filterByDomains should be called on DDG results with allowed domains
+    expect(mockFilterByDomains).toHaveBeenCalled();
+    expect(capturedResults).toHaveLength(1);
+    expect(capturedResults[0].title).toBe('GH');
+  });
+
+  it('should apply filterByDomains on DDG-only path (no API key)', async () => {
+    mockHasApiKey.mockReturnValue(false);
+    mockReadStdin.mockResolvedValue({ query: 'test query', blocked_domains: ['spam.com'] });
+
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+    mockSearchDDG.mockResolvedValue([
+      { title: 'Good', url: 'https://good.com/page' },
+      { title: 'Spam', url: 'https://spam.com/page' },
+    ]);
+
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+    mockFilterByDomains.mockImplementation((results: any[]) =>
+      results.filter((r: any) => !r.url.includes('spam.com')),
+    );
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    expect(mockFilterByDomains).toHaveBeenCalled();
+    expect(capturedResults).toHaveLength(1);
+    expect(capturedResults[0].title).toBe('Good');
+  });
+
+  it('should not apply filtering when no domains specified', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => fn());
+    mockSearch.mockResolvedValue({
+      results: [{ title: 'Result', url: 'https://example.com' }],
+      content: 'content',
+    });
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // filterByDomains should NOT be called when no domains
+    expect(mockFilterByDomains).not.toHaveBeenCalled();
+    expect(mockSearch).toHaveBeenCalledWith('test query', undefined);
   });
 });
