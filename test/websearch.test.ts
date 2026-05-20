@@ -8,7 +8,7 @@ const mockRetryWithBackoff = vi.fn();
 
 vi.mock('../src/lib/perplexity.js', () => ({
   search: (...args: any[]) => mockSearch(...args),
-  hasApiKey: () => mockHasApiKey(),
+  hasApiKey: (...args: any[]) => mockHasApiKey(...args),
   getApiKey: vi.fn().mockReturnValue('test-key'),
 }));
 
@@ -18,17 +18,27 @@ vi.mock('../src/lib/duckduckgo.js', () => ({
 
 vi.mock('../src/lib/retry.js', () => ({
   retryWithBackoff: (...args: any[]) => mockRetryWithBackoff(...args),
+  getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
   isTransientError: vi.fn(),
   isDDGTransientError: vi.fn(),
 }));
 
+vi.mock('../src/lib/config.js', () => ({
+  loadConfig: vi.fn(() => ({
+    perplexity: { apiKey: 'test-key', model: 'sonar' },
+    retry: { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 },
+    logging: { level: 'info' },
+  })),
+}));
+
 vi.mock('../src/lib/logger.js', () => ({
-  logger: {
+  createLogger: vi.fn(() => ({
     debug: vi.fn((msg: string) => process.stderr.write(`[debug] ${msg}\n`)),
     info: vi.fn((msg: string) => process.stderr.write(`[info] ${msg}\n`)),
     warn: vi.fn((msg: string) => process.stderr.write(`[warn] ${msg}\n`)),
     error: vi.fn((msg: string) => process.stderr.write(`[error] ${msg}\n`)),
-  },
+    setLevel: vi.fn(),
+  })),
 }));
 
 // Mock input module
@@ -78,8 +88,6 @@ describe('WebSearch fallback orchestration', () => {
   let stderrWriteSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    vi.stubEnv('PPLX_API_KEY', 'test-key');
-    vi.stubEnv('PPLX_MODEL', '');
     vi.resetModules();
     mockSearch.mockReset();
     mockHasApiKey.mockReset();
@@ -144,7 +152,7 @@ describe('WebSearch fallback orchestration', () => {
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 100));
 
-    expect(mockSearch).toHaveBeenCalledWith('test query', undefined);
+    expect(mockSearch).toHaveBeenCalledWith('test query', expect.any(Object), undefined);
     expect(mockSearchDDG).not.toHaveBeenCalled();
     expect(capturedProvider).toBe('perplexity');
   });
@@ -270,7 +278,7 @@ describe('WebSearch fallback orchestration', () => {
     await new Promise((r) => setTimeout(r, 100));
 
     // Perplexity search should be called with domain filter
-    expect(mockSearch).toHaveBeenCalledWith('test query', ['github.com']);
+    expect(mockSearch).toHaveBeenCalledWith('test query', expect.any(Object), ['github.com']);
     // buildPerplexityDomainFilter should be called with the domains
     expect(mockBuildPerplexityDomainFilter).toHaveBeenCalledWith(['github.com'], undefined);
   });
@@ -291,7 +299,7 @@ describe('WebSearch fallback orchestration', () => {
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 100));
 
-    expect(mockSearch).toHaveBeenCalledWith('test query', ['-reddit.com']);
+    expect(mockSearch).toHaveBeenCalledWith('test query', expect.any(Object), ['-reddit.com']);
     expect(mockBuildPerplexityDomainFilter).toHaveBeenCalledWith(undefined, ['reddit.com']);
     // Safety net filter should be applied for blocked domains
     expect(mockFilterByDomains).toHaveBeenCalled();
@@ -366,7 +374,7 @@ describe('WebSearch fallback orchestration', () => {
 
     // filterByDomains should NOT be called when no domains
     expect(mockFilterByDomains).not.toHaveBeenCalled();
-    expect(mockSearch).toHaveBeenCalledWith('test query', undefined);
+    expect(mockSearch).toHaveBeenCalledWith('test query', expect.any(Object), undefined);
   });
 
   // Plan 03: Partial result merging and detailed errors (D-17, D-18, D-19, D-15)

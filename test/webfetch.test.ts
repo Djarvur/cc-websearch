@@ -30,7 +30,7 @@ const mockHasApiKey = vi.fn();
 const mockSummarize = vi.fn();
 
 vi.mock('../src/lib/perplexity.js', () => ({
-  hasApiKey: () => mockHasApiKey(),
+  hasApiKey: (...args: any[]) => mockHasApiKey(...args),
   summarize: (...args: any[]) => mockSummarize(...args),
   getApiKey: vi.fn().mockReturnValue('test-key'),
   search: vi.fn(),
@@ -41,17 +41,28 @@ const mockRetryWithBackoff = vi.fn();
 
 vi.mock('../src/lib/retry.js', () => ({
   retryWithBackoff: (...args: any[]) => mockRetryWithBackoff(...args),
+  getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
   isTransientError: vi.fn(),
+}));
+
+// Mock config
+vi.mock('../src/lib/config.js', () => ({
+  loadConfig: vi.fn(() => ({
+    perplexity: { apiKey: 'test-key', model: 'sonar' },
+    retry: { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 },
+    logging: { level: 'info' },
+  })),
 }));
 
 // Mock logger
 vi.mock('../src/lib/logger.js', () => ({
-  logger: {
+  createLogger: vi.fn(() => ({
     debug: vi.fn(),
     info: vi.fn(),
     warn: vi.fn(),
     error: vi.fn((msg: string) => process.stderr.write(`[error] ${msg}\n`)),
-  },
+    setLevel: vi.fn(),
+  })),
 }));
 
 // Mock input module
@@ -253,7 +264,7 @@ describe('WebFetch pipeline', () => {
     await import('../src/webfetch.js');
     await new Promise((r) => setTimeout(r, 100));
 
-    // summarize should be called with (markdown, userPrompt)
-    expect(mockSummarize).toHaveBeenCalledWith('Article body text.', 'Summarize the key points');
+    // summarize should be called with (markdown, userPrompt, config)
+    expect(mockSummarize).toHaveBeenCalledWith('Article body text.', 'Summarize the key points', expect.any(Object));
   });
 });

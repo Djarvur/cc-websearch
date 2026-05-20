@@ -16,17 +16,27 @@ vi.mock('../src/lib/duckduckgo.js', () => ({
 
 vi.mock('../src/lib/retry.js', () => ({
   retryWithBackoff: (fn: () => Promise<any>) => fn(),
+  getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
   isTransientError: vi.fn(),
   isDDGTransientError: vi.fn(),
 }));
 
+vi.mock('../src/lib/config.js', () => ({
+  loadConfig: vi.fn(() => ({
+    perplexity: { apiKey: 'test-key', model: 'sonar' },
+    retry: { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 },
+    logging: { level: 'debug' },
+  })),
+}));
+
 vi.mock('../src/lib/logger.js', () => ({
-  logger: {
+  createLogger: vi.fn(() => ({
     debug: vi.fn((msg: string) => process.stderr.write(`[debug] ${msg}\n`)),
     info: vi.fn((msg: string) => process.stderr.write(`[info] ${msg}\n`)),
     warn: vi.fn((msg: string) => process.stderr.write(`[warn] ${msg}\n`)),
     error: vi.fn((msg: string) => process.stderr.write(`[error] ${msg}\n`)),
-  },
+    setLevel: vi.fn(),
+  })),
 }));
 
 const mockReadStdin = vi.fn();
@@ -65,9 +75,6 @@ describe('IO separation', () => {
   let stderrWriteSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    vi.stubEnv('PPLX_API_KEY', 'test-key');
-    vi.stubEnv('PPLX_MODEL', '');
-    vi.stubEnv('LOG_LEVEL', 'debug');
     vi.resetModules();
     mockSearch.mockReset();
     mockSearchDDG.mockReset();

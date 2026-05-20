@@ -1,17 +1,12 @@
 #!/usr/bin/env node
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined") return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x + '" is not supported');
-});
-var __commonJS = (cb, mod) => function __require2() {
+var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __export = (target, all) => {
@@ -37,9 +32,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 
 // node_modules/html-entities/dist/commonjs/named-references.js
 var require_named_references = __commonJS({
-  "node_modules/html-entities/dist/commonjs/named-references.js"(exports) {
+  "node_modules/html-entities/dist/commonjs/named-references.js"(exports2) {
     "use strict";
-    var __assign = exports && exports.__assign || function() {
+    var __assign = exports2 && exports2.__assign || function() {
       __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
           s = arguments[i];
@@ -50,8 +45,8 @@ var require_named_references = __commonJS({
       };
       return __assign.apply(this, arguments);
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.namedReferences = exports.bodyRegExps = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.namedReferences = exports2.bodyRegExps = void 0;
     var pairDivider = "~";
     var blockDivider = "~~";
     function generateNamedReferences(input, prev) {
@@ -75,25 +70,25 @@ var require_named_references = __commonJS({
       }
       return prev ? { entities: __assign(__assign({}, entities), prev.entities), characters: __assign(__assign({}, characters), prev.characters) } : { entities, characters };
     }
-    exports.bodyRegExps = {
+    exports2.bodyRegExps = {
       xml: /&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,
       html4: /&notin;|&(?:nbsp|iexcl|cent|pound|curren|yen|brvbar|sect|uml|copy|ordf|laquo|not|shy|reg|macr|deg|plusmn|sup2|sup3|acute|micro|para|middot|cedil|sup1|ordm|raquo|frac14|frac12|frac34|iquest|Agrave|Aacute|Acirc|Atilde|Auml|Aring|AElig|Ccedil|Egrave|Eacute|Ecirc|Euml|Igrave|Iacute|Icirc|Iuml|ETH|Ntilde|Ograve|Oacute|Ocirc|Otilde|Ouml|times|Oslash|Ugrave|Uacute|Ucirc|Uuml|Yacute|THORN|szlig|agrave|aacute|acirc|atilde|auml|aring|aelig|ccedil|egrave|eacute|ecirc|euml|igrave|iacute|icirc|iuml|eth|ntilde|ograve|oacute|ocirc|otilde|ouml|divide|oslash|ugrave|uacute|ucirc|uuml|yacute|thorn|yuml|quot|amp|lt|gt|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g,
       html5: /&centerdot;|&copysr;|&divideontimes;|&gtcc;|&gtcir;|&gtdot;|&gtlPar;|&gtquest;|&gtrapprox;|&gtrarr;|&gtrdot;|&gtreqless;|&gtreqqless;|&gtrless;|&gtrsim;|&ltcc;|&ltcir;|&ltdot;|&lthree;|&ltimes;|&ltlarr;|&ltquest;|&ltrPar;|&ltri;|&ltrie;|&ltrif;|&notin;|&notinE;|&notindot;|&notinva;|&notinvb;|&notinvc;|&notni;|&notniva;|&notnivb;|&notnivc;|&parallel;|&timesb;|&timesbar;|&timesd;|&(?:AElig|AMP|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|GT|Iacute|Icirc|Igrave|Iuml|LT|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|QUOT|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|amp|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|gt|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|lt|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|quot|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml|#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);?/g
     };
-    exports.namedReferences = {};
-    exports.namedReferences["xml"] = generateNamedReferences(`lt~<~gt~>~quot~"~apos~'~amp~&`);
-    exports.namedReferences["html4"] = generateNamedReferences(`apos~'~OElig~\u0152~oelig~\u0153~Scaron~\u0160~scaron~\u0161~Yuml~\u0178~circ~\u02C6~tilde~\u02DC~ensp~\u2002~emsp~\u2003~thinsp~\u2009~zwnj~\u200C~zwj~\u200D~lrm~\u200E~rlm~\u200F~ndash~\u2013~mdash~\u2014~lsquo~\u2018~rsquo~\u2019~sbquo~\u201A~ldquo~\u201C~rdquo~\u201D~bdquo~\u201E~dagger~\u2020~Dagger~\u2021~permil~\u2030~lsaquo~\u2039~rsaquo~\u203A~euro~\u20AC~fnof~\u0192~Alpha~\u0391~Beta~\u0392~Gamma~\u0393~Delta~\u0394~Epsilon~\u0395~Zeta~\u0396~Eta~\u0397~Theta~\u0398~Iota~\u0399~Kappa~\u039A~Lambda~\u039B~Mu~\u039C~Nu~\u039D~Xi~\u039E~Omicron~\u039F~Pi~\u03A0~Rho~\u03A1~Sigma~\u03A3~Tau~\u03A4~Upsilon~\u03A5~Phi~\u03A6~Chi~\u03A7~Psi~\u03A8~Omega~\u03A9~alpha~\u03B1~beta~\u03B2~gamma~\u03B3~delta~\u03B4~epsilon~\u03B5~zeta~\u03B6~eta~\u03B7~theta~\u03B8~iota~\u03B9~kappa~\u03BA~lambda~\u03BB~mu~\u03BC~nu~\u03BD~xi~\u03BE~omicron~\u03BF~pi~\u03C0~rho~\u03C1~sigmaf~\u03C2~sigma~\u03C3~tau~\u03C4~upsilon~\u03C5~phi~\u03C6~chi~\u03C7~psi~\u03C8~omega~\u03C9~thetasym~\u03D1~upsih~\u03D2~piv~\u03D6~bull~\u2022~hellip~\u2026~prime~\u2032~Prime~\u2033~oline~\u203E~frasl~\u2044~weierp~\u2118~image~\u2111~real~\u211C~trade~\u2122~alefsym~\u2135~larr~\u2190~uarr~\u2191~rarr~\u2192~darr~\u2193~harr~\u2194~crarr~\u21B5~lArr~\u21D0~uArr~\u21D1~rArr~\u21D2~dArr~\u21D3~hArr~\u21D4~forall~\u2200~part~\u2202~exist~\u2203~empty~\u2205~nabla~\u2207~isin~\u2208~notin~\u2209~ni~\u220B~prod~\u220F~sum~\u2211~minus~\u2212~lowast~\u2217~radic~\u221A~prop~\u221D~infin~\u221E~ang~\u2220~and~\u2227~or~\u2228~cap~\u2229~cup~\u222A~int~\u222B~there4~\u2234~sim~\u223C~cong~\u2245~asymp~\u2248~ne~\u2260~equiv~\u2261~le~\u2264~ge~\u2265~sub~\u2282~sup~\u2283~nsub~\u2284~sube~\u2286~supe~\u2287~oplus~\u2295~otimes~\u2297~perp~\u22A5~sdot~\u22C5~lceil~\u2308~rceil~\u2309~lfloor~\u230A~rfloor~\u230B~lang~\u2329~rang~\u232A~loz~\u25CA~spades~\u2660~clubs~\u2663~hearts~\u2665~diams~\u2666~~nbsp~\xA0~iexcl~\xA1~cent~\xA2~pound~\xA3~curren~\xA4~yen~\xA5~brvbar~\xA6~sect~\xA7~uml~\xA8~copy~\xA9~ordf~\xAA~laquo~\xAB~not~\xAC~shy~\xAD~reg~\xAE~macr~\xAF~deg~\xB0~plusmn~\xB1~sup2~\xB2~sup3~\xB3~acute~\xB4~micro~\xB5~para~\xB6~middot~\xB7~cedil~\xB8~sup1~\xB9~ordm~\xBA~raquo~\xBB~frac14~\xBC~frac12~\xBD~frac34~\xBE~iquest~\xBF~Agrave~\xC0~Aacute~\xC1~Acirc~\xC2~Atilde~\xC3~Auml~\xC4~Aring~\xC5~AElig~\xC6~Ccedil~\xC7~Egrave~\xC8~Eacute~\xC9~Ecirc~\xCA~Euml~\xCB~Igrave~\xCC~Iacute~\xCD~Icirc~\xCE~Iuml~\xCF~ETH~\xD0~Ntilde~\xD1~Ograve~\xD2~Oacute~\xD3~Ocirc~\xD4~Otilde~\xD5~Ouml~\xD6~times~\xD7~Oslash~\xD8~Ugrave~\xD9~Uacute~\xDA~Ucirc~\xDB~Uuml~\xDC~Yacute~\xDD~THORN~\xDE~szlig~\xDF~agrave~\xE0~aacute~\xE1~acirc~\xE2~atilde~\xE3~auml~\xE4~aring~\xE5~aelig~\xE6~ccedil~\xE7~egrave~\xE8~eacute~\xE9~ecirc~\xEA~euml~\xEB~igrave~\xEC~iacute~\xED~icirc~\xEE~iuml~\xEF~eth~\xF0~ntilde~\xF1~ograve~\xF2~oacute~\xF3~ocirc~\xF4~otilde~\xF5~ouml~\xF6~divide~\xF7~oslash~\xF8~ugrave~\xF9~uacute~\xFA~ucirc~\xFB~uuml~\xFC~yacute~\xFD~thorn~\xFE~yuml~\xFF~quot~"~amp~&~lt~<~gt~>`);
-    exports.namedReferences["html5"] = generateNamedReferences('Abreve~\u0102~Acy~\u0410~Afr~\u{1D504}~Amacr~\u0100~And~\u2A53~Aogon~\u0104~Aopf~\u{1D538}~ApplyFunction~\u2061~Ascr~\u{1D49C}~Assign~\u2254~Backslash~\u2216~Barv~\u2AE7~Barwed~\u2306~Bcy~\u0411~Because~\u2235~Bernoullis~\u212C~Bfr~\u{1D505}~Bopf~\u{1D539}~Breve~\u02D8~Bscr~\u212C~Bumpeq~\u224E~CHcy~\u0427~Cacute~\u0106~Cap~\u22D2~CapitalDifferentialD~\u2145~Cayleys~\u212D~Ccaron~\u010C~Ccirc~\u0108~Cconint~\u2230~Cdot~\u010A~Cedilla~\xB8~CenterDot~\xB7~Cfr~\u212D~CircleDot~\u2299~CircleMinus~\u2296~CirclePlus~\u2295~CircleTimes~\u2297~ClockwiseContourIntegral~\u2232~CloseCurlyDoubleQuote~\u201D~CloseCurlyQuote~\u2019~Colon~\u2237~Colone~\u2A74~Congruent~\u2261~Conint~\u222F~ContourIntegral~\u222E~Copf~\u2102~Coproduct~\u2210~CounterClockwiseContourIntegral~\u2233~Cross~\u2A2F~Cscr~\u{1D49E}~Cup~\u22D3~CupCap~\u224D~DD~\u2145~DDotrahd~\u2911~DJcy~\u0402~DScy~\u0405~DZcy~\u040F~Darr~\u21A1~Dashv~\u2AE4~Dcaron~\u010E~Dcy~\u0414~Del~\u2207~Dfr~\u{1D507}~DiacriticalAcute~\xB4~DiacriticalDot~\u02D9~DiacriticalDoubleAcute~\u02DD~DiacriticalGrave~`~DiacriticalTilde~\u02DC~Diamond~\u22C4~DifferentialD~\u2146~Dopf~\u{1D53B}~Dot~\xA8~DotDot~\u20DC~DotEqual~\u2250~DoubleContourIntegral~\u222F~DoubleDot~\xA8~DoubleDownArrow~\u21D3~DoubleLeftArrow~\u21D0~DoubleLeftRightArrow~\u21D4~DoubleLeftTee~\u2AE4~DoubleLongLeftArrow~\u27F8~DoubleLongLeftRightArrow~\u27FA~DoubleLongRightArrow~\u27F9~DoubleRightArrow~\u21D2~DoubleRightTee~\u22A8~DoubleUpArrow~\u21D1~DoubleUpDownArrow~\u21D5~DoubleVerticalBar~\u2225~DownArrow~\u2193~DownArrowBar~\u2913~DownArrowUpArrow~\u21F5~DownBreve~\u0311~DownLeftRightVector~\u2950~DownLeftTeeVector~\u295E~DownLeftVector~\u21BD~DownLeftVectorBar~\u2956~DownRightTeeVector~\u295F~DownRightVector~\u21C1~DownRightVectorBar~\u2957~DownTee~\u22A4~DownTeeArrow~\u21A7~Downarrow~\u21D3~Dscr~\u{1D49F}~Dstrok~\u0110~ENG~\u014A~Ecaron~\u011A~Ecy~\u042D~Edot~\u0116~Efr~\u{1D508}~Element~\u2208~Emacr~\u0112~EmptySmallSquare~\u25FB~EmptyVerySmallSquare~\u25AB~Eogon~\u0118~Eopf~\u{1D53C}~Equal~\u2A75~EqualTilde~\u2242~Equilibrium~\u21CC~Escr~\u2130~Esim~\u2A73~Exists~\u2203~ExponentialE~\u2147~Fcy~\u0424~Ffr~\u{1D509}~FilledSmallSquare~\u25FC~FilledVerySmallSquare~\u25AA~Fopf~\u{1D53D}~ForAll~\u2200~Fouriertrf~\u2131~Fscr~\u2131~GJcy~\u0403~Gammad~\u03DC~Gbreve~\u011E~Gcedil~\u0122~Gcirc~\u011C~Gcy~\u0413~Gdot~\u0120~Gfr~\u{1D50A}~Gg~\u22D9~Gopf~\u{1D53E}~GreaterEqual~\u2265~GreaterEqualLess~\u22DB~GreaterFullEqual~\u2267~GreaterGreater~\u2AA2~GreaterLess~\u2277~GreaterSlantEqual~\u2A7E~GreaterTilde~\u2273~Gscr~\u{1D4A2}~Gt~\u226B~HARDcy~\u042A~Hacek~\u02C7~Hat~^~Hcirc~\u0124~Hfr~\u210C~HilbertSpace~\u210B~Hopf~\u210D~HorizontalLine~\u2500~Hscr~\u210B~Hstrok~\u0126~HumpDownHump~\u224E~HumpEqual~\u224F~IEcy~\u0415~IJlig~\u0132~IOcy~\u0401~Icy~\u0418~Idot~\u0130~Ifr~\u2111~Im~\u2111~Imacr~\u012A~ImaginaryI~\u2148~Implies~\u21D2~Int~\u222C~Integral~\u222B~Intersection~\u22C2~InvisibleComma~\u2063~InvisibleTimes~\u2062~Iogon~\u012E~Iopf~\u{1D540}~Iscr~\u2110~Itilde~\u0128~Iukcy~\u0406~Jcirc~\u0134~Jcy~\u0419~Jfr~\u{1D50D}~Jopf~\u{1D541}~Jscr~\u{1D4A5}~Jsercy~\u0408~Jukcy~\u0404~KHcy~\u0425~KJcy~\u040C~Kcedil~\u0136~Kcy~\u041A~Kfr~\u{1D50E}~Kopf~\u{1D542}~Kscr~\u{1D4A6}~LJcy~\u0409~Lacute~\u0139~Lang~\u27EA~Laplacetrf~\u2112~Larr~\u219E~Lcaron~\u013D~Lcedil~\u013B~Lcy~\u041B~LeftAngleBracket~\u27E8~LeftArrow~\u2190~LeftArrowBar~\u21E4~LeftArrowRightArrow~\u21C6~LeftCeiling~\u2308~LeftDoubleBracket~\u27E6~LeftDownTeeVector~\u2961~LeftDownVector~\u21C3~LeftDownVectorBar~\u2959~LeftFloor~\u230A~LeftRightArrow~\u2194~LeftRightVector~\u294E~LeftTee~\u22A3~LeftTeeArrow~\u21A4~LeftTeeVector~\u295A~LeftTriangle~\u22B2~LeftTriangleBar~\u29CF~LeftTriangleEqual~\u22B4~LeftUpDownVector~\u2951~LeftUpTeeVector~\u2960~LeftUpVector~\u21BF~LeftUpVectorBar~\u2958~LeftVector~\u21BC~LeftVectorBar~\u2952~Leftarrow~\u21D0~Leftrightarrow~\u21D4~LessEqualGreater~\u22DA~LessFullEqual~\u2266~LessGreater~\u2276~LessLess~\u2AA1~LessSlantEqual~\u2A7D~LessTilde~\u2272~Lfr~\u{1D50F}~Ll~\u22D8~Lleftarrow~\u21DA~Lmidot~\u013F~LongLeftArrow~\u27F5~LongLeftRightArrow~\u27F7~LongRightArrow~\u27F6~Longleftarrow~\u27F8~Longleftrightarrow~\u27FA~Longrightarrow~\u27F9~Lopf~\u{1D543}~LowerLeftArrow~\u2199~LowerRightArrow~\u2198~Lscr~\u2112~Lsh~\u21B0~Lstrok~\u0141~Lt~\u226A~Map~\u2905~Mcy~\u041C~MediumSpace~\u205F~Mellintrf~\u2133~Mfr~\u{1D510}~MinusPlus~\u2213~Mopf~\u{1D544}~Mscr~\u2133~NJcy~\u040A~Nacute~\u0143~Ncaron~\u0147~Ncedil~\u0145~Ncy~\u041D~NegativeMediumSpace~\u200B~NegativeThickSpace~\u200B~NegativeThinSpace~\u200B~NegativeVeryThinSpace~\u200B~NestedGreaterGreater~\u226B~NestedLessLess~\u226A~NewLine~\n~Nfr~\u{1D511}~NoBreak~\u2060~NonBreakingSpace~\xA0~Nopf~\u2115~Not~\u2AEC~NotCongruent~\u2262~NotCupCap~\u226D~NotDoubleVerticalBar~\u2226~NotElement~\u2209~NotEqual~\u2260~NotEqualTilde~\u2242\u0338~NotExists~\u2204~NotGreater~\u226F~NotGreaterEqual~\u2271~NotGreaterFullEqual~\u2267\u0338~NotGreaterGreater~\u226B\u0338~NotGreaterLess~\u2279~NotGreaterSlantEqual~\u2A7E\u0338~NotGreaterTilde~\u2275~NotHumpDownHump~\u224E\u0338~NotHumpEqual~\u224F\u0338~NotLeftTriangle~\u22EA~NotLeftTriangleBar~\u29CF\u0338~NotLeftTriangleEqual~\u22EC~NotLess~\u226E~NotLessEqual~\u2270~NotLessGreater~\u2278~NotLessLess~\u226A\u0338~NotLessSlantEqual~\u2A7D\u0338~NotLessTilde~\u2274~NotNestedGreaterGreater~\u2AA2\u0338~NotNestedLessLess~\u2AA1\u0338~NotPrecedes~\u2280~NotPrecedesEqual~\u2AAF\u0338~NotPrecedesSlantEqual~\u22E0~NotReverseElement~\u220C~NotRightTriangle~\u22EB~NotRightTriangleBar~\u29D0\u0338~NotRightTriangleEqual~\u22ED~NotSquareSubset~\u228F\u0338~NotSquareSubsetEqual~\u22E2~NotSquareSuperset~\u2290\u0338~NotSquareSupersetEqual~\u22E3~NotSubset~\u2282\u20D2~NotSubsetEqual~\u2288~NotSucceeds~\u2281~NotSucceedsEqual~\u2AB0\u0338~NotSucceedsSlantEqual~\u22E1~NotSucceedsTilde~\u227F\u0338~NotSuperset~\u2283\u20D2~NotSupersetEqual~\u2289~NotTilde~\u2241~NotTildeEqual~\u2244~NotTildeFullEqual~\u2247~NotTildeTilde~\u2249~NotVerticalBar~\u2224~Nscr~\u{1D4A9}~Ocy~\u041E~Odblac~\u0150~Ofr~\u{1D512}~Omacr~\u014C~Oopf~\u{1D546}~OpenCurlyDoubleQuote~\u201C~OpenCurlyQuote~\u2018~Or~\u2A54~Oscr~\u{1D4AA}~Otimes~\u2A37~OverBar~\u203E~OverBrace~\u23DE~OverBracket~\u23B4~OverParenthesis~\u23DC~PartialD~\u2202~Pcy~\u041F~Pfr~\u{1D513}~PlusMinus~\xB1~Poincareplane~\u210C~Popf~\u2119~Pr~\u2ABB~Precedes~\u227A~PrecedesEqual~\u2AAF~PrecedesSlantEqual~\u227C~PrecedesTilde~\u227E~Product~\u220F~Proportion~\u2237~Proportional~\u221D~Pscr~\u{1D4AB}~Qfr~\u{1D514}~Qopf~\u211A~Qscr~\u{1D4AC}~RBarr~\u2910~Racute~\u0154~Rang~\u27EB~Rarr~\u21A0~Rarrtl~\u2916~Rcaron~\u0158~Rcedil~\u0156~Rcy~\u0420~Re~\u211C~ReverseElement~\u220B~ReverseEquilibrium~\u21CB~ReverseUpEquilibrium~\u296F~Rfr~\u211C~RightAngleBracket~\u27E9~RightArrow~\u2192~RightArrowBar~\u21E5~RightArrowLeftArrow~\u21C4~RightCeiling~\u2309~RightDoubleBracket~\u27E7~RightDownTeeVector~\u295D~RightDownVector~\u21C2~RightDownVectorBar~\u2955~RightFloor~\u230B~RightTee~\u22A2~RightTeeArrow~\u21A6~RightTeeVector~\u295B~RightTriangle~\u22B3~RightTriangleBar~\u29D0~RightTriangleEqual~\u22B5~RightUpDownVector~\u294F~RightUpTeeVector~\u295C~RightUpVector~\u21BE~RightUpVectorBar~\u2954~RightVector~\u21C0~RightVectorBar~\u2953~Rightarrow~\u21D2~Ropf~\u211D~RoundImplies~\u2970~Rrightarrow~\u21DB~Rscr~\u211B~Rsh~\u21B1~RuleDelayed~\u29F4~SHCHcy~\u0429~SHcy~\u0428~SOFTcy~\u042C~Sacute~\u015A~Sc~\u2ABC~Scedil~\u015E~Scirc~\u015C~Scy~\u0421~Sfr~\u{1D516}~ShortDownArrow~\u2193~ShortLeftArrow~\u2190~ShortRightArrow~\u2192~ShortUpArrow~\u2191~SmallCircle~\u2218~Sopf~\u{1D54A}~Sqrt~\u221A~Square~\u25A1~SquareIntersection~\u2293~SquareSubset~\u228F~SquareSubsetEqual~\u2291~SquareSuperset~\u2290~SquareSupersetEqual~\u2292~SquareUnion~\u2294~Sscr~\u{1D4AE}~Star~\u22C6~Sub~\u22D0~Subset~\u22D0~SubsetEqual~\u2286~Succeeds~\u227B~SucceedsEqual~\u2AB0~SucceedsSlantEqual~\u227D~SucceedsTilde~\u227F~SuchThat~\u220B~Sum~\u2211~Sup~\u22D1~Superset~\u2283~SupersetEqual~\u2287~Supset~\u22D1~TRADE~\u2122~TSHcy~\u040B~TScy~\u0426~Tab~	~Tcaron~\u0164~Tcedil~\u0162~Tcy~\u0422~Tfr~\u{1D517}~Therefore~\u2234~ThickSpace~\u205F\u200A~ThinSpace~\u2009~Tilde~\u223C~TildeEqual~\u2243~TildeFullEqual~\u2245~TildeTilde~\u2248~Topf~\u{1D54B}~TripleDot~\u20DB~Tscr~\u{1D4AF}~Tstrok~\u0166~Uarr~\u219F~Uarrocir~\u2949~Ubrcy~\u040E~Ubreve~\u016C~Ucy~\u0423~Udblac~\u0170~Ufr~\u{1D518}~Umacr~\u016A~UnderBar~_~UnderBrace~\u23DF~UnderBracket~\u23B5~UnderParenthesis~\u23DD~Union~\u22C3~UnionPlus~\u228E~Uogon~\u0172~Uopf~\u{1D54C}~UpArrow~\u2191~UpArrowBar~\u2912~UpArrowDownArrow~\u21C5~UpDownArrow~\u2195~UpEquilibrium~\u296E~UpTee~\u22A5~UpTeeArrow~\u21A5~Uparrow~\u21D1~Updownarrow~\u21D5~UpperLeftArrow~\u2196~UpperRightArrow~\u2197~Upsi~\u03D2~Uring~\u016E~Uscr~\u{1D4B0}~Utilde~\u0168~VDash~\u22AB~Vbar~\u2AEB~Vcy~\u0412~Vdash~\u22A9~Vdashl~\u2AE6~Vee~\u22C1~Verbar~\u2016~Vert~\u2016~VerticalBar~\u2223~VerticalLine~|~VerticalSeparator~\u2758~VerticalTilde~\u2240~VeryThinSpace~\u200A~Vfr~\u{1D519}~Vopf~\u{1D54D}~Vscr~\u{1D4B1}~Vvdash~\u22AA~Wcirc~\u0174~Wedge~\u22C0~Wfr~\u{1D51A}~Wopf~\u{1D54E}~Wscr~\u{1D4B2}~Xfr~\u{1D51B}~Xopf~\u{1D54F}~Xscr~\u{1D4B3}~YAcy~\u042F~YIcy~\u0407~YUcy~\u042E~Ycirc~\u0176~Ycy~\u042B~Yfr~\u{1D51C}~Yopf~\u{1D550}~Yscr~\u{1D4B4}~ZHcy~\u0416~Zacute~\u0179~Zcaron~\u017D~Zcy~\u0417~Zdot~\u017B~ZeroWidthSpace~\u200B~Zfr~\u2128~Zopf~\u2124~Zscr~\u{1D4B5}~abreve~\u0103~ac~\u223E~acE~\u223E\u0333~acd~\u223F~acy~\u0430~af~\u2061~afr~\u{1D51E}~aleph~\u2135~amacr~\u0101~amalg~\u2A3F~andand~\u2A55~andd~\u2A5C~andslope~\u2A58~andv~\u2A5A~ange~\u29A4~angle~\u2220~angmsd~\u2221~angmsdaa~\u29A8~angmsdab~\u29A9~angmsdac~\u29AA~angmsdad~\u29AB~angmsdae~\u29AC~angmsdaf~\u29AD~angmsdag~\u29AE~angmsdah~\u29AF~angrt~\u221F~angrtvb~\u22BE~angrtvbd~\u299D~angsph~\u2222~angst~\xC5~angzarr~\u237C~aogon~\u0105~aopf~\u{1D552}~ap~\u2248~apE~\u2A70~apacir~\u2A6F~ape~\u224A~apid~\u224B~approx~\u2248~approxeq~\u224A~ascr~\u{1D4B6}~ast~*~asympeq~\u224D~awconint~\u2233~awint~\u2A11~bNot~\u2AED~backcong~\u224C~backepsilon~\u03F6~backprime~\u2035~backsim~\u223D~backsimeq~\u22CD~barvee~\u22BD~barwed~\u2305~barwedge~\u2305~bbrk~\u23B5~bbrktbrk~\u23B6~bcong~\u224C~bcy~\u0431~becaus~\u2235~because~\u2235~bemptyv~\u29B0~bepsi~\u03F6~bernou~\u212C~beth~\u2136~between~\u226C~bfr~\u{1D51F}~bigcap~\u22C2~bigcirc~\u25EF~bigcup~\u22C3~bigodot~\u2A00~bigoplus~\u2A01~bigotimes~\u2A02~bigsqcup~\u2A06~bigstar~\u2605~bigtriangledown~\u25BD~bigtriangleup~\u25B3~biguplus~\u2A04~bigvee~\u22C1~bigwedge~\u22C0~bkarow~\u290D~blacklozenge~\u29EB~blacksquare~\u25AA~blacktriangle~\u25B4~blacktriangledown~\u25BE~blacktriangleleft~\u25C2~blacktriangleright~\u25B8~blank~\u2423~blk12~\u2592~blk14~\u2591~blk34~\u2593~block~\u2588~bne~=\u20E5~bnequiv~\u2261\u20E5~bnot~\u2310~bopf~\u{1D553}~bot~\u22A5~bottom~\u22A5~bowtie~\u22C8~boxDL~\u2557~boxDR~\u2554~boxDl~\u2556~boxDr~\u2553~boxH~\u2550~boxHD~\u2566~boxHU~\u2569~boxHd~\u2564~boxHu~\u2567~boxUL~\u255D~boxUR~\u255A~boxUl~\u255C~boxUr~\u2559~boxV~\u2551~boxVH~\u256C~boxVL~\u2563~boxVR~\u2560~boxVh~\u256B~boxVl~\u2562~boxVr~\u255F~boxbox~\u29C9~boxdL~\u2555~boxdR~\u2552~boxdl~\u2510~boxdr~\u250C~boxh~\u2500~boxhD~\u2565~boxhU~\u2568~boxhd~\u252C~boxhu~\u2534~boxminus~\u229F~boxplus~\u229E~boxtimes~\u22A0~boxuL~\u255B~boxuR~\u2558~boxul~\u2518~boxur~\u2514~boxv~\u2502~boxvH~\u256A~boxvL~\u2561~boxvR~\u255E~boxvh~\u253C~boxvl~\u2524~boxvr~\u251C~bprime~\u2035~breve~\u02D8~bscr~\u{1D4B7}~bsemi~\u204F~bsim~\u223D~bsime~\u22CD~bsol~\\~bsolb~\u29C5~bsolhsub~\u27C8~bullet~\u2022~bump~\u224E~bumpE~\u2AAE~bumpe~\u224F~bumpeq~\u224F~cacute~\u0107~capand~\u2A44~capbrcup~\u2A49~capcap~\u2A4B~capcup~\u2A47~capdot~\u2A40~caps~\u2229\uFE00~caret~\u2041~caron~\u02C7~ccaps~\u2A4D~ccaron~\u010D~ccirc~\u0109~ccups~\u2A4C~ccupssm~\u2A50~cdot~\u010B~cemptyv~\u29B2~centerdot~\xB7~cfr~\u{1D520}~chcy~\u0447~check~\u2713~checkmark~\u2713~cir~\u25CB~cirE~\u29C3~circeq~\u2257~circlearrowleft~\u21BA~circlearrowright~\u21BB~circledR~\xAE~circledS~\u24C8~circledast~\u229B~circledcirc~\u229A~circleddash~\u229D~cire~\u2257~cirfnint~\u2A10~cirmid~\u2AEF~cirscir~\u29C2~clubsuit~\u2663~colon~:~colone~\u2254~coloneq~\u2254~comma~,~commat~@~comp~\u2201~compfn~\u2218~complement~\u2201~complexes~\u2102~congdot~\u2A6D~conint~\u222E~copf~\u{1D554}~coprod~\u2210~copysr~\u2117~cross~\u2717~cscr~\u{1D4B8}~csub~\u2ACF~csube~\u2AD1~csup~\u2AD0~csupe~\u2AD2~ctdot~\u22EF~cudarrl~\u2938~cudarrr~\u2935~cuepr~\u22DE~cuesc~\u22DF~cularr~\u21B6~cularrp~\u293D~cupbrcap~\u2A48~cupcap~\u2A46~cupcup~\u2A4A~cupdot~\u228D~cupor~\u2A45~cups~\u222A\uFE00~curarr~\u21B7~curarrm~\u293C~curlyeqprec~\u22DE~curlyeqsucc~\u22DF~curlyvee~\u22CE~curlywedge~\u22CF~curvearrowleft~\u21B6~curvearrowright~\u21B7~cuvee~\u22CE~cuwed~\u22CF~cwconint~\u2232~cwint~\u2231~cylcty~\u232D~dHar~\u2965~daleth~\u2138~dash~\u2010~dashv~\u22A3~dbkarow~\u290F~dblac~\u02DD~dcaron~\u010F~dcy~\u0434~dd~\u2146~ddagger~\u2021~ddarr~\u21CA~ddotseq~\u2A77~demptyv~\u29B1~dfisht~\u297F~dfr~\u{1D521}~dharl~\u21C3~dharr~\u21C2~diam~\u22C4~diamond~\u22C4~diamondsuit~\u2666~die~\xA8~digamma~\u03DD~disin~\u22F2~div~\xF7~divideontimes~\u22C7~divonx~\u22C7~djcy~\u0452~dlcorn~\u231E~dlcrop~\u230D~dollar~$~dopf~\u{1D555}~dot~\u02D9~doteq~\u2250~doteqdot~\u2251~dotminus~\u2238~dotplus~\u2214~dotsquare~\u22A1~doublebarwedge~\u2306~downarrow~\u2193~downdownarrows~\u21CA~downharpoonleft~\u21C3~downharpoonright~\u21C2~drbkarow~\u2910~drcorn~\u231F~drcrop~\u230C~dscr~\u{1D4B9}~dscy~\u0455~dsol~\u29F6~dstrok~\u0111~dtdot~\u22F1~dtri~\u25BF~dtrif~\u25BE~duarr~\u21F5~duhar~\u296F~dwangle~\u29A6~dzcy~\u045F~dzigrarr~\u27FF~eDDot~\u2A77~eDot~\u2251~easter~\u2A6E~ecaron~\u011B~ecir~\u2256~ecolon~\u2255~ecy~\u044D~edot~\u0117~ee~\u2147~efDot~\u2252~efr~\u{1D522}~eg~\u2A9A~egs~\u2A96~egsdot~\u2A98~el~\u2A99~elinters~\u23E7~ell~\u2113~els~\u2A95~elsdot~\u2A97~emacr~\u0113~emptyset~\u2205~emptyv~\u2205~emsp13~\u2004~emsp14~\u2005~eng~\u014B~eogon~\u0119~eopf~\u{1D556}~epar~\u22D5~eparsl~\u29E3~eplus~\u2A71~epsi~\u03B5~epsiv~\u03F5~eqcirc~\u2256~eqcolon~\u2255~eqsim~\u2242~eqslantgtr~\u2A96~eqslantless~\u2A95~equals~=~equest~\u225F~equivDD~\u2A78~eqvparsl~\u29E5~erDot~\u2253~erarr~\u2971~escr~\u212F~esdot~\u2250~esim~\u2242~excl~!~expectation~\u2130~exponentiale~\u2147~fallingdotseq~\u2252~fcy~\u0444~female~\u2640~ffilig~\uFB03~fflig~\uFB00~ffllig~\uFB04~ffr~\u{1D523}~filig~\uFB01~fjlig~fj~flat~\u266D~fllig~\uFB02~fltns~\u25B1~fopf~\u{1D557}~fork~\u22D4~forkv~\u2AD9~fpartint~\u2A0D~frac13~\u2153~frac15~\u2155~frac16~\u2159~frac18~\u215B~frac23~\u2154~frac25~\u2156~frac35~\u2157~frac38~\u215C~frac45~\u2158~frac56~\u215A~frac58~\u215D~frac78~\u215E~frown~\u2322~fscr~\u{1D4BB}~gE~\u2267~gEl~\u2A8C~gacute~\u01F5~gammad~\u03DD~gap~\u2A86~gbreve~\u011F~gcirc~\u011D~gcy~\u0433~gdot~\u0121~gel~\u22DB~geq~\u2265~geqq~\u2267~geqslant~\u2A7E~ges~\u2A7E~gescc~\u2AA9~gesdot~\u2A80~gesdoto~\u2A82~gesdotol~\u2A84~gesl~\u22DB\uFE00~gesles~\u2A94~gfr~\u{1D524}~gg~\u226B~ggg~\u22D9~gimel~\u2137~gjcy~\u0453~gl~\u2277~glE~\u2A92~gla~\u2AA5~glj~\u2AA4~gnE~\u2269~gnap~\u2A8A~gnapprox~\u2A8A~gne~\u2A88~gneq~\u2A88~gneqq~\u2269~gnsim~\u22E7~gopf~\u{1D558}~grave~`~gscr~\u210A~gsim~\u2273~gsime~\u2A8E~gsiml~\u2A90~gtcc~\u2AA7~gtcir~\u2A7A~gtdot~\u22D7~gtlPar~\u2995~gtquest~\u2A7C~gtrapprox~\u2A86~gtrarr~\u2978~gtrdot~\u22D7~gtreqless~\u22DB~gtreqqless~\u2A8C~gtrless~\u2277~gtrsim~\u2273~gvertneqq~\u2269\uFE00~gvnE~\u2269\uFE00~hairsp~\u200A~half~\xBD~hamilt~\u210B~hardcy~\u044A~harrcir~\u2948~harrw~\u21AD~hbar~\u210F~hcirc~\u0125~heartsuit~\u2665~hercon~\u22B9~hfr~\u{1D525}~hksearow~\u2925~hkswarow~\u2926~hoarr~\u21FF~homtht~\u223B~hookleftarrow~\u21A9~hookrightarrow~\u21AA~hopf~\u{1D559}~horbar~\u2015~hscr~\u{1D4BD}~hslash~\u210F~hstrok~\u0127~hybull~\u2043~hyphen~\u2010~ic~\u2063~icy~\u0438~iecy~\u0435~iff~\u21D4~ifr~\u{1D526}~ii~\u2148~iiiint~\u2A0C~iiint~\u222D~iinfin~\u29DC~iiota~\u2129~ijlig~\u0133~imacr~\u012B~imagline~\u2110~imagpart~\u2111~imath~\u0131~imof~\u22B7~imped~\u01B5~in~\u2208~incare~\u2105~infintie~\u29DD~inodot~\u0131~intcal~\u22BA~integers~\u2124~intercal~\u22BA~intlarhk~\u2A17~intprod~\u2A3C~iocy~\u0451~iogon~\u012F~iopf~\u{1D55A}~iprod~\u2A3C~iscr~\u{1D4BE}~isinE~\u22F9~isindot~\u22F5~isins~\u22F4~isinsv~\u22F3~isinv~\u2208~it~\u2062~itilde~\u0129~iukcy~\u0456~jcirc~\u0135~jcy~\u0439~jfr~\u{1D527}~jmath~\u0237~jopf~\u{1D55B}~jscr~\u{1D4BF}~jsercy~\u0458~jukcy~\u0454~kappav~\u03F0~kcedil~\u0137~kcy~\u043A~kfr~\u{1D528}~kgreen~\u0138~khcy~\u0445~kjcy~\u045C~kopf~\u{1D55C}~kscr~\u{1D4C0}~lAarr~\u21DA~lAtail~\u291B~lBarr~\u290E~lE~\u2266~lEg~\u2A8B~lHar~\u2962~lacute~\u013A~laemptyv~\u29B4~lagran~\u2112~langd~\u2991~langle~\u27E8~lap~\u2A85~larrb~\u21E4~larrbfs~\u291F~larrfs~\u291D~larrhk~\u21A9~larrlp~\u21AB~larrpl~\u2939~larrsim~\u2973~larrtl~\u21A2~lat~\u2AAB~latail~\u2919~late~\u2AAD~lates~\u2AAD\uFE00~lbarr~\u290C~lbbrk~\u2772~lbrace~{~lbrack~[~lbrke~\u298B~lbrksld~\u298F~lbrkslu~\u298D~lcaron~\u013E~lcedil~\u013C~lcub~{~lcy~\u043B~ldca~\u2936~ldquor~\u201E~ldrdhar~\u2967~ldrushar~\u294B~ldsh~\u21B2~leftarrow~\u2190~leftarrowtail~\u21A2~leftharpoondown~\u21BD~leftharpoonup~\u21BC~leftleftarrows~\u21C7~leftrightarrow~\u2194~leftrightarrows~\u21C6~leftrightharpoons~\u21CB~leftrightsquigarrow~\u21AD~leftthreetimes~\u22CB~leg~\u22DA~leq~\u2264~leqq~\u2266~leqslant~\u2A7D~les~\u2A7D~lescc~\u2AA8~lesdot~\u2A7F~lesdoto~\u2A81~lesdotor~\u2A83~lesg~\u22DA\uFE00~lesges~\u2A93~lessapprox~\u2A85~lessdot~\u22D6~lesseqgtr~\u22DA~lesseqqgtr~\u2A8B~lessgtr~\u2276~lesssim~\u2272~lfisht~\u297C~lfr~\u{1D529}~lg~\u2276~lgE~\u2A91~lhard~\u21BD~lharu~\u21BC~lharul~\u296A~lhblk~\u2584~ljcy~\u0459~ll~\u226A~llarr~\u21C7~llcorner~\u231E~llhard~\u296B~lltri~\u25FA~lmidot~\u0140~lmoust~\u23B0~lmoustache~\u23B0~lnE~\u2268~lnap~\u2A89~lnapprox~\u2A89~lne~\u2A87~lneq~\u2A87~lneqq~\u2268~lnsim~\u22E6~loang~\u27EC~loarr~\u21FD~lobrk~\u27E6~longleftarrow~\u27F5~longleftrightarrow~\u27F7~longmapsto~\u27FC~longrightarrow~\u27F6~looparrowleft~\u21AB~looparrowright~\u21AC~lopar~\u2985~lopf~\u{1D55D}~loplus~\u2A2D~lotimes~\u2A34~lowbar~_~lozenge~\u25CA~lozf~\u29EB~lpar~(~lparlt~\u2993~lrarr~\u21C6~lrcorner~\u231F~lrhar~\u21CB~lrhard~\u296D~lrtri~\u22BF~lscr~\u{1D4C1}~lsh~\u21B0~lsim~\u2272~lsime~\u2A8D~lsimg~\u2A8F~lsqb~[~lsquor~\u201A~lstrok~\u0142~ltcc~\u2AA6~ltcir~\u2A79~ltdot~\u22D6~lthree~\u22CB~ltimes~\u22C9~ltlarr~\u2976~ltquest~\u2A7B~ltrPar~\u2996~ltri~\u25C3~ltrie~\u22B4~ltrif~\u25C2~lurdshar~\u294A~luruhar~\u2966~lvertneqq~\u2268\uFE00~lvnE~\u2268\uFE00~mDDot~\u223A~male~\u2642~malt~\u2720~maltese~\u2720~map~\u21A6~mapsto~\u21A6~mapstodown~\u21A7~mapstoleft~\u21A4~mapstoup~\u21A5~marker~\u25AE~mcomma~\u2A29~mcy~\u043C~measuredangle~\u2221~mfr~\u{1D52A}~mho~\u2127~mid~\u2223~midast~*~midcir~\u2AF0~minusb~\u229F~minusd~\u2238~minusdu~\u2A2A~mlcp~\u2ADB~mldr~\u2026~mnplus~\u2213~models~\u22A7~mopf~\u{1D55E}~mp~\u2213~mscr~\u{1D4C2}~mstpos~\u223E~multimap~\u22B8~mumap~\u22B8~nGg~\u22D9\u0338~nGt~\u226B\u20D2~nGtv~\u226B\u0338~nLeftarrow~\u21CD~nLeftrightarrow~\u21CE~nLl~\u22D8\u0338~nLt~\u226A\u20D2~nLtv~\u226A\u0338~nRightarrow~\u21CF~nVDash~\u22AF~nVdash~\u22AE~nacute~\u0144~nang~\u2220\u20D2~nap~\u2249~napE~\u2A70\u0338~napid~\u224B\u0338~napos~\u0149~napprox~\u2249~natur~\u266E~natural~\u266E~naturals~\u2115~nbump~\u224E\u0338~nbumpe~\u224F\u0338~ncap~\u2A43~ncaron~\u0148~ncedil~\u0146~ncong~\u2247~ncongdot~\u2A6D\u0338~ncup~\u2A42~ncy~\u043D~neArr~\u21D7~nearhk~\u2924~nearr~\u2197~nearrow~\u2197~nedot~\u2250\u0338~nequiv~\u2262~nesear~\u2928~nesim~\u2242\u0338~nexist~\u2204~nexists~\u2204~nfr~\u{1D52B}~ngE~\u2267\u0338~nge~\u2271~ngeq~\u2271~ngeqq~\u2267\u0338~ngeqslant~\u2A7E\u0338~nges~\u2A7E\u0338~ngsim~\u2275~ngt~\u226F~ngtr~\u226F~nhArr~\u21CE~nharr~\u21AE~nhpar~\u2AF2~nis~\u22FC~nisd~\u22FA~niv~\u220B~njcy~\u045A~nlArr~\u21CD~nlE~\u2266\u0338~nlarr~\u219A~nldr~\u2025~nle~\u2270~nleftarrow~\u219A~nleftrightarrow~\u21AE~nleq~\u2270~nleqq~\u2266\u0338~nleqslant~\u2A7D\u0338~nles~\u2A7D\u0338~nless~\u226E~nlsim~\u2274~nlt~\u226E~nltri~\u22EA~nltrie~\u22EC~nmid~\u2224~nopf~\u{1D55F}~notinE~\u22F9\u0338~notindot~\u22F5\u0338~notinva~\u2209~notinvb~\u22F7~notinvc~\u22F6~notni~\u220C~notniva~\u220C~notnivb~\u22FE~notnivc~\u22FD~npar~\u2226~nparallel~\u2226~nparsl~\u2AFD\u20E5~npart~\u2202\u0338~npolint~\u2A14~npr~\u2280~nprcue~\u22E0~npre~\u2AAF\u0338~nprec~\u2280~npreceq~\u2AAF\u0338~nrArr~\u21CF~nrarr~\u219B~nrarrc~\u2933\u0338~nrarrw~\u219D\u0338~nrightarrow~\u219B~nrtri~\u22EB~nrtrie~\u22ED~nsc~\u2281~nsccue~\u22E1~nsce~\u2AB0\u0338~nscr~\u{1D4C3}~nshortmid~\u2224~nshortparallel~\u2226~nsim~\u2241~nsime~\u2244~nsimeq~\u2244~nsmid~\u2224~nspar~\u2226~nsqsube~\u22E2~nsqsupe~\u22E3~nsubE~\u2AC5\u0338~nsube~\u2288~nsubset~\u2282\u20D2~nsubseteq~\u2288~nsubseteqq~\u2AC5\u0338~nsucc~\u2281~nsucceq~\u2AB0\u0338~nsup~\u2285~nsupE~\u2AC6\u0338~nsupe~\u2289~nsupset~\u2283\u20D2~nsupseteq~\u2289~nsupseteqq~\u2AC6\u0338~ntgl~\u2279~ntlg~\u2278~ntriangleleft~\u22EA~ntrianglelefteq~\u22EC~ntriangleright~\u22EB~ntrianglerighteq~\u22ED~num~#~numero~\u2116~numsp~\u2007~nvDash~\u22AD~nvHarr~\u2904~nvap~\u224D\u20D2~nvdash~\u22AC~nvge~\u2265\u20D2~nvgt~>\u20D2~nvinfin~\u29DE~nvlArr~\u2902~nvle~\u2264\u20D2~nvlt~<\u20D2~nvltrie~\u22B4\u20D2~nvrArr~\u2903~nvrtrie~\u22B5\u20D2~nvsim~\u223C\u20D2~nwArr~\u21D6~nwarhk~\u2923~nwarr~\u2196~nwarrow~\u2196~nwnear~\u2927~oS~\u24C8~oast~\u229B~ocir~\u229A~ocy~\u043E~odash~\u229D~odblac~\u0151~odiv~\u2A38~odot~\u2299~odsold~\u29BC~ofcir~\u29BF~ofr~\u{1D52C}~ogon~\u02DB~ogt~\u29C1~ohbar~\u29B5~ohm~\u03A9~oint~\u222E~olarr~\u21BA~olcir~\u29BE~olcross~\u29BB~olt~\u29C0~omacr~\u014D~omid~\u29B6~ominus~\u2296~oopf~\u{1D560}~opar~\u29B7~operp~\u29B9~orarr~\u21BB~ord~\u2A5D~order~\u2134~orderof~\u2134~origof~\u22B6~oror~\u2A56~orslope~\u2A57~orv~\u2A5B~oscr~\u2134~osol~\u2298~otimesas~\u2A36~ovbar~\u233D~par~\u2225~parallel~\u2225~parsim~\u2AF3~parsl~\u2AFD~pcy~\u043F~percnt~%~period~.~pertenk~\u2031~pfr~\u{1D52D}~phiv~\u03D5~phmmat~\u2133~phone~\u260E~pitchfork~\u22D4~planck~\u210F~planckh~\u210E~plankv~\u210F~plus~+~plusacir~\u2A23~plusb~\u229E~pluscir~\u2A22~plusdo~\u2214~plusdu~\u2A25~pluse~\u2A72~plussim~\u2A26~plustwo~\u2A27~pm~\xB1~pointint~\u2A15~popf~\u{1D561}~pr~\u227A~prE~\u2AB3~prap~\u2AB7~prcue~\u227C~pre~\u2AAF~prec~\u227A~precapprox~\u2AB7~preccurlyeq~\u227C~preceq~\u2AAF~precnapprox~\u2AB9~precneqq~\u2AB5~precnsim~\u22E8~precsim~\u227E~primes~\u2119~prnE~\u2AB5~prnap~\u2AB9~prnsim~\u22E8~profalar~\u232E~profline~\u2312~profsurf~\u2313~propto~\u221D~prsim~\u227E~prurel~\u22B0~pscr~\u{1D4C5}~puncsp~\u2008~qfr~\u{1D52E}~qint~\u2A0C~qopf~\u{1D562}~qprime~\u2057~qscr~\u{1D4C6}~quaternions~\u210D~quatint~\u2A16~quest~?~questeq~\u225F~rAarr~\u21DB~rAtail~\u291C~rBarr~\u290F~rHar~\u2964~race~\u223D\u0331~racute~\u0155~raemptyv~\u29B3~rangd~\u2992~range~\u29A5~rangle~\u27E9~rarrap~\u2975~rarrb~\u21E5~rarrbfs~\u2920~rarrc~\u2933~rarrfs~\u291E~rarrhk~\u21AA~rarrlp~\u21AC~rarrpl~\u2945~rarrsim~\u2974~rarrtl~\u21A3~rarrw~\u219D~ratail~\u291A~ratio~\u2236~rationals~\u211A~rbarr~\u290D~rbbrk~\u2773~rbrace~}~rbrack~]~rbrke~\u298C~rbrksld~\u298E~rbrkslu~\u2990~rcaron~\u0159~rcedil~\u0157~rcub~}~rcy~\u0440~rdca~\u2937~rdldhar~\u2969~rdquor~\u201D~rdsh~\u21B3~realine~\u211B~realpart~\u211C~reals~\u211D~rect~\u25AD~rfisht~\u297D~rfr~\u{1D52F}~rhard~\u21C1~rharu~\u21C0~rharul~\u296C~rhov~\u03F1~rightarrow~\u2192~rightarrowtail~\u21A3~rightharpoondown~\u21C1~rightharpoonup~\u21C0~rightleftarrows~\u21C4~rightleftharpoons~\u21CC~rightrightarrows~\u21C9~rightsquigarrow~\u219D~rightthreetimes~\u22CC~ring~\u02DA~risingdotseq~\u2253~rlarr~\u21C4~rlhar~\u21CC~rmoust~\u23B1~rmoustache~\u23B1~rnmid~\u2AEE~roang~\u27ED~roarr~\u21FE~robrk~\u27E7~ropar~\u2986~ropf~\u{1D563}~roplus~\u2A2E~rotimes~\u2A35~rpar~)~rpargt~\u2994~rppolint~\u2A12~rrarr~\u21C9~rscr~\u{1D4C7}~rsh~\u21B1~rsqb~]~rsquor~\u2019~rthree~\u22CC~rtimes~\u22CA~rtri~\u25B9~rtrie~\u22B5~rtrif~\u25B8~rtriltri~\u29CE~ruluhar~\u2968~rx~\u211E~sacute~\u015B~sc~\u227B~scE~\u2AB4~scap~\u2AB8~sccue~\u227D~sce~\u2AB0~scedil~\u015F~scirc~\u015D~scnE~\u2AB6~scnap~\u2ABA~scnsim~\u22E9~scpolint~\u2A13~scsim~\u227F~scy~\u0441~sdotb~\u22A1~sdote~\u2A66~seArr~\u21D8~searhk~\u2925~searr~\u2198~searrow~\u2198~semi~;~seswar~\u2929~setminus~\u2216~setmn~\u2216~sext~\u2736~sfr~\u{1D530}~sfrown~\u2322~sharp~\u266F~shchcy~\u0449~shcy~\u0448~shortmid~\u2223~shortparallel~\u2225~sigmav~\u03C2~simdot~\u2A6A~sime~\u2243~simeq~\u2243~simg~\u2A9E~simgE~\u2AA0~siml~\u2A9D~simlE~\u2A9F~simne~\u2246~simplus~\u2A24~simrarr~\u2972~slarr~\u2190~smallsetminus~\u2216~smashp~\u2A33~smeparsl~\u29E4~smid~\u2223~smile~\u2323~smt~\u2AAA~smte~\u2AAC~smtes~\u2AAC\uFE00~softcy~\u044C~sol~/~solb~\u29C4~solbar~\u233F~sopf~\u{1D564}~spadesuit~\u2660~spar~\u2225~sqcap~\u2293~sqcaps~\u2293\uFE00~sqcup~\u2294~sqcups~\u2294\uFE00~sqsub~\u228F~sqsube~\u2291~sqsubset~\u228F~sqsubseteq~\u2291~sqsup~\u2290~sqsupe~\u2292~sqsupset~\u2290~sqsupseteq~\u2292~squ~\u25A1~square~\u25A1~squarf~\u25AA~squf~\u25AA~srarr~\u2192~sscr~\u{1D4C8}~ssetmn~\u2216~ssmile~\u2323~sstarf~\u22C6~star~\u2606~starf~\u2605~straightepsilon~\u03F5~straightphi~\u03D5~strns~\xAF~subE~\u2AC5~subdot~\u2ABD~subedot~\u2AC3~submult~\u2AC1~subnE~\u2ACB~subne~\u228A~subplus~\u2ABF~subrarr~\u2979~subset~\u2282~subseteq~\u2286~subseteqq~\u2AC5~subsetneq~\u228A~subsetneqq~\u2ACB~subsim~\u2AC7~subsub~\u2AD5~subsup~\u2AD3~succ~\u227B~succapprox~\u2AB8~succcurlyeq~\u227D~succeq~\u2AB0~succnapprox~\u2ABA~succneqq~\u2AB6~succnsim~\u22E9~succsim~\u227F~sung~\u266A~supE~\u2AC6~supdot~\u2ABE~supdsub~\u2AD8~supedot~\u2AC4~suphsol~\u27C9~suphsub~\u2AD7~suplarr~\u297B~supmult~\u2AC2~supnE~\u2ACC~supne~\u228B~supplus~\u2AC0~supset~\u2283~supseteq~\u2287~supseteqq~\u2AC6~supsetneq~\u228B~supsetneqq~\u2ACC~supsim~\u2AC8~supsub~\u2AD4~supsup~\u2AD6~swArr~\u21D9~swarhk~\u2926~swarr~\u2199~swarrow~\u2199~swnwar~\u292A~target~\u2316~tbrk~\u23B4~tcaron~\u0165~tcedil~\u0163~tcy~\u0442~tdot~\u20DB~telrec~\u2315~tfr~\u{1D531}~therefore~\u2234~thetav~\u03D1~thickapprox~\u2248~thicksim~\u223C~thkap~\u2248~thksim~\u223C~timesb~\u22A0~timesbar~\u2A31~timesd~\u2A30~tint~\u222D~toea~\u2928~top~\u22A4~topbot~\u2336~topcir~\u2AF1~topf~\u{1D565}~topfork~\u2ADA~tosa~\u2929~tprime~\u2034~triangle~\u25B5~triangledown~\u25BF~triangleleft~\u25C3~trianglelefteq~\u22B4~triangleq~\u225C~triangleright~\u25B9~trianglerighteq~\u22B5~tridot~\u25EC~trie~\u225C~triminus~\u2A3A~triplus~\u2A39~trisb~\u29CD~tritime~\u2A3B~trpezium~\u23E2~tscr~\u{1D4C9}~tscy~\u0446~tshcy~\u045B~tstrok~\u0167~twixt~\u226C~twoheadleftarrow~\u219E~twoheadrightarrow~\u21A0~uHar~\u2963~ubrcy~\u045E~ubreve~\u016D~ucy~\u0443~udarr~\u21C5~udblac~\u0171~udhar~\u296E~ufisht~\u297E~ufr~\u{1D532}~uharl~\u21BF~uharr~\u21BE~uhblk~\u2580~ulcorn~\u231C~ulcorner~\u231C~ulcrop~\u230F~ultri~\u25F8~umacr~\u016B~uogon~\u0173~uopf~\u{1D566}~uparrow~\u2191~updownarrow~\u2195~upharpoonleft~\u21BF~upharpoonright~\u21BE~uplus~\u228E~upsi~\u03C5~upuparrows~\u21C8~urcorn~\u231D~urcorner~\u231D~urcrop~\u230E~uring~\u016F~urtri~\u25F9~uscr~\u{1D4CA}~utdot~\u22F0~utilde~\u0169~utri~\u25B5~utrif~\u25B4~uuarr~\u21C8~uwangle~\u29A7~vArr~\u21D5~vBar~\u2AE8~vBarv~\u2AE9~vDash~\u22A8~vangrt~\u299C~varepsilon~\u03F5~varkappa~\u03F0~varnothing~\u2205~varphi~\u03D5~varpi~\u03D6~varpropto~\u221D~varr~\u2195~varrho~\u03F1~varsigma~\u03C2~varsubsetneq~\u228A\uFE00~varsubsetneqq~\u2ACB\uFE00~varsupsetneq~\u228B\uFE00~varsupsetneqq~\u2ACC\uFE00~vartheta~\u03D1~vartriangleleft~\u22B2~vartriangleright~\u22B3~vcy~\u0432~vdash~\u22A2~vee~\u2228~veebar~\u22BB~veeeq~\u225A~vellip~\u22EE~verbar~|~vert~|~vfr~\u{1D533}~vltri~\u22B2~vnsub~\u2282\u20D2~vnsup~\u2283\u20D2~vopf~\u{1D567}~vprop~\u221D~vrtri~\u22B3~vscr~\u{1D4CB}~vsubnE~\u2ACB\uFE00~vsubne~\u228A\uFE00~vsupnE~\u2ACC\uFE00~vsupne~\u228B\uFE00~vzigzag~\u299A~wcirc~\u0175~wedbar~\u2A5F~wedge~\u2227~wedgeq~\u2259~wfr~\u{1D534}~wopf~\u{1D568}~wp~\u2118~wr~\u2240~wreath~\u2240~wscr~\u{1D4CC}~xcap~\u22C2~xcirc~\u25EF~xcup~\u22C3~xdtri~\u25BD~xfr~\u{1D535}~xhArr~\u27FA~xharr~\u27F7~xlArr~\u27F8~xlarr~\u27F5~xmap~\u27FC~xnis~\u22FB~xodot~\u2A00~xopf~\u{1D569}~xoplus~\u2A01~xotime~\u2A02~xrArr~\u27F9~xrarr~\u27F6~xscr~\u{1D4CD}~xsqcup~\u2A06~xuplus~\u2A04~xutri~\u25B3~xvee~\u22C1~xwedge~\u22C0~yacy~\u044F~ycirc~\u0177~ycy~\u044B~yfr~\u{1D536}~yicy~\u0457~yopf~\u{1D56A}~yscr~\u{1D4CE}~yucy~\u044E~zacute~\u017A~zcaron~\u017E~zcy~\u0437~zdot~\u017C~zeetrf~\u2128~zfr~\u{1D537}~zhcy~\u0436~zigrarr~\u21DD~zopf~\u{1D56B}~zscr~\u{1D4CF}~~AMP~&~COPY~\xA9~GT~>~LT~<~QUOT~"~REG~\xAE', exports.namedReferences["html4"]);
+    exports2.namedReferences = {};
+    exports2.namedReferences["xml"] = generateNamedReferences(`lt~<~gt~>~quot~"~apos~'~amp~&`);
+    exports2.namedReferences["html4"] = generateNamedReferences(`apos~'~OElig~\u0152~oelig~\u0153~Scaron~\u0160~scaron~\u0161~Yuml~\u0178~circ~\u02C6~tilde~\u02DC~ensp~\u2002~emsp~\u2003~thinsp~\u2009~zwnj~\u200C~zwj~\u200D~lrm~\u200E~rlm~\u200F~ndash~\u2013~mdash~\u2014~lsquo~\u2018~rsquo~\u2019~sbquo~\u201A~ldquo~\u201C~rdquo~\u201D~bdquo~\u201E~dagger~\u2020~Dagger~\u2021~permil~\u2030~lsaquo~\u2039~rsaquo~\u203A~euro~\u20AC~fnof~\u0192~Alpha~\u0391~Beta~\u0392~Gamma~\u0393~Delta~\u0394~Epsilon~\u0395~Zeta~\u0396~Eta~\u0397~Theta~\u0398~Iota~\u0399~Kappa~\u039A~Lambda~\u039B~Mu~\u039C~Nu~\u039D~Xi~\u039E~Omicron~\u039F~Pi~\u03A0~Rho~\u03A1~Sigma~\u03A3~Tau~\u03A4~Upsilon~\u03A5~Phi~\u03A6~Chi~\u03A7~Psi~\u03A8~Omega~\u03A9~alpha~\u03B1~beta~\u03B2~gamma~\u03B3~delta~\u03B4~epsilon~\u03B5~zeta~\u03B6~eta~\u03B7~theta~\u03B8~iota~\u03B9~kappa~\u03BA~lambda~\u03BB~mu~\u03BC~nu~\u03BD~xi~\u03BE~omicron~\u03BF~pi~\u03C0~rho~\u03C1~sigmaf~\u03C2~sigma~\u03C3~tau~\u03C4~upsilon~\u03C5~phi~\u03C6~chi~\u03C7~psi~\u03C8~omega~\u03C9~thetasym~\u03D1~upsih~\u03D2~piv~\u03D6~bull~\u2022~hellip~\u2026~prime~\u2032~Prime~\u2033~oline~\u203E~frasl~\u2044~weierp~\u2118~image~\u2111~real~\u211C~trade~\u2122~alefsym~\u2135~larr~\u2190~uarr~\u2191~rarr~\u2192~darr~\u2193~harr~\u2194~crarr~\u21B5~lArr~\u21D0~uArr~\u21D1~rArr~\u21D2~dArr~\u21D3~hArr~\u21D4~forall~\u2200~part~\u2202~exist~\u2203~empty~\u2205~nabla~\u2207~isin~\u2208~notin~\u2209~ni~\u220B~prod~\u220F~sum~\u2211~minus~\u2212~lowast~\u2217~radic~\u221A~prop~\u221D~infin~\u221E~ang~\u2220~and~\u2227~or~\u2228~cap~\u2229~cup~\u222A~int~\u222B~there4~\u2234~sim~\u223C~cong~\u2245~asymp~\u2248~ne~\u2260~equiv~\u2261~le~\u2264~ge~\u2265~sub~\u2282~sup~\u2283~nsub~\u2284~sube~\u2286~supe~\u2287~oplus~\u2295~otimes~\u2297~perp~\u22A5~sdot~\u22C5~lceil~\u2308~rceil~\u2309~lfloor~\u230A~rfloor~\u230B~lang~\u2329~rang~\u232A~loz~\u25CA~spades~\u2660~clubs~\u2663~hearts~\u2665~diams~\u2666~~nbsp~\xA0~iexcl~\xA1~cent~\xA2~pound~\xA3~curren~\xA4~yen~\xA5~brvbar~\xA6~sect~\xA7~uml~\xA8~copy~\xA9~ordf~\xAA~laquo~\xAB~not~\xAC~shy~\xAD~reg~\xAE~macr~\xAF~deg~\xB0~plusmn~\xB1~sup2~\xB2~sup3~\xB3~acute~\xB4~micro~\xB5~para~\xB6~middot~\xB7~cedil~\xB8~sup1~\xB9~ordm~\xBA~raquo~\xBB~frac14~\xBC~frac12~\xBD~frac34~\xBE~iquest~\xBF~Agrave~\xC0~Aacute~\xC1~Acirc~\xC2~Atilde~\xC3~Auml~\xC4~Aring~\xC5~AElig~\xC6~Ccedil~\xC7~Egrave~\xC8~Eacute~\xC9~Ecirc~\xCA~Euml~\xCB~Igrave~\xCC~Iacute~\xCD~Icirc~\xCE~Iuml~\xCF~ETH~\xD0~Ntilde~\xD1~Ograve~\xD2~Oacute~\xD3~Ocirc~\xD4~Otilde~\xD5~Ouml~\xD6~times~\xD7~Oslash~\xD8~Ugrave~\xD9~Uacute~\xDA~Ucirc~\xDB~Uuml~\xDC~Yacute~\xDD~THORN~\xDE~szlig~\xDF~agrave~\xE0~aacute~\xE1~acirc~\xE2~atilde~\xE3~auml~\xE4~aring~\xE5~aelig~\xE6~ccedil~\xE7~egrave~\xE8~eacute~\xE9~ecirc~\xEA~euml~\xEB~igrave~\xEC~iacute~\xED~icirc~\xEE~iuml~\xEF~eth~\xF0~ntilde~\xF1~ograve~\xF2~oacute~\xF3~ocirc~\xF4~otilde~\xF5~ouml~\xF6~divide~\xF7~oslash~\xF8~ugrave~\xF9~uacute~\xFA~ucirc~\xFB~uuml~\xFC~yacute~\xFD~thorn~\xFE~yuml~\xFF~quot~"~amp~&~lt~<~gt~>`);
+    exports2.namedReferences["html5"] = generateNamedReferences('Abreve~\u0102~Acy~\u0410~Afr~\u{1D504}~Amacr~\u0100~And~\u2A53~Aogon~\u0104~Aopf~\u{1D538}~ApplyFunction~\u2061~Ascr~\u{1D49C}~Assign~\u2254~Backslash~\u2216~Barv~\u2AE7~Barwed~\u2306~Bcy~\u0411~Because~\u2235~Bernoullis~\u212C~Bfr~\u{1D505}~Bopf~\u{1D539}~Breve~\u02D8~Bscr~\u212C~Bumpeq~\u224E~CHcy~\u0427~Cacute~\u0106~Cap~\u22D2~CapitalDifferentialD~\u2145~Cayleys~\u212D~Ccaron~\u010C~Ccirc~\u0108~Cconint~\u2230~Cdot~\u010A~Cedilla~\xB8~CenterDot~\xB7~Cfr~\u212D~CircleDot~\u2299~CircleMinus~\u2296~CirclePlus~\u2295~CircleTimes~\u2297~ClockwiseContourIntegral~\u2232~CloseCurlyDoubleQuote~\u201D~CloseCurlyQuote~\u2019~Colon~\u2237~Colone~\u2A74~Congruent~\u2261~Conint~\u222F~ContourIntegral~\u222E~Copf~\u2102~Coproduct~\u2210~CounterClockwiseContourIntegral~\u2233~Cross~\u2A2F~Cscr~\u{1D49E}~Cup~\u22D3~CupCap~\u224D~DD~\u2145~DDotrahd~\u2911~DJcy~\u0402~DScy~\u0405~DZcy~\u040F~Darr~\u21A1~Dashv~\u2AE4~Dcaron~\u010E~Dcy~\u0414~Del~\u2207~Dfr~\u{1D507}~DiacriticalAcute~\xB4~DiacriticalDot~\u02D9~DiacriticalDoubleAcute~\u02DD~DiacriticalGrave~`~DiacriticalTilde~\u02DC~Diamond~\u22C4~DifferentialD~\u2146~Dopf~\u{1D53B}~Dot~\xA8~DotDot~\u20DC~DotEqual~\u2250~DoubleContourIntegral~\u222F~DoubleDot~\xA8~DoubleDownArrow~\u21D3~DoubleLeftArrow~\u21D0~DoubleLeftRightArrow~\u21D4~DoubleLeftTee~\u2AE4~DoubleLongLeftArrow~\u27F8~DoubleLongLeftRightArrow~\u27FA~DoubleLongRightArrow~\u27F9~DoubleRightArrow~\u21D2~DoubleRightTee~\u22A8~DoubleUpArrow~\u21D1~DoubleUpDownArrow~\u21D5~DoubleVerticalBar~\u2225~DownArrow~\u2193~DownArrowBar~\u2913~DownArrowUpArrow~\u21F5~DownBreve~\u0311~DownLeftRightVector~\u2950~DownLeftTeeVector~\u295E~DownLeftVector~\u21BD~DownLeftVectorBar~\u2956~DownRightTeeVector~\u295F~DownRightVector~\u21C1~DownRightVectorBar~\u2957~DownTee~\u22A4~DownTeeArrow~\u21A7~Downarrow~\u21D3~Dscr~\u{1D49F}~Dstrok~\u0110~ENG~\u014A~Ecaron~\u011A~Ecy~\u042D~Edot~\u0116~Efr~\u{1D508}~Element~\u2208~Emacr~\u0112~EmptySmallSquare~\u25FB~EmptyVerySmallSquare~\u25AB~Eogon~\u0118~Eopf~\u{1D53C}~Equal~\u2A75~EqualTilde~\u2242~Equilibrium~\u21CC~Escr~\u2130~Esim~\u2A73~Exists~\u2203~ExponentialE~\u2147~Fcy~\u0424~Ffr~\u{1D509}~FilledSmallSquare~\u25FC~FilledVerySmallSquare~\u25AA~Fopf~\u{1D53D}~ForAll~\u2200~Fouriertrf~\u2131~Fscr~\u2131~GJcy~\u0403~Gammad~\u03DC~Gbreve~\u011E~Gcedil~\u0122~Gcirc~\u011C~Gcy~\u0413~Gdot~\u0120~Gfr~\u{1D50A}~Gg~\u22D9~Gopf~\u{1D53E}~GreaterEqual~\u2265~GreaterEqualLess~\u22DB~GreaterFullEqual~\u2267~GreaterGreater~\u2AA2~GreaterLess~\u2277~GreaterSlantEqual~\u2A7E~GreaterTilde~\u2273~Gscr~\u{1D4A2}~Gt~\u226B~HARDcy~\u042A~Hacek~\u02C7~Hat~^~Hcirc~\u0124~Hfr~\u210C~HilbertSpace~\u210B~Hopf~\u210D~HorizontalLine~\u2500~Hscr~\u210B~Hstrok~\u0126~HumpDownHump~\u224E~HumpEqual~\u224F~IEcy~\u0415~IJlig~\u0132~IOcy~\u0401~Icy~\u0418~Idot~\u0130~Ifr~\u2111~Im~\u2111~Imacr~\u012A~ImaginaryI~\u2148~Implies~\u21D2~Int~\u222C~Integral~\u222B~Intersection~\u22C2~InvisibleComma~\u2063~InvisibleTimes~\u2062~Iogon~\u012E~Iopf~\u{1D540}~Iscr~\u2110~Itilde~\u0128~Iukcy~\u0406~Jcirc~\u0134~Jcy~\u0419~Jfr~\u{1D50D}~Jopf~\u{1D541}~Jscr~\u{1D4A5}~Jsercy~\u0408~Jukcy~\u0404~KHcy~\u0425~KJcy~\u040C~Kcedil~\u0136~Kcy~\u041A~Kfr~\u{1D50E}~Kopf~\u{1D542}~Kscr~\u{1D4A6}~LJcy~\u0409~Lacute~\u0139~Lang~\u27EA~Laplacetrf~\u2112~Larr~\u219E~Lcaron~\u013D~Lcedil~\u013B~Lcy~\u041B~LeftAngleBracket~\u27E8~LeftArrow~\u2190~LeftArrowBar~\u21E4~LeftArrowRightArrow~\u21C6~LeftCeiling~\u2308~LeftDoubleBracket~\u27E6~LeftDownTeeVector~\u2961~LeftDownVector~\u21C3~LeftDownVectorBar~\u2959~LeftFloor~\u230A~LeftRightArrow~\u2194~LeftRightVector~\u294E~LeftTee~\u22A3~LeftTeeArrow~\u21A4~LeftTeeVector~\u295A~LeftTriangle~\u22B2~LeftTriangleBar~\u29CF~LeftTriangleEqual~\u22B4~LeftUpDownVector~\u2951~LeftUpTeeVector~\u2960~LeftUpVector~\u21BF~LeftUpVectorBar~\u2958~LeftVector~\u21BC~LeftVectorBar~\u2952~Leftarrow~\u21D0~Leftrightarrow~\u21D4~LessEqualGreater~\u22DA~LessFullEqual~\u2266~LessGreater~\u2276~LessLess~\u2AA1~LessSlantEqual~\u2A7D~LessTilde~\u2272~Lfr~\u{1D50F}~Ll~\u22D8~Lleftarrow~\u21DA~Lmidot~\u013F~LongLeftArrow~\u27F5~LongLeftRightArrow~\u27F7~LongRightArrow~\u27F6~Longleftarrow~\u27F8~Longleftrightarrow~\u27FA~Longrightarrow~\u27F9~Lopf~\u{1D543}~LowerLeftArrow~\u2199~LowerRightArrow~\u2198~Lscr~\u2112~Lsh~\u21B0~Lstrok~\u0141~Lt~\u226A~Map~\u2905~Mcy~\u041C~MediumSpace~\u205F~Mellintrf~\u2133~Mfr~\u{1D510}~MinusPlus~\u2213~Mopf~\u{1D544}~Mscr~\u2133~NJcy~\u040A~Nacute~\u0143~Ncaron~\u0147~Ncedil~\u0145~Ncy~\u041D~NegativeMediumSpace~\u200B~NegativeThickSpace~\u200B~NegativeThinSpace~\u200B~NegativeVeryThinSpace~\u200B~NestedGreaterGreater~\u226B~NestedLessLess~\u226A~NewLine~\n~Nfr~\u{1D511}~NoBreak~\u2060~NonBreakingSpace~\xA0~Nopf~\u2115~Not~\u2AEC~NotCongruent~\u2262~NotCupCap~\u226D~NotDoubleVerticalBar~\u2226~NotElement~\u2209~NotEqual~\u2260~NotEqualTilde~\u2242\u0338~NotExists~\u2204~NotGreater~\u226F~NotGreaterEqual~\u2271~NotGreaterFullEqual~\u2267\u0338~NotGreaterGreater~\u226B\u0338~NotGreaterLess~\u2279~NotGreaterSlantEqual~\u2A7E\u0338~NotGreaterTilde~\u2275~NotHumpDownHump~\u224E\u0338~NotHumpEqual~\u224F\u0338~NotLeftTriangle~\u22EA~NotLeftTriangleBar~\u29CF\u0338~NotLeftTriangleEqual~\u22EC~NotLess~\u226E~NotLessEqual~\u2270~NotLessGreater~\u2278~NotLessLess~\u226A\u0338~NotLessSlantEqual~\u2A7D\u0338~NotLessTilde~\u2274~NotNestedGreaterGreater~\u2AA2\u0338~NotNestedLessLess~\u2AA1\u0338~NotPrecedes~\u2280~NotPrecedesEqual~\u2AAF\u0338~NotPrecedesSlantEqual~\u22E0~NotReverseElement~\u220C~NotRightTriangle~\u22EB~NotRightTriangleBar~\u29D0\u0338~NotRightTriangleEqual~\u22ED~NotSquareSubset~\u228F\u0338~NotSquareSubsetEqual~\u22E2~NotSquareSuperset~\u2290\u0338~NotSquareSupersetEqual~\u22E3~NotSubset~\u2282\u20D2~NotSubsetEqual~\u2288~NotSucceeds~\u2281~NotSucceedsEqual~\u2AB0\u0338~NotSucceedsSlantEqual~\u22E1~NotSucceedsTilde~\u227F\u0338~NotSuperset~\u2283\u20D2~NotSupersetEqual~\u2289~NotTilde~\u2241~NotTildeEqual~\u2244~NotTildeFullEqual~\u2247~NotTildeTilde~\u2249~NotVerticalBar~\u2224~Nscr~\u{1D4A9}~Ocy~\u041E~Odblac~\u0150~Ofr~\u{1D512}~Omacr~\u014C~Oopf~\u{1D546}~OpenCurlyDoubleQuote~\u201C~OpenCurlyQuote~\u2018~Or~\u2A54~Oscr~\u{1D4AA}~Otimes~\u2A37~OverBar~\u203E~OverBrace~\u23DE~OverBracket~\u23B4~OverParenthesis~\u23DC~PartialD~\u2202~Pcy~\u041F~Pfr~\u{1D513}~PlusMinus~\xB1~Poincareplane~\u210C~Popf~\u2119~Pr~\u2ABB~Precedes~\u227A~PrecedesEqual~\u2AAF~PrecedesSlantEqual~\u227C~PrecedesTilde~\u227E~Product~\u220F~Proportion~\u2237~Proportional~\u221D~Pscr~\u{1D4AB}~Qfr~\u{1D514}~Qopf~\u211A~Qscr~\u{1D4AC}~RBarr~\u2910~Racute~\u0154~Rang~\u27EB~Rarr~\u21A0~Rarrtl~\u2916~Rcaron~\u0158~Rcedil~\u0156~Rcy~\u0420~Re~\u211C~ReverseElement~\u220B~ReverseEquilibrium~\u21CB~ReverseUpEquilibrium~\u296F~Rfr~\u211C~RightAngleBracket~\u27E9~RightArrow~\u2192~RightArrowBar~\u21E5~RightArrowLeftArrow~\u21C4~RightCeiling~\u2309~RightDoubleBracket~\u27E7~RightDownTeeVector~\u295D~RightDownVector~\u21C2~RightDownVectorBar~\u2955~RightFloor~\u230B~RightTee~\u22A2~RightTeeArrow~\u21A6~RightTeeVector~\u295B~RightTriangle~\u22B3~RightTriangleBar~\u29D0~RightTriangleEqual~\u22B5~RightUpDownVector~\u294F~RightUpTeeVector~\u295C~RightUpVector~\u21BE~RightUpVectorBar~\u2954~RightVector~\u21C0~RightVectorBar~\u2953~Rightarrow~\u21D2~Ropf~\u211D~RoundImplies~\u2970~Rrightarrow~\u21DB~Rscr~\u211B~Rsh~\u21B1~RuleDelayed~\u29F4~SHCHcy~\u0429~SHcy~\u0428~SOFTcy~\u042C~Sacute~\u015A~Sc~\u2ABC~Scedil~\u015E~Scirc~\u015C~Scy~\u0421~Sfr~\u{1D516}~ShortDownArrow~\u2193~ShortLeftArrow~\u2190~ShortRightArrow~\u2192~ShortUpArrow~\u2191~SmallCircle~\u2218~Sopf~\u{1D54A}~Sqrt~\u221A~Square~\u25A1~SquareIntersection~\u2293~SquareSubset~\u228F~SquareSubsetEqual~\u2291~SquareSuperset~\u2290~SquareSupersetEqual~\u2292~SquareUnion~\u2294~Sscr~\u{1D4AE}~Star~\u22C6~Sub~\u22D0~Subset~\u22D0~SubsetEqual~\u2286~Succeeds~\u227B~SucceedsEqual~\u2AB0~SucceedsSlantEqual~\u227D~SucceedsTilde~\u227F~SuchThat~\u220B~Sum~\u2211~Sup~\u22D1~Superset~\u2283~SupersetEqual~\u2287~Supset~\u22D1~TRADE~\u2122~TSHcy~\u040B~TScy~\u0426~Tab~	~Tcaron~\u0164~Tcedil~\u0162~Tcy~\u0422~Tfr~\u{1D517}~Therefore~\u2234~ThickSpace~\u205F\u200A~ThinSpace~\u2009~Tilde~\u223C~TildeEqual~\u2243~TildeFullEqual~\u2245~TildeTilde~\u2248~Topf~\u{1D54B}~TripleDot~\u20DB~Tscr~\u{1D4AF}~Tstrok~\u0166~Uarr~\u219F~Uarrocir~\u2949~Ubrcy~\u040E~Ubreve~\u016C~Ucy~\u0423~Udblac~\u0170~Ufr~\u{1D518}~Umacr~\u016A~UnderBar~_~UnderBrace~\u23DF~UnderBracket~\u23B5~UnderParenthesis~\u23DD~Union~\u22C3~UnionPlus~\u228E~Uogon~\u0172~Uopf~\u{1D54C}~UpArrow~\u2191~UpArrowBar~\u2912~UpArrowDownArrow~\u21C5~UpDownArrow~\u2195~UpEquilibrium~\u296E~UpTee~\u22A5~UpTeeArrow~\u21A5~Uparrow~\u21D1~Updownarrow~\u21D5~UpperLeftArrow~\u2196~UpperRightArrow~\u2197~Upsi~\u03D2~Uring~\u016E~Uscr~\u{1D4B0}~Utilde~\u0168~VDash~\u22AB~Vbar~\u2AEB~Vcy~\u0412~Vdash~\u22A9~Vdashl~\u2AE6~Vee~\u22C1~Verbar~\u2016~Vert~\u2016~VerticalBar~\u2223~VerticalLine~|~VerticalSeparator~\u2758~VerticalTilde~\u2240~VeryThinSpace~\u200A~Vfr~\u{1D519}~Vopf~\u{1D54D}~Vscr~\u{1D4B1}~Vvdash~\u22AA~Wcirc~\u0174~Wedge~\u22C0~Wfr~\u{1D51A}~Wopf~\u{1D54E}~Wscr~\u{1D4B2}~Xfr~\u{1D51B}~Xopf~\u{1D54F}~Xscr~\u{1D4B3}~YAcy~\u042F~YIcy~\u0407~YUcy~\u042E~Ycirc~\u0176~Ycy~\u042B~Yfr~\u{1D51C}~Yopf~\u{1D550}~Yscr~\u{1D4B4}~ZHcy~\u0416~Zacute~\u0179~Zcaron~\u017D~Zcy~\u0417~Zdot~\u017B~ZeroWidthSpace~\u200B~Zfr~\u2128~Zopf~\u2124~Zscr~\u{1D4B5}~abreve~\u0103~ac~\u223E~acE~\u223E\u0333~acd~\u223F~acy~\u0430~af~\u2061~afr~\u{1D51E}~aleph~\u2135~amacr~\u0101~amalg~\u2A3F~andand~\u2A55~andd~\u2A5C~andslope~\u2A58~andv~\u2A5A~ange~\u29A4~angle~\u2220~angmsd~\u2221~angmsdaa~\u29A8~angmsdab~\u29A9~angmsdac~\u29AA~angmsdad~\u29AB~angmsdae~\u29AC~angmsdaf~\u29AD~angmsdag~\u29AE~angmsdah~\u29AF~angrt~\u221F~angrtvb~\u22BE~angrtvbd~\u299D~angsph~\u2222~angst~\xC5~angzarr~\u237C~aogon~\u0105~aopf~\u{1D552}~ap~\u2248~apE~\u2A70~apacir~\u2A6F~ape~\u224A~apid~\u224B~approx~\u2248~approxeq~\u224A~ascr~\u{1D4B6}~ast~*~asympeq~\u224D~awconint~\u2233~awint~\u2A11~bNot~\u2AED~backcong~\u224C~backepsilon~\u03F6~backprime~\u2035~backsim~\u223D~backsimeq~\u22CD~barvee~\u22BD~barwed~\u2305~barwedge~\u2305~bbrk~\u23B5~bbrktbrk~\u23B6~bcong~\u224C~bcy~\u0431~becaus~\u2235~because~\u2235~bemptyv~\u29B0~bepsi~\u03F6~bernou~\u212C~beth~\u2136~between~\u226C~bfr~\u{1D51F}~bigcap~\u22C2~bigcirc~\u25EF~bigcup~\u22C3~bigodot~\u2A00~bigoplus~\u2A01~bigotimes~\u2A02~bigsqcup~\u2A06~bigstar~\u2605~bigtriangledown~\u25BD~bigtriangleup~\u25B3~biguplus~\u2A04~bigvee~\u22C1~bigwedge~\u22C0~bkarow~\u290D~blacklozenge~\u29EB~blacksquare~\u25AA~blacktriangle~\u25B4~blacktriangledown~\u25BE~blacktriangleleft~\u25C2~blacktriangleright~\u25B8~blank~\u2423~blk12~\u2592~blk14~\u2591~blk34~\u2593~block~\u2588~bne~=\u20E5~bnequiv~\u2261\u20E5~bnot~\u2310~bopf~\u{1D553}~bot~\u22A5~bottom~\u22A5~bowtie~\u22C8~boxDL~\u2557~boxDR~\u2554~boxDl~\u2556~boxDr~\u2553~boxH~\u2550~boxHD~\u2566~boxHU~\u2569~boxHd~\u2564~boxHu~\u2567~boxUL~\u255D~boxUR~\u255A~boxUl~\u255C~boxUr~\u2559~boxV~\u2551~boxVH~\u256C~boxVL~\u2563~boxVR~\u2560~boxVh~\u256B~boxVl~\u2562~boxVr~\u255F~boxbox~\u29C9~boxdL~\u2555~boxdR~\u2552~boxdl~\u2510~boxdr~\u250C~boxh~\u2500~boxhD~\u2565~boxhU~\u2568~boxhd~\u252C~boxhu~\u2534~boxminus~\u229F~boxplus~\u229E~boxtimes~\u22A0~boxuL~\u255B~boxuR~\u2558~boxul~\u2518~boxur~\u2514~boxv~\u2502~boxvH~\u256A~boxvL~\u2561~boxvR~\u255E~boxvh~\u253C~boxvl~\u2524~boxvr~\u251C~bprime~\u2035~breve~\u02D8~bscr~\u{1D4B7}~bsemi~\u204F~bsim~\u223D~bsime~\u22CD~bsol~\\~bsolb~\u29C5~bsolhsub~\u27C8~bullet~\u2022~bump~\u224E~bumpE~\u2AAE~bumpe~\u224F~bumpeq~\u224F~cacute~\u0107~capand~\u2A44~capbrcup~\u2A49~capcap~\u2A4B~capcup~\u2A47~capdot~\u2A40~caps~\u2229\uFE00~caret~\u2041~caron~\u02C7~ccaps~\u2A4D~ccaron~\u010D~ccirc~\u0109~ccups~\u2A4C~ccupssm~\u2A50~cdot~\u010B~cemptyv~\u29B2~centerdot~\xB7~cfr~\u{1D520}~chcy~\u0447~check~\u2713~checkmark~\u2713~cir~\u25CB~cirE~\u29C3~circeq~\u2257~circlearrowleft~\u21BA~circlearrowright~\u21BB~circledR~\xAE~circledS~\u24C8~circledast~\u229B~circledcirc~\u229A~circleddash~\u229D~cire~\u2257~cirfnint~\u2A10~cirmid~\u2AEF~cirscir~\u29C2~clubsuit~\u2663~colon~:~colone~\u2254~coloneq~\u2254~comma~,~commat~@~comp~\u2201~compfn~\u2218~complement~\u2201~complexes~\u2102~congdot~\u2A6D~conint~\u222E~copf~\u{1D554}~coprod~\u2210~copysr~\u2117~cross~\u2717~cscr~\u{1D4B8}~csub~\u2ACF~csube~\u2AD1~csup~\u2AD0~csupe~\u2AD2~ctdot~\u22EF~cudarrl~\u2938~cudarrr~\u2935~cuepr~\u22DE~cuesc~\u22DF~cularr~\u21B6~cularrp~\u293D~cupbrcap~\u2A48~cupcap~\u2A46~cupcup~\u2A4A~cupdot~\u228D~cupor~\u2A45~cups~\u222A\uFE00~curarr~\u21B7~curarrm~\u293C~curlyeqprec~\u22DE~curlyeqsucc~\u22DF~curlyvee~\u22CE~curlywedge~\u22CF~curvearrowleft~\u21B6~curvearrowright~\u21B7~cuvee~\u22CE~cuwed~\u22CF~cwconint~\u2232~cwint~\u2231~cylcty~\u232D~dHar~\u2965~daleth~\u2138~dash~\u2010~dashv~\u22A3~dbkarow~\u290F~dblac~\u02DD~dcaron~\u010F~dcy~\u0434~dd~\u2146~ddagger~\u2021~ddarr~\u21CA~ddotseq~\u2A77~demptyv~\u29B1~dfisht~\u297F~dfr~\u{1D521}~dharl~\u21C3~dharr~\u21C2~diam~\u22C4~diamond~\u22C4~diamondsuit~\u2666~die~\xA8~digamma~\u03DD~disin~\u22F2~div~\xF7~divideontimes~\u22C7~divonx~\u22C7~djcy~\u0452~dlcorn~\u231E~dlcrop~\u230D~dollar~$~dopf~\u{1D555}~dot~\u02D9~doteq~\u2250~doteqdot~\u2251~dotminus~\u2238~dotplus~\u2214~dotsquare~\u22A1~doublebarwedge~\u2306~downarrow~\u2193~downdownarrows~\u21CA~downharpoonleft~\u21C3~downharpoonright~\u21C2~drbkarow~\u2910~drcorn~\u231F~drcrop~\u230C~dscr~\u{1D4B9}~dscy~\u0455~dsol~\u29F6~dstrok~\u0111~dtdot~\u22F1~dtri~\u25BF~dtrif~\u25BE~duarr~\u21F5~duhar~\u296F~dwangle~\u29A6~dzcy~\u045F~dzigrarr~\u27FF~eDDot~\u2A77~eDot~\u2251~easter~\u2A6E~ecaron~\u011B~ecir~\u2256~ecolon~\u2255~ecy~\u044D~edot~\u0117~ee~\u2147~efDot~\u2252~efr~\u{1D522}~eg~\u2A9A~egs~\u2A96~egsdot~\u2A98~el~\u2A99~elinters~\u23E7~ell~\u2113~els~\u2A95~elsdot~\u2A97~emacr~\u0113~emptyset~\u2205~emptyv~\u2205~emsp13~\u2004~emsp14~\u2005~eng~\u014B~eogon~\u0119~eopf~\u{1D556}~epar~\u22D5~eparsl~\u29E3~eplus~\u2A71~epsi~\u03B5~epsiv~\u03F5~eqcirc~\u2256~eqcolon~\u2255~eqsim~\u2242~eqslantgtr~\u2A96~eqslantless~\u2A95~equals~=~equest~\u225F~equivDD~\u2A78~eqvparsl~\u29E5~erDot~\u2253~erarr~\u2971~escr~\u212F~esdot~\u2250~esim~\u2242~excl~!~expectation~\u2130~exponentiale~\u2147~fallingdotseq~\u2252~fcy~\u0444~female~\u2640~ffilig~\uFB03~fflig~\uFB00~ffllig~\uFB04~ffr~\u{1D523}~filig~\uFB01~fjlig~fj~flat~\u266D~fllig~\uFB02~fltns~\u25B1~fopf~\u{1D557}~fork~\u22D4~forkv~\u2AD9~fpartint~\u2A0D~frac13~\u2153~frac15~\u2155~frac16~\u2159~frac18~\u215B~frac23~\u2154~frac25~\u2156~frac35~\u2157~frac38~\u215C~frac45~\u2158~frac56~\u215A~frac58~\u215D~frac78~\u215E~frown~\u2322~fscr~\u{1D4BB}~gE~\u2267~gEl~\u2A8C~gacute~\u01F5~gammad~\u03DD~gap~\u2A86~gbreve~\u011F~gcirc~\u011D~gcy~\u0433~gdot~\u0121~gel~\u22DB~geq~\u2265~geqq~\u2267~geqslant~\u2A7E~ges~\u2A7E~gescc~\u2AA9~gesdot~\u2A80~gesdoto~\u2A82~gesdotol~\u2A84~gesl~\u22DB\uFE00~gesles~\u2A94~gfr~\u{1D524}~gg~\u226B~ggg~\u22D9~gimel~\u2137~gjcy~\u0453~gl~\u2277~glE~\u2A92~gla~\u2AA5~glj~\u2AA4~gnE~\u2269~gnap~\u2A8A~gnapprox~\u2A8A~gne~\u2A88~gneq~\u2A88~gneqq~\u2269~gnsim~\u22E7~gopf~\u{1D558}~grave~`~gscr~\u210A~gsim~\u2273~gsime~\u2A8E~gsiml~\u2A90~gtcc~\u2AA7~gtcir~\u2A7A~gtdot~\u22D7~gtlPar~\u2995~gtquest~\u2A7C~gtrapprox~\u2A86~gtrarr~\u2978~gtrdot~\u22D7~gtreqless~\u22DB~gtreqqless~\u2A8C~gtrless~\u2277~gtrsim~\u2273~gvertneqq~\u2269\uFE00~gvnE~\u2269\uFE00~hairsp~\u200A~half~\xBD~hamilt~\u210B~hardcy~\u044A~harrcir~\u2948~harrw~\u21AD~hbar~\u210F~hcirc~\u0125~heartsuit~\u2665~hercon~\u22B9~hfr~\u{1D525}~hksearow~\u2925~hkswarow~\u2926~hoarr~\u21FF~homtht~\u223B~hookleftarrow~\u21A9~hookrightarrow~\u21AA~hopf~\u{1D559}~horbar~\u2015~hscr~\u{1D4BD}~hslash~\u210F~hstrok~\u0127~hybull~\u2043~hyphen~\u2010~ic~\u2063~icy~\u0438~iecy~\u0435~iff~\u21D4~ifr~\u{1D526}~ii~\u2148~iiiint~\u2A0C~iiint~\u222D~iinfin~\u29DC~iiota~\u2129~ijlig~\u0133~imacr~\u012B~imagline~\u2110~imagpart~\u2111~imath~\u0131~imof~\u22B7~imped~\u01B5~in~\u2208~incare~\u2105~infintie~\u29DD~inodot~\u0131~intcal~\u22BA~integers~\u2124~intercal~\u22BA~intlarhk~\u2A17~intprod~\u2A3C~iocy~\u0451~iogon~\u012F~iopf~\u{1D55A}~iprod~\u2A3C~iscr~\u{1D4BE}~isinE~\u22F9~isindot~\u22F5~isins~\u22F4~isinsv~\u22F3~isinv~\u2208~it~\u2062~itilde~\u0129~iukcy~\u0456~jcirc~\u0135~jcy~\u0439~jfr~\u{1D527}~jmath~\u0237~jopf~\u{1D55B}~jscr~\u{1D4BF}~jsercy~\u0458~jukcy~\u0454~kappav~\u03F0~kcedil~\u0137~kcy~\u043A~kfr~\u{1D528}~kgreen~\u0138~khcy~\u0445~kjcy~\u045C~kopf~\u{1D55C}~kscr~\u{1D4C0}~lAarr~\u21DA~lAtail~\u291B~lBarr~\u290E~lE~\u2266~lEg~\u2A8B~lHar~\u2962~lacute~\u013A~laemptyv~\u29B4~lagran~\u2112~langd~\u2991~langle~\u27E8~lap~\u2A85~larrb~\u21E4~larrbfs~\u291F~larrfs~\u291D~larrhk~\u21A9~larrlp~\u21AB~larrpl~\u2939~larrsim~\u2973~larrtl~\u21A2~lat~\u2AAB~latail~\u2919~late~\u2AAD~lates~\u2AAD\uFE00~lbarr~\u290C~lbbrk~\u2772~lbrace~{~lbrack~[~lbrke~\u298B~lbrksld~\u298F~lbrkslu~\u298D~lcaron~\u013E~lcedil~\u013C~lcub~{~lcy~\u043B~ldca~\u2936~ldquor~\u201E~ldrdhar~\u2967~ldrushar~\u294B~ldsh~\u21B2~leftarrow~\u2190~leftarrowtail~\u21A2~leftharpoondown~\u21BD~leftharpoonup~\u21BC~leftleftarrows~\u21C7~leftrightarrow~\u2194~leftrightarrows~\u21C6~leftrightharpoons~\u21CB~leftrightsquigarrow~\u21AD~leftthreetimes~\u22CB~leg~\u22DA~leq~\u2264~leqq~\u2266~leqslant~\u2A7D~les~\u2A7D~lescc~\u2AA8~lesdot~\u2A7F~lesdoto~\u2A81~lesdotor~\u2A83~lesg~\u22DA\uFE00~lesges~\u2A93~lessapprox~\u2A85~lessdot~\u22D6~lesseqgtr~\u22DA~lesseqqgtr~\u2A8B~lessgtr~\u2276~lesssim~\u2272~lfisht~\u297C~lfr~\u{1D529}~lg~\u2276~lgE~\u2A91~lhard~\u21BD~lharu~\u21BC~lharul~\u296A~lhblk~\u2584~ljcy~\u0459~ll~\u226A~llarr~\u21C7~llcorner~\u231E~llhard~\u296B~lltri~\u25FA~lmidot~\u0140~lmoust~\u23B0~lmoustache~\u23B0~lnE~\u2268~lnap~\u2A89~lnapprox~\u2A89~lne~\u2A87~lneq~\u2A87~lneqq~\u2268~lnsim~\u22E6~loang~\u27EC~loarr~\u21FD~lobrk~\u27E6~longleftarrow~\u27F5~longleftrightarrow~\u27F7~longmapsto~\u27FC~longrightarrow~\u27F6~looparrowleft~\u21AB~looparrowright~\u21AC~lopar~\u2985~lopf~\u{1D55D}~loplus~\u2A2D~lotimes~\u2A34~lowbar~_~lozenge~\u25CA~lozf~\u29EB~lpar~(~lparlt~\u2993~lrarr~\u21C6~lrcorner~\u231F~lrhar~\u21CB~lrhard~\u296D~lrtri~\u22BF~lscr~\u{1D4C1}~lsh~\u21B0~lsim~\u2272~lsime~\u2A8D~lsimg~\u2A8F~lsqb~[~lsquor~\u201A~lstrok~\u0142~ltcc~\u2AA6~ltcir~\u2A79~ltdot~\u22D6~lthree~\u22CB~ltimes~\u22C9~ltlarr~\u2976~ltquest~\u2A7B~ltrPar~\u2996~ltri~\u25C3~ltrie~\u22B4~ltrif~\u25C2~lurdshar~\u294A~luruhar~\u2966~lvertneqq~\u2268\uFE00~lvnE~\u2268\uFE00~mDDot~\u223A~male~\u2642~malt~\u2720~maltese~\u2720~map~\u21A6~mapsto~\u21A6~mapstodown~\u21A7~mapstoleft~\u21A4~mapstoup~\u21A5~marker~\u25AE~mcomma~\u2A29~mcy~\u043C~measuredangle~\u2221~mfr~\u{1D52A}~mho~\u2127~mid~\u2223~midast~*~midcir~\u2AF0~minusb~\u229F~minusd~\u2238~minusdu~\u2A2A~mlcp~\u2ADB~mldr~\u2026~mnplus~\u2213~models~\u22A7~mopf~\u{1D55E}~mp~\u2213~mscr~\u{1D4C2}~mstpos~\u223E~multimap~\u22B8~mumap~\u22B8~nGg~\u22D9\u0338~nGt~\u226B\u20D2~nGtv~\u226B\u0338~nLeftarrow~\u21CD~nLeftrightarrow~\u21CE~nLl~\u22D8\u0338~nLt~\u226A\u20D2~nLtv~\u226A\u0338~nRightarrow~\u21CF~nVDash~\u22AF~nVdash~\u22AE~nacute~\u0144~nang~\u2220\u20D2~nap~\u2249~napE~\u2A70\u0338~napid~\u224B\u0338~napos~\u0149~napprox~\u2249~natur~\u266E~natural~\u266E~naturals~\u2115~nbump~\u224E\u0338~nbumpe~\u224F\u0338~ncap~\u2A43~ncaron~\u0148~ncedil~\u0146~ncong~\u2247~ncongdot~\u2A6D\u0338~ncup~\u2A42~ncy~\u043D~neArr~\u21D7~nearhk~\u2924~nearr~\u2197~nearrow~\u2197~nedot~\u2250\u0338~nequiv~\u2262~nesear~\u2928~nesim~\u2242\u0338~nexist~\u2204~nexists~\u2204~nfr~\u{1D52B}~ngE~\u2267\u0338~nge~\u2271~ngeq~\u2271~ngeqq~\u2267\u0338~ngeqslant~\u2A7E\u0338~nges~\u2A7E\u0338~ngsim~\u2275~ngt~\u226F~ngtr~\u226F~nhArr~\u21CE~nharr~\u21AE~nhpar~\u2AF2~nis~\u22FC~nisd~\u22FA~niv~\u220B~njcy~\u045A~nlArr~\u21CD~nlE~\u2266\u0338~nlarr~\u219A~nldr~\u2025~nle~\u2270~nleftarrow~\u219A~nleftrightarrow~\u21AE~nleq~\u2270~nleqq~\u2266\u0338~nleqslant~\u2A7D\u0338~nles~\u2A7D\u0338~nless~\u226E~nlsim~\u2274~nlt~\u226E~nltri~\u22EA~nltrie~\u22EC~nmid~\u2224~nopf~\u{1D55F}~notinE~\u22F9\u0338~notindot~\u22F5\u0338~notinva~\u2209~notinvb~\u22F7~notinvc~\u22F6~notni~\u220C~notniva~\u220C~notnivb~\u22FE~notnivc~\u22FD~npar~\u2226~nparallel~\u2226~nparsl~\u2AFD\u20E5~npart~\u2202\u0338~npolint~\u2A14~npr~\u2280~nprcue~\u22E0~npre~\u2AAF\u0338~nprec~\u2280~npreceq~\u2AAF\u0338~nrArr~\u21CF~nrarr~\u219B~nrarrc~\u2933\u0338~nrarrw~\u219D\u0338~nrightarrow~\u219B~nrtri~\u22EB~nrtrie~\u22ED~nsc~\u2281~nsccue~\u22E1~nsce~\u2AB0\u0338~nscr~\u{1D4C3}~nshortmid~\u2224~nshortparallel~\u2226~nsim~\u2241~nsime~\u2244~nsimeq~\u2244~nsmid~\u2224~nspar~\u2226~nsqsube~\u22E2~nsqsupe~\u22E3~nsubE~\u2AC5\u0338~nsube~\u2288~nsubset~\u2282\u20D2~nsubseteq~\u2288~nsubseteqq~\u2AC5\u0338~nsucc~\u2281~nsucceq~\u2AB0\u0338~nsup~\u2285~nsupE~\u2AC6\u0338~nsupe~\u2289~nsupset~\u2283\u20D2~nsupseteq~\u2289~nsupseteqq~\u2AC6\u0338~ntgl~\u2279~ntlg~\u2278~ntriangleleft~\u22EA~ntrianglelefteq~\u22EC~ntriangleright~\u22EB~ntrianglerighteq~\u22ED~num~#~numero~\u2116~numsp~\u2007~nvDash~\u22AD~nvHarr~\u2904~nvap~\u224D\u20D2~nvdash~\u22AC~nvge~\u2265\u20D2~nvgt~>\u20D2~nvinfin~\u29DE~nvlArr~\u2902~nvle~\u2264\u20D2~nvlt~<\u20D2~nvltrie~\u22B4\u20D2~nvrArr~\u2903~nvrtrie~\u22B5\u20D2~nvsim~\u223C\u20D2~nwArr~\u21D6~nwarhk~\u2923~nwarr~\u2196~nwarrow~\u2196~nwnear~\u2927~oS~\u24C8~oast~\u229B~ocir~\u229A~ocy~\u043E~odash~\u229D~odblac~\u0151~odiv~\u2A38~odot~\u2299~odsold~\u29BC~ofcir~\u29BF~ofr~\u{1D52C}~ogon~\u02DB~ogt~\u29C1~ohbar~\u29B5~ohm~\u03A9~oint~\u222E~olarr~\u21BA~olcir~\u29BE~olcross~\u29BB~olt~\u29C0~omacr~\u014D~omid~\u29B6~ominus~\u2296~oopf~\u{1D560}~opar~\u29B7~operp~\u29B9~orarr~\u21BB~ord~\u2A5D~order~\u2134~orderof~\u2134~origof~\u22B6~oror~\u2A56~orslope~\u2A57~orv~\u2A5B~oscr~\u2134~osol~\u2298~otimesas~\u2A36~ovbar~\u233D~par~\u2225~parallel~\u2225~parsim~\u2AF3~parsl~\u2AFD~pcy~\u043F~percnt~%~period~.~pertenk~\u2031~pfr~\u{1D52D}~phiv~\u03D5~phmmat~\u2133~phone~\u260E~pitchfork~\u22D4~planck~\u210F~planckh~\u210E~plankv~\u210F~plus~+~plusacir~\u2A23~plusb~\u229E~pluscir~\u2A22~plusdo~\u2214~plusdu~\u2A25~pluse~\u2A72~plussim~\u2A26~plustwo~\u2A27~pm~\xB1~pointint~\u2A15~popf~\u{1D561}~pr~\u227A~prE~\u2AB3~prap~\u2AB7~prcue~\u227C~pre~\u2AAF~prec~\u227A~precapprox~\u2AB7~preccurlyeq~\u227C~preceq~\u2AAF~precnapprox~\u2AB9~precneqq~\u2AB5~precnsim~\u22E8~precsim~\u227E~primes~\u2119~prnE~\u2AB5~prnap~\u2AB9~prnsim~\u22E8~profalar~\u232E~profline~\u2312~profsurf~\u2313~propto~\u221D~prsim~\u227E~prurel~\u22B0~pscr~\u{1D4C5}~puncsp~\u2008~qfr~\u{1D52E}~qint~\u2A0C~qopf~\u{1D562}~qprime~\u2057~qscr~\u{1D4C6}~quaternions~\u210D~quatint~\u2A16~quest~?~questeq~\u225F~rAarr~\u21DB~rAtail~\u291C~rBarr~\u290F~rHar~\u2964~race~\u223D\u0331~racute~\u0155~raemptyv~\u29B3~rangd~\u2992~range~\u29A5~rangle~\u27E9~rarrap~\u2975~rarrb~\u21E5~rarrbfs~\u2920~rarrc~\u2933~rarrfs~\u291E~rarrhk~\u21AA~rarrlp~\u21AC~rarrpl~\u2945~rarrsim~\u2974~rarrtl~\u21A3~rarrw~\u219D~ratail~\u291A~ratio~\u2236~rationals~\u211A~rbarr~\u290D~rbbrk~\u2773~rbrace~}~rbrack~]~rbrke~\u298C~rbrksld~\u298E~rbrkslu~\u2990~rcaron~\u0159~rcedil~\u0157~rcub~}~rcy~\u0440~rdca~\u2937~rdldhar~\u2969~rdquor~\u201D~rdsh~\u21B3~realine~\u211B~realpart~\u211C~reals~\u211D~rect~\u25AD~rfisht~\u297D~rfr~\u{1D52F}~rhard~\u21C1~rharu~\u21C0~rharul~\u296C~rhov~\u03F1~rightarrow~\u2192~rightarrowtail~\u21A3~rightharpoondown~\u21C1~rightharpoonup~\u21C0~rightleftarrows~\u21C4~rightleftharpoons~\u21CC~rightrightarrows~\u21C9~rightsquigarrow~\u219D~rightthreetimes~\u22CC~ring~\u02DA~risingdotseq~\u2253~rlarr~\u21C4~rlhar~\u21CC~rmoust~\u23B1~rmoustache~\u23B1~rnmid~\u2AEE~roang~\u27ED~roarr~\u21FE~robrk~\u27E7~ropar~\u2986~ropf~\u{1D563}~roplus~\u2A2E~rotimes~\u2A35~rpar~)~rpargt~\u2994~rppolint~\u2A12~rrarr~\u21C9~rscr~\u{1D4C7}~rsh~\u21B1~rsqb~]~rsquor~\u2019~rthree~\u22CC~rtimes~\u22CA~rtri~\u25B9~rtrie~\u22B5~rtrif~\u25B8~rtriltri~\u29CE~ruluhar~\u2968~rx~\u211E~sacute~\u015B~sc~\u227B~scE~\u2AB4~scap~\u2AB8~sccue~\u227D~sce~\u2AB0~scedil~\u015F~scirc~\u015D~scnE~\u2AB6~scnap~\u2ABA~scnsim~\u22E9~scpolint~\u2A13~scsim~\u227F~scy~\u0441~sdotb~\u22A1~sdote~\u2A66~seArr~\u21D8~searhk~\u2925~searr~\u2198~searrow~\u2198~semi~;~seswar~\u2929~setminus~\u2216~setmn~\u2216~sext~\u2736~sfr~\u{1D530}~sfrown~\u2322~sharp~\u266F~shchcy~\u0449~shcy~\u0448~shortmid~\u2223~shortparallel~\u2225~sigmav~\u03C2~simdot~\u2A6A~sime~\u2243~simeq~\u2243~simg~\u2A9E~simgE~\u2AA0~siml~\u2A9D~simlE~\u2A9F~simne~\u2246~simplus~\u2A24~simrarr~\u2972~slarr~\u2190~smallsetminus~\u2216~smashp~\u2A33~smeparsl~\u29E4~smid~\u2223~smile~\u2323~smt~\u2AAA~smte~\u2AAC~smtes~\u2AAC\uFE00~softcy~\u044C~sol~/~solb~\u29C4~solbar~\u233F~sopf~\u{1D564}~spadesuit~\u2660~spar~\u2225~sqcap~\u2293~sqcaps~\u2293\uFE00~sqcup~\u2294~sqcups~\u2294\uFE00~sqsub~\u228F~sqsube~\u2291~sqsubset~\u228F~sqsubseteq~\u2291~sqsup~\u2290~sqsupe~\u2292~sqsupset~\u2290~sqsupseteq~\u2292~squ~\u25A1~square~\u25A1~squarf~\u25AA~squf~\u25AA~srarr~\u2192~sscr~\u{1D4C8}~ssetmn~\u2216~ssmile~\u2323~sstarf~\u22C6~star~\u2606~starf~\u2605~straightepsilon~\u03F5~straightphi~\u03D5~strns~\xAF~subE~\u2AC5~subdot~\u2ABD~subedot~\u2AC3~submult~\u2AC1~subnE~\u2ACB~subne~\u228A~subplus~\u2ABF~subrarr~\u2979~subset~\u2282~subseteq~\u2286~subseteqq~\u2AC5~subsetneq~\u228A~subsetneqq~\u2ACB~subsim~\u2AC7~subsub~\u2AD5~subsup~\u2AD3~succ~\u227B~succapprox~\u2AB8~succcurlyeq~\u227D~succeq~\u2AB0~succnapprox~\u2ABA~succneqq~\u2AB6~succnsim~\u22E9~succsim~\u227F~sung~\u266A~supE~\u2AC6~supdot~\u2ABE~supdsub~\u2AD8~supedot~\u2AC4~suphsol~\u27C9~suphsub~\u2AD7~suplarr~\u297B~supmult~\u2AC2~supnE~\u2ACC~supne~\u228B~supplus~\u2AC0~supset~\u2283~supseteq~\u2287~supseteqq~\u2AC6~supsetneq~\u228B~supsetneqq~\u2ACC~supsim~\u2AC8~supsub~\u2AD4~supsup~\u2AD6~swArr~\u21D9~swarhk~\u2926~swarr~\u2199~swarrow~\u2199~swnwar~\u292A~target~\u2316~tbrk~\u23B4~tcaron~\u0165~tcedil~\u0163~tcy~\u0442~tdot~\u20DB~telrec~\u2315~tfr~\u{1D531}~therefore~\u2234~thetav~\u03D1~thickapprox~\u2248~thicksim~\u223C~thkap~\u2248~thksim~\u223C~timesb~\u22A0~timesbar~\u2A31~timesd~\u2A30~tint~\u222D~toea~\u2928~top~\u22A4~topbot~\u2336~topcir~\u2AF1~topf~\u{1D565}~topfork~\u2ADA~tosa~\u2929~tprime~\u2034~triangle~\u25B5~triangledown~\u25BF~triangleleft~\u25C3~trianglelefteq~\u22B4~triangleq~\u225C~triangleright~\u25B9~trianglerighteq~\u22B5~tridot~\u25EC~trie~\u225C~triminus~\u2A3A~triplus~\u2A39~trisb~\u29CD~tritime~\u2A3B~trpezium~\u23E2~tscr~\u{1D4C9}~tscy~\u0446~tshcy~\u045B~tstrok~\u0167~twixt~\u226C~twoheadleftarrow~\u219E~twoheadrightarrow~\u21A0~uHar~\u2963~ubrcy~\u045E~ubreve~\u016D~ucy~\u0443~udarr~\u21C5~udblac~\u0171~udhar~\u296E~ufisht~\u297E~ufr~\u{1D532}~uharl~\u21BF~uharr~\u21BE~uhblk~\u2580~ulcorn~\u231C~ulcorner~\u231C~ulcrop~\u230F~ultri~\u25F8~umacr~\u016B~uogon~\u0173~uopf~\u{1D566}~uparrow~\u2191~updownarrow~\u2195~upharpoonleft~\u21BF~upharpoonright~\u21BE~uplus~\u228E~upsi~\u03C5~upuparrows~\u21C8~urcorn~\u231D~urcorner~\u231D~urcrop~\u230E~uring~\u016F~urtri~\u25F9~uscr~\u{1D4CA}~utdot~\u22F0~utilde~\u0169~utri~\u25B5~utrif~\u25B4~uuarr~\u21C8~uwangle~\u29A7~vArr~\u21D5~vBar~\u2AE8~vBarv~\u2AE9~vDash~\u22A8~vangrt~\u299C~varepsilon~\u03F5~varkappa~\u03F0~varnothing~\u2205~varphi~\u03D5~varpi~\u03D6~varpropto~\u221D~varr~\u2195~varrho~\u03F1~varsigma~\u03C2~varsubsetneq~\u228A\uFE00~varsubsetneqq~\u2ACB\uFE00~varsupsetneq~\u228B\uFE00~varsupsetneqq~\u2ACC\uFE00~vartheta~\u03D1~vartriangleleft~\u22B2~vartriangleright~\u22B3~vcy~\u0432~vdash~\u22A2~vee~\u2228~veebar~\u22BB~veeeq~\u225A~vellip~\u22EE~verbar~|~vert~|~vfr~\u{1D533}~vltri~\u22B2~vnsub~\u2282\u20D2~vnsup~\u2283\u20D2~vopf~\u{1D567}~vprop~\u221D~vrtri~\u22B3~vscr~\u{1D4CB}~vsubnE~\u2ACB\uFE00~vsubne~\u228A\uFE00~vsupnE~\u2ACC\uFE00~vsupne~\u228B\uFE00~vzigzag~\u299A~wcirc~\u0175~wedbar~\u2A5F~wedge~\u2227~wedgeq~\u2259~wfr~\u{1D534}~wopf~\u{1D568}~wp~\u2118~wr~\u2240~wreath~\u2240~wscr~\u{1D4CC}~xcap~\u22C2~xcirc~\u25EF~xcup~\u22C3~xdtri~\u25BD~xfr~\u{1D535}~xhArr~\u27FA~xharr~\u27F7~xlArr~\u27F8~xlarr~\u27F5~xmap~\u27FC~xnis~\u22FB~xodot~\u2A00~xopf~\u{1D569}~xoplus~\u2A01~xotime~\u2A02~xrArr~\u27F9~xrarr~\u27F6~xscr~\u{1D4CD}~xsqcup~\u2A06~xuplus~\u2A04~xutri~\u25B3~xvee~\u22C1~xwedge~\u22C0~yacy~\u044F~ycirc~\u0177~ycy~\u044B~yfr~\u{1D536}~yicy~\u0457~yopf~\u{1D56A}~yscr~\u{1D4CE}~yucy~\u044E~zacute~\u017A~zcaron~\u017E~zcy~\u0437~zdot~\u017C~zeetrf~\u2128~zfr~\u{1D537}~zhcy~\u0436~zigrarr~\u21DD~zopf~\u{1D56B}~zscr~\u{1D4CF}~~AMP~&~COPY~\xA9~GT~>~LT~<~QUOT~"~REG~\xAE', exports2.namedReferences["html4"]);
   }
 });
 
 // node_modules/html-entities/dist/commonjs/numeric-unicode-map.js
 var require_numeric_unicode_map = __commonJS({
-  "node_modules/html-entities/dist/commonjs/numeric-unicode-map.js"(exports) {
+  "node_modules/html-entities/dist/commonjs/numeric-unicode-map.js"(exports2) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.numericUnicodeMap = void 0;
-    exports.numericUnicodeMap = {
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.numericUnicodeMap = void 0;
+    exports2.numericUnicodeMap = {
       0: 65533,
       128: 8364,
       130: 8218,
@@ -128,28 +123,28 @@ var require_numeric_unicode_map = __commonJS({
 
 // node_modules/html-entities/dist/commonjs/surrogate-pairs.js
 var require_surrogate_pairs = __commonJS({
-  "node_modules/html-entities/dist/commonjs/surrogate-pairs.js"(exports) {
+  "node_modules/html-entities/dist/commonjs/surrogate-pairs.js"(exports2) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.highSurrogateTo = exports.highSurrogateFrom = exports.getCodePoint = exports.fromCodePoint = void 0;
-    exports.fromCodePoint = String.fromCodePoint || function(astralCodePoint) {
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.highSurrogateTo = exports2.highSurrogateFrom = exports2.getCodePoint = exports2.fromCodePoint = void 0;
+    exports2.fromCodePoint = String.fromCodePoint || function(astralCodePoint) {
       return String.fromCharCode(Math.floor((astralCodePoint - 65536) / 1024) + 55296, (astralCodePoint - 65536) % 1024 + 56320);
     };
-    exports.getCodePoint = String.prototype.codePointAt ? function(input, position) {
+    exports2.getCodePoint = String.prototype.codePointAt ? function(input, position) {
       return input.codePointAt(position);
     } : function(input, position) {
       return (input.charCodeAt(position) - 55296) * 1024 + input.charCodeAt(position + 1) - 56320 + 65536;
     };
-    exports.highSurrogateFrom = 55296;
-    exports.highSurrogateTo = 56319;
+    exports2.highSurrogateFrom = 55296;
+    exports2.highSurrogateTo = 56319;
   }
 });
 
 // node_modules/html-entities/dist/commonjs/index.js
 var require_commonjs = __commonJS({
-  "node_modules/html-entities/dist/commonjs/index.js"(exports) {
+  "node_modules/html-entities/dist/commonjs/index.js"(exports2) {
     "use strict";
-    var __assign = exports && exports.__assign || function() {
+    var __assign = exports2 && exports2.__assign || function() {
       __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
           s = arguments[i];
@@ -160,10 +155,10 @@ var require_commonjs = __commonJS({
       };
       return __assign.apply(this, arguments);
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.encode = encode3;
-    exports.decodeEntity = decodeEntity;
-    exports.decode = decode3;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.encode = encode3;
+    exports2.decodeEntity = decodeEntity;
+    exports2.decode = decode3;
     var named_references_js_1 = require_named_references();
     var numeric_unicode_map_js_1 = require_numeric_unicode_map();
     var surrogate_pairs_js_1 = require_surrogate_pairs();
@@ -270,7 +265,7 @@ var require_commonjs = __commonJS({
 
 // node_modules/needle/lib/querystring.js
 var require_querystring = __commonJS({
-  "node_modules/needle/lib/querystring.js"(exports) {
+  "node_modules/needle/lib/querystring.js"(exports2) {
     var toString = Object.prototype.toString;
     function stringify(obj, prefix) {
       if (prefix && (obj === null || typeof obj == "undefined")) {
@@ -306,16 +301,16 @@ var require_querystring = __commonJS({
       });
       return ret.join("&");
     }
-    exports.build = stringify;
+    exports2.build = stringify;
   }
 });
 
 // node_modules/needle/lib/multipart.js
 var require_multipart = __commonJS({
-  "node_modules/needle/lib/multipart.js"(exports) {
-    var readFile = __require("fs").readFile;
-    var basename = __require("path").basename;
-    exports.build = function(data, boundary, callback) {
+  "node_modules/needle/lib/multipart.js"(exports2) {
+    var readFile = require("fs").readFile;
+    var basename = require("path").basename;
+    exports2.build = function(data, boundary, callback) {
       if (typeof data != "object" || typeof data.pipe == "function")
         return callback(new Error("Multipart builder expects data as key/val object."));
       var body = "", object2 = flatten(data), count = Object.keys(object2).length;
@@ -392,8 +387,8 @@ var require_multipart = __commonJS({
 
 // node_modules/needle/lib/auth.js
 var require_auth = __commonJS({
-  "node_modules/needle/lib/auth.js"(exports, module) {
-    var createHash = __require("crypto").createHash;
+  "node_modules/needle/lib/auth.js"(exports2, module2) {
+    var createHash = require("crypto").createHash;
     function get_header(header, credentials, opts) {
       var type = header.split(" ")[0], user = credentials[0], pass = credentials[1];
       if (type == "Digest") {
@@ -460,7 +455,7 @@ var require_auth = __commonJS({
         header.push(k + '="' + params[k] + '"');
       return "Digest " + header.join(", ");
     };
-    module.exports = {
+    module2.exports = {
       header: get_header,
       basic,
       digest: digest.generate
@@ -470,8 +465,8 @@ var require_auth = __commonJS({
 
 // node_modules/needle/lib/cookies.js
 var require_cookies = __commonJS({
-  "node_modules/needle/lib/cookies.js"(exports) {
-    var unescape = __require("querystring").unescape;
+  "node_modules/needle/lib/cookies.js"(exports2) {
+    var unescape = require("querystring").unescape;
     var COOKIE_PAIR = /^([^=\s]+)\s*=\s*("?)\s*(.*)\s*\2\s*$/;
     var EXCLUDED_CHARS = /[\x00-\x1F\x7F\x3B\x3B\s\"\,\\"%]/g;
     var KEY_INDEX = 1;
@@ -514,14 +509,14 @@ var require_cookies = __commonJS({
         return str;
       }, "");
     }
-    exports.read = parseSetCookieHeader;
-    exports.write = writeCookieString;
+    exports2.read = parseSetCookieHeader;
+    exports2.write = writeCookieString;
   }
 });
 
 // node_modules/sax/lib/sax.js
 var require_sax = __commonJS({
-  "node_modules/sax/lib/sax.js"(exports) {
+  "node_modules/sax/lib/sax.js"(exports2) {
     (function(sax) {
       sax.parser = function(strict, opt) {
         return new SAXParser(strict, opt);
@@ -677,7 +672,7 @@ var require_sax = __commonJS({
       };
       var Stream2;
       try {
-        Stream2 = __require("stream").Stream;
+        Stream2 = require("stream").Stream;
       } catch (ex) {
         Stream2 = function() {
         };
@@ -2106,14 +2101,14 @@ var require_sax = __commonJS({
           }
         })();
       }
-    })(typeof exports === "undefined" ? exports.sax = {} : exports);
+    })(typeof exports2 === "undefined" ? exports2.sax = {} : exports2);
   }
 });
 
 // node_modules/needle/lib/parsers.js
 var require_parsers = __commonJS({
-  "node_modules/needle/lib/parsers.js"(exports, module) {
-    var Transform = __require("stream").Transform;
+  "node_modules/needle/lib/parsers.js"(exports2, module2) {
+    var Transform = require("stream").Transform;
     var sax = require_sax();
     function parseXML(str, cb) {
       var obj, current, parser = sax.parser(true, { trim: true, lowercase: true });
@@ -2209,16 +2204,16 @@ var require_parsers = __commonJS({
         cb(err, obj);
       });
     });
-    module.exports = parsers;
-    module.exports.use = buildParser;
+    module2.exports = parsers;
+    module2.exports.use = buildParser;
   }
 });
 
 // node_modules/safer-buffer/safer.js
 var require_safer = __commonJS({
-  "node_modules/safer-buffer/safer.js"(exports, module) {
+  "node_modules/safer-buffer/safer.js"(exports2, module2) {
     "use strict";
-    var buffer = __require("buffer");
+    var buffer = require("buffer");
     var Buffer2 = buffer.Buffer;
     var safer = {};
     var key;
@@ -2278,16 +2273,16 @@ var require_safer = __commonJS({
         safer.constants.MAX_STRING_LENGTH = safer.kStringMaxLength;
       }
     }
-    module.exports = safer;
+    module2.exports = safer;
   }
 });
 
 // node_modules/iconv-lite/lib/bom-handling.js
 var require_bom_handling = __commonJS({
-  "node_modules/iconv-lite/lib/bom-handling.js"(exports) {
+  "node_modules/iconv-lite/lib/bom-handling.js"(exports2) {
     "use strict";
     var BOMChar = "\uFEFF";
-    exports.PrependBOM = PrependBOMWrapper;
+    exports2.PrependBOM = PrependBOMWrapper;
     function PrependBOMWrapper(encoder, options) {
       this.encoder = encoder;
       this.addBOM = true;
@@ -2302,7 +2297,7 @@ var require_bom_handling = __commonJS({
     PrependBOMWrapper.prototype.end = function() {
       return this.encoder.end();
     };
-    exports.StripBOM = StripBOMWrapper;
+    exports2.StripBOM = StripBOMWrapper;
     function StripBOMWrapper(decoder, options) {
       this.decoder = decoder;
       this.pass = false;
@@ -2328,10 +2323,10 @@ var require_bom_handling = __commonJS({
 
 // node_modules/iconv-lite/encodings/internal.js
 var require_internal = __commonJS({
-  "node_modules/iconv-lite/encodings/internal.js"(exports, module) {
+  "node_modules/iconv-lite/encodings/internal.js"(exports2, module2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
-    module.exports = {
+    module2.exports = {
       // Encodings
       utf8: { type: "_internal", bomAware: true },
       cesu8: { type: "_internal", bomAware: true },
@@ -2360,7 +2355,7 @@ var require_internal = __commonJS({
     }
     InternalCodec.prototype.encoder = InternalEncoder;
     InternalCodec.prototype.decoder = InternalDecoder;
-    var StringDecoder = __require("string_decoder").StringDecoder;
+    var StringDecoder = require("string_decoder").StringDecoder;
     if (!StringDecoder.prototype.end)
       StringDecoder.prototype.end = function() {
       };
@@ -2480,19 +2475,19 @@ var require_internal = __commonJS({
 
 // node_modules/iconv-lite/encodings/utf32.js
 var require_utf32 = __commonJS({
-  "node_modules/iconv-lite/encodings/utf32.js"(exports) {
+  "node_modules/iconv-lite/encodings/utf32.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
-    exports._utf32 = Utf32Codec;
+    exports2._utf32 = Utf32Codec;
     function Utf32Codec(codecOptions, iconv) {
       this.iconv = iconv;
       this.bomAware = true;
       this.isLE = codecOptions.isLE;
     }
-    exports.utf32le = { type: "_utf32", isLE: true };
-    exports.utf32be = { type: "_utf32", isLE: false };
-    exports.ucs4le = "utf32le";
-    exports.ucs4be = "utf32be";
+    exports2.utf32le = { type: "_utf32", isLE: true };
+    exports2.utf32be = { type: "_utf32", isLE: false };
+    exports2.ucs4le = "utf32le";
+    exports2.ucs4be = "utf32be";
     Utf32Codec.prototype.encoder = Utf32Encoder;
     Utf32Codec.prototype.decoder = Utf32Decoder;
     function Utf32Encoder(options, codec2) {
@@ -2602,8 +2597,8 @@ var require_utf32 = __commonJS({
     Utf32Decoder.prototype.end = function() {
       this.overflow.length = 0;
     };
-    exports.utf32 = Utf32AutoCodec;
-    exports.ucs4 = "utf32";
+    exports2.utf32 = Utf32AutoCodec;
+    exports2.ucs4 = "utf32";
     function Utf32AutoCodec(options, iconv) {
       this.iconv = iconv;
     }
@@ -2699,10 +2694,10 @@ var require_utf32 = __commonJS({
 
 // node_modules/iconv-lite/encodings/utf16.js
 var require_utf16 = __commonJS({
-  "node_modules/iconv-lite/encodings/utf16.js"(exports) {
+  "node_modules/iconv-lite/encodings/utf16.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
-    exports.utf16be = Utf16BECodec;
+    exports2.utf16be = Utf16BECodec;
     function Utf16BECodec() {
     }
     Utf16BECodec.prototype.encoder = Utf16BEEncoder;
@@ -2744,7 +2739,7 @@ var require_utf16 = __commonJS({
     Utf16BEDecoder.prototype.end = function() {
       this.overflowByte = -1;
     };
-    exports.utf16 = Utf16Codec;
+    exports2.utf16 = Utf16Codec;
     function Utf16Codec(codecOptions, iconv) {
       this.iconv = iconv;
     }
@@ -2833,11 +2828,11 @@ var require_utf16 = __commonJS({
 
 // node_modules/iconv-lite/encodings/utf7.js
 var require_utf7 = __commonJS({
-  "node_modules/iconv-lite/encodings/utf7.js"(exports) {
+  "node_modules/iconv-lite/encodings/utf7.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
-    exports.utf7 = Utf7Codec;
-    exports.unicode11utf7 = "utf7";
+    exports2.utf7 = Utf7Codec;
+    exports2.unicode11utf7 = "utf7";
     function Utf7Codec(codecOptions, iconv) {
       this.iconv = iconv;
     }
@@ -2914,7 +2909,7 @@ var require_utf7 = __commonJS({
       this.base64Accum = "";
       return res;
     };
-    exports.utf7imap = Utf7IMAPCodec;
+    exports2.utf7imap = Utf7IMAPCodec;
     function Utf7IMAPCodec(codecOptions, iconv) {
       this.iconv = iconv;
     }
@@ -3034,10 +3029,10 @@ var require_utf7 = __commonJS({
 
 // node_modules/iconv-lite/encodings/sbcs-codec.js
 var require_sbcs_codec = __commonJS({
-  "node_modules/iconv-lite/encodings/sbcs-codec.js"(exports) {
+  "node_modules/iconv-lite/encodings/sbcs-codec.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
-    exports._sbcs = SBCSCodec;
+    exports2._sbcs = SBCSCodec;
     function SBCSCodec(codecOptions, iconv) {
       if (!codecOptions)
         throw new Error("SBCS codec is called without the data.");
@@ -3090,9 +3085,9 @@ var require_sbcs_codec = __commonJS({
 
 // node_modules/iconv-lite/encodings/sbcs-data.js
 var require_sbcs_data = __commonJS({
-  "node_modules/iconv-lite/encodings/sbcs-data.js"(exports, module) {
+  "node_modules/iconv-lite/encodings/sbcs-data.js"(exports2, module2) {
     "use strict";
-    module.exports = {
+    module2.exports = {
       // Not supported by iconv, not sure why.
       "10029": "maccenteuro",
       "maccenteuro": {
@@ -3243,9 +3238,9 @@ var require_sbcs_data = __commonJS({
 
 // node_modules/iconv-lite/encodings/sbcs-data-generated.js
 var require_sbcs_data_generated = __commonJS({
-  "node_modules/iconv-lite/encodings/sbcs-data-generated.js"(exports, module) {
+  "node_modules/iconv-lite/encodings/sbcs-data-generated.js"(exports2, module2) {
     "use strict";
-    module.exports = {
+    module2.exports = {
       "437": "cp437",
       "737": "cp737",
       "775": "cp775",
@@ -3698,10 +3693,10 @@ var require_sbcs_data_generated = __commonJS({
 
 // node_modules/iconv-lite/encodings/dbcs-codec.js
 var require_dbcs_codec = __commonJS({
-  "node_modules/iconv-lite/encodings/dbcs-codec.js"(exports) {
+  "node_modules/iconv-lite/encodings/dbcs-codec.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
-    exports._dbcs = DBCSCodec;
+    exports2._dbcs = DBCSCodec;
     var UNASSIGNED = -1;
     var GB18030_CODE = -2;
     var SEQ_START = -10;
@@ -4115,8 +4110,8 @@ var require_dbcs_codec = __commonJS({
 
 // node_modules/iconv-lite/encodings/tables/shiftjis.json
 var require_shiftjis = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/shiftjis.json"(exports, module) {
-    module.exports = [
+  "node_modules/iconv-lite/encodings/tables/shiftjis.json"(exports2, module2) {
+    module2.exports = [
       ["0", "\0", 128],
       ["a1", "\uFF61", 62],
       ["8140", "\u3000\u3001\u3002\uFF0C\uFF0E\u30FB\uFF1A\uFF1B\uFF1F\uFF01\u309B\u309C\xB4\uFF40\xA8\uFF3E\uFFE3\uFF3F\u30FD\u30FE\u309D\u309E\u3003\u4EDD\u3005\u3006\u3007\u30FC\u2015\u2010\uFF0F\uFF3C\uFF5E\u2225\uFF5C\u2026\u2025\u2018\u2019\u201C\u201D\uFF08\uFF09\u3014\u3015\uFF3B\uFF3D\uFF5B\uFF5D\u3008", 9, "\uFF0B\uFF0D\xB1\xD7"],
@@ -4246,8 +4241,8 @@ var require_shiftjis = __commonJS({
 
 // node_modules/iconv-lite/encodings/tables/eucjp.json
 var require_eucjp = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/eucjp.json"(exports, module) {
-    module.exports = [
+  "node_modules/iconv-lite/encodings/tables/eucjp.json"(exports2, module2) {
+    module2.exports = [
       ["0", "\0", 127],
       ["8ea1", "\uFF61", 62],
       ["a1a1", "\u3000\u3001\u3002\uFF0C\uFF0E\u30FB\uFF1A\uFF1B\uFF1F\uFF01\u309B\u309C\xB4\uFF40\xA8\uFF3E\uFFE3\uFF3F\u30FD\u30FE\u309D\u309E\u3003\u4EDD\u3005\u3006\u3007\u30FC\u2015\u2010\uFF0F\uFF3C\uFF5E\u2225\uFF5C\u2026\u2025\u2018\u2019\u201C\u201D\uFF08\uFF09\u3014\u3015\uFF3B\uFF3D\uFF5B\uFF5D\u3008", 9, "\uFF0B\uFF0D\xB1\xD7\xF7\uFF1D\u2260\uFF1C\uFF1E\u2266\u2267\u221E\u2234\u2642\u2640\xB0\u2032\u2033\u2103\uFFE5\uFF04\uFFE0\uFFE1\uFF05\uFF03\uFF06\uFF0A\uFF20\xA7\u2606\u2605\u25CB\u25CF\u25CE\u25C7"],
@@ -4434,8 +4429,8 @@ var require_eucjp = __commonJS({
 
 // node_modules/iconv-lite/encodings/tables/cp936.json
 var require_cp936 = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/cp936.json"(exports, module) {
-    module.exports = [
+  "node_modules/iconv-lite/encodings/tables/cp936.json"(exports2, module2) {
+    module2.exports = [
       ["0", "\0", 127, "\u20AC"],
       ["8140", "\u4E02\u4E04\u4E05\u4E06\u4E0F\u4E12\u4E17\u4E1F\u4E20\u4E21\u4E23\u4E26\u4E29\u4E2E\u4E2F\u4E31\u4E33\u4E35\u4E37\u4E3C\u4E40\u4E41\u4E42\u4E44\u4E46\u4E4A\u4E51\u4E55\u4E57\u4E5A\u4E5B\u4E62\u4E63\u4E64\u4E65\u4E67\u4E68\u4E6A", 5, "\u4E72\u4E74", 9, "\u4E7F", 6, "\u4E87\u4E8A"],
       ["8180", "\u4E90\u4E96\u4E97\u4E99\u4E9C\u4E9D\u4E9E\u4EA3\u4EAA\u4EAF\u4EB0\u4EB1\u4EB4\u4EB6\u4EB7\u4EB8\u4EB9\u4EBC\u4EBD\u4EBE\u4EC8\u4ECC\u4ECF\u4ED0\u4ED2\u4EDA\u4EDB\u4EDC\u4EE0\u4EE2\u4EE6\u4EE7\u4EE9\u4EED\u4EEE\u4EEF\u4EF1\u4EF4\u4EF8\u4EF9\u4EFA\u4EFC\u4EFE\u4F00\u4F02", 6, "\u4F0B\u4F0C\u4F12", 4, "\u4F1C\u4F1D\u4F21\u4F23\u4F28\u4F29\u4F2C\u4F2D\u4F2E\u4F31\u4F33\u4F35\u4F37\u4F39\u4F3B\u4F3E", 4, "\u4F44\u4F45\u4F47", 5, "\u4F52\u4F54\u4F56\u4F61\u4F62\u4F66\u4F68\u4F6A\u4F6B\u4F6D\u4F6E\u4F71\u4F72\u4F75\u4F77\u4F78\u4F79\u4F7A\u4F7D\u4F80\u4F81\u4F82\u4F85\u4F86\u4F87\u4F8A\u4F8C\u4F8E\u4F90\u4F92\u4F93\u4F95\u4F96\u4F98\u4F99\u4F9A\u4F9C\u4F9E\u4F9F\u4FA1\u4FA2"],
@@ -4704,8 +4699,8 @@ var require_cp936 = __commonJS({
 
 // node_modules/iconv-lite/encodings/tables/gbk-added.json
 var require_gbk_added = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/gbk-added.json"(exports, module) {
-    module.exports = [
+  "node_modules/iconv-lite/encodings/tables/gbk-added.json"(exports2, module2) {
+    module2.exports = [
       ["a140", "\uE4C6", 62],
       ["a180", "\uE505", 32],
       ["a240", "\uE526", 62],
@@ -4766,15 +4761,15 @@ var require_gbk_added = __commonJS({
 
 // node_modules/iconv-lite/encodings/tables/gb18030-ranges.json
 var require_gb18030_ranges = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/gb18030-ranges.json"(exports, module) {
-    module.exports = { uChars: [128, 165, 169, 178, 184, 216, 226, 235, 238, 244, 248, 251, 253, 258, 276, 284, 300, 325, 329, 334, 364, 463, 465, 467, 469, 471, 473, 475, 477, 506, 594, 610, 712, 716, 730, 930, 938, 962, 970, 1026, 1104, 1106, 8209, 8215, 8218, 8222, 8231, 8241, 8244, 8246, 8252, 8365, 8452, 8454, 8458, 8471, 8482, 8556, 8570, 8596, 8602, 8713, 8720, 8722, 8726, 8731, 8737, 8740, 8742, 8748, 8751, 8760, 8766, 8777, 8781, 8787, 8802, 8808, 8816, 8854, 8858, 8870, 8896, 8979, 9322, 9372, 9548, 9588, 9616, 9622, 9634, 9652, 9662, 9672, 9676, 9680, 9702, 9735, 9738, 9793, 9795, 11906, 11909, 11913, 11917, 11928, 11944, 11947, 11951, 11956, 11960, 11964, 11979, 12284, 12292, 12312, 12319, 12330, 12351, 12436, 12447, 12535, 12543, 12586, 12842, 12850, 12964, 13200, 13215, 13218, 13253, 13263, 13267, 13270, 13384, 13428, 13727, 13839, 13851, 14617, 14703, 14801, 14816, 14964, 15183, 15471, 15585, 16471, 16736, 17208, 17325, 17330, 17374, 17623, 17997, 18018, 18212, 18218, 18301, 18318, 18760, 18811, 18814, 18820, 18823, 18844, 18848, 18872, 19576, 19620, 19738, 19887, 40870, 59244, 59336, 59367, 59413, 59417, 59423, 59431, 59437, 59443, 59452, 59460, 59478, 59493, 63789, 63866, 63894, 63976, 63986, 64016, 64018, 64021, 64025, 64034, 64037, 64042, 65074, 65093, 65107, 65112, 65127, 65132, 65375, 65510, 65536], gbChars: [0, 36, 38, 45, 50, 81, 89, 95, 96, 100, 103, 104, 105, 109, 126, 133, 148, 172, 175, 179, 208, 306, 307, 308, 309, 310, 311, 312, 313, 341, 428, 443, 544, 545, 558, 741, 742, 749, 750, 805, 819, 820, 7922, 7924, 7925, 7927, 7934, 7943, 7944, 7945, 7950, 8062, 8148, 8149, 8152, 8164, 8174, 8236, 8240, 8262, 8264, 8374, 8380, 8381, 8384, 8388, 8390, 8392, 8393, 8394, 8396, 8401, 8406, 8416, 8419, 8424, 8437, 8439, 8445, 8482, 8485, 8496, 8521, 8603, 8936, 8946, 9046, 9050, 9063, 9066, 9076, 9092, 9100, 9108, 9111, 9113, 9131, 9162, 9164, 9218, 9219, 11329, 11331, 11334, 11336, 11346, 11361, 11363, 11366, 11370, 11372, 11375, 11389, 11682, 11686, 11687, 11692, 11694, 11714, 11716, 11723, 11725, 11730, 11736, 11982, 11989, 12102, 12336, 12348, 12350, 12384, 12393, 12395, 12397, 12510, 12553, 12851, 12962, 12973, 13738, 13823, 13919, 13933, 14080, 14298, 14585, 14698, 15583, 15847, 16318, 16434, 16438, 16481, 16729, 17102, 17122, 17315, 17320, 17402, 17418, 17859, 17909, 17911, 17915, 17916, 17936, 17939, 17961, 18664, 18703, 18814, 18962, 19043, 33469, 33470, 33471, 33484, 33485, 33490, 33497, 33501, 33505, 33513, 33520, 33536, 33550, 37845, 37921, 37948, 38029, 38038, 38064, 38065, 38066, 38069, 38075, 38076, 38078, 39108, 39109, 39113, 39114, 39115, 39116, 39265, 39394, 189e3] };
+  "node_modules/iconv-lite/encodings/tables/gb18030-ranges.json"(exports2, module2) {
+    module2.exports = { uChars: [128, 165, 169, 178, 184, 216, 226, 235, 238, 244, 248, 251, 253, 258, 276, 284, 300, 325, 329, 334, 364, 463, 465, 467, 469, 471, 473, 475, 477, 506, 594, 610, 712, 716, 730, 930, 938, 962, 970, 1026, 1104, 1106, 8209, 8215, 8218, 8222, 8231, 8241, 8244, 8246, 8252, 8365, 8452, 8454, 8458, 8471, 8482, 8556, 8570, 8596, 8602, 8713, 8720, 8722, 8726, 8731, 8737, 8740, 8742, 8748, 8751, 8760, 8766, 8777, 8781, 8787, 8802, 8808, 8816, 8854, 8858, 8870, 8896, 8979, 9322, 9372, 9548, 9588, 9616, 9622, 9634, 9652, 9662, 9672, 9676, 9680, 9702, 9735, 9738, 9793, 9795, 11906, 11909, 11913, 11917, 11928, 11944, 11947, 11951, 11956, 11960, 11964, 11979, 12284, 12292, 12312, 12319, 12330, 12351, 12436, 12447, 12535, 12543, 12586, 12842, 12850, 12964, 13200, 13215, 13218, 13253, 13263, 13267, 13270, 13384, 13428, 13727, 13839, 13851, 14617, 14703, 14801, 14816, 14964, 15183, 15471, 15585, 16471, 16736, 17208, 17325, 17330, 17374, 17623, 17997, 18018, 18212, 18218, 18301, 18318, 18760, 18811, 18814, 18820, 18823, 18844, 18848, 18872, 19576, 19620, 19738, 19887, 40870, 59244, 59336, 59367, 59413, 59417, 59423, 59431, 59437, 59443, 59452, 59460, 59478, 59493, 63789, 63866, 63894, 63976, 63986, 64016, 64018, 64021, 64025, 64034, 64037, 64042, 65074, 65093, 65107, 65112, 65127, 65132, 65375, 65510, 65536], gbChars: [0, 36, 38, 45, 50, 81, 89, 95, 96, 100, 103, 104, 105, 109, 126, 133, 148, 172, 175, 179, 208, 306, 307, 308, 309, 310, 311, 312, 313, 341, 428, 443, 544, 545, 558, 741, 742, 749, 750, 805, 819, 820, 7922, 7924, 7925, 7927, 7934, 7943, 7944, 7945, 7950, 8062, 8148, 8149, 8152, 8164, 8174, 8236, 8240, 8262, 8264, 8374, 8380, 8381, 8384, 8388, 8390, 8392, 8393, 8394, 8396, 8401, 8406, 8416, 8419, 8424, 8437, 8439, 8445, 8482, 8485, 8496, 8521, 8603, 8936, 8946, 9046, 9050, 9063, 9066, 9076, 9092, 9100, 9108, 9111, 9113, 9131, 9162, 9164, 9218, 9219, 11329, 11331, 11334, 11336, 11346, 11361, 11363, 11366, 11370, 11372, 11375, 11389, 11682, 11686, 11687, 11692, 11694, 11714, 11716, 11723, 11725, 11730, 11736, 11982, 11989, 12102, 12336, 12348, 12350, 12384, 12393, 12395, 12397, 12510, 12553, 12851, 12962, 12973, 13738, 13823, 13919, 13933, 14080, 14298, 14585, 14698, 15583, 15847, 16318, 16434, 16438, 16481, 16729, 17102, 17122, 17315, 17320, 17402, 17418, 17859, 17909, 17911, 17915, 17916, 17936, 17939, 17961, 18664, 18703, 18814, 18962, 19043, 33469, 33470, 33471, 33484, 33485, 33490, 33497, 33501, 33505, 33513, 33520, 33536, 33550, 37845, 37921, 37948, 38029, 38038, 38064, 38065, 38066, 38069, 38075, 38076, 38078, 39108, 39109, 39113, 39114, 39115, 39116, 39265, 39394, 189e3] };
   }
 });
 
 // node_modules/iconv-lite/encodings/tables/cp949.json
 var require_cp949 = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/cp949.json"(exports, module) {
-    module.exports = [
+  "node_modules/iconv-lite/encodings/tables/cp949.json"(exports2, module2) {
+    module2.exports = [
       ["0", "\0", 127],
       ["8141", "\uAC02\uAC03\uAC05\uAC06\uAC0B", 4, "\uAC18\uAC1E\uAC1F\uAC21\uAC22\uAC23\uAC25", 6, "\uAC2E\uAC32\uAC33\uAC34"],
       ["8161", "\uAC35\uAC36\uAC37\uAC3A\uAC3B\uAC3D\uAC3E\uAC3F\uAC41", 9, "\uAC4C\uAC4E", 5, "\uAC55"],
@@ -5052,8 +5047,8 @@ var require_cp949 = __commonJS({
 
 // node_modules/iconv-lite/encodings/tables/cp950.json
 var require_cp950 = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/cp950.json"(exports, module) {
-    module.exports = [
+  "node_modules/iconv-lite/encodings/tables/cp950.json"(exports2, module2) {
+    module2.exports = [
       ["0", "\0", 127],
       ["a140", "\u3000\uFF0C\u3001\u3002\uFF0E\u2027\uFF1B\uFF1A\uFF1F\uFF01\uFE30\u2026\u2025\uFE50\uFE51\uFE52\xB7\uFE54\uFE55\uFE56\uFE57\uFF5C\u2013\uFE31\u2014\uFE33\u2574\uFE34\uFE4F\uFF08\uFF09\uFE35\uFE36\uFF5B\uFF5D\uFE37\uFE38\u3014\u3015\uFE39\uFE3A\u3010\u3011\uFE3B\uFE3C\u300A\u300B\uFE3D\uFE3E\u3008\u3009\uFE3F\uFE40\u300C\u300D\uFE41\uFE42\u300E\u300F\uFE43\uFE44\uFE59\uFE5A"],
       ["a1a1", "\uFE5B\uFE5C\uFE5D\uFE5E\u2018\u2019\u201C\u201D\u301D\u301E\u2035\u2032\uFF03\uFF06\uFF0A\u203B\xA7\u3003\u25CB\u25CF\u25B3\u25B2\u25CE\u2606\u2605\u25C7\u25C6\u25A1\u25A0\u25BD\u25BC\u32A3\u2105\xAF\uFFE3\uFF3F\u02CD\uFE49\uFE4A\uFE4D\uFE4E\uFE4B\uFE4C\uFE5F\uFE60\uFE61\uFF0B\uFF0D\xD7\xF7\xB1\u221A\uFF1C\uFF1E\uFF1D\u2266\u2267\u2260\u221E\u2252\u2261\uFE62", 4, "\uFF5E\u2229\u222A\u22A5\u2220\u221F\u22BF\u33D2\u33D1\u222B\u222E\u2235\u2234\u2640\u2642\u2295\u2299\u2191\u2193\u2190\u2192\u2196\u2197\u2199\u2198\u2225\u2223\uFF0F"],
@@ -5235,8 +5230,8 @@ var require_cp950 = __commonJS({
 
 // node_modules/iconv-lite/encodings/tables/big5-added.json
 var require_big5_added = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/big5-added.json"(exports, module) {
-    module.exports = [
+  "node_modules/iconv-lite/encodings/tables/big5-added.json"(exports2, module2) {
+    module2.exports = [
       ["8740", "\u43F0\u4C32\u4603\u45A6\u4578\u{27267}\u4D77\u45B3\u{27CB1}\u4CE2\u{27CC5}\u3B95\u4736\u4744\u4C47\u4C40\u{242BF}\u{23617}\u{27352}\u{26E8B}\u{270D2}\u4C57\u{2A351}\u474F\u45DA\u4C85\u{27C6C}\u4D07\u4AA4\u46A1\u{26B23}\u7225\u{25A54}\u{21A63}\u{23E06}\u{23F61}\u664D\u56FB"],
       ["8767", "\u7D95\u591D\u{28BB9}\u3DF4\u9734\u{27BEF}\u5BDB\u{21D5E}\u5AA4\u3625\u{29EB0}\u5AD1\u5BB7\u5CFC\u676E\u8593\u{29945}\u7461\u749D\u3875\u{21D53}\u{2369E}\u{26021}\u3EEC"],
       ["87a1", "\u{258DE}\u3AF5\u7AFC\u9F97\u{24161}\u{2890D}\u{231EA}\u{20A8A}\u{2325E}\u430A\u8484\u9F96\u942F\u4930\u8613\u5896\u974A\u9218\u79D0\u7A32\u6660\u6A29\u889D\u744C\u7BC5\u6782\u7A2C\u524F\u9046\u34E6\u73C4\u{25DB9}\u74C6\u9FC7\u57B3\u492F\u544C\u4131\u{2368E}\u5818\u7A72\u{27B65}\u8B8F\u46AE\u{26E88}\u4181\u{25D99}\u7BAE\u{224BC}\u9FC8\u{224C1}\u{224C9}\u{224CC}\u9FC9\u8504\u{235BB}\u40B4\u9FCA\u44E1\u{2ADFF}\u62C1\u706E\u9FCB"],
@@ -5363,9 +5358,9 @@ var require_big5_added = __commonJS({
 
 // node_modules/iconv-lite/encodings/dbcs-data.js
 var require_dbcs_data = __commonJS({
-  "node_modules/iconv-lite/encodings/dbcs-data.js"(exports, module) {
+  "node_modules/iconv-lite/encodings/dbcs-data.js"(exports2, module2) {
     "use strict";
-    module.exports = {
+    module2.exports = {
       // == Japanese/ShiftJIS ====================================================
       // All japanese encodings are based on JIS X set of standards:
       // JIS X 0201 - Single-byte encoding of ASCII + ¥ + Kana chars at 0xA1-0xDF.
@@ -5610,7 +5605,7 @@ var require_dbcs_data = __commonJS({
 
 // node_modules/iconv-lite/encodings/index.js
 var require_encodings = __commonJS({
-  "node_modules/iconv-lite/encodings/index.js"(exports, module) {
+  "node_modules/iconv-lite/encodings/index.js"(exports2, module2) {
     "use strict";
     var modules = [
       require_internal(),
@@ -5624,12 +5619,12 @@ var require_encodings = __commonJS({
       require_dbcs_data()
     ];
     for (i = 0; i < modules.length; i++) {
-      module = modules[i];
-      for (enc in module)
-        if (Object.prototype.hasOwnProperty.call(module, enc))
-          exports[enc] = module[enc];
+      module2 = modules[i];
+      for (enc in module2)
+        if (Object.prototype.hasOwnProperty.call(module2, enc))
+          exports2[enc] = module2[enc];
     }
-    var module;
+    var module2;
     var enc;
     var i;
   }
@@ -5637,10 +5632,10 @@ var require_encodings = __commonJS({
 
 // node_modules/iconv-lite/lib/streams.js
 var require_streams = __commonJS({
-  "node_modules/iconv-lite/lib/streams.js"(exports, module) {
+  "node_modules/iconv-lite/lib/streams.js"(exports2, module2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
-    module.exports = function(stream_module) {
+    module2.exports = function(stream_module) {
       var Transform = stream_module.Transform;
       function IconvLiteEncoderStream(conv, options) {
         this.conv = conv;
@@ -5732,11 +5727,11 @@ var require_streams = __commonJS({
 
 // node_modules/iconv-lite/lib/index.js
 var require_lib = __commonJS({
-  "node_modules/iconv-lite/lib/index.js"(exports, module) {
+  "node_modules/iconv-lite/lib/index.js"(exports2, module2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     var bomHandling = require_bom_handling();
-    var iconv = module.exports;
+    var iconv = module2.exports;
     iconv.encodings = null;
     iconv.defaultCharUnicode = "\uFFFD";
     iconv.defaultCharSingleByte = "?";
@@ -5834,7 +5829,7 @@ var require_lib = __commonJS({
     };
     var stream_module;
     try {
-      stream_module = __require("stream");
+      stream_module = require("stream");
     } catch (e) {
     }
     if (stream_module && stream_module.Transform) {
@@ -5852,10 +5847,10 @@ var require_lib = __commonJS({
 
 // node_modules/needle/lib/decoder.js
 var require_decoder = __commonJS({
-  "node_modules/needle/lib/decoder.js"(exports, module) {
+  "node_modules/needle/lib/decoder.js"(exports2, module2) {
     var iconv;
-    var inherits = __require("util").inherits;
-    var stream = __require("stream");
+    var inherits = require("util").inherits;
+    var stream = require("stream");
     var regex = /(?:charset|encoding)\s*=\s*['"]? *([\w\-]+)/i;
     inherits(StreamDecoder, stream.Transform);
     function StreamDecoder(charset) {
@@ -5889,7 +5884,7 @@ var require_decoder = __commonJS({
       this.decoder.write(chunk);
       done();
     };
-    module.exports = function(charset) {
+    module2.exports = function(charset) {
       try {
         if (!iconv) iconv = require_lib();
       } catch (e) {
@@ -5904,10 +5899,10 @@ var require_decoder = __commonJS({
 
 // node_modules/needle/lib/utils.js
 var require_utils = __commonJS({
-  "node_modules/needle/lib/utils.js"(exports, module) {
-    var fs = __require("fs");
-    var url2 = __require("url");
-    var stream = __require("stream");
+  "node_modules/needle/lib/utils.js"(exports2, module2) {
+    var fs = require("fs");
+    var url2 = require("url");
+    var stream = require("stream");
     function resolve_url(href, base) {
       if (url2.URL)
         return new url2.URL(href, base);
@@ -5972,7 +5967,7 @@ var require_utils = __commonJS({
         });
       }
     }
-    module.exports = {
+    module2.exports = {
       resolve_url,
       get_env_var,
       host_and_ports_match,
@@ -5987,8 +5982,8 @@ var require_utils = __commonJS({
 
 // node_modules/needle/package.json
 var require_package = __commonJS({
-  "node_modules/needle/package.json"(exports, module) {
-    module.exports = {
+  "node_modules/needle/package.json"(exports2, module2) {
+    module2.exports = {
       name: "needle",
       version: "3.5.0",
       description: "The leanest and most handsome HTTP client in the Nodelands.",
@@ -6063,13 +6058,13 @@ var require_package = __commonJS({
 
 // node_modules/needle/lib/needle.js
 var require_needle = __commonJS({
-  "node_modules/needle/lib/needle.js"(exports, module) {
-    var fs = __require("fs");
-    var http = __require("http");
-    var https = __require("https");
-    var url2 = __require("url");
-    var stream = __require("stream");
-    var debug = __require("util").debuglog("needle");
+  "node_modules/needle/lib/needle.js"(exports2, module2) {
+    var fs = require("fs");
+    var http = require("http");
+    var https = require("https");
+    var url2 = require("url");
+    var stream = require("stream");
+    var debug = require("util").debuglog("needle");
     var stringify = require_querystring().build;
     var multipart = require_multipart();
     var auth = require_auth();
@@ -6082,14 +6077,14 @@ var require_needle = __commonJS({
     user_agent += " (Node.js " + process.version + "; " + process.platform + " " + process.arch + ")";
     var tls_options = "pfx key passphrase cert ca ciphers rejectUnauthorized secureProtocol checkServerIdentity family";
     var close_by_default = !http.Agent || http.Agent.defaultMaxSockets != Infinity;
-    var extend2 = Object.assign ? Object.assign : __require("util")._extend;
+    var extend2 = Object.assign ? Object.assign : require("util")._extend;
     var redirect_codes = [301, 302, 303, 307, 308];
     function bind_opts(fn, options) {
       return fn.bind(null, options);
     }
     var decompressors = {};
     try {
-      zlib = __require("zlib");
+      zlib = require("zlib");
       zlib_options = {
         flush: zlib.Z_SYNC_FLUSH,
         finishFlush: zlib.Z_SYNC_FLUSH
@@ -6577,7 +6572,7 @@ var require_needle = __commonJS({
       return out;
     };
     if (typeof Promise !== "undefined") {
-      module.exports = function() {
+      module2.exports = function() {
         var verb, args = [].slice.call(arguments);
         if (args[0].match(/\.|\//))
           verb = args.length > 2 ? "post" : "get";
@@ -6585,15 +6580,15 @@ var require_needle = __commonJS({
           verb = args.shift();
         if (verb.match(/get|head/i) && args.length == 2)
           args.splice(1, 0, null);
-        return new Promise(function(resolve, reject) {
-          module.exports.request(verb, args[0], args[1], args[2], function(err, resp) {
-            return err ? reject(err) : resolve(resp);
+        return new Promise(function(resolve2, reject) {
+          module2.exports.request(verb, args[0], args[1], args[2], function(err, resp) {
+            return err ? reject(err) : resolve2(resp);
           });
         });
       };
     }
-    module.exports.version = version2;
-    module.exports.defaults = function(obj) {
+    module2.exports.version = version2;
+    module2.exports.defaults = function(obj) {
       for (var key in obj) {
         var target_key = aliased.options[key] || key;
         if (defaults.hasOwnProperty(target_key) && typeof obj[key] != "undefined") {
@@ -6612,16 +6607,16 @@ var require_needle = __commonJS({
       return defaults;
     };
     "head get".split(" ").forEach(function(method) {
-      module.exports[method] = function(uri, options, callback) {
+      module2.exports[method] = function(uri, options, callback) {
         return new Needle(method, uri, options.query, options, callback).start();
       };
     });
     "post put patch delete".split(" ").forEach(function(method) {
-      module.exports[method] = function(uri, data, options, callback) {
+      module2.exports[method] = function(uri, data, options, callback) {
         return new Needle(method, uri, data, options, callback).start();
       };
     });
-    module.exports.request = function(method, uri, data, opts, callback) {
+    module2.exports.request = function(method, uri, data, opts, callback) {
       return new Needle(method, uri, data, opts, callback).start();
     };
   }
@@ -6629,17 +6624,17 @@ var require_needle = __commonJS({
 
 // node_modules/duck-duck-scrape/lib/util.js
 var require_util = __commonJS({
-  "node_modules/duck-duck-scrape/lib/util.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/util.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.parseSpiceBody = exports.ensureJSON = exports.getVQD = exports.queryString = exports.SearchTimeType = exports.SafeSearchType = exports.COMMON_HEADERS = exports.VQD_REGEX = exports.SPICE_BASE = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.parseSpiceBody = exports2.ensureJSON = exports2.getVQD = exports2.queryString = exports2.SearchTimeType = exports2.SafeSearchType = exports2.COMMON_HEADERS = exports2.VQD_REGEX = exports2.SPICE_BASE = void 0;
     var needle_1 = __importDefault(require_needle());
-    exports.SPICE_BASE = "https://duckduckgo.com/js/spice";
-    exports.VQD_REGEX = /vqd=['"](\d+-\d+(?:-\d+)?)['"]/;
-    exports.COMMON_HEADERS = {
+    exports2.SPICE_BASE = "https://duckduckgo.com/js/spice";
+    exports2.VQD_REGEX = /vqd=['"](\d+-\d+(?:-\d+)?)['"]/;
+    exports2.COMMON_HEADERS = {
       "sec-ch-ua": '"Not=A?Brand";v="8", "Chromium";v="129"',
       "sec-ch-ua-mobile": "?0",
       "sec-ch-ua-platform": '"Windows"',
@@ -6656,7 +6651,7 @@ var require_util = __commonJS({
       SafeSearchType2[SafeSearchType2["STRICT"] = 0] = "STRICT";
       SafeSearchType2[SafeSearchType2["MODERATE"] = -1] = "MODERATE";
       SafeSearchType2[SafeSearchType2["OFF"] = -2] = "OFF";
-    })(SafeSearchType = exports.SafeSearchType || (exports.SafeSearchType = {}));
+    })(SafeSearchType = exports2.SafeSearchType || (exports2.SafeSearchType = {}));
     var SearchTimeType;
     (function(SearchTimeType2) {
       SearchTimeType2["ALL"] = "a";
@@ -6664,20 +6659,20 @@ var require_util = __commonJS({
       SearchTimeType2["WEEK"] = "w";
       SearchTimeType2["MONTH"] = "m";
       SearchTimeType2["YEAR"] = "y";
-    })(SearchTimeType = exports.SearchTimeType || (exports.SearchTimeType = {}));
+    })(SearchTimeType = exports2.SearchTimeType || (exports2.SearchTimeType = {}));
     function queryString(query) {
       return new URLSearchParams(query).toString();
     }
-    exports.queryString = queryString;
+    exports2.queryString = queryString;
     async function getVQD(query, ia = "web", options) {
       try {
         const response = await (0, needle_1.default)("get", `https://duckduckgo.com/?${queryString({ q: query, ia })}`, options);
-        return exports.VQD_REGEX.exec(response.body)[1];
+        return exports2.VQD_REGEX.exec(response.body)[1];
       } catch (e) {
         throw new Error(`Failed to get the VQD for query "${query}".`);
       }
     }
-    exports.getVQD = getVQD;
+    exports2.getVQD = getVQD;
     function ensureJSON(body) {
       if (body instanceof Buffer)
         return JSON.parse(body.toString());
@@ -6685,23 +6680,23 @@ var require_util = __commonJS({
         return JSON.parse(body);
       return body;
     }
-    exports.ensureJSON = ensureJSON;
+    exports2.ensureJSON = ensureJSON;
     function parseSpiceBody(body, regex = /^ddg_spice_[\w]+\(\n?((?:.|\n)+)\n?\);?/) {
       return JSON.parse(regex.exec(body.toString())[1]);
     }
-    exports.parseSpiceBody = parseSpiceBody;
+    exports2.parseSpiceBody = parseSpiceBody;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/search/images.js
 var require_images = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/images.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/search/images.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.searchImages = exports.ImageLicense = exports.ImageColor = exports.ImageLayout = exports.ImageType = exports.ImageSize = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.searchImages = exports2.ImageLicense = exports2.ImageColor = exports2.ImageLayout = exports2.ImageType = exports2.ImageSize = void 0;
     var html_entities_1 = require_commonjs();
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
@@ -6712,7 +6707,7 @@ var require_images = __commonJS({
       ImageSize2["MEDIUM"] = "Medium";
       ImageSize2["LARGE"] = "Large";
       ImageSize2["WALLPAPER"] = "Wallpaper";
-    })(ImageSize = exports.ImageSize || (exports.ImageSize = {}));
+    })(ImageSize = exports2.ImageSize || (exports2.ImageSize = {}));
     var ImageType;
     (function(ImageType2) {
       ImageType2["ALL"] = "";
@@ -6720,14 +6715,14 @@ var require_images = __commonJS({
       ImageType2["CLIPART"] = "clipart";
       ImageType2["GIF"] = "gif";
       ImageType2["TRANSPARENT"] = "transparent";
-    })(ImageType = exports.ImageType || (exports.ImageType = {}));
+    })(ImageType = exports2.ImageType || (exports2.ImageType = {}));
     var ImageLayout;
     (function(ImageLayout2) {
       ImageLayout2["ALL"] = "";
       ImageLayout2["SQUARE"] = "Square";
       ImageLayout2["TALL"] = "Tall";
       ImageLayout2["WIDE"] = "Wide";
-    })(ImageLayout = exports.ImageLayout || (exports.ImageLayout = {}));
+    })(ImageLayout = exports2.ImageLayout || (exports2.ImageLayout = {}));
     var ImageColor;
     (function(ImageColor2) {
       ImageColor2["ALL"] = "";
@@ -6745,7 +6740,7 @@ var require_images = __commonJS({
       ImageColor2["GREY"] = "Gray";
       ImageColor2["TEAL"] = "Teal";
       ImageColor2["WHITE"] = "White";
-    })(ImageColor = exports.ImageColor || (exports.ImageColor = {}));
+    })(ImageColor = exports2.ImageColor || (exports2.ImageColor = {}));
     var ImageLicense;
     (function(ImageLicense2) {
       ImageLicense2["ALL"] = "";
@@ -6755,7 +6750,7 @@ var require_images = __commonJS({
       ImageLicense2["SHARE_COMMERCIALLY"] = "ShareCommercially";
       ImageLicense2["MODIFY"] = "Modify";
       ImageLicense2["MODIFY_COMMERCIALLY"] = "ModifyCommercially";
-    })(ImageLicense = exports.ImageLicense || (exports.ImageLicense = {}));
+    })(ImageLicense = exports2.ImageLicense || (exports2.ImageLicense = {}));
     var defaultOptions = {
       safeSearch: util_1.SafeSearchType.OFF,
       locale: "en-us",
@@ -6800,7 +6795,7 @@ var require_images = __commonJS({
         }))
       };
     }
-    exports.searchImages = searchImages;
+    exports2.searchImages = searchImages;
     function sanityCheck(options) {
       options = Object.assign({}, defaultOptions, options);
       if (!(options.safeSearch in util_1.SafeSearchType))
@@ -6832,13 +6827,13 @@ var require_images = __commonJS({
 
 // node_modules/duck-duck-scrape/lib/search/news.js
 var require_news = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/news.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/search/news.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.searchNews = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.searchNews = void 0;
     var html_entities_1 = require_commonjs();
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
@@ -6886,7 +6881,7 @@ var require_news = __commonJS({
         }))
       };
     }
-    exports.searchNews = searchNews;
+    exports2.searchNews = searchNews;
     function sanityCheck(options) {
       options = Object.assign({}, defaultOptions, options);
       if (!(options.safeSearch in util_1.SafeSearchType))
@@ -6910,13 +6905,13 @@ var require_news = __commonJS({
 
 // node_modules/duck-duck-scrape/lib/search/search.js
 var require_search = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/search.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/search/search.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.autocomplete = exports.search = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.autocomplete = exports2.search = void 0;
     var html_entities_1 = require_commonjs();
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
@@ -7066,7 +7061,7 @@ var require_search = __commonJS({
       }
       return results;
     }
-    exports.search = search2;
+    exports2.search = search2;
     function sanityCheck(options) {
       options = Object.assign({}, defaultOptions, options);
       if (!(options.safeSearch in util_1.SafeSearchType))
@@ -7099,19 +7094,19 @@ var require_search = __commonJS({
       const response = await (0, needle_1.default)("get", `https://duckduckgo.com/ac/?${(0, util_1.queryString)(queryObject)}`, needleOptions);
       return (0, util_1.ensureJSON)(response.body);
     }
-    exports.autocomplete = autocomplete;
+    exports2.autocomplete = autocomplete;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/search/videos.js
 var require_videos = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/videos.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/search/videos.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.searchVideos = exports.VideoLicense = exports.VideoDuration = exports.VideoDefinition = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.searchVideos = exports2.VideoLicense = exports2.VideoDuration = exports2.VideoDefinition = void 0;
     var html_entities_1 = require_commonjs();
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
@@ -7120,20 +7115,20 @@ var require_videos = __commonJS({
       VideoDefinition2["ANY"] = "";
       VideoDefinition2["HIGH"] = "high";
       VideoDefinition2["STANDARD"] = "standard";
-    })(VideoDefinition = exports.VideoDefinition || (exports.VideoDefinition = {}));
+    })(VideoDefinition = exports2.VideoDefinition || (exports2.VideoDefinition = {}));
     var VideoDuration;
     (function(VideoDuration2) {
       VideoDuration2["ANY"] = "";
       VideoDuration2["SHORT"] = "short";
       VideoDuration2["MEDIUM"] = "medium";
       VideoDuration2["LONG"] = "long";
-    })(VideoDuration = exports.VideoDuration || (exports.VideoDuration = {}));
+    })(VideoDuration = exports2.VideoDuration || (exports2.VideoDuration = {}));
     var VideoLicense;
     (function(VideoLicense2) {
       VideoLicense2["ANY"] = "";
       VideoLicense2["CREATIVE_COMMONS"] = "creativeCommon";
       VideoLicense2["YOUTUBE"] = "youtube";
-    })(VideoLicense = exports.VideoLicense || (exports.VideoLicense = {}));
+    })(VideoLicense = exports2.VideoLicense || (exports2.VideoLicense = {}));
     var defaultOptions = {
       safeSearch: util_1.SafeSearchType.OFF,
       locale: "en-us",
@@ -7184,7 +7179,7 @@ var require_videos = __commonJS({
         }))
       };
     }
-    exports.searchVideos = searchVideos;
+    exports2.searchVideos = searchVideos;
     function sanityCheck(options) {
       options = Object.assign({}, defaultOptions, options);
       if (!(options.safeSearch in util_1.SafeSearchType))
@@ -7214,13 +7209,13 @@ var require_videos = __commonJS({
 
 // node_modules/duck-duck-scrape/lib/spices/currency.js
 var require_currency = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/currency.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/currency.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.currency = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.currency = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function currency(from, to, amount = 1, needleOptions) {
@@ -7234,19 +7229,19 @@ var require_currency = __commonJS({
         throw new Error(result.headers.description);
       return result;
     }
-    exports.currency = currency;
+    exports2.currency = currency;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/dictionary/audio.js
 var require_audio = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/audio.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/dictionary/audio.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.dictionaryAudio = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.dictionaryAudio = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function dictionaryAudio(word, needleOptions) {
@@ -7257,19 +7252,19 @@ var require_audio = __commonJS({
         return [];
       return response.body;
     }
-    exports.dictionaryAudio = dictionaryAudio;
+    exports2.dictionaryAudio = dictionaryAudio;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/dictionary/definition.js
 var require_definition = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/definition.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/dictionary/definition.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.dictionaryDefinition = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.dictionaryDefinition = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function dictionaryDefinition(word, needleOptions) {
@@ -7281,19 +7276,19 @@ var require_definition = __commonJS({
       const result = (0, util_1.parseSpiceBody)(response.body);
       return result;
     }
-    exports.dictionaryDefinition = dictionaryDefinition;
+    exports2.dictionaryDefinition = dictionaryDefinition;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/dictionary/hyphenation.js
 var require_hyphenation = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/hyphenation.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/dictionary/hyphenation.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.dictionaryHyphenation = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.dictionaryHyphenation = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function dictionaryHyphenation(word, needleOptions) {
@@ -7304,19 +7299,19 @@ var require_hyphenation = __commonJS({
         return [];
       return response.body;
     }
-    exports.dictionaryHyphenation = dictionaryHyphenation;
+    exports2.dictionaryHyphenation = dictionaryHyphenation;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/dictionary/pronunciation.js
 var require_pronunciation = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/pronunciation.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/dictionary/pronunciation.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.dictionaryPronunciation = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.dictionaryPronunciation = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function dictionaryPronunciation(word, needleOptions) {
@@ -7327,19 +7322,19 @@ var require_pronunciation = __commonJS({
         return [];
       return response.body;
     }
-    exports.dictionaryPronunciation = dictionaryPronunciation;
+    exports2.dictionaryPronunciation = dictionaryPronunciation;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/dns.js
 var require_dns = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dns.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/dns.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.dns = exports.DNSRecordType = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.dns = exports2.DNSRecordType = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     var DNSRecordType;
@@ -7380,7 +7375,7 @@ var require_dns = __commonJS({
       DNSRecordType2["TSIG"] = "tsig";
       DNSRecordType2["TX"] = "tx";
       DNSRecordType2["TXT"] = "txt";
-    })(DNSRecordType = exports.DNSRecordType || (exports.DNSRecordType = {}));
+    })(DNSRecordType = exports2.DNSRecordType || (exports2.DNSRecordType = {}));
     async function dns(domain2, recordType = DNSRecordType.ANY, needleOptions) {
       if (!domain2)
         throw new Error("Domain cannot be empty!");
@@ -7388,19 +7383,19 @@ var require_dns = __commonJS({
       const result = (0, util_1.parseSpiceBody)(response.body);
       return result;
     }
-    exports.dns = dns;
+    exports2.dns = dns;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/emojipedia.js
 var require_emojipedia = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/emojipedia.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/emojipedia.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.emojipedia = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.emojipedia = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function emojipedia(emoji3, needleOptions) {
@@ -7410,19 +7405,19 @@ var require_emojipedia = __commonJS({
       const result = (0, util_1.parseSpiceBody)(response.body);
       return result;
     }
-    exports.emojipedia = emojipedia;
+    exports2.emojipedia = emojipedia;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/expandUrl.js
 var require_expandUrl = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/expandUrl.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/expandUrl.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.expandUrl = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.expandUrl = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function expandUrl(url2, needleOptions) {
@@ -7432,19 +7427,19 @@ var require_expandUrl = __commonJS({
       const result = (0, util_1.parseSpiceBody)(response.body);
       return result;
     }
-    exports.expandUrl = expandUrl;
+    exports2.expandUrl = expandUrl;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/forecast.js
 var require_forecast = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/forecast.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/forecast.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.forecast = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.forecast = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function forecast(query, locale = "en", needleOptions) {
@@ -7457,19 +7452,19 @@ var require_forecast = __commonJS({
         return null;
       return (0, util_1.parseSpiceBody)(response.body, /ddg_spice_[\w]+\(\n?((?:.|\n)+)\n?\);?/);
     }
-    exports.forecast = forecast;
+    exports2.forecast = forecast;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/statista.js
 var require_statista = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/statista.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/statista.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.statista = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.statista = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function statista(query, needleOptions) {
@@ -7477,19 +7472,19 @@ var require_statista = __commonJS({
       const result = (0, util_1.parseSpiceBody)(response.body);
       return result;
     }
-    exports.statista = statista;
+    exports2.statista = statista;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/stocks.js
 var require_stocks = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/stocks.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/stocks.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.stocks = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.stocks = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function stocks(symbol2, needleOptions) {
@@ -7501,19 +7496,19 @@ var require_stocks = __commonJS({
         throw new Error(`${result.Outcome}: ${result.Message}`);
       return result;
     }
-    exports.stocks = stocks;
+    exports2.stocks = stocks;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/thesaurus.js
 var require_thesaurus = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/thesaurus.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/thesaurus.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.thesaurus = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.thesaurus = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function thesaurus(word, needleOptions) {
@@ -7525,19 +7520,19 @@ var require_thesaurus = __commonJS({
       const result = (0, util_1.parseSpiceBody)(response.body);
       return result;
     }
-    exports.thesaurus = thesaurus;
+    exports2.thesaurus = thesaurus;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/spices/time.js
 var require_time = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/time.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/spices/time.js"(exports2) {
     "use strict";
-    var __importDefault = exports && exports.__importDefault || function(mod) {
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.time = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.time = void 0;
     var needle_1 = __importDefault(require_needle());
     var util_1 = require_util();
     async function time3(query, needleOptions) {
@@ -7546,15 +7541,15 @@ var require_time = __commonJS({
       const response = await (0, needle_1.default)("get", `${util_1.SPICE_BASE}/time/${query}`, needleOptions);
       return (0, util_1.parseSpiceBody)(response.body);
     }
-    exports.time = time3;
+    exports2.time = time3;
   }
 });
 
 // node_modules/duck-duck-scrape/lib/index.js
 var require_lib2 = __commonJS({
-  "node_modules/duck-duck-scrape/lib/index.js"(exports) {
+  "node_modules/duck-duck-scrape/lib/index.js"(exports2) {
     "use strict";
-    var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       Object.defineProperty(o, k2, { enumerable: true, get: function() {
         return m[k];
@@ -7563,36 +7558,36 @@ var require_lib2 = __commonJS({
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
     }));
-    var __exportStar = exports && exports.__exportStar || function(m, exports2) {
-      for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p)) __createBinding(exports2, m, p);
+    var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
+      for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.SearchTimeType = exports.SafeSearchType = exports.getVQD = void 0;
-    __exportStar(require_images(), exports);
-    __exportStar(require_news(), exports);
-    __exportStar(require_search(), exports);
-    __exportStar(require_videos(), exports);
-    __exportStar(require_currency(), exports);
-    __exportStar(require_audio(), exports);
-    __exportStar(require_definition(), exports);
-    __exportStar(require_hyphenation(), exports);
-    __exportStar(require_pronunciation(), exports);
-    __exportStar(require_dns(), exports);
-    __exportStar(require_emojipedia(), exports);
-    __exportStar(require_expandUrl(), exports);
-    __exportStar(require_forecast(), exports);
-    __exportStar(require_statista(), exports);
-    __exportStar(require_stocks(), exports);
-    __exportStar(require_thesaurus(), exports);
-    __exportStar(require_time(), exports);
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.SearchTimeType = exports2.SafeSearchType = exports2.getVQD = void 0;
+    __exportStar(require_images(), exports2);
+    __exportStar(require_news(), exports2);
+    __exportStar(require_search(), exports2);
+    __exportStar(require_videos(), exports2);
+    __exportStar(require_currency(), exports2);
+    __exportStar(require_audio(), exports2);
+    __exportStar(require_definition(), exports2);
+    __exportStar(require_hyphenation(), exports2);
+    __exportStar(require_pronunciation(), exports2);
+    __exportStar(require_dns(), exports2);
+    __exportStar(require_emojipedia(), exports2);
+    __exportStar(require_expandUrl(), exports2);
+    __exportStar(require_forecast(), exports2);
+    __exportStar(require_statista(), exports2);
+    __exportStar(require_stocks(), exports2);
+    __exportStar(require_thesaurus(), exports2);
+    __exportStar(require_time(), exports2);
     var util_1 = require_util();
-    Object.defineProperty(exports, "getVQD", { enumerable: true, get: function() {
+    Object.defineProperty(exports2, "getVQD", { enumerable: true, get: function() {
       return util_1.getVQD;
     } });
-    Object.defineProperty(exports, "SafeSearchType", { enumerable: true, get: function() {
+    Object.defineProperty(exports2, "SafeSearchType", { enumerable: true, get: function() {
       return util_1.SafeSearchType;
     } });
-    Object.defineProperty(exports, "SearchTimeType", { enumerable: true, get: function() {
+    Object.defineProperty(exports2, "SearchTimeType", { enumerable: true, get: function() {
       return util_1.SearchTimeType;
     } });
   }
@@ -7600,14 +7595,14 @@ var require_lib2 = __commonJS({
 
 // node_modules/@perplexity-ai/perplexity_ai/internal/tslib.js
 var require_tslib = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/internal/tslib.js"(exports) {
+  "node_modules/@perplexity-ai/perplexity_ai/internal/tslib.js"(exports2) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.__setModuleDefault = exports.__createBinding = void 0;
-    exports.__classPrivateFieldSet = __classPrivateFieldSet2;
-    exports.__classPrivateFieldGet = __classPrivateFieldGet2;
-    exports.__importStar = __importStar;
-    exports.__exportStar = __exportStar;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.__setModuleDefault = exports2.__createBinding = void 0;
+    exports2.__classPrivateFieldSet = __classPrivateFieldSet2;
+    exports2.__classPrivateFieldGet = __classPrivateFieldGet2;
+    exports2.__importStar = __importStar;
+    exports2.__exportStar = __exportStar;
     function __classPrivateFieldSet2(receiver, state, value, kind, f) {
       if (kind === "m")
         throw new TypeError("Private method is not writable");
@@ -7642,13 +7637,13 @@ var require_tslib = __commonJS({
         k2 = k;
       o[k2] = m[k];
     };
-    exports.__createBinding = __createBinding;
+    exports2.__createBinding = __createBinding;
     var __setModuleDefault = Object.create ? function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
     } : function(o, v) {
       o["default"] = v;
     };
-    exports.__setModuleDefault = __setModuleDefault;
+    exports2.__setModuleDefault = __setModuleDefault;
     var ownKeys = function(o) {
       ownKeys = Object.getOwnPropertyNames || function(o2) {
         var ar = [];
@@ -7681,11 +7676,11 @@ var require_tslib = __commonJS({
 
 // node_modules/@perplexity-ai/perplexity_ai/internal/errors.js
 var require_errors = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/internal/errors.js"(exports) {
+  "node_modules/@perplexity-ai/perplexity_ai/internal/errors.js"(exports2) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.castToError = void 0;
-    exports.isAbortError = isAbortError2;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.castToError = void 0;
+    exports2.isAbortError = isAbortError2;
     function isAbortError2(err) {
       return typeof err === "object" && err !== null && // Spec-compliant fetch implementations
       ("name" in err && err.name === "AbortError" || // Expo fetch
@@ -7715,20 +7710,20 @@ var require_errors = __commonJS({
       }
       return new Error(err);
     };
-    exports.castToError = castToError2;
+    exports2.castToError = castToError2;
   }
 });
 
 // node_modules/@perplexity-ai/perplexity_ai/core/error.js
 var require_error = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/core/error.js"(exports) {
+  "node_modules/@perplexity-ai/perplexity_ai/core/error.js"(exports2) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.InternalServerError = exports.RateLimitError = exports.UnprocessableEntityError = exports.ConflictError = exports.NotFoundError = exports.PermissionDeniedError = exports.AuthenticationError = exports.BadRequestError = exports.APIConnectionTimeoutError = exports.APIConnectionError = exports.APIUserAbortError = exports.APIError = exports.PerplexityError = void 0;
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.InternalServerError = exports2.RateLimitError = exports2.UnprocessableEntityError = exports2.ConflictError = exports2.NotFoundError = exports2.PermissionDeniedError = exports2.AuthenticationError = exports2.BadRequestError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIUserAbortError = exports2.APIError = exports2.PerplexityError = void 0;
     var errors_1 = require_errors();
     var PerplexityError2 = class extends Error {
     };
-    exports.PerplexityError = PerplexityError2;
+    exports2.PerplexityError = PerplexityError2;
     var APIError2 = class _APIError extends PerplexityError2 {
       constructor(status, error51, message, headers) {
         super(`${_APIError.makeMessage(status, error51, message)}`);
@@ -7781,13 +7776,13 @@ var require_error = __commonJS({
         return new _APIError(status, error51, message, headers);
       }
     };
-    exports.APIError = APIError2;
+    exports2.APIError = APIError2;
     var APIUserAbortError2 = class extends APIError2 {
       constructor({ message } = {}) {
         super(void 0, void 0, message || "Request was aborted.", void 0);
       }
     };
-    exports.APIUserAbortError = APIUserAbortError2;
+    exports2.APIUserAbortError = APIUserAbortError2;
     var APIConnectionError3 = class extends APIError2 {
       constructor({ message, cause }) {
         super(void 0, void 0, message || "Connection error.", void 0);
@@ -7795,47 +7790,47 @@ var require_error = __commonJS({
           this.cause = cause;
       }
     };
-    exports.APIConnectionError = APIConnectionError3;
+    exports2.APIConnectionError = APIConnectionError3;
     var APIConnectionTimeoutError3 = class extends APIConnectionError3 {
       constructor({ message } = {}) {
         super({ message: message ?? "Request timed out." });
       }
     };
-    exports.APIConnectionTimeoutError = APIConnectionTimeoutError3;
+    exports2.APIConnectionTimeoutError = APIConnectionTimeoutError3;
     var BadRequestError2 = class extends APIError2 {
     };
-    exports.BadRequestError = BadRequestError2;
+    exports2.BadRequestError = BadRequestError2;
     var AuthenticationError2 = class extends APIError2 {
     };
-    exports.AuthenticationError = AuthenticationError2;
+    exports2.AuthenticationError = AuthenticationError2;
     var PermissionDeniedError2 = class extends APIError2 {
     };
-    exports.PermissionDeniedError = PermissionDeniedError2;
+    exports2.PermissionDeniedError = PermissionDeniedError2;
     var NotFoundError2 = class extends APIError2 {
     };
-    exports.NotFoundError = NotFoundError2;
+    exports2.NotFoundError = NotFoundError2;
     var ConflictError2 = class extends APIError2 {
     };
-    exports.ConflictError = ConflictError2;
+    exports2.ConflictError = ConflictError2;
     var UnprocessableEntityError2 = class extends APIError2 {
     };
-    exports.UnprocessableEntityError = UnprocessableEntityError2;
+    exports2.UnprocessableEntityError = UnprocessableEntityError2;
     var RateLimitError3 = class extends APIError2 {
     };
-    exports.RateLimitError = RateLimitError3;
+    exports2.RateLimitError = RateLimitError3;
     var InternalServerError3 = class extends APIError2 {
     };
-    exports.InternalServerError = InternalServerError3;
+    exports2.InternalServerError = InternalServerError3;
   }
 });
 
 // node_modules/@perplexity-ai/perplexity_ai/error.js
 var require_error2 = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/error.js"(exports) {
+  "node_modules/@perplexity-ai/perplexity_ai/error.js"(exports2) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
+    Object.defineProperty(exports2, "__esModule", { value: true });
     var tslib_1 = require_tslib();
-    tslib_1.__exportStar(require_error(), exports);
+    tslib_1.__exportStar(require_error(), exports2);
   }
 });
 
@@ -22359,6 +22354,10 @@ var WebSearchInputSchema = external_exports.strictObject({
   allowed_domains: external_exports.array(external_exports.string()).optional(),
   blocked_domains: external_exports.array(external_exports.string()).optional()
 });
+var WebFetchInputSchema = external_exports.strictObject({
+  url: external_exports.string().url("Invalid URL format"),
+  prompt: external_exports.string().min(1, "Prompt is required")
+});
 async function readStdin(schema) {
   const chunks = [];
   for await (const chunk of process.stdin) {
@@ -22397,25 +22396,143 @@ function formatSearchResults(results, provider) {
 }
 
 // src/lib/logger.ts
-var currentLevel = process.env.LOG_LEVEL || "info";
 var LEVEL_ORDER = {
   debug: 0,
   info: 1,
   warn: 2,
   error: 3
 };
-function log(level, message) {
-  if (LEVEL_ORDER[level] >= LEVEL_ORDER[currentLevel]) {
-    process.stderr.write(`[${level}] ${message}
+function createLogger(module2, level = "info") {
+  let currentLevel = level;
+  function log(level2, message) {
+    if (LEVEL_ORDER[level2] >= LEVEL_ORDER[currentLevel]) {
+      const timestamp = (/* @__PURE__ */ new Date()).toISOString();
+      process.stderr.write(`[${timestamp}] [${level2}:${module2}] ${message}
 `);
+    }
+  }
+  return {
+    debug: (msg) => log("debug", msg),
+    info: (msg) => log("info", msg),
+    warn: (msg) => log("warn", msg),
+    error: (msg) => log("error", msg),
+    setLevel: (newLevel) => {
+      currentLevel = newLevel;
+    }
+  };
+}
+
+// src/lib/config.ts
+var import_fs = require("fs");
+var import_path = require("path");
+var import_os = require("os");
+var ConfigSchema = external_exports.strictObject({
+  perplexity: external_exports.strictObject({
+    apiKey: external_exports.string().optional(),
+    model: external_exports.string().optional()
+  }).optional(),
+  retry: external_exports.strictObject({
+    maxRetries: external_exports.number().int().min(0).optional(),
+    baseDelay: external_exports.number().int().min(0).optional(),
+    maxDelay: external_exports.number().int().min(0).optional(),
+    timeout: external_exports.number().int().min(0).optional()
+  }).optional(),
+  logging: external_exports.strictObject({
+    level: external_exports.enum(["debug", "info", "warn", "error"]).optional()
+  }).optional()
+});
+var DEFAULTS = {
+  perplexity: { model: "sonar" },
+  retry: { maxRetries: 4, baseDelay: 1e3, maxDelay: 16e3, timeout: 3e4 },
+  logging: { level: "info" }
+};
+var ENV_MAP = {
+  "perplexity.apiKey": "WEBSEARCH_PERPLEXITY_API_KEY",
+  "perplexity.model": "WEBSEARCH_PERPLEXITY_MODEL",
+  "retry.maxRetries": "WEBSEARCH_RETRY_MAX_RETRIES",
+  "retry.baseDelay": "WEBSEARCH_RETRY_BASE_DELAY",
+  "retry.maxDelay": "WEBSEARCH_RETRY_MAX_DELAY",
+  "retry.timeout": "WEBSEARCH_RETRY_TIMEOUT",
+  "logging.level": "WEBSEARCH_LOGGING_LEVEL"
+};
+var CONFIG_PATH = (0, import_path.join)((0, import_os.homedir)(), ".config", "websearch", "config.json");
+function readConfigFile() {
+  if (!(0, import_fs.existsSync)(CONFIG_PATH)) return null;
+  try {
+    return JSON.parse((0, import_fs.readFileSync)(CONFIG_PATH, "utf-8"));
+  } catch {
+    process.stderr.write("[warn] Failed to parse config file\n");
+    return null;
   }
 }
-var logger = {
-  debug: (msg) => log("debug", msg),
-  info: (msg) => log("info", msg),
-  warn: (msg) => log("warn", msg),
-  error: (msg) => log("error", msg)
-};
+function validateFileConfig(raw) {
+  const result = ConfigSchema.safeParse(raw);
+  if (!result.success) {
+    for (const issue2 of result.error.issues) {
+      const path2 = issue2.path.join(".");
+      process.stderr.write(`[warn] Invalid config at ${path2}: ${issue2.message}
+`);
+    }
+    return {};
+  }
+  return result.data;
+}
+var NUMBER_KEYS = /* @__PURE__ */ new Set([
+  "retry.maxRetries",
+  "retry.baseDelay",
+  "retry.maxDelay",
+  "retry.timeout"
+]);
+var VALID_LEVELS = /* @__PURE__ */ new Set(["debug", "info", "warn", "error"]);
+function resolveFromEnv(key) {
+  const envName = ENV_MAP[key];
+  if (!envName) return void 0;
+  const envValue = process.env[envName];
+  if (envValue === void 0 || envValue === "") return void 0;
+  if (NUMBER_KEYS.has(key)) {
+    const num = Number(envValue);
+    if (Number.isNaN(num)) {
+      process.stderr.write(`[warn] Invalid number for ${envName}: "${envValue}"
+`);
+      return void 0;
+    }
+    return num;
+  }
+  if (key === "logging.level") {
+    if (!VALID_LEVELS.has(envValue)) {
+      process.stderr.write(`[warn] Invalid log level: "${envValue}"
+`);
+      return void 0;
+    }
+    return envValue;
+  }
+  return envValue;
+}
+function resolve(key, fileValue, defaultValue) {
+  const envValue = resolveFromEnv(key);
+  if (envValue !== void 0) return envValue;
+  if (fileValue !== void 0) return fileValue;
+  return defaultValue;
+}
+function loadConfig() {
+  const rawFile = readConfigFile();
+  const fileConfig = rawFile ? validateFileConfig(rawFile) : {};
+  return {
+    perplexity: {
+      apiKey: resolve("perplexity.apiKey", fileConfig.perplexity?.apiKey, void 0),
+      model: resolve("perplexity.model", fileConfig.perplexity?.model, DEFAULTS.perplexity.model)
+    },
+    retry: {
+      maxRetries: resolve("retry.maxRetries", fileConfig.retry?.maxRetries, DEFAULTS.retry.maxRetries),
+      baseDelay: resolve("retry.baseDelay", fileConfig.retry?.baseDelay, DEFAULTS.retry.baseDelay),
+      maxDelay: resolve("retry.maxDelay", fileConfig.retry?.maxDelay, DEFAULTS.retry.maxDelay),
+      timeout: resolve("retry.timeout", fileConfig.retry?.timeout, DEFAULTS.retry.timeout)
+    },
+    logging: {
+      level: resolve("logging.level", fileConfig.logging?.level, DEFAULTS.logging.level)
+    }
+  };
+}
 
 // node_modules/@perplexity-ai/perplexity_ai/internal/tslib.mjs
 function __classPrivateFieldSet(receiver, state, value, kind, f) {
@@ -22602,7 +22719,7 @@ var safeJSON = (text) => {
 };
 
 // node_modules/@perplexity-ai/perplexity_ai/internal/utils/sleep.mjs
-var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+var sleep = (ms) => new Promise((resolve2) => setTimeout(resolve2, ms));
 
 // node_modules/@perplexity-ai/perplexity_ai/version.mjs
 var VERSION = "0.29.0";
@@ -23308,11 +23425,11 @@ var parseLogLevel = (maybeLevel, sourceName, client) => {
 };
 function noop() {
 }
-function makeLogFn(fnLevel, logger2, logLevel) {
-  if (!logger2 || levelNumbers[fnLevel] > levelNumbers[logLevel]) {
+function makeLogFn(fnLevel, logger4, logLevel) {
+  if (!logger4 || levelNumbers[fnLevel] > levelNumbers[logLevel]) {
     return noop;
   } else {
-    return logger2[fnLevel].bind(logger2);
+    return logger4[fnLevel].bind(logger4);
   }
 }
 var noopLogger = {
@@ -23323,22 +23440,22 @@ var noopLogger = {
 };
 var cachedLoggers = /* @__PURE__ */ new WeakMap();
 function loggerFor(client) {
-  const logger2 = client.logger;
+  const logger4 = client.logger;
   const logLevel = client.logLevel ?? "off";
-  if (!logger2) {
+  if (!logger4) {
     return noopLogger;
   }
-  const cachedLogger = cachedLoggers.get(logger2);
+  const cachedLogger = cachedLoggers.get(logger4);
   if (cachedLogger && cachedLogger[0] === logLevel) {
     return cachedLogger[1];
   }
   const levelLogger = {
-    error: makeLogFn("error", logger2, logLevel),
-    warn: makeLogFn("warn", logger2, logLevel),
-    info: makeLogFn("info", logger2, logLevel),
-    debug: makeLogFn("debug", logger2, logLevel)
+    error: makeLogFn("error", logger4, logLevel),
+    warn: makeLogFn("warn", logger4, logLevel),
+    info: makeLogFn("info", logger4, logLevel),
+    debug: makeLogFn("debug", logger4, logLevel)
   };
-  cachedLoggers.set(logger2, [logLevel, levelLogger]);
+  cachedLoggers.set(logger4, [logLevel, levelLogger]);
   return levelLogger;
 }
 var formatRequestDetails = (details) => {
@@ -23372,7 +23489,7 @@ var Stream = class _Stream {
   }
   static fromSSEResponse(response, controller, client) {
     let consumed = false;
-    const logger2 = client ? loggerFor(client) : console;
+    const logger4 = client ? loggerFor(client) : console;
     async function* iterator() {
       if (consumed) {
         throw new PerplexityError("Cannot iterate over a consumed stream, use `.tee()` to split the stream.");
@@ -23394,8 +23511,8 @@ var Stream = class _Stream {
             try {
               yield JSON.parse(sse.data);
             } catch (e) {
-              logger2.error(`Could not parse message into JSON:`, sse.data);
-              logger2.error(`From chunk:`, sse.raw);
+              logger4.error(`Could not parse message into JSON:`, sse.data);
+              logger4.error(`From chunk:`, sse.raw);
               throw e;
             }
           }
@@ -23649,8 +23766,8 @@ async function defaultParseResponse(client, props) {
 var _APIPromise_client;
 var APIPromise = class _APIPromise extends Promise {
   constructor(client, responsePromise, parseResponse = defaultParseResponse) {
-    super((resolve) => {
-      resolve(null);
+    super((resolve2) => {
+      resolve2(null);
     });
     this.responsePromise = responsePromise;
     this.parseResponse = parseResponse;
@@ -24140,25 +24257,20 @@ Perplexity.Browser = Browser;
 Perplexity.Async = Async;
 
 // src/lib/perplexity.ts
-function getApiKey() {
-  const pplxKey = process.env.PPLX_API_KEY;
-  const perpKey = process.env.PERPLEXITY_API_KEY;
-  if (pplxKey) {
-    logger.debug("Using API key from PPLX_API_KEY");
-    return pplxKey;
+var logger = createLogger("perplexity");
+function getApiKey(config2) {
+  if (config2.perplexity.apiKey) {
+    logger.debug("Using API key from config");
+    return config2.perplexity.apiKey;
   }
-  if (perpKey) {
-    logger.debug("Using API key from PERPLEXITY_API_KEY");
-    return perpKey;
-  }
-  throw new Error("No API key found. Set PPLX_API_KEY or PERPLEXITY_API_KEY environment variable.");
+  throw new Error("No API key found. Set WEBSEARCH_PERPLEXITY_API_KEY or add apiKey to config file.");
 }
-function hasApiKey() {
-  return !!(process.env.PPLX_API_KEY || process.env.PERPLEXITY_API_KEY);
+function hasApiKey(config2) {
+  return !!config2.perplexity.apiKey;
 }
-async function search(query, domainFilter) {
-  const apiKey = getApiKey();
-  const model = process.env.PPLX_MODEL || "sonar";
+async function search(query, config2, domainFilter) {
+  const apiKey = getApiKey(config2);
+  const model = config2.perplexity.model;
   const client = new Perplexity({ apiKey });
   const params = {
     model,
@@ -24192,10 +24304,11 @@ async function search(query, domainFilter) {
 
 // src/lib/duckduckgo.ts
 var import_duck_duck_scrape = __toESM(require_lib2(), 1);
+var logger2 = createLogger("ddg");
 async function searchDDG(query) {
   const searchResults = await (0, import_duck_duck_scrape.search)(query);
   if (searchResults.noResults) {
-    logger.debug("DDG returned no results");
+    logger2.debug("DDG returned no results");
     return [];
   }
   return searchResults.results.map((r) => ({
@@ -24206,16 +24319,18 @@ async function searchDDG(query) {
 
 // src/lib/retry.ts
 var import_error7 = __toESM(require_error2(), 1);
-function getRetryConfig() {
+var logger3 = createLogger("retry");
+var DEFAULTS2 = { maxRetries: 4, baseDelay: 1e3, maxDelay: 16e3, timeout: 3e4 };
+function getRetryConfig(config2) {
   return {
-    maxRetries: parseInt(process.env.RETRY_MAX_RETRIES || "4", 10),
-    baseDelay: parseInt(process.env.RETRY_BASE_DELAY || "1000", 10),
-    maxDelay: parseInt(process.env.RETRY_MAX_DELAY || "16000", 10),
-    timeout: parseInt(process.env.RETRY_TIMEOUT || "30000", 10)
+    maxRetries: config2.retry.maxRetries,
+    baseDelay: config2.retry.baseDelay,
+    maxDelay: config2.retry.maxDelay,
+    timeout: config2.retry.timeout
   };
 }
 function sleep2(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
 }
 async function withTimeout(promise2, ms) {
   const controller = new AbortController();
@@ -24240,7 +24355,7 @@ function isDDGTransientError(err) {
   return false;
 }
 async function retryWithBackoff(fn, isTransient, options) {
-  const config2 = { ...getRetryConfig(), ...options };
+  const config2 = { ...DEFAULTS2, ...options };
   let lastError;
   for (let attempt = 0; attempt <= config2.maxRetries; attempt++) {
     try {
@@ -24251,7 +24366,7 @@ async function retryWithBackoff(fn, isTransient, options) {
         throw err;
       }
       const delay = Math.random() * Math.min(config2.maxDelay, config2.baseDelay * Math.pow(2, attempt));
-      logger.debug(`Retry ${attempt + 1}/${config2.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`);
+      logger3.debug(`Retry ${attempt + 1}/${config2.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`);
       await sleep2(delay);
     }
   }
@@ -24300,41 +24415,46 @@ function dedupeAndMerge(pplxResults, ddgResults) {
   return [...pplxResults, ...uniqueDdg];
 }
 async function main() {
+  const config2 = loadConfig();
+  const logger4 = createLogger("websearch", config2.logging.level);
   try {
     const parsed = await readStdin(WebSearchInputSchema);
-    logger.info(`Searching for: ${parsed.query}`);
+    logger4.info(`Searching for: ${parsed.query}`);
     validateDomainExclusivity(parsed);
     const domainFilter = buildPerplexityDomainFilter(parsed.allowed_domains, parsed.blocked_domains);
     const hasDomainFilter = !!(parsed.allowed_domains?.length || parsed.blocked_domains?.length);
     let results;
     let provider;
-    if (hasApiKey()) {
+    if (hasApiKey(config2)) {
       let pplxPartial = [];
+      const retryOpts = getRetryConfig(config2);
       try {
         const pplxResult = await retryWithBackoff(
           // Wrap search to capture partial results from any successful attempt
           async () => {
-            const result = await search(parsed.query, domainFilter);
+            const result = await search(parsed.query, config2, domainFilter);
             if (result.results.length > 0) {
               pplxPartial = result.results;
             }
             return result;
           },
-          isTransientError
+          isTransientError,
+          retryOpts
         );
         results = pplxResult.results;
         provider = "perplexity";
-        logger.debug(`Perplexity content: ${pplxResult.content}`);
+        logger4.debug(`Perplexity content: ${pplxResult.content}`);
         if (parsed.blocked_domains && parsed.blocked_domains.length > 0) {
           results = filterByDomains(results, void 0, parsed.blocked_domains);
         }
       } catch (pplxErr) {
         const pplxErrorMsg = pplxErr instanceof Error ? pplxErr.message : String(pplxErr);
-        logger.debug(`Perplexity failed, falling back to DDG: ${pplxPartial.length > 0 ? `(preserving ${pplxPartial.length} partial results) ` : ""}${pplxErrorMsg}`);
+        logger4.debug(`Perplexity failed, falling back to DDG: ${pplxPartial.length > 0 ? `(preserving ${pplxPartial.length} partial results) ` : ""}${pplxErrorMsg}`);
         try {
           const ddgResults = await retryWithBackoff(
             () => searchDDG(parsed.query),
-            isDDGTransientError
+            isDDGTransientError,
+            retryOpts
           );
           const filteredDdg = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
           results = dedupeAndMerge(pplxPartial, filteredDdg);
@@ -24349,14 +24469,15 @@ async function main() {
     } else {
       const ddgResults = await retryWithBackoff(
         () => searchDDG(parsed.query),
-        isDDGTransientError
+        isDDGTransientError,
+        getRetryConfig(config2)
       );
       results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
       provider = "duckduckgo";
     }
     process.stdout.write(formatSearchResults(results, provider));
   } catch (err) {
-    logger.error(err instanceof Error ? err.message : String(err));
+    logger4.error(err instanceof Error ? err.message : String(err));
     process.exitCode = 1;
   }
 }
