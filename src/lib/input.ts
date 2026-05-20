@@ -17,3 +17,15 @@ export async function readStdin<T>(schema: z.ZodType<T>): Promise<T> {
   const parsed = JSON.parse(raw);
   return schema.parse(parsed);
 }
+
+export function validateDomainExclusivity(input: {
+  allowed_domains?: string[];
+  blocked_domains?: string[];
+}): void {
+  const hasAllowed = input.allowed_domains && input.allowed_domains.length > 0;
+  const hasBlocked = input.blocked_domains && input.blocked_domains.length > 0;
+
+  if (hasAllowed && hasBlocked) {
+    throw new Error('Cannot specify both allowed_domains and blocked_domains in the same request.');
+  }
+}
