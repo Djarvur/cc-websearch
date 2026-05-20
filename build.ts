@@ -4,7 +4,8 @@ const commonOptions = {
   bundle: true,
   platform: 'node' as const,
   target: 'node20',
-  format: 'esm' as const,
+  format: 'cjs' as const,
+  outExtension: { '.js': '.cjs' },
   banner: { js: '#!/usr/bin/env node' },
 };
 
