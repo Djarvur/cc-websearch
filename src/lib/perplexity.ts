@@ -1,33 +1,28 @@
 import Perplexity from '@perplexity-ai/perplexity_ai';
-import { logger } from './logger.js';
+import { createLogger } from './logger.js';
+import type { ResolvedConfig } from './config.js';
 
-export function getApiKey(): string {
-  const pplxKey = process.env.PPLX_API_KEY;
-  const perpKey = process.env.PERPLEXITY_API_KEY;
+const logger = createLogger('perplexity');
 
-  if (pplxKey) {
-    logger.debug('Using API key from PPLX_API_KEY');
-    return pplxKey;
+export function getApiKey(config: ResolvedConfig): string {
+  if (config.perplexity.apiKey) {
+    logger.debug('Using API key from config');
+    return config.perplexity.apiKey;
   }
 
-  if (perpKey) {
-    logger.debug('Using API key from PERPLEXITY_API_KEY');
-    return perpKey;
-  }
-
-  throw new Error('No API key found. Set PPLX_API_KEY or PERPLEXITY_API_KEY environment variable.');
+  throw new Error('No API key found. Set WEBSEARCH_PERPLEXITY_API_KEY or add apiKey to config file.');
 }
 
-export function hasApiKey(): boolean {
-  return !!(process.env.PPLX_API_KEY || process.env.PERPLEXITY_API_KEY);
+export function hasApiKey(config: ResolvedConfig): boolean {
+  return !!config.perplexity.apiKey;
 }
 
-export async function search(query: string, domainFilter?: string[]): Promise<{
+export async function search(query: string, config: ResolvedConfig, domainFilter?: string[]): Promise<{
   results: Array<{ title: string; url: string }>;
   content: string;
 }> {
-  const apiKey = getApiKey();
-  const model = process.env.PPLX_MODEL || 'sonar';
+  const apiKey = getApiKey(config);
+  const model = config.perplexity.model;
 
   const client = new Perplexity({ apiKey });
 
@@ -74,9 +69,9 @@ export async function search(query: string, domainFilter?: string[]): Promise<{
  * User prompt is sent as system instruction, content as user message (D-05).
  * Returns raw answer text with citations naturally embedded (D-02, D-03).
  */
-export async function summarize(content: string, userPrompt: string): Promise<string> {
-  const apiKey = getApiKey();
-  const model = process.env.PPLX_MODEL || 'sonar';
+export async function summarize(content: string, userPrompt: string, config: ResolvedConfig): Promise<string> {
+  const apiKey = getApiKey(config);
+  const model = config.perplexity.model;
 
   const client = new Perplexity({ apiKey });
 

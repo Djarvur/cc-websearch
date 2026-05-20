@@ -1,6 +1,4 @@
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
-
-let currentLevel: LogLevel = (process.env.LOG_LEVEL as LogLevel) || 'info';
+export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 const LEVEL_ORDER: Record<LogLevel, number> = {
   debug: 0,
@@ -9,15 +7,21 @@ const LEVEL_ORDER: Record<LogLevel, number> = {
   error: 3,
 };
 
-function log(level: LogLevel, message: string): void {
-  if (LEVEL_ORDER[level] >= LEVEL_ORDER[currentLevel]) {
-    process.stderr.write(`[${level}] ${message}\n`);
-  }
-}
+export function createLogger(module: string, level: LogLevel = 'info') {
+  let currentLevel = level;
 
-export const logger = {
-  debug: (msg: string) => log('debug', msg),
-  info: (msg: string) => log('info', msg),
-  warn: (msg: string) => log('warn', msg),
-  error: (msg: string) => log('error', msg),
-};
+  function log(level: LogLevel, message: string): void {
+    if (LEVEL_ORDER[level] >= LEVEL_ORDER[currentLevel]) {
+      const timestamp = new Date().toISOString();
+      process.stderr.write(`[${timestamp}] [${level}:${module}] ${message}\n`);
+    }
+  }
+
+  return {
+    debug: (msg: string) => log('debug', msg),
+    info: (msg: string) => log('info', msg),
+    warn: (msg: string) => log('warn', msg),
+    error: (msg: string) => log('error', msg),
+    setLevel: (newLevel: LogLevel) => { currentLevel = newLevel; },
+  };
+}

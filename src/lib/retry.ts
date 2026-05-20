@@ -4,7 +4,8 @@ import {
   APIConnectionError,
   APIConnectionTimeoutError,
 } from '@perplexity-ai/perplexity_ai/error.js';
-import { logger } from './logger.js';
+import { createLogger } from './logger.js';
+import type { ResolvedConfig } from './config.js';
 
 export interface RetryConfig {
   maxRetries: number;
@@ -13,12 +14,16 @@ export interface RetryConfig {
   timeout: number;
 }
 
-export function getRetryConfig(): RetryConfig {
+const logger = createLogger('retry');
+
+const DEFAULTS: RetryConfig = { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 };
+
+export function getRetryConfig(config: ResolvedConfig): RetryConfig {
   return {
-    maxRetries: parseInt(process.env.RETRY_MAX_RETRIES || '4', 10),
-    baseDelay: parseInt(process.env.RETRY_BASE_DELAY || '1000', 10),
-    maxDelay: parseInt(process.env.RETRY_MAX_DELAY || '16000', 10),
-    timeout: parseInt(process.env.RETRY_TIMEOUT || '30000', 10),
+    maxRetries: config.retry.maxRetries,
+    baseDelay: config.retry.baseDelay,
+    maxDelay: config.retry.maxDelay,
+    timeout: config.retry.timeout,
   };
 }
 
@@ -57,7 +62,7 @@ export async function retryWithBackoff<T>(
   isTransient: (err: unknown) => boolean,
   options?: Partial<RetryConfig>,
 ): Promise<T> {
-  const config = { ...getRetryConfig(), ...options };
+  const config = { ...DEFAULTS, ...options };
   let lastError: Error;
 
   for (let attempt = 0; attempt <= config.maxRetries; attempt++) {

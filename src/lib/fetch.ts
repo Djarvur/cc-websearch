@@ -1,4 +1,6 @@
-import { logger } from './logger.js';
+import { createLogger } from './logger.js';
+
+const logger = createLogger('fetch');
 
 export class CrossHostRedirectError extends Error {
   constructor(

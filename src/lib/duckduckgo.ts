@@ -1,6 +1,8 @@
 import { search as ddgSearch } from 'duck-duck-scrape';
 import type { SearchResult } from '../types.js';
-import { logger } from './logger.js';
+import { createLogger } from './logger.js';
+
+const logger = createLogger('ddg');
 
 export async function searchDDG(query: string): Promise<SearchResult[]> {
   const searchResults = await ddgSearch(query);
