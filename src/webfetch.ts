@@ -1,11 +1,15 @@
 import { readStdin, WebFetchInputSchema } from './lib/input.js';
-import { logger } from './lib/logger.js';
+import { createLogger } from './lib/logger.js';
+import { loadConfig } from './lib/config.js';
 import { normalizeUrl, fetchWithRedirects, CrossHostRedirectError } from './lib/fetch.js';
 import { extractMarkdown } from './lib/content.js';
 import { hasApiKey, summarize } from './lib/perplexity.js';
-import { retryWithBackoff, isTransientError } from './lib/retry.js';
+import { retryWithBackoff, getRetryConfig, isTransientError } from './lib/retry.js';
 
 async function main(): Promise<void> {
+  const config = loadConfig();
+  const logger = createLogger('webfetch', config.logging.level);
+
   try {
     const input = await readStdin(WebFetchInputSchema);
     logger.info(`Fetching: ${input.url}`);
@@ -19,15 +23,16 @@ async function main(): Promise<void> {
     const markdown = extractMarkdown(html, finalUrl.href);
 
     // D-07/D-08: If no API key, return raw markdown
-    if (!hasApiKey()) {
+    if (!hasApiKey(config)) {
       process.stdout.write(markdown);
       return;
     }
 
     // Summarize via Perplexity (FTEC-04)
     const summary = await retryWithBackoff(
-      () => summarize(markdown, input.prompt),
+      () => summarize(markdown, input.prompt, config),
       isTransientError,
+      getRetryConfig(config),
     );
     process.stdout.write(summary);
   } catch (err) {

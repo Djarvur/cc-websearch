@@ -1,9 +1,10 @@
 import { readStdin, WebSearchInputSchema, validateDomainExclusivity } from './lib/input.js';
 import { formatSearchResults } from './lib/output.js';
-import { logger } from './lib/logger.js';
+import { createLogger } from './lib/logger.js';
+import { loadConfig } from './lib/config.js';
 import { hasApiKey, search } from './lib/perplexity.js';
 import { searchDDG } from './lib/duckduckgo.js';
-import { retryWithBackoff, isTransientError, isDDGTransientError } from './lib/retry.js';
+import { retryWithBackoff, getRetryConfig, isTransientError, isDDGTransientError } from './lib/retry.js';
 import { filterByDomains, buildPerplexityDomainFilter } from './lib/filter.js';
 import type { SearchResult } from './types.js';
 
@@ -18,6 +19,9 @@ function dedupeAndMerge(pplxResults: SearchResult[], ddgResults: SearchResult[])
 }
 
 async function main(): Promise<void> {
+  const config = loadConfig();
+  const logger = createLogger('websearch', config.logging.level);
+
   try {
     const parsed = await readStdin(WebSearchInputSchema);
     logger.info(`Searching for: ${parsed.query}`);
@@ -32,22 +36,24 @@ async function main(): Promise<void> {
     let results: SearchResult[];
     let provider: string;
 
-    if (hasApiKey()) {
+    if (hasApiKey(config)) {
       // Primary: Perplexity with retries
       // Capture partial results in case retry wrapper fails after a successful call (D-17)
       let pplxPartial: SearchResult[] = [];
+      const retryOpts = getRetryConfig(config);
 
       try {
         const pplxResult = await retryWithBackoff(
           // Wrap search to capture partial results from any successful attempt
           async () => {
-            const result = await search(parsed.query, domainFilter);
+            const result = await search(parsed.query, config, domainFilter);
             if (result.results.length > 0) {
               pplxPartial = result.results;
             }
             return result;
           },
           isTransientError,
+          retryOpts,
         );
         results = pplxResult.results;
         provider = 'perplexity';
@@ -66,6 +72,7 @@ async function main(): Promise<void> {
           const ddgResults = await retryWithBackoff(
             () => searchDDG(parsed.query),
             isDDGTransientError,
+            retryOpts,
           );
           // Post-filter DDG results with subdomain-inclusive matching
           const filteredDdg = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
@@ -85,6 +92,7 @@ async function main(): Promise<void> {
       const ddgResults = await retryWithBackoff(
         () => searchDDG(parsed.query),
         isDDGTransientError,
+        getRetryConfig(config),
       );
       // Post-filter DDG results with subdomain-inclusive matching
       results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
