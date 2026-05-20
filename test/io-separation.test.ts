@@ -2,10 +2,22 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Mock dependencies
 const mockSearch = vi.fn();
+const mockSearchDDG = vi.fn();
 
 vi.mock('../src/lib/perplexity.js', () => ({
-  search: mockSearch,
+  search: (...args: any[]) => mockSearch(...args),
+  hasApiKey: vi.fn().mockReturnValue(true),
   getApiKey: vi.fn().mockReturnValue('test-key'),
+}));
+
+vi.mock('../src/lib/duckduckgo.js', () => ({
+  searchDDG: (...args: any[]) => mockSearchDDG(...args),
+}));
+
+vi.mock('../src/lib/retry.js', () => ({
+  retryWithBackoff: (fn: () => Promise<any>) => fn(),
+  isTransientError: vi.fn(),
+  isDDGTransientError: vi.fn(),
 }));
 
 vi.mock('../src/lib/logger.js', () => ({
@@ -25,8 +37,12 @@ vi.mock('../src/lib/input.js', () => ({
 }));
 
 vi.mock('../src/lib/output.js', () => ({
-  formatSearchResults: vi.fn((results: any[]) => {
-    const lines = ['<search_results>'];
+  formatSearchResults: vi.fn((results: any[], provider?: string) => {
+    const lines: string[] = [];
+    if (provider) {
+      lines.push(`<!-- provider: ${provider} -->`);
+    }
+    lines.push('<search_results>');
     for (const r of results) {
       lines.push('  <result>');
       lines.push(`    <title>${r.title}</title>`);
@@ -48,6 +64,7 @@ describe('IO separation', () => {
     vi.stubEnv('LOG_LEVEL', 'debug');
     vi.resetModules();
     mockSearch.mockReset();
+    mockSearchDDG.mockReset();
     mockReadStdin.mockReset();
     stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     stderrWriteSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
@@ -98,6 +115,7 @@ describe('IO separation', () => {
   it('should write to stderr only on error case (stdout empty or clean)', async () => {
     mockReadStdin.mockResolvedValue({ query: 'test query' });
     mockSearch.mockRejectedValue(new Error('API failure'));
+    mockSearchDDG.mockRejectedValue(new Error('DDG failure'));
 
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 50));
@@ -105,7 +123,7 @@ describe('IO separation', () => {
     const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
     const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
 
-    // Error goes to stderr
+    // Error goes to stderr (includes both provider failures per D-19)
     expect(stderrOutput).toContain('[error]');
     expect(stderrOutput).toContain('API failure');
 
