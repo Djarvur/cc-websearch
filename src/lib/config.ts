@@ -102,7 +102,7 @@ function resolveFromEnv(key: string): string | number | undefined {
 
   if (NUMBER_KEYS.has(key)) {
     const num = Number(envValue);
-    if (Number.isNaN(num)) {
+    if (Number.isNaN(num) || !Number.isInteger(num) || num < 0) {
       process.stderr.write(`[warn] Invalid number for ${envName}: "${envValue}"\n`);
       return undefined;
     }
