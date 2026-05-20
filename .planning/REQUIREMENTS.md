@@ -19,18 +19,18 @@
 - [ ] **SRCH-02**: Script outputs `<search_results>` XML format with `<result>`, `<title>`, `<url>` tags matching Claude Code exactly
 - [x] **SRCH-03**: `allowed_domains` and `blocked_domains` cannot be combined in same call — returns error if both provided
 - [ ] **SRCH-04**: Perplexity Chat Completions API as primary search provider — extracts results from response citations and content
-- [ ] **SRCH-05**: DuckDuckGo Lite HTML scraping as fallback when Perplexity unavailable, no API key, or credits exhausted
+- [x] **SRCH-05**: DuckDuckGo Lite HTML scraping as fallback when Perplexity unavailable, no API key, or credits exhausted
 - [x] **SRCH-06**: Domain filtering applied post-results for DDG, via `search_domain_filter` API param for Perplexity
-- [ ] **SRCH-07**: Exponential backoff with full jitter retry on rate limit (429) responses from either provider
-- [ ] **SRCH-08**: Two-tier fallback: Perplexity → DDG → fail cleanly with error message to stderr
+- [x] **SRCH-07**: Exponential backoff with full jitter retry on rate limit (429) responses from either provider
+- [x] **SRCH-08**: Two-tier fallback: Perplexity → DDG → fail cleanly with error message to stderr
 
 ### WebFetch
 
-- [ ] **FTEC-01**: Script accepts `{url: string (required), prompt: string (required)}`
-- [ ] **FTEC-02**: URL normalization: HTTP auto-upgraded to HTTPS
+- [x] **FTEC-01**: Script accepts `{url: string (required), prompt: string (required)}`
+- [x] **FTEC-02**: URL normalization: HTTP auto-upgraded to HTTPS
 - [ ] **FTEC-03**: HTML-to-Markdown conversion using Readability (content extraction) + Turndown (HTML→MD), with fallback to raw Turndown when Readability returns null
 - [ ] **FTEC-04**: LLM summarization via Perplexity Chat Completions — sends extracted markdown + user prompt, returns summarized answer (not raw content)
-- [ ] **FTEC-05**: Same-host redirects followed automatically; cross-host redirects return redirect metadata instead of following
+- [x] **FTEC-05**: Same-host redirects followed automatically; cross-host redirects return redirect metadata instead of following
 
 ### Config & Infrastructure
 
@@ -77,15 +77,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SRCH-02 | Phase 1 | Pending |
 | SRCH-03 | Phase 2 | Done |
 | SRCH-04 | Phase 1 | Pending |
-| SRCH-05 | Phase 2 | Pending |
+| SRCH-05 | Phase 2 | Complete |
 | SRCH-06 | Phase 2 | Done |
-| SRCH-07 | Phase 2 | Pending |
-| SRCH-08 | Phase 2 | Pending |
-| FTEC-01 | Phase 3 | Pending |
-| FTEC-02 | Phase 3 | Pending |
+| SRCH-07 | Phase 2 | Complete |
+| SRCH-08 | Phase 2 | Complete |
+| FTEC-01 | Phase 3 | Done |
+| FTEC-02 | Phase 3 | Done |
 | FTEC-03 | Phase 3 | Pending |
 | FTEC-04 | Phase 3 | Pending |
-| FTEC-05 | Phase 3 | Pending |
+| FTEC-05 | Phase 3 | Done |
 | CONF-01 | Phase 1 | Pending |
 | CONF-02 | Phase 4 | Pending |
 | CONF-03 | Phase 4 | Pending |

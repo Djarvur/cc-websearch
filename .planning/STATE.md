@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 context gathered
-last_updated: "2026-05-20T13:41:52.259Z"
-last_activity: 2026-05-20 -- Phase 3 planning complete
+stopped_at: Phase 3 Plan 01 complete
+last_updated: "2026-05-20T14:22:11.809Z"
+last_activity: 2026-05-20 -- Phase 3 Plan 01 (HTTP fetch pipeline) complete
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 7
-  completed_plans: 5
+  completed_plans: 6
   percent: 50
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-20)
 ## Current Position
 
 Phase: 3
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-05-20 -- Phase 3 planning complete
+Plan: 01 complete
+Status: Ready for Plan 02
+Last activity: 2026-05-20 -- Phase 3 Plan 01 (HTTP fetch pipeline) complete
 
-Progress: [██████░░░░] 62%
+Progress: [█████████░] 86%
 
 ## Performance Metrics
 
@@ -65,6 +65,9 @@ Recent decisions affecting current work:
 - filterByDomains returns original array when no filters specified (no-copy optimization)
 - Perplexity results get post-filter safety net only for blocked_domains, not allowed_domains
 - buildPerplexityDomainFilter returns undefined for empty arrays, triggering no API parameter
+- fetchWithRedirects uses native fetch with redirect:manual for custom redirect logic
+- CrossHostRedirectError written to stdout (not stderr) per D-10
+- HTTP URLs auto-upgraded to HTTPS via normalizeUrl
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-20T12:44:16.786Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-webfetch-content-pipeline/03-CONTEXT.md
+Last session: 2026-05-20T14:22:11.809Z
+Stopped at: Phase 3 Plan 01 complete
+Resume file: .planning/phases/03-webfetch-content-pipeline/03-01-SUMMARY.md

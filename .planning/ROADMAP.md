@@ -93,7 +93,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 03-01: Input schema, URL normalization, HTTP fetch with manual redirect handling, error paths, SKILL.md update
+- [x] 03-01: Input schema, URL normalization, HTTP fetch with manual redirect handling, error paths, SKILL.md update
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -126,5 +126,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
 | 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
-| 3. WebFetch Content Pipeline | 0/2 | Not started | - |
+| 3. WebFetch Content Pipeline | 1/2 | In Progress|  |
 | 4. Config File and Logging | 0/1 | Not started | - |
