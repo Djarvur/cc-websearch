@@ -368,4 +368,220 @@ describe('WebSearch fallback orchestration', () => {
     expect(mockFilterByDomains).not.toHaveBeenCalled();
     expect(mockSearch).toHaveBeenCalledWith('test query', undefined);
   });
+
+  // Plan 03: Partial result merging and detailed errors (D-17, D-18, D-19, D-15)
+
+  it('should merge partial Perplexity results with DDG fallback (D-17)', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    // First retryWithBackoff call: Perplexity returns partial results, then fails on retry
+    let pplxCallCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      pplxCallCount++;
+      if (pplxCallCount === 1) {
+        // Perplexity attempt: capture partial results via fn(), then throw
+        try {
+          return await fn();
+        } catch {
+          throw new Error('Perplexity 429 after retries');
+        }
+      }
+      // DDG fallback: succeed
+      return fn();
+    });
+
+    mockSearch.mockResolvedValue({
+      results: [
+        { title: 'Partial Pplx 1', url: 'https://pplx1.com' },
+        { title: 'Partial Pplx 2', url: 'https://pplx2.com' },
+      ],
+      content: 'partial content',
+    });
+
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG Result 1', url: 'https://ddg1.com' },
+      { title: 'DDG Result 2', url: 'https://ddg2.com' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // Provider should reflect merged sources
+    expect(capturedProvider).toBe('perplexity+duckduckgo');
+    // Results should contain both Perplexity and DDG results
+    expect(capturedResults).toHaveLength(4);
+  });
+
+  it('should order merged results: Perplexity first, DDG appended (D-18)', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    let pplxCallCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      pplxCallCount++;
+      if (pplxCallCount === 1) {
+        try {
+          return await fn();
+        } catch {
+          throw new Error('Perplexity failed after retries');
+        }
+      }
+      return fn();
+    });
+
+    mockSearch.mockResolvedValue({
+      results: [{ title: 'Pplx First', url: 'https://pplx-first.com' }],
+      content: 'content',
+    });
+
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG Second', url: 'https://ddg-second.com' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    expect(capturedResults).toHaveLength(2);
+    // Perplexity result comes first
+    expect(capturedResults[0].title).toBe('Pplx First');
+    // DDG result comes second
+    expect(capturedResults[1].title).toBe('DDG Second');
+  });
+
+  it('should deduplicate by URL when merging (D-18)', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    let pplxCallCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      pplxCallCount++;
+      if (pplxCallCount === 1) {
+        try {
+          return await fn();
+        } catch {
+          throw new Error('Perplexity failed');
+        }
+      }
+      return fn();
+    });
+
+    mockSearch.mockResolvedValue({
+      results: [
+        { title: 'Pplx Title', url: 'https://shared.com/page' },
+        { title: 'Pplx Only', url: 'https://pplx-only.com' },
+      ],
+      content: 'content',
+    });
+
+    // DDG returns same URL as one Perplexity result plus a unique one
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG Title', url: 'https://shared.com/page' },
+      { title: 'DDG Only', url: 'https://ddg-only.com' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // Deduped: shared URL appears only once (Perplexity version kept)
+    expect(capturedResults).toHaveLength(3);
+    // Perplexity version of the shared URL should be kept
+    const sharedResult = capturedResults.find((r: any) => r.url === 'https://shared.com/page');
+    expect(sharedResult.title).toBe('Pplx Title');
+  });
+
+  it('should show perplexity+duckduckgo provider comment for merged results (D-15)', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    let pplxCallCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      pplxCallCount++;
+      if (pplxCallCount === 1) {
+        try {
+          return await fn();
+        } catch {
+          throw new Error('Perplexity failed');
+        }
+      }
+      return fn();
+    });
+
+    mockSearch.mockResolvedValue({
+      results: [{ title: 'Pplx', url: 'https://pplx.com' }],
+      content: 'content',
+    });
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG', url: 'https://ddg.com' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    expect(stdoutOutput).toContain('<!-- provider: perplexity+duckduckgo -->');
+  });
+
+  it('should include provider names and error types in total failure message (D-19)', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+
+    let callCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      callCount++;
+      if (callCount === 1) {
+        throw new Error('Perplexity returned 429 after 4 retries');
+      }
+      throw new Error('DDG network error: connection refused');
+    });
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
+    // Error message should include both provider names
+    expect(stderrOutput).toMatch(/Perplexity/);
+    expect(stderrOutput).toMatch(/DDG/);
+    // Error message should include specific error types
+    expect(stderrOutput).toMatch(/429/);
+    expect(stderrOutput).toMatch(/connection refused/);
+    expect(process.exitCode).toBe(1);
+  });
+
+  it('should show duckduckgo provider when Perplexity fails with no partial results', async () => {
+    mockHasApiKey.mockReturnValue(true);
+    mockReadStdin.mockResolvedValue({ query: 'test query' });
+    mockBuildPerplexityDomainFilter.mockReturnValue(undefined);
+    mockFilterByDomains.mockImplementation((results: any[]) => results);
+
+    let callCount = 0;
+    mockRetryWithBackoff.mockImplementation(async (fn: any) => {
+      callCount++;
+      if (callCount === 1) {
+        // Perplexity fails without any results
+        throw new Error('Perplexity error');
+      }
+      // DDG succeeds
+      return fn();
+    });
+
+    mockSearchDDG.mockResolvedValue([
+      { title: 'DDG Only', url: 'https://ddg-only.com' },
+    ]);
+
+    await import('../src/websearch.js');
+    await new Promise((r) => setTimeout(r, 100));
+
+    // No partial results, so provider is just duckduckgo (not merged)
+    expect(capturedProvider).toBe('duckduckgo');
+  });
 });
