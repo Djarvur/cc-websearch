@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A Claude Code plugin providing two skills that replace the built-in WebSearch and WebFetch tools. Distributed as a standard Claude Code plugin installable via the plugin command. Two Node CLI scripts (`websearch`, `webfetch`) called via `node` from skill definitions, producing output identical to Claude Code's built-in tools.
+A Claude Code plugin providing two skills that replace the built-in WebSearch and WebFetch tools. Distributed as a standard Claude Code plugin installable via the plugin command. Two Node CLI scripts (`websearch`, `webfetch`) called via `node` from skill definitions, producing output identical to Claude Code's built-in tools. Zero API keys required — DuckDuckGo Lite is the sole search provider.
 
 ## Core Value
 
@@ -12,60 +12,64 @@ Exact drop-in replacement for Claude Code's WebSearch and WebFetch — same inte
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ WebSearch skill using DuckDuckGo Lite HTML scraping — v1.0
+- ✓ WebFetch skill that retrieves web pages and returns content in markdown — v1.0
+- ✓ WebSearch supports domain filtering (allowed_domains, blocked_domains) — v1.0
+- ✓ Search results returned in Claude Code XML format with title, url, and snippet — v1.0
+- ✓ Exponential backoff with jitter retry strategy for rate limit responses — v1.0
+- ✓ Config file support at `~/.config/websearch/config.json` with env variable override — v1.0
+- ✓ Configurable logging levels for debugging rate limits and errors — v1.0
+- ✓ Plugin installable via standard Claude Code plugin command — v1.0
+- ✓ CLI scripts accept JSON on stdin matching Claude Code tool schema — v1.0
+- ✓ CI toolchain with ESLint, Prettier, coverage enforcement, and mise task runner — v1.0
+- ✓ E2E test suite validating real DDG search and WebFetch — v1.0
+- ✓ GitHub Actions CI, cron workflow, and Dependabot — v1.0
 
 ### Active
 
-- [ ] WebSearch skill that queries Perplexity Chat Completions API as primary provider
-- [ ] WebSearch falls back to DuckDuckGo Lite HTML scraping when Perplexity unavailable, no key provided, or credits exhausted
-- [ ] WebSearch supports domain filtering (allowed_domains, blocked_domains) matching Claude Code's interface
-- [ ] WebSearch returns markdown search results with link citations — exact Claude Code output format
-- [ ] WebFetch skill that retrieves web pages and returns content in markdown or plain text format
-- [ ] WebFetch is standalone — pure page retrieval, no search interaction
-- [ ] Exponential backoff with jitter retry strategy for rate limit responses from any provider
-- [ ] Config file support at `~/.config/websearch/config.json` with env variable fallback
 - [ ] Optional caching — enabled via config, cache directory configurable, no cache when not configured
-- [ ] Configurable logging levels for debugging rate limits, fallbacks, and errors
-- [ ] Plugin installable via standard Claude Code plugin command
-- [ ] CLI scripts accept hybrid input — CLI flags for simple use, JSON on stdin matching Claude Code tool schema
+- [ ] CLI flags for testing outside Claude Code (`--query`, `--url`, `--prompt`, `--allowed-domains`, `--blocked-domains`)
 
 ### Out of Scope
 
 - MCP server implementation — skills call CLI scripts directly, no MCP transport
-- Additional search providers beyond Perplexity and DDG — two-tier fallback only
+- Additional search providers beyond DuckDuckGo — DDG-only is the designed architecture
 - Auto-following links from search results — WebFetch is standalone
-- Three-tier fallback chains — Perplexity → DDG → fail cleanly
+- Three-tier fallback chains — DDG → fail cleanly
+- LLM summarization — removed in Phase 5 (DDG-only), WebFetch is pure fetch-extract-markdown
 
 ## Context
 
-- Claude Code's built-in WebSearch and WebFetch tools have specific input/output schemas that must be matched exactly
-- Perplexity Chat Completions endpoint provides structured search results with citations
-- DuckDuckGo Lite provides HTML search results that can be scraped without API keys
-- HTML-to-Markdown conversion needed for WebFetch — Readability + Turndown is the standard approach
-- Plugin is registered as a Claude Code plugin with skills in proper subdirectories
-- Skills invoke scripts using `node` command
+- Shipped v1.0 with ~3,000 LOC TypeScript, 142 tests, 14 test files
+- Tech stack: TypeScript, Node.js 20+, DuckDuckGo Lite HTML scraping via fetch + cheerio, Readability + Turndown for content extraction
+- DuckDuckGo Lite endpoint (`https://lite.duckduckgo.com/lite/`) provides stable search results without API keys — no rate limiting from the Lite endpoint
+- E2E tests validate real DDG search and WebFetch behavior against live network
+- GitHub Actions CI runs lint, typecheck, test coverage, and build on every PR
+- Weekly cron workflow runs npm audit and E2E tests
+- Dependabot configured for npm and GitHub Actions dependency updates
 
 ## Constraints
 
 - **Runtime**: TypeScript/Node — scripts run via `node`
 - **Distribution**: Standard Claude Code plugin — installable via plugin command
 - **Output format**: Must match Claude Code's WebSearch and WebFetch output byte-for-byte
-- **Perplexity API**: Chat Completions endpoint
-- **DDG API**: DuckDuckGo Lite HTML scraping
+- **DDG API**: DuckDuckGo Lite HTML scraping (`https://lite.duckduckgo.com/lite/`)
 - **Config**: `~/.config/websearch/config.json` or environment variables
 
 ## Key Decisions
 
-| Decision                            | Rationale                                                                              | Outcome   |
-| ----------------------------------- | -------------------------------------------------------------------------------------- | --------- |
-| TypeScript/Node                     | Matches Claude Code plugin ecosystem, skill scripts run via `node`                     | — Pending |
-| Perplexity Chat Completions         | More flexible than Ask API, structured results with citations                          | — Pending |
-| DDG Lite HTML scraping              | No API key required, widely used pattern, reliable fallback                            | — Pending |
-| Exponential + jitter retry          | Standard best practice for rate-limited APIs, prevents thundering herd                 | — Pending |
-| Hybrid CLI input (flags + stdin)    | Flags for simple queries, JSON stdin for complex structured input matching tool schema | — Pending |
-| Markdown stdout + stderr errors     | Matches Claude Code output format directly, clean separation of results vs diagnostics | — Pending |
-| Readability + Turndown for WebFetch | Standard HTML content extraction + markdown conversion pipeline                        | — Pending |
-| Optional configurable caching       | Saves API credits on repeat queries, disabled by default to keep simple                | — Pending |
+| Decision                            | Rationale                                                                              | Outcome       |
+| ----------------------------------- | -------------------------------------------------------------------------------------- | ------------- |
+| TypeScript/Node                     | Matches Claude Code plugin ecosystem, skill scripts run via `node`                     | ✓ Good        |
+| Perplexity Chat Completions         | More flexible than Ask API, structured results with citations                          | ⚠️ Revisit    |
+| DDG Lite HTML scraping              | No API key required, widely used pattern, reliable fallback                            | ✓ Good        |
+| Exponential + jitter retry          | Standard best practice for rate-limited APIs, prevents thundering herd                 | ✓ Good        |
+| Hybrid CLI input (stdin JSON)       | JSON stdin matching tool schema for Claude Code use                                    | ✓ Good        |
+| Markdown stdout + stderr errors     | Matches Claude Code output format directly, clean separation of results vs diagnostics | ✓ Good        |
+| Readability + Turndown for WebFetch | Standard HTML content extraction + markdown conversion pipeline                        | ✓ Good        |
+| Optional configurable caching       | Saves API credits on repeat queries, disabled by default to keep simple                | — Deferred    |
+| fetch + cheerio (DDG Lite)          | Replaced duck-duck-scrape (Phase 8), stable Lite endpoint, no rate limiting           | ✓ Good        |
+| DDG-only architecture               | Perplexity pricing no longer viable, zero API keys, simpler maintenance                | ✓ Good        |
 
 ## Evolution
 
@@ -88,4 +92,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-05-20 after initialization_
+*Last updated: 2026-05-22 after v1.0 milestone*
