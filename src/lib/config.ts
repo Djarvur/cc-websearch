@@ -5,10 +5,6 @@ import { homedir } from 'os';
 
 // Schema (D-01): nested strict objects, same pattern as input.ts
 export const ConfigSchema = z.strictObject({
-  perplexity: z.strictObject({
-    apiKey: z.string().optional(),
-    model: z.string().optional(),
-  }).optional(),
   retry: z.strictObject({
     maxRetries: z.number().int().min(0).optional(),
     baseDelay: z.number().int().min(0).optional(),
@@ -24,15 +20,12 @@ export type Config = z.infer<typeof ConfigSchema>;
 
 // Hardcoded defaults
 const DEFAULTS = {
-  perplexity: { model: 'sonar' },
   retry: { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 },
   logging: { level: 'info' as const },
 } as const;
 
 // Env var mapping (D-02, D-04)
 const ENV_MAP = {
-  'perplexity.apiKey': 'WEBSEARCH_PERPLEXITY_API_KEY',
-  'perplexity.model': 'WEBSEARCH_PERPLEXITY_MODEL',
   'retry.maxRetries': 'WEBSEARCH_RETRY_MAX_RETRIES',
   'retry.baseDelay': 'WEBSEARCH_RETRY_BASE_DELAY',
   'retry.maxDelay': 'WEBSEARCH_RETRY_MAX_DELAY',
@@ -43,12 +36,8 @@ const ENV_MAP = {
 // Config path (D-03)
 const CONFIG_PATH = join(homedir(), '.config', 'websearch', 'config.json');
 
-// Fully resolved config type -- all fields present, no undefined except apiKey
+// Fully resolved config type -- all fields present
 export interface ResolvedConfig {
-  perplexity: {
-    apiKey: string | undefined;
-    model: string;
-  };
   retry: {
     maxRetries: number;
     baseDelay: number;
@@ -135,10 +124,6 @@ export function loadConfig(): ResolvedConfig {
   const fileConfig = rawFile ? validateFileConfig(rawFile) : {};
 
   return {
-    perplexity: {
-      apiKey: resolve<string | undefined>('perplexity.apiKey', fileConfig.perplexity?.apiKey, undefined),
-      model: resolve('perplexity.model', fileConfig.perplexity?.model, DEFAULTS.perplexity.model),
-    },
     retry: {
       maxRetries: resolve('retry.maxRetries', fileConfig.retry?.maxRetries, DEFAULTS.retry.maxRetries),
       baseDelay: resolve('retry.baseDelay', fileConfig.retry?.baseDelay, DEFAULTS.retry.baseDelay),

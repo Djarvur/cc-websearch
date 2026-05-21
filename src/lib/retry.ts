@@ -1,9 +1,3 @@
-import {
-  RateLimitError,
-  InternalServerError,
-  APIConnectionError,
-  APIConnectionTimeoutError,
-} from '@perplexity-ai/perplexity_ai/error.js';
 import { createLogger } from './logger.js';
 import type { LogLevel } from './logger.js';
 import type { ResolvedConfig } from './config.js';
@@ -46,14 +40,6 @@ async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   } finally {
     clearTimeout(timeoutId!);
   }
-}
-
-export function isTransientError(err: unknown): boolean {
-  if (err instanceof RateLimitError) return true;
-  if (err instanceof InternalServerError) return true;
-  if (err instanceof APIConnectionError) return true;
-  if (err instanceof APIConnectionTimeoutError) return true;
-  return false;
 }
 
 export function isDDGTransientError(err: unknown): boolean {

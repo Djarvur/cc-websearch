@@ -3,7 +3,6 @@ import {
   normalizeDomain,
   matchesDomain,
   filterByDomains,
-  buildPerplexityDomainFilter,
 } from '../src/lib/filter.js';
 import type { SearchResult } from '../src/types.js';
 
@@ -107,62 +106,5 @@ describe('filterByDomains', () => {
   it('should handle empty results array', () => {
     const filtered = filterByDomains([], ['github.com'], undefined);
     expect(filtered).toEqual([]);
-  });
-});
-
-describe('buildPerplexityDomainFilter', () => {
-  it('should return allowed domains normalized', () => {
-    const filter = buildPerplexityDomainFilter(['github.com', 'npmjs.com'], undefined);
-    expect(filter).toEqual(['github.com', 'npmjs.com']);
-  });
-
-  it('should prefix blocked domains with "-"', () => {
-    const filter = buildPerplexityDomainFilter(undefined, ['reddit.com', 'pinterest.com']);
-    expect(filter).toEqual(['-reddit.com', '-pinterest.com']);
-  });
-
-  it('should return undefined when no domains provided', () => {
-    const filter = buildPerplexityDomainFilter(undefined, undefined);
-    expect(filter).toBeUndefined();
-  });
-
-  it('should normalize domains before building filter', () => {
-    const filter = buildPerplexityDomainFilter(
-      ['https://www.github.com/'],
-      undefined,
-    );
-    expect(filter).toEqual(['github.com']);
-  });
-
-  it('should normalize blocked domains before prefixing', () => {
-    const filter = buildPerplexityDomainFilter(
-      undefined,
-      ['https://www.reddit.com/'],
-    );
-    expect(filter).toEqual(['-reddit.com']);
-  });
-
-  it('should cap at 20 domains', () => {
-    const domains = Array.from({ length: 25 }, (_, i) => `domain${i}.com`);
-    const filter = buildPerplexityDomainFilter(domains, undefined);
-    expect(filter).toHaveLength(20);
-  });
-
-  it('should cap blocked domains at 20', () => {
-    const domains = Array.from({ length: 25 }, (_, i) => `domain${i}.com`);
-    const filter = buildPerplexityDomainFilter(undefined, domains);
-    expect(filter).toHaveLength(20);
-    // All should be prefixed
-    expect(filter!.every((d) => d.startsWith('-'))).toBe(true);
-  });
-
-  it('should return undefined for empty allowed array', () => {
-    const filter = buildPerplexityDomainFilter([], undefined);
-    expect(filter).toBeUndefined();
-  });
-
-  it('should return undefined for empty blocked array', () => {
-    const filter = buildPerplexityDomainFilter(undefined, []);
-    expect(filter).toBeUndefined();
   });
 });

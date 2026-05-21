@@ -83,7 +83,6 @@ describe('getRetryConfig', () => {
 
   it('should return values from ResolvedConfig', async () => {
     const config: ResolvedConfig = {
-      perplexity: { apiKey: undefined, model: 'sonar' },
       retry: { maxRetries: 6, baseDelay: 500, maxDelay: 8000, timeout: 60000 },
       logging: { level: 'info' },
     };
@@ -99,7 +98,6 @@ describe('getRetryConfig', () => {
 
   it('should return defaults when config has default values', async () => {
     const config: ResolvedConfig = {
-      perplexity: { apiKey: undefined, model: 'sonar' },
       retry: { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 },
       logging: { level: 'info' },
     };
@@ -111,47 +109,6 @@ describe('getRetryConfig', () => {
     expect(retryConfig.baseDelay).toBe(1000);
     expect(retryConfig.maxDelay).toBe(16000);
     expect(retryConfig.timeout).toBe(30000);
-  });
-});
-
-describe('isTransientError', () => {
-  it('should detect RateLimitError as transient', async () => {
-    const { RateLimitError } = await import('@perplexity-ai/perplexity_ai/error.js');
-    const { isTransientError } = await import('../src/lib/retry.js');
-
-    const err = new RateLimitError(429, undefined, 'rate limited', undefined);
-    expect(isTransientError(err)).toBe(true);
-  });
-
-  it('should detect InternalServerError as transient', async () => {
-    const { InternalServerError } = await import('@perplexity-ai/perplexity_ai/error.js');
-    const { isTransientError } = await import('../src/lib/retry.js');
-
-    const err = new InternalServerError(500, undefined, 'server error', undefined);
-    expect(isTransientError(err)).toBe(true);
-  });
-
-  it('should detect APIConnectionError as transient', async () => {
-    const { APIConnectionError } = await import('@perplexity-ai/perplexity_ai/error.js');
-    const { isTransientError } = await import('../src/lib/retry.js');
-
-    const err = new APIConnectionError({ message: 'connection failed', cause: undefined });
-    expect(isTransientError(err)).toBe(true);
-  });
-
-  it('should detect APIConnectionTimeoutError as transient', async () => {
-    const { APIConnectionTimeoutError } = await import('@perplexity-ai/perplexity_ai/error.js');
-    const { isTransientError } = await import('../src/lib/retry.js');
-
-    const err = new APIConnectionTimeoutError({ message: 'timeout' });
-    expect(isTransientError(err)).toBe(true);
-  });
-
-  it('should NOT detect generic Error as transient', async () => {
-    vi.resetModules();
-    const { isTransientError } = await import('../src/lib/retry.js');
-
-    expect(isTransientError(new Error('some error'))).toBe(false);
   });
 });
 

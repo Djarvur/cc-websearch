@@ -52,24 +52,3 @@ export function filterByDomains(
 
   return results;
 }
-
-/**
- * Build Perplexity API search_domain_filter array.
- * Allowed domains: pass as-is (normalized).
- * Blocked domains: prefix with "-" per Perplexity API convention.
- * Max 20 domains per request.
- */
-export function buildPerplexityDomainFilter(
-  allowedDomains?: string[],
-  blockedDomains?: string[],
-): string[] | undefined {
-  if (allowedDomains && allowedDomains.length > 0) {
-    return allowedDomains.slice(0, 20).map((d) => normalizeDomain(d));
-  }
-
-  if (blockedDomains && blockedDomains.length > 0) {
-    return blockedDomains.slice(0, 20).map((d) => '-' + normalizeDomain(d));
-  }
-
-  return undefined;
-}

@@ -1,15 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-// Mock dependencies
-const mockSearch = vi.fn();
+// Mock provider modules
 const mockSearchDDG = vi.fn();
-
-vi.mock('../src/lib/perplexity.js', () => ({
-  search: (...args: any[]) => mockSearch(...args),
-  hasApiKey: vi.fn().mockReturnValue(true),
-  getApiKey: vi.fn().mockReturnValue('test-key'),
-  configureLogger: vi.fn(),
-}));
 
 vi.mock('../src/lib/duckduckgo.js', () => ({
   searchDDG: (...args: any[]) => mockSearchDDG(...args),
@@ -19,14 +11,12 @@ vi.mock('../src/lib/duckduckgo.js', () => ({
 vi.mock('../src/lib/retry.js', () => ({
   retryWithBackoff: (fn: () => Promise<any>) => fn(),
   getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
-  isTransientError: vi.fn(),
   isDDGTransientError: vi.fn(),
   configureLogger: vi.fn(),
 }));
 
 vi.mock('../src/lib/config.js', () => ({
   loadConfig: vi.fn(() => ({
-    perplexity: { apiKey: 'test-key', model: 'sonar' },
     retry: { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 },
     logging: { level: 'debug' },
   })),
@@ -51,7 +41,6 @@ vi.mock('../src/lib/input.js', () => ({
 }));
 
 vi.mock('../src/lib/filter.js', () => ({
-  buildPerplexityDomainFilter: vi.fn().mockReturnValue(undefined),
   filterByDomains: vi.fn((results: any[]) => results),
 }));
 
@@ -63,16 +52,14 @@ vi.mock('../src/lib/fetch.js', () => ({
 }));
 
 vi.mock('../src/lib/output.js', () => ({
-  formatSearchResults: vi.fn((results: any[], provider?: string) => {
+  formatSearchResults: vi.fn((results: any[]) => {
     const lines: string[] = [];
-    if (provider) {
-      lines.push(`<!-- provider: ${provider} -->`);
-    }
     lines.push('<search_results>');
     for (const r of results) {
       lines.push('  <result>');
       lines.push(`    <title>${r.title}</title>`);
       lines.push(`    <url>${r.url}</url>`);
+      lines.push(`    <snippet>${r.snippet ?? ''}</snippet>`);
       lines.push('  </result>');
     }
     lines.push('</search_results>');
@@ -86,7 +73,6 @@ describe('IO separation', () => {
 
   beforeEach(() => {
     vi.resetModules();
-    mockSearch.mockReset();
     mockSearchDDG.mockReset();
     mockReadStdin.mockReset();
     stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
@@ -100,10 +86,9 @@ describe('IO separation', () => {
 
   it('should have stdout contain only XML (no log messages)', async () => {
     mockReadStdin.mockResolvedValue({ query: 'test query' });
-    mockSearch.mockResolvedValue({
-      results: [{ title: 'Result', url: 'https://example.com' }],
-      content: 'content',
-    });
+    mockSearchDDG.mockResolvedValue([
+      { title: 'Result', url: 'https://example.com', snippet: 'test' },
+    ]);
 
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 50));
@@ -118,10 +103,9 @@ describe('IO separation', () => {
 
   it('should have stderr contain log messages (no XML)', async () => {
     mockReadStdin.mockResolvedValue({ query: 'test query' });
-    mockSearch.mockResolvedValue({
-      results: [{ title: 'Result', url: 'https://example.com' }],
-      content: 'content',
-    });
+    mockSearchDDG.mockResolvedValue([
+      { title: 'Result', url: 'https://example.com', snippet: 'test' },
+    ]);
 
     await import('../src/websearch.js');
     await new Promise((r) => setTimeout(r, 50));
@@ -137,7 +121,6 @@ describe('IO separation', () => {
 
   it('should write to stderr only on error case (stdout empty or clean)', async () => {
     mockReadStdin.mockResolvedValue({ query: 'test query' });
-    mockSearch.mockRejectedValue(new Error('API failure'));
     mockSearchDDG.mockRejectedValue(new Error('DDG failure'));
 
     await import('../src/websearch.js');
@@ -146,11 +129,11 @@ describe('IO separation', () => {
     const stderrOutput = stderrWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
     const stdoutOutput = stdoutWriteSpy.mock.calls.map((c: any) => String(c[0])).join('');
 
-    // Error goes to stderr (includes both provider failures per D-19)
+    // Error goes to stderr
     expect(stderrOutput).toContain('[error]');
-    expect(stderrOutput).toContain('API failure');
+    expect(stderrOutput).toContain('DDG failure');
 
     // stdout should not contain error messages
-    expect(stdoutOutput).not.toContain('API failure');
+    expect(stdoutOutput).not.toContain('DDG failure');
   });
 });

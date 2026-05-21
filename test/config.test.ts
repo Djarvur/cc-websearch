@@ -33,8 +33,6 @@ describe('loadConfig', () => {
       vi.mocked(existsSync).mockReturnValue(false);
       const config = loadConfig();
 
-      expect(config.perplexity.apiKey).toBeUndefined();
-      expect(config.perplexity.model).toBe('sonar');
       expect(config.retry.maxRetries).toBe(4);
       expect(config.retry.baseDelay).toBe(1000);
       expect(config.retry.maxDelay).toBe(16000);
@@ -49,7 +47,6 @@ describe('loadConfig', () => {
       vi.mocked(existsSync).mockReturnValue(true);
       vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
         retry: { maxRetries: 8, baseDelay: 2000 },
-        perplexity: { apiKey: 'file-key', model: 'sonar-pro' },
         logging: { level: 'debug' },
       }));
 
@@ -59,8 +56,6 @@ describe('loadConfig', () => {
       expect(config.retry.baseDelay).toBe(2000);
       expect(config.retry.maxDelay).toBe(16000); // default
       expect(config.retry.timeout).toBe(30000); // default
-      expect(config.perplexity.apiKey).toBe('file-key');
-      expect(config.perplexity.model).toBe('sonar-pro');
       expect(config.logging.level).toBe('debug');
     });
 
@@ -74,8 +69,6 @@ describe('loadConfig', () => {
 
       expect(config.retry.maxRetries).toBe(2);
       expect(config.retry.baseDelay).toBe(1000); // default
-      expect(config.perplexity.apiKey).toBeUndefined();
-      expect(config.perplexity.model).toBe('sonar'); // default
     });
   });
 
@@ -106,32 +99,27 @@ describe('loadConfig', () => {
 
     it('should resolve each key independently', () => {
       vi.stubEnv('WEBSEARCH_RETRY_MAX_RETRIES', '12');
-      vi.stubEnv('WEBSEARCH_PERPLEXITY_API_KEY', 'env-key');
       vi.mocked(existsSync).mockReturnValue(true);
       vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
         retry: { maxRetries: 3, baseDelay: 500 },
-        perplexity: { apiKey: 'file-key', model: 'sonar-pro' },
       }));
 
       const config = loadConfig();
 
-      // Env wins for these
+      // Env wins for this
       expect(config.retry.maxRetries).toBe(12);
-      expect(config.perplexity.apiKey).toBe('env-key');
-      // File wins for these (no env set)
+      // File wins for this (no env set)
       expect(config.retry.baseDelay).toBe(500);
-      expect(config.perplexity.model).toBe('sonar-pro');
     });
 
     it('should use defaults for keys with neither env nor file', () => {
-      vi.stubEnv('WEBSEARCH_PERPLEXITY_API_KEY', 'my-key');
+      vi.stubEnv('WEBSEARCH_RETRY_MAX_RETRIES', '12');
       vi.mocked(existsSync).mockReturnValue(false);
 
       const config = loadConfig();
 
-      expect(config.perplexity.apiKey).toBe('my-key');
-      expect(config.perplexity.model).toBe('sonar'); // default
-      expect(config.retry.maxRetries).toBe(4); // default
+      expect(config.retry.maxRetries).toBe(12);
+      expect(config.retry.baseDelay).toBe(1000); // default
       expect(config.logging.level).toBe('info'); // default
     });
   });
@@ -286,24 +274,6 @@ describe('loadConfig', () => {
       );
       expect(config.retry.maxRetries).toBe(4); // default
     });
-
-    it('should accept valid api key from env', () => {
-      vi.stubEnv('WEBSEARCH_PERPLEXITY_API_KEY', 'pplx-test-key');
-      vi.mocked(existsSync).mockReturnValue(false);
-
-      const config = loadConfig();
-
-      expect(config.perplexity.apiKey).toBe('pplx-test-key');
-    });
-
-    it('should accept valid model from env', () => {
-      vi.stubEnv('WEBSEARCH_PERPLEXITY_MODEL', 'sonar-pro');
-      vi.mocked(existsSync).mockReturnValue(false);
-
-      const config = loadConfig();
-
-      expect(config.perplexity.model).toBe('sonar-pro');
-    });
   });
 });
 
@@ -315,7 +285,6 @@ describe('ConfigSchema', () => {
 
   it('should accept a fully populated config', () => {
     const result = ConfigSchema.safeParse({
-      perplexity: { apiKey: 'key', model: 'sonar-pro' },
       retry: { maxRetries: 8, baseDelay: 2000, maxDelay: 32000, timeout: 60000 },
       logging: { level: 'debug' },
     });
