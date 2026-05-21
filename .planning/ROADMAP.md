@@ -18,6 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: WebFetch Content Pipeline** - Page fetching, content extraction, markdown conversion, and LLM summarization (completed 2026-05-20)
 - [x] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels (completed 2026-05-20)
 - [x] **Phase 5: DDG-Only with Citations** - Remove Perplexity dependency, make DDG sole search provider, add citations to DDG results (completed 2026-05-21)
+- [ ] **Phase 6: CI Pipeline and E2E Tests** - GitHub Actions CI, end-to-end tests, periodic dependency checks
 
 ## Phase Details
 
@@ -163,3 +164,44 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
 | 4. Config File and Logging | 3/3 | Complete | 2026-05-20 |
 | 5. DDG-Only with Citations | 2/2 | Complete | 2026-05-21 |
+| 6. CI Pipeline and E2E Tests | 0/0 | Not started | |
+
+
+### Phase 6: CI Pipeline and E2E Tests
+
+**Goal**: GitHub Actions CI runs tests on PRs, end-to-end tests validate plugin behavior, periodic dependency checks and security audits
+**Mode**: mvp
+**Depends on**: Phase 5
+**Requirements**: CI-01, CI-02, CI-03, CI-04, CI-05, CI-06, CI-07, CI-08
+**Success Criteria** (what must be TRUE):
+
+  1. GitHub Actions workflow runs on every PR and push to master — installs deps, builds, runs unit tests
+  2. E2E tests validate real plugin behavior — WebSearch returns DDG results, WebFetch fetches and converts pages
+  3. Periodic workflow (cron) runs dependency audit (npm audit / Dependabot) and checks for outdated packages
+  4. CI fails on test failures, type errors, or lint issues — no silent passes
+
+**Plans**: 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 06-01-PLAN.md: Local CI toolchain -- ESLint flat config, Prettier, coverage enforcement, mise tasks, jsdom bundle fix
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 06-02-PLAN.md: E2E tests and PR gate -- E2E test suite (WebSearch, WebFetch, errors, domain filtering), GitHub Actions CI workflow
+- [ ] 06-03-PLAN.md: Cron workflow and Dependabot -- periodic audit/E2E workflow, automated dependency updates
+
+## Progress
+
+**Execution Order:**
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 1. Plugin Foundation and Primary Search | 2/2 | Complete   | 2026-05-19 |
+| 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
+| 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
+| 4. Config File and Logging | 3/3 | Complete | 2026-05-20 |
+| 5. DDG-Only with Citations | 2/2 | Complete | 2026-05-21 |
+| 6. CI Pipeline and E2E Tests | 0/3 | Not started | |
