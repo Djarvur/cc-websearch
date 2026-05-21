@@ -59,6 +59,7 @@ completed: 2026-05-21
 - **Files modified:** 107 (mostly Prettier formatting)
 
 ## Accomplishments
+
 - Fixed deferred jsdom bundle bug by marking jsdom as external in esbuild for webfetch
 - Established ESLint 9 flat config with typescript-eslint recommended + strict rules
 - Set up Prettier with project conventions (singleQuote, trailingComma: all, printWidth: 100)
@@ -76,6 +77,7 @@ Each task was committed atomically:
 3. **Task 3: Create mise task runner config** - `60ef47d` (feat)
 
 ## Files Created/Modified
+
 - `eslint.config.js` - ESLint 9 flat config with typescript-eslint recommended + strict, eslint-config-prettier last
 - `.prettierrc` - Prettier config: semi, singleQuote, trailingComma: all, printWidth: 100, tabWidth: 2
 - `.prettierignore` - Prettier exclusions: scripts/, coverage/, node_modules/, dist/
@@ -90,6 +92,7 @@ Each task was committed atomically:
 - `test/config.test.ts` - Prefixed unused config variables with underscore
 
 ## Decisions Made
+
 - Disabled `@typescript-eslint/no-explicit-any` for test files since mock function signatures legitimately need any type flexibility
 - Allowed underscore-prefixed unused vars in test files (`_config`) to satisfy strict no-unused-vars
 - Installed `@vitest/coverage-v8@4.1.6` (not 4.1.7) because the 4.1.7 peer dependency requires vitest@4.1.7, which caused npm arborist crash
@@ -101,6 +104,7 @@ Each task was committed atomically:
 ### Auto-fixed Issues
 
 **1. [Rule 2 - Missing Critical] Fixed pre-existing typecheck failures**
+
 - **Found during:** Task 2 (lint cleanup pass)
 - **Issue:** `npm run typecheck` was failing with 50+ errors before any changes. Missing `types: ["node"]` in tsconfig.json, missing type declarations for jsdom, turndown, and turndown-plugin-gfm
 - **Fix:** Added `types: ["node"]` to tsconfig.json compilerOptions, installed `@types/jsdom` and `@types/turndown`, created `src/turndown-plugin-gfm.d.ts` declaration file
@@ -109,6 +113,7 @@ Each task was committed atomically:
 - **Committed in:** 14c1828 (Task 2 commit)
 
 **2. [Rule 3 - Blocking] npm install fails for @vitest/coverage-v8@4.1.7**
+
 - **Found during:** Task 1 (install devDependencies)
 - **Issue:** Installing all 6 packages at once caused npm arborist crash. Root cause: @vitest/coverage-v8@4.1.7 has peerDependency on vitest@4.1.7 but installed vitest is 4.1.6
 - **Fix:** Installed packages individually and used @vitest/coverage-v8@4.1.6 to match installed vitest version
@@ -117,6 +122,7 @@ Each task was committed atomically:
 - **Committed in:** 7bbd64f (Task 1 commit)
 
 **3. [Rule 2 - Missing Critical] Added .claude/ to ESLint ignores**
+
 - **Found during:** Task 2 (lint cleanup pass)
 - **Issue:** ESLint was reporting 100+ errors in .claude/ directory (GSD tooling files written as CommonJS, not ESM)
 - **Fix:** Added `.claude/**` to ESLint ignores block
@@ -130,25 +136,29 @@ Each task was committed atomically:
 **Impact on plan:** All auto-fixes necessary for correctness. The typecheck fix addresses a pre-existing issue that would have blocked CI. The coverage-v8 version alignment resolves a package compatibility issue.
 
 ## Issues Encountered
+
 - npm arborist crash when installing all 6 devDependencies simultaneously -- resolved by installing individually and matching peer dependency versions
 
 ## Coverage Baseline
 
-| Metric | Threshold | Actual | Status |
-|--------|-----------|--------|--------|
-| Statements | 80% | 90.69% | Pass |
-| Branches | 70% | 88.11% | Pass |
-| Functions | 80% | 84.78% | Pass |
-| Lines | 80% | 91.04% | Pass |
+| Metric     | Threshold | Actual | Status |
+| ---------- | --------- | ------ | ------ |
+| Statements | 80%       | 90.69% | Pass   |
+| Branches   | 70%       | 88.11% | Pass   |
+| Functions  | 80%       | 84.78% | Pass   |
+| Lines      | 80%       | 91.04% | Pass   |
 
 ## User Setup Required
+
 None - no external service configuration required.
 
 ## Next Phase Readiness
+
 - Local CI toolchain fully operational: `npm run check` validates everything CI will check
 - jsdom bundle fix resolves the deferred issue from Phase 05, unblocking WebFetch E2E tests in Plan 06-02
 - Coverage thresholds at 80/70/80; actual coverage well above thresholds
 
 ---
-*Phase: 06-ci-pipeline-and-e2e-tests*
-*Completed: 2026-05-21*
+
+_Phase: 06-ci-pipeline-and-e2e-tests_
+_Completed: 2026-05-21_

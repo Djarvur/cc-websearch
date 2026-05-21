@@ -28,13 +28,13 @@ key-files:
   modified: []
 
 key-decisions:
-  - "E2E tests invoke bundled scripts via child_process.spawn for real integration validation"
-  - "withRetry wrapper handles DDG transient rate limiting with exponential backoff"
-  - "E2E tests excluded from PR gate (cron only) per plan decision D-09"
+  - 'E2E tests invoke bundled scripts via child_process.spawn for real integration validation'
+  - 'withRetry wrapper handles DDG transient rate limiting with exponential backoff'
+  - 'E2E tests excluded from PR gate (cron only) per plan decision D-09'
 
 patterns-established:
-  - "E2E test pattern: runScript spawns node with JSON stdin, captures stdout/stderr/exitCode"
-  - "Retry pattern: withRetry wraps assertions, retries on failure with 3s/6s/9s delays"
+  - 'E2E test pattern: runScript spawns node with JSON stdin, captures stdout/stderr/exitCode'
+  - 'Retry pattern: withRetry wraps assertions, retries on failure with 3s/6s/9s delays'
 
 requirements-completed: [CI-01, CI-02, CI-04, CI-06]
 
@@ -54,6 +54,7 @@ completed: 2026-05-21
 - **Files modified:** 5
 
 ## Accomplishments
+
 - Five E2E tests: WebSearch (basic, domain filter, error) + WebFetch (page fetch, error)
 - runScript helper spawns bundled scripts via child_process with JSON stdin
 - withRetry wrapper with exponential backoff for transient DDG rate limits
@@ -67,6 +68,7 @@ completed: 2026-05-21
 3. **Task 2: GitHub Actions PR gate workflow** - `a22bb43` (ci)
 
 ## Files Created/Modified
+
 - `test/e2e/helpers.ts` - runScript (child_process.spawn) and withRetry utilities
 - `test/e2e/websearch.e2e.ts` - 3 E2E tests: basic query, domain filtering, error handling
 - `test/e2e/webfetch.e2e.ts` - 2 E2E tests: real page fetch, bad URL error
@@ -74,6 +76,7 @@ completed: 2026-05-21
 - `.github/workflows/ci.yml` - PR gate CI workflow (lint, typecheck, test, coverage, build)
 
 ## Decisions Made
+
 - E2E tests invoke actual bundled .cjs scripts (not source) to validate build output
 - withRetry uses 3s/6s/9s backoff (increased from 2s/4s/6s after DDG rate limit testing)
 - E2E tests excluded from PR gate -- run in cron workflow only (per D-09)
@@ -83,12 +86,14 @@ completed: 2026-05-21
 ### Auto-fixed Issues
 
 **1. Sandbox write block recovery**
+
 - **Found during:** Task 1 execution (subagent hit sandbox write denial)
 - **Issue:** Subagent sandbox blocked all write operations after DDG network requests
 - **Fix:** Orchestrator completed inline -- committed staged files, created ci.yml, fixed imports
 - **Verification:** All files committed, ci.yml structurally validated
 
 **2. NodeNext moduleResolution requires .js extensions**
+
 - **Found during:** Post-edit IDE diagnostic
 - **Issue:** E2E test imports used './helpers' without .js extension
 - **Fix:** Changed to './helpers.js' in both websearch.e2e.ts and webfetch.e2e.ts
@@ -100,13 +105,16 @@ completed: 2026-05-21
 **Impact on plan:** Minor. Core plan intent fully preserved.
 
 ## Issues Encountered
+
 - DDG rate limiting prevented E2E test verification during execution (transient -- will pass when rate limit clears)
 - Subagent sandbox write block required inline recovery by orchestrator
 
 ## Next Phase Readiness
+
 - E2E tests ready for cron workflow execution
 - PR gate CI workflow ready for GitHub
 
 ---
-*Phase: 06-ci-pipeline-and-e2e-tests*
-*Completed: 2026-05-21*
+
+_Phase: 06-ci-pipeline-and-e2e-tests_
+_Completed: 2026-05-21_
