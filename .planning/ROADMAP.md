@@ -164,7 +164,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. WebFetch Content Pipeline            | 2/2            | Complete    | 2026-05-20 |
 | 4. Config File and Logging              | 3/3            | Complete    | 2026-05-20 |
 | 5. DDG-Only with Citations              | 2/2            | Complete    | 2026-05-21 |
-| 6. CI Pipeline and E2E Tests            | 0/0            | Not started |            |
+| 6. CI Pipeline and E2E Tests            | 1/3            | In progress |            |
 
 ### Phase 6: CI Pipeline and E2E Tests
 
@@ -184,7 +184,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 Plans:
 **Wave 1**
 
-- [ ] 06-01-PLAN.md: Local CI toolchain -- ESLint flat config, Prettier, coverage enforcement, mise tasks, jsdom bundle fix
+- [x] 06-01-PLAN.md: Local CI toolchain -- ESLint flat config, Prettier, coverage enforcement, mise tasks, jsdom bundle fix (completed 2026-05-21)
 
 **Wave 2** _(blocked on Wave 1 completion)_
 
@@ -203,4 +203,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. WebFetch Content Pipeline            | 2/2            | Complete    | 2026-05-20 |
 | 4. Config File and Logging              | 3/3            | Complete    | 2026-05-20 |
 | 5. DDG-Only with Citations              | 2/2            | Complete    | 2026-05-21 |
-| 6. CI Pipeline and E2E Tests            | 0/3            | Not started |            |
+| 6. CI Pipeline and E2E Tests            | 1/3            | In progress |            |
