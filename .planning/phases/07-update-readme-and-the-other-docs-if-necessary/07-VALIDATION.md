@@ -15,13 +15,13 @@ created: 2026-05-21
 
 ## Test Infrastructure
 
-| Property | Value |
-|----------|-------|
-| **Framework** | vitest 4.1.6 |
-| **Config file** | vitest.config.ts |
-| **Quick run command** | `npm test` |
+| Property               | Value                                             |
+| ---------------------- | ------------------------------------------------- |
+| **Framework**          | vitest 4.1.6                                      |
+| **Config file**        | vitest.config.ts                                  |
+| **Quick run command**  | `npm test`                                        |
 | **Full suite command** | `npm run check` (lint + typecheck + test + build) |
-| **Estimated runtime** | ~30 seconds |
+| **Estimated runtime**  | ~30 seconds                                       |
 
 ---
 
@@ -35,15 +35,15 @@ created: 2026-05-21
 
 ## Per-Task Verification Map
 
-| Task ID | Plan | Wave | Automated Command | File Exists | Status |
-|---------|------|------|-------------------|-------------|--------|
-| 07-01-1 | 01 | 1 | `grep -c 'webfetch\\.cjs' skills/webfetch/SKILL.md && npm test -- test/skills.test.ts` | ✅ | ⬜ pending |
-| 07-01-2 | 01 | 1 | `grep -c 'WEBSEARCH_RETRY_MAX_RETRIES' .env.example && ... && ! grep -c -i 'PPLX\\|PERPLEXITY' .env.example` | ⬜ W0 | ⬜ pending |
-| 07-01-3 | 01 | 1 | human review (checkpoint) | ⬜ W0 | ⬜ pending |
-| 07-02-1 | 02 | 2 | `npm test -- test/skills.test.ts && npm test -- test/manifest.test.ts` | ✅ | ⬜ pending |
-| 07-02-2 | 02 | 2 | `npm run check` | ✅ | ⬜ pending |
+| Task ID | Plan | Wave | Automated Command                                                                      | File Exists               | Status     |
+| ------- | ---- | ---- | -------------------------------------------------------------------------------------- | ------------------------- | ---------- | ---------- |
+| 07-01-1 | 01   | 1    | `grep -c 'webfetch\\.cjs' skills/webfetch/SKILL.md && npm test -- test/skills.test.ts` | ✅                        | ⬜ pending |
+| 07-01-2 | 01   | 1    | `grep -c 'WEBSEARCH_RETRY_MAX_RETRIES' .env.example && ... && ! grep -c -i 'PPLX\\     | PERPLEXITY' .env.example` | ⬜ W0      | ⬜ pending |
+| 07-01-3 | 01   | 1    | human review (checkpoint)                                                              | ⬜ W0                     | ⬜ pending |
+| 07-02-1 | 02   | 2    | `npm test -- test/skills.test.ts && npm test -- test/manifest.test.ts`                 | ✅                        | ⬜ pending |
+| 07-02-2 | 02   | 2    | `npm run check`                                                                        | ✅                        | ⬜ pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+_Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ---
 
@@ -55,10 +55,10 @@ None — existing test infrastructure covers all phase requirements.
 
 ## Manual-Only Verifications
 
-| Behavior | Why Manual | Test Instructions |
-|----------|------------|-------------------|
-| README content correctness (Task 07-01-3) | Content quality cannot be automated | Review rendered README for completeness, accuracy, clarity per acceptance criteria checklist |
-| .env.example accuracy (Task 07-01-2) partial | Automated grep covers field presence; human check verifies values | Compare grep output against src/lib/config.ts fields |
+| Behavior                                     | Why Manual                                                        | Test Instructions                                                                            |
+| -------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| README content correctness (Task 07-01-3)    | Content quality cannot be automated                               | Review rendered README for completeness, accuracy, clarity per acceptance criteria checklist |
+| .env.example accuracy (Task 07-01-2) partial | Automated grep covers field presence; human check verifies values | Compare grep output against src/lib/config.ts fields                                         |
 
 ---
 

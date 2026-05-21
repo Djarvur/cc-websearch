@@ -31,9 +31,9 @@ key-files:
     - skills/webfetch/SKILL.md
 
 key-decisions:
-  - "README excludes Perplexity references (DDG sole provider since Phase 5)"
-  - "No CHANGELOG, CONTRIBUTING, or SECURITY sections per D-16"
-  - "Install instructions use `claude plugin add` not npm"
+  - 'README excludes Perplexity references (DDG sole provider since Phase 5)'
+  - 'No CHANGELOG, CONTRIBUTING, or SECURITY sections per D-16'
+  - 'Install instructions use `claude plugin add` not npm'
 
 patterns-established: []
 
@@ -107,5 +107,5 @@ None - no external service configuration required.
 
 ---
 
-*Phase: 07-update-readme-and-the-other-docs-if-necessary*
-*Completed: 2026-05-21*
+_Phase: 07-update-readme-and-the-other-docs-if-necessary_
+_Completed: 2026-05-21_

@@ -1,7 +1,7 @@
 ---
 status: human_needed
 phase: 06-ci-pipeline-and-e2e-tests
-score: "17/17 must-haves verified, 4/4 success criteria met"
+score: '17/17 must-haves verified, 4/4 success criteria met'
 files_reviewed: 18
 findings:
   automated_pass: 14
@@ -33,25 +33,28 @@ All 17 must-haves verified. All 4 roadmap success criteria met. 14 artifacts exi
 ## Human Verification Required (3 items)
 
 ### 1. E2E tests pass against real network
+
 Run `npm run e2e`. Expected: all 5 tests pass (WebSearch basic, domain filter, error; WebFetch page fetch, error). WebSearch returns XML `<search_results>`. WebFetch returns markdown.
 
 ### 2. GitHub Actions PR gate
+
 Push to GitHub, create PR to master. Expected: CI triggers, all 5 steps pass (npm ci, lint, typecheck, test --coverage, build). No continue-on-error.
 
 ### 3. Cron workflow and Dependabot
+
 After push to master. Expected: cron.yml in GitHub Actions tab (Mon 6AM UTC + workflow_dispatch). dependabot.yml in Settings > Security > Dependabot.
 
 ## Requirements Coverage
 
-| Requirement | Plans | Status |
-|-------------|-------|--------|
-| CI-01 | 06-01, 06-02 | ✓ |
-| CI-02 | 06-02 | ✓ |
-| CI-03 | 06-03 | ✓ |
-| CI-04 | 06-01 | ✓ |
-| CI-05 | 06-01 | ✓ |
-| CI-06 | 06-01 | ✓ |
-| CI-07 | 06-01 | ✓ |
-| CI-08 | 06-03 | ✓ |
+| Requirement | Plans        | Status |
+| ----------- | ------------ | ------ |
+| CI-01       | 06-01, 06-02 | ✓      |
+| CI-02       | 06-02        | ✓      |
+| CI-03       | 06-03        | ✓      |
+| CI-04       | 06-01        | ✓      |
+| CI-05       | 06-01        | ✓      |
+| CI-06       | 06-01        | ✓      |
+| CI-07       | 06-01        | ✓      |
+| CI-08       | 06-03        | ✓      |
 
 **Note:** CI-01 through CI-08 are referenced in ROADMAP.md but NOT defined in REQUIREMENTS.md. Documentation gap — add definitions.

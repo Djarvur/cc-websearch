@@ -40,6 +40,7 @@ The script produces `<search_results>` XML on stdout:
 ```
 
 Optional fields:
+
 - `allowed_domains` (string[]): Only return results from these domains
 - `blocked_domains` (string[]): Exclude results from these domains
 
@@ -83,27 +84,28 @@ See `.env.example` at the project root for a complete template with all options 
 
 ### Options
 
-| Key                   | Type                                   | Default  | Description                      |
-| --------------------- | -------------------------------------- | -------- | -------------------------------- |
-| `retry.maxRetries`    | integer (0+)                           | 4        | Maximum retry attempts           |
-| `retry.baseDelay`     | integer ms (0+)                        | 1000     | Initial backoff delay            |
-| `retry.maxDelay`      | integer ms (0+)                        | 16000    | Maximum backoff delay            |
-| `retry.timeout`       | integer ms (0+)                        | 30000    | Request timeout                  |
-| `logging.level`       | `"debug"` \| `"info"` \| `"warn"` \| `"error"` | `"info"` | Logging verbosity        |
+| Key                | Type                                           | Default  | Description            |
+| ------------------ | ---------------------------------------------- | -------- | ---------------------- |
+| `retry.maxRetries` | integer (0+)                                   | 4        | Maximum retry attempts |
+| `retry.baseDelay`  | integer ms (0+)                                | 1000     | Initial backoff delay  |
+| `retry.maxDelay`   | integer ms (0+)                                | 16000    | Maximum backoff delay  |
+| `retry.timeout`    | integer ms (0+)                                | 30000    | Request timeout        |
+| `logging.level`    | `"debug"` \| `"info"` \| `"warn"` \| `"error"` | `"info"` | Logging verbosity      |
 
 ### Environment variable overrides
 
 Each config option has a corresponding environment variable that takes precedence over the config file:
 
-| Environment variable          | Overrides           |
-| ----------------------------- | ------------------- |
-| `WEBSEARCH_RETRY_MAX_RETRIES` | `retry.maxRetries`  |
-| `WEBSEARCH_RETRY_BASE_DELAY`  | `retry.baseDelay`   |
-| `WEBSEARCH_RETRY_MAX_DELAY`   | `retry.maxDelay`    |
-| `WEBSEARCH_RETRY_TIMEOUT`     | `retry.timeout`     |
-| `WEBSEARCH_LOGGING_LEVEL`     | `logging.level`     |
+| Environment variable          | Overrides          |
+| ----------------------------- | ------------------ |
+| `WEBSEARCH_RETRY_MAX_RETRIES` | `retry.maxRetries` |
+| `WEBSEARCH_RETRY_BASE_DELAY`  | `retry.baseDelay`  |
+| `WEBSEARCH_RETRY_MAX_DELAY`   | `retry.maxDelay`   |
+| `WEBSEARCH_RETRY_TIMEOUT`     | `retry.timeout`    |
+| `WEBSEARCH_LOGGING_LEVEL`     | `logging.level`    |
 
 Precedence (highest to lowest):
+
 1. Environment variable
 2. Config file value
 3. Hardcoded default
@@ -112,28 +114,28 @@ Precedence (highest to lowest):
 
 ### WebSearch
 
-| Feature             | Built-in WebSearch            | cc-websearch WebSearch           |
-| ------------------- | ----------------------------- | -------------------------------- |
-| Search provider     | Claude internal               | DuckDuckGo (HTML scraping)       |
-| API key required    | No                            | No                               |
-| `query`             | Supported                     | Supported                        |
-| `allowed_domains`   | Supported                     | Supported                        |
-| `blocked_domains`   | Supported                     | Supported                        |
-| Output format       | `<search_results>` XML        | `<search_results>` XML           |
-| Result fields       | title, url, snippet           | title, url, snippet              |
-| Domain filter limit | Neither required              | Cannot use both simultaneously   |
+| Feature             | Built-in WebSearch     | cc-websearch WebSearch         |
+| ------------------- | ---------------------- | ------------------------------ |
+| Search provider     | Claude internal        | DuckDuckGo (HTML scraping)     |
+| API key required    | No                     | No                             |
+| `query`             | Supported              | Supported                      |
+| `allowed_domains`   | Supported              | Supported                      |
+| `blocked_domains`   | Supported              | Supported                      |
+| Output format       | `<search_results>` XML | `<search_results>` XML         |
+| Result fields       | title, url, snippet    | title, url, snippet            |
+| Domain filter limit | Neither required       | Cannot use both simultaneously |
 
 ### WebFetch
 
-| Feature              | Built-in WebFetch             | cc-websearch WebFetch              |
-| -------------------- | ----------------------------- | ---------------------------------- |
-| Content source       | Claude internal               | Fetch + Readability extraction     |
-| API key required     | No                            | No                                 |
-| `url`                | Supported                     | Supported                          |
-| `prompt`             | Supported                     | Supported                          |
-| Output format        | Markdown text                 | Markdown text                      |
-| Redirect handling    | Follows redirects             | HTTP-to-HTTPS upgrade, reports cross-host redirects |
-| Content type filter  | HTML only                     | HTML only (`text/html`, `application/xhtml`) |
+| Feature             | Built-in WebFetch | cc-websearch WebFetch                               |
+| ------------------- | ----------------- | --------------------------------------------------- |
+| Content source      | Claude internal   | Fetch + Readability extraction                      |
+| API key required    | No                | No                                                  |
+| `url`               | Supported         | Supported                                           |
+| `prompt`            | Supported         | Supported                                           |
+| Output format       | Markdown text     | Markdown text                                       |
+| Redirect handling   | Follows redirects | HTTP-to-HTTPS upgrade, reports cross-host redirects |
+| Content type filter | HTML only         | HTML only (`text/html`, `application/xhtml`)        |
 
 ## Architecture
 
@@ -210,12 +212,12 @@ npm install
 
 ### Commands
 
-| Command                  | Description                              |
-| ------------------------ | ---------------------------------------- |
-| `npm run build`          | Compile scripts with esbuild to `.cjs`   |
-| `npm test`               | Run vitest unit tests                    |
-| `npm run typecheck`      | TypeScript type checking (`tsc --noEmit`) |
-| `npm run lint`           | ESLint + Prettier formatting check       |
-| `npm run e2e`            | Build + run end-to-end tests             |
-| `npm run check`          | Run lint + typecheck + test + build      |
-| `npm run test:watch`     | Run tests in watch mode                  |
+| Command              | Description                               |
+| -------------------- | ----------------------------------------- |
+| `npm run build`      | Compile scripts with esbuild to `.cjs`    |
+| `npm test`           | Run vitest unit tests                     |
+| `npm run typecheck`  | TypeScript type checking (`tsc --noEmit`) |
+| `npm run lint`       | ESLint + Prettier formatting check        |
+| `npm run e2e`        | Build + run end-to-end tests              |
+| `npm run check`      | Run lint + typecheck + test + build       |
+| `npm run test:watch` | Run tests in watch mode                   |
