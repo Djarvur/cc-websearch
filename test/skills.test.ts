@@ -76,3 +76,42 @@ describe('Compiled bundle existence', () => {
     expect(existsSync(webfetchCjsPath)).toBe(true);
   });
 });
+
+describe('SKILL.md script path references', () => {
+  const skillFiles: { name: string; path: string }[] = [
+    { name: 'websearch', path: resolve(ROOT, 'skills', 'websearch', 'SKILL.md') },
+    { name: 'webfetch', path: resolve(ROOT, 'skills', 'webfetch', 'SKILL.md') },
+  ];
+
+  for (const { name, path } of skillFiles) {
+    it(`${name} SKILL.md should reference a valid compiled script file`, () => {
+      const content = readFileSync(path, 'utf8');
+      const scriptPattern = /\$\{CLAUDE_PLUGIN_ROOT\}\/scripts\/([^"]+)/;
+      const match = content.match(scriptPattern);
+
+      expect(match).not.toBeNull();
+      const extractedFilename = match![1];
+
+      const scriptPath = resolve(ROOT, 'scripts', extractedFilename);
+      expect(existsSync(scriptPath)).toBe(true);
+    });
+  }
+});
+
+describe('Hooks directory', () => {
+  it('should NOT exist (hooks/absence is intentional)', () => {
+    const hooksPath = resolve(ROOT, 'hooks');
+    expect(existsSync(hooksPath)).toBe(false);
+  });
+});
+
+describe('Plugin manifest description', () => {
+  it('should have a non-empty description field', () => {
+    const manifestPath = resolve(ROOT, '.claude-plugin', 'plugin.json');
+    const raw = readFileSync(manifestPath, 'utf8');
+    const manifest = JSON.parse(raw);
+    expect(manifest.description).toBeDefined();
+    expect(typeof manifest.description).toBe('string');
+    expect(manifest.description.length).toBeGreaterThan(0);
+  });
+});
