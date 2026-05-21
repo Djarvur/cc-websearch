@@ -12,6 +12,11 @@ vi.mock('../src/lib/logger.js', () => ({
 
 import type { ResolvedConfig } from '../src/lib/config.js';
 
+/** Helper: a promise that never settles (used to trigger timeouts) */
+function hangPromise(): Promise<never> {
+  return new Promise<never>(() => {});
+}
+
 describe('retryWithBackoff', () => {
   beforeEach(() => {
     vi.resetModules();
@@ -74,6 +79,73 @@ describe('retryWithBackoff', () => {
     ).rejects.toThrow('keep failing');
     // 1 initial + 2 retries = 3 total calls
     expect(fn).toHaveBeenCalledTimes(3);
+  });
+});
+
+describe('withTimeout (via retryWithBackoff)', () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
+  it('should reject with ETIMEDOUT error when operation times out', async () => {
+    vi.useFakeTimers();
+    const fn = vi.fn().mockImplementation(() => hangPromise());
+
+    const { retryWithBackoff } = await import('../src/lib/retry.js');
+
+    const promise = retryWithBackoff(fn, () => true, {
+      maxRetries: 0,
+      baseDelay: 1,
+      maxDelay: 1,
+      timeout: 100,
+    });
+
+    await vi.advanceTimersByTimeAsync(200);
+
+    await expect(promise).rejects.toThrow(/ETIMEDOUT/);
+  });
+
+  it('should retry on timeout errors when using isDDGTransientError', async () => {
+    vi.useFakeTimers();
+    const fn = vi.fn().mockImplementation(() => hangPromise());
+
+    const { retryWithBackoff, isDDGTransientError } = await import('../src/lib/retry.js');
+
+    const promise = retryWithBackoff(fn, isDDGTransientError, {
+      maxRetries: 1,
+      baseDelay: 1,
+      maxDelay: 1,
+      timeout: 100,
+    });
+
+    // Advance past timeout (100ms) + retry jitter (0-2ms) + second timeout
+    await vi.advanceTimersByTimeAsync(500);
+
+    await expect(promise).rejects.toThrow(/ETIMEDOUT/);
+    // 1 initial + 1 retry = 2 calls (timeout error is now transient)
+    expect(fn).toHaveBeenCalledTimes(2);
+  });
+
+  it('should resolve successfully when operation completes before timeout', async () => {
+    vi.useFakeTimers();
+    const fn = vi.fn().mockResolvedValue('fast');
+
+    const { retryWithBackoff, isDDGTransientError } = await import('../src/lib/retry.js');
+
+    const result = await retryWithBackoff(fn, isDDGTransientError, {
+      maxRetries: 1,
+      baseDelay: 1,
+      maxDelay: 1,
+      timeout: 10000,
+    });
+
+    expect(result).toBe('fast');
+    expect(fn).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -1,5 +1,32 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { PassThrough } from 'stream';
 import { WebSearchInputSchema, validateDomainExclusivity } from '../src/lib/input.js';
+
+/** Save and restore process.stdin for readStdin tests */
+function mockStdin(data?: string, isTTY?: boolean) {
+  const stream = new PassThrough();
+  if (isTTY) {
+    Object.defineProperty(stream, 'isTTY', { value: true, configurable: true });
+  }
+  Object.defineProperty(process, 'stdin', {
+    value: stream,
+    configurable: true,
+    writable: true,
+  });
+  if (data !== undefined) {
+    stream.write(data);
+  }
+  stream.end();
+  return stream;
+}
+
+function saveStdinDescriptor(): PropertyDescriptor | undefined {
+  return Object.getOwnPropertyDescriptor(process, 'stdin');
+}
+
+function restoreStdin(saved?: PropertyDescriptor): void {
+  Object.defineProperty(process, 'stdin', saved ?? { value: undefined, configurable: true, writable: true });
+}
 
 describe('WebSearchInputSchema', () => {
   it('should parse valid input with query only', () => {
@@ -61,5 +88,44 @@ describe('validateDomainExclusivity', () => {
 
   it('should not throw when blocked_domains is empty array', () => {
     expect(() => validateDomainExclusivity({ blocked_domains: [] })).not.toThrow();
+  });
+});
+
+describe('readStdin', () => {
+  let stdinDesc: PropertyDescriptor | undefined;
+
+  beforeEach(() => {
+    stdinDesc = saveStdinDescriptor();
+    vi.resetModules();
+  });
+
+  afterEach(() => {
+    restoreStdin(stdinDesc);
+    vi.restoreAllMocks();
+  });
+
+  it('should throw descriptive error when stdin emits no data (empty input)', async () => {
+    mockStdin(); // end immediately with no data
+
+    const { readStdin } = await import('../src/lib/input.js');
+
+    await expect(readStdin(WebSearchInputSchema)).rejects.toThrow('No input received');
+  });
+
+  it('should throw immediately when stdin is a TTY (no pipe)', async () => {
+    mockStdin(undefined, true); // TTY, no data
+
+    const { readStdin } = await import('../src/lib/input.js');
+
+    await expect(readStdin(WebSearchInputSchema)).rejects.toThrow('No input provided');
+  });
+
+  it('should parse valid JSON input from stdin', async () => {
+    mockStdin('{"query": "hello world"}');
+
+    const { readStdin } = await import('../src/lib/input.js');
+
+    const result = await readStdin(WebSearchInputSchema);
+    expect(result.query).toBe('hello world');
   });
 });
