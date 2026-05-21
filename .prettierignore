@@ -2,3 +2,4 @@ scripts/
 coverage/
 node_modules/
 dist/
+.planning/

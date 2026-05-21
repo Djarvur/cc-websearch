@@ -90,7 +90,10 @@ describe('SKILL.md script path references', () => {
       const match = content.match(scriptPattern);
 
       expect(match).not.toBeNull();
-      const extractedFilename = match![1];
+      expect(match).toBeDefined();
+      /* v8 ignore next 3 — TypeScript narrowing guard; match is always non-null after expect above */
+      const extractedFilename = match ? match[1] : '';
+      expect(extractedFilename.length).toBeGreaterThan(0);
 
       const scriptPath = resolve(ROOT, 'scripts', extractedFilename);
       expect(existsSync(scriptPath)).toBe(true);
