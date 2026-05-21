@@ -19,5 +19,6 @@ await Promise.all([
     ...commonOptions,
     entryPoints: ['src/webfetch.ts'],
     outfile: 'scripts/webfetch.cjs',
+    external: ['jsdom'], // jsdom must be external -- reads CSS via fs at runtime
   }),
 ]);
