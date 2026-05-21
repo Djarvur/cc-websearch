@@ -25,7 +25,11 @@ function saveStdinDescriptor(): PropertyDescriptor | undefined {
 }
 
 function restoreStdin(saved?: PropertyDescriptor): void {
-  Object.defineProperty(process, 'stdin', saved ?? { value: undefined, configurable: true, writable: true });
+  Object.defineProperty(
+    process,
+    'stdin',
+    saved ?? { value: undefined, configurable: true, writable: true },
+  );
 }
 
 describe('WebSearchInputSchema', () => {

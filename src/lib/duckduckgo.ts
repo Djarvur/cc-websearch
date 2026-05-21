@@ -46,7 +46,9 @@ export async function searchDDG(query: string): Promise<SearchResult[]> {
   const html = await response.text();
 
   if (html.includes('DDG.deep.anomalyDetectionBlock')) {
-    throw new Error('DDG detected an anomaly in the request, you are likely making requests too quickly.');
+    throw new Error(
+      'DDG detected an anomaly in the request, you are likely making requests too quickly.',
+    );
   }
 
   const $ = cheerio.load(html);

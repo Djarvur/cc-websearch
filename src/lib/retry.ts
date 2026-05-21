@@ -33,7 +33,10 @@ function sleep(ms: number): Promise<void> {
 async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
   const timeoutPromise = new Promise<never>((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error(`Request timed out after ${ms}ms (ETIMEDOUT)`)), ms);
+    timeoutId = setTimeout(
+      () => reject(new Error(`Request timed out after ${ms}ms (ETIMEDOUT)`)),
+      ms,
+    );
   });
   try {
     return await Promise.race([promise, timeoutPromise]);

@@ -11,9 +11,7 @@ vi.mock('../src/lib/logger.js', () => ({
 }));
 
 // Helper to build DDG Lite result rows
-function resultRows(
-  items: Array<{ title: string; url: string; snippet: string }>,
-): string {
+function resultRows(items: Array<{ title: string; url: string; snippet: string }>): string {
   return items
     .map(
       (item, i) => `
@@ -73,8 +71,16 @@ describe('searchDDG', () => {
     const results = await searchDDG('test query');
 
     expect(results).toHaveLength(2);
-    expect(results[0]).toEqual({ title: 'Result 1', url: 'https://example.com/1', snippet: 'desc 1' });
-    expect(results[1]).toEqual({ title: 'Result 2', url: 'https://example.com/2', snippet: 'desc 2' });
+    expect(results[0]).toEqual({
+      title: 'Result 1',
+      url: 'https://example.com/1',
+      snippet: 'desc 1',
+    });
+    expect(results[1]).toEqual({
+      title: 'Result 2',
+      url: 'https://example.com/2',
+      snippet: 'desc 2',
+    });
   });
 
   it('should make request to DDG Lite with encoded query', async () => {
@@ -120,7 +126,9 @@ describe('searchDDG', () => {
 
     const { searchDDG } = await import('../src/lib/duckduckgo.js');
 
-    await expect(searchDDG('test query')).rejects.toThrow('DDG Lite returned HTTP 503: Service Unavailable');
+    await expect(searchDDG('test query')).rejects.toThrow(
+      'DDG Lite returned HTTP 503: Service Unavailable',
+    );
   });
 
   it('should strip HTML tags from snippet text', async () => {
@@ -166,9 +174,7 @@ describe('searchDDG', () => {
 
     const { searchDDG } = await import('../src/lib/duckduckgo.js');
 
-    await expect(searchDDG('test query')).rejects.toThrow(
-      'DDG detected an anomaly in the request',
-    );
+    await expect(searchDDG('test query')).rejects.toThrow('DDG detected an anomaly in the request');
   });
 
   it('should use the correct User-Agent header', async () => {
