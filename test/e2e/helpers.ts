@@ -38,7 +38,7 @@ export async function withRetry(fn: () => Promise<void>, maxRetries = 3): Promis
     } catch (err) {
       lastError = err instanceof Error ? err : new Error(String(err));
       if (i < maxRetries - 1) {
-        await new Promise((r) => setTimeout(r, 2000 * (i + 1)));
+        await new Promise((r) => setTimeout(r, 3000 * (i + 1)));
       }
     }
   }
