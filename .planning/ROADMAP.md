@@ -209,3 +209,21 @@ Plans:
 **Wave 2** _(blocked on Wave 1 completion)_
 
 - [x] 07-02-PLAN.md -- Verification gate: extend structure validation tests, run full validation check
+
+### Phase 8: Close tech debt: update REQUIREMENTS.md, fix SUMMARY gaps, finalize Nyquist
+
+**Goal:** All tracking, documentation, and code debt items resolved so the v1.0 milestone can be cleanly closed.
+**Requirements**: D-01 through D-19 (decision IDs from CONTEXT.md)
+**Depends on:** Phase 7
+**Plans:** 4 plans
+
+Plans:
+**Wave 1** _(tracking/documentation -- parallel)_
+
+- [ ] 08-01-PLAN.md -- REQUIREMENTS.md update: rewrite SRCH-04/FTEC-04/CONF-01/CONF-03, add CI-01-08, update PLUG/SRCH docs, standardize traceability, sync checkboxes
+- [ ] 08-02-PLAN.md -- SUMMARY audit and aggregation: fix 03-01 frontmatter gap, audit all 17 plan-level SUMMARYs, create phase-level SUMMARYs (01-07), create v1.0 milestone SUMMARY
+- [ ] 08-03-PLAN.md -- Nyquist finalization: complete all 7 VALIDATION.md checklists, set nyquist_compliant=true, wave_0_complete=true, status=completed
+
+**Wave 2** _(code fixes -- after tracking/documentation per CONTEXT.md)_
+
+- [ ] 08-04-PLAN.md -- Code debt fixes: fix withTimeout (retry.ts), readStdin crash (input.ts), normalizeUrl scheme validation (fetch.ts), @types/jsdom version mismatch (package.json)
