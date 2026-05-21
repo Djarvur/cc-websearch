@@ -30,9 +30,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/html-entities/dist/commonjs/named-references.js
+// ../../../node_modules/html-entities/dist/commonjs/named-references.js
 var require_named_references = __commonJS({
-  "node_modules/html-entities/dist/commonjs/named-references.js"(exports2) {
+  "../../../node_modules/html-entities/dist/commonjs/named-references.js"(exports2) {
     "use strict";
     var __assign = exports2 && exports2.__assign || function() {
       __assign = Object.assign || function(t) {
@@ -82,9 +82,9 @@ var require_named_references = __commonJS({
   }
 });
 
-// node_modules/html-entities/dist/commonjs/numeric-unicode-map.js
+// ../../../node_modules/html-entities/dist/commonjs/numeric-unicode-map.js
 var require_numeric_unicode_map = __commonJS({
-  "node_modules/html-entities/dist/commonjs/numeric-unicode-map.js"(exports2) {
+  "../../../node_modules/html-entities/dist/commonjs/numeric-unicode-map.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.numericUnicodeMap = void 0;
@@ -121,9 +121,9 @@ var require_numeric_unicode_map = __commonJS({
   }
 });
 
-// node_modules/html-entities/dist/commonjs/surrogate-pairs.js
+// ../../../node_modules/html-entities/dist/commonjs/surrogate-pairs.js
 var require_surrogate_pairs = __commonJS({
-  "node_modules/html-entities/dist/commonjs/surrogate-pairs.js"(exports2) {
+  "../../../node_modules/html-entities/dist/commonjs/surrogate-pairs.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.highSurrogateTo = exports2.highSurrogateFrom = exports2.getCodePoint = exports2.fromCodePoint = void 0;
@@ -140,9 +140,9 @@ var require_surrogate_pairs = __commonJS({
   }
 });
 
-// node_modules/html-entities/dist/commonjs/index.js
+// ../../../node_modules/html-entities/dist/commonjs/index.js
 var require_commonjs = __commonJS({
-  "node_modules/html-entities/dist/commonjs/index.js"(exports2) {
+  "../../../node_modules/html-entities/dist/commonjs/index.js"(exports2) {
     "use strict";
     var __assign = exports2 && exports2.__assign || function() {
       __assign = Object.assign || function(t) {
@@ -263,9 +263,9 @@ var require_commonjs = __commonJS({
   }
 });
 
-// node_modules/needle/lib/querystring.js
+// ../../../node_modules/needle/lib/querystring.js
 var require_querystring = __commonJS({
-  "node_modules/needle/lib/querystring.js"(exports2) {
+  "../../../node_modules/needle/lib/querystring.js"(exports2) {
     var toString = Object.prototype.toString;
     function stringify(obj, prefix) {
       if (prefix && (obj === null || typeof obj == "undefined")) {
@@ -305,9 +305,9 @@ var require_querystring = __commonJS({
   }
 });
 
-// node_modules/needle/lib/multipart.js
+// ../../../node_modules/needle/lib/multipart.js
 var require_multipart = __commonJS({
-  "node_modules/needle/lib/multipart.js"(exports2) {
+  "../../../node_modules/needle/lib/multipart.js"(exports2) {
     var readFile = require("fs").readFile;
     var basename = require("path").basename;
     exports2.build = function(data, boundary, callback) {
@@ -385,9 +385,9 @@ var require_multipart = __commonJS({
   }
 });
 
-// node_modules/needle/lib/auth.js
+// ../../../node_modules/needle/lib/auth.js
 var require_auth = __commonJS({
-  "node_modules/needle/lib/auth.js"(exports2, module2) {
+  "../../../node_modules/needle/lib/auth.js"(exports2, module2) {
     var createHash = require("crypto").createHash;
     function get_header(header, credentials, opts) {
       var type = header.split(" ")[0], user = credentials[0], pass = credentials[1];
@@ -463,9 +463,9 @@ var require_auth = __commonJS({
   }
 });
 
-// node_modules/needle/lib/cookies.js
+// ../../../node_modules/needle/lib/cookies.js
 var require_cookies = __commonJS({
-  "node_modules/needle/lib/cookies.js"(exports2) {
+  "../../../node_modules/needle/lib/cookies.js"(exports2) {
     var unescape = require("querystring").unescape;
     var COOKIE_PAIR = /^([^=\s]+)\s*=\s*("?)\s*(.*)\s*\2\s*$/;
     var EXCLUDED_CHARS = /[\x00-\x1F\x7F\x3B\x3B\s\"\,\\"%]/g;
@@ -514,9 +514,9 @@ var require_cookies = __commonJS({
   }
 });
 
-// node_modules/sax/lib/sax.js
+// ../../../node_modules/sax/lib/sax.js
 var require_sax = __commonJS({
-  "node_modules/sax/lib/sax.js"(exports2) {
+  "../../../node_modules/sax/lib/sax.js"(exports2) {
     (function(sax) {
       sax.parser = function(strict, opt) {
         return new SAXParser(strict, opt);
@@ -2105,9 +2105,9 @@ var require_sax = __commonJS({
   }
 });
 
-// node_modules/needle/lib/parsers.js
+// ../../../node_modules/needle/lib/parsers.js
 var require_parsers = __commonJS({
-  "node_modules/needle/lib/parsers.js"(exports2, module2) {
+  "../../../node_modules/needle/lib/parsers.js"(exports2, module2) {
     var Transform = require("stream").Transform;
     var sax = require_sax();
     function parseXML(str, cb) {
@@ -2209,9 +2209,9 @@ var require_parsers = __commonJS({
   }
 });
 
-// node_modules/safer-buffer/safer.js
+// ../../../node_modules/safer-buffer/safer.js
 var require_safer = __commonJS({
-  "node_modules/safer-buffer/safer.js"(exports2, module2) {
+  "../../../node_modules/safer-buffer/safer.js"(exports2, module2) {
     "use strict";
     var buffer = require("buffer");
     var Buffer2 = buffer.Buffer;
@@ -2277,9 +2277,9 @@ var require_safer = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/lib/bom-handling.js
+// ../../../node_modules/iconv-lite/lib/bom-handling.js
 var require_bom_handling = __commonJS({
-  "node_modules/iconv-lite/lib/bom-handling.js"(exports2) {
+  "../../../node_modules/iconv-lite/lib/bom-handling.js"(exports2) {
     "use strict";
     var BOMChar = "\uFEFF";
     exports2.PrependBOM = PrependBOMWrapper;
@@ -2321,9 +2321,9 @@ var require_bom_handling = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/internal.js
+// ../../../node_modules/iconv-lite/encodings/internal.js
 var require_internal = __commonJS({
-  "node_modules/iconv-lite/encodings/internal.js"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/internal.js"(exports2, module2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     module2.exports = {
@@ -2473,9 +2473,9 @@ var require_internal = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/utf32.js
+// ../../../node_modules/iconv-lite/encodings/utf32.js
 var require_utf32 = __commonJS({
-  "node_modules/iconv-lite/encodings/utf32.js"(exports2) {
+  "../../../node_modules/iconv-lite/encodings/utf32.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     exports2._utf32 = Utf32Codec;
@@ -2692,9 +2692,9 @@ var require_utf32 = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/utf16.js
+// ../../../node_modules/iconv-lite/encodings/utf16.js
 var require_utf16 = __commonJS({
-  "node_modules/iconv-lite/encodings/utf16.js"(exports2) {
+  "../../../node_modules/iconv-lite/encodings/utf16.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     exports2.utf16be = Utf16BECodec;
@@ -2826,9 +2826,9 @@ var require_utf16 = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/utf7.js
+// ../../../node_modules/iconv-lite/encodings/utf7.js
 var require_utf7 = __commonJS({
-  "node_modules/iconv-lite/encodings/utf7.js"(exports2) {
+  "../../../node_modules/iconv-lite/encodings/utf7.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     exports2.utf7 = Utf7Codec;
@@ -3027,9 +3027,9 @@ var require_utf7 = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/sbcs-codec.js
+// ../../../node_modules/iconv-lite/encodings/sbcs-codec.js
 var require_sbcs_codec = __commonJS({
-  "node_modules/iconv-lite/encodings/sbcs-codec.js"(exports2) {
+  "../../../node_modules/iconv-lite/encodings/sbcs-codec.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     exports2._sbcs = SBCSCodec;
@@ -3083,9 +3083,9 @@ var require_sbcs_codec = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/sbcs-data.js
+// ../../../node_modules/iconv-lite/encodings/sbcs-data.js
 var require_sbcs_data = __commonJS({
-  "node_modules/iconv-lite/encodings/sbcs-data.js"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/sbcs-data.js"(exports2, module2) {
     "use strict";
     module2.exports = {
       // Not supported by iconv, not sure why.
@@ -3236,9 +3236,9 @@ var require_sbcs_data = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/sbcs-data-generated.js
+// ../../../node_modules/iconv-lite/encodings/sbcs-data-generated.js
 var require_sbcs_data_generated = __commonJS({
-  "node_modules/iconv-lite/encodings/sbcs-data-generated.js"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/sbcs-data-generated.js"(exports2, module2) {
     "use strict";
     module2.exports = {
       "437": "cp437",
@@ -3691,9 +3691,9 @@ var require_sbcs_data_generated = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/dbcs-codec.js
+// ../../../node_modules/iconv-lite/encodings/dbcs-codec.js
 var require_dbcs_codec = __commonJS({
-  "node_modules/iconv-lite/encodings/dbcs-codec.js"(exports2) {
+  "../../../node_modules/iconv-lite/encodings/dbcs-codec.js"(exports2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     exports2._dbcs = DBCSCodec;
@@ -4108,9 +4108,9 @@ var require_dbcs_codec = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/shiftjis.json
+// ../../../node_modules/iconv-lite/encodings/tables/shiftjis.json
 var require_shiftjis = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/shiftjis.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/shiftjis.json"(exports2, module2) {
     module2.exports = [
       ["0", "\0", 128],
       ["a1", "\uFF61", 62],
@@ -4239,9 +4239,9 @@ var require_shiftjis = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/eucjp.json
+// ../../../node_modules/iconv-lite/encodings/tables/eucjp.json
 var require_eucjp = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/eucjp.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/eucjp.json"(exports2, module2) {
     module2.exports = [
       ["0", "\0", 127],
       ["8ea1", "\uFF61", 62],
@@ -4427,9 +4427,9 @@ var require_eucjp = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/cp936.json
+// ../../../node_modules/iconv-lite/encodings/tables/cp936.json
 var require_cp936 = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/cp936.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/cp936.json"(exports2, module2) {
     module2.exports = [
       ["0", "\0", 127, "\u20AC"],
       ["8140", "\u4E02\u4E04\u4E05\u4E06\u4E0F\u4E12\u4E17\u4E1F\u4E20\u4E21\u4E23\u4E26\u4E29\u4E2E\u4E2F\u4E31\u4E33\u4E35\u4E37\u4E3C\u4E40\u4E41\u4E42\u4E44\u4E46\u4E4A\u4E51\u4E55\u4E57\u4E5A\u4E5B\u4E62\u4E63\u4E64\u4E65\u4E67\u4E68\u4E6A", 5, "\u4E72\u4E74", 9, "\u4E7F", 6, "\u4E87\u4E8A"],
@@ -4697,9 +4697,9 @@ var require_cp936 = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/gbk-added.json
+// ../../../node_modules/iconv-lite/encodings/tables/gbk-added.json
 var require_gbk_added = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/gbk-added.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/gbk-added.json"(exports2, module2) {
     module2.exports = [
       ["a140", "\uE4C6", 62],
       ["a180", "\uE505", 32],
@@ -4759,16 +4759,16 @@ var require_gbk_added = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/gb18030-ranges.json
+// ../../../node_modules/iconv-lite/encodings/tables/gb18030-ranges.json
 var require_gb18030_ranges = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/gb18030-ranges.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/gb18030-ranges.json"(exports2, module2) {
     module2.exports = { uChars: [128, 165, 169, 178, 184, 216, 226, 235, 238, 244, 248, 251, 253, 258, 276, 284, 300, 325, 329, 334, 364, 463, 465, 467, 469, 471, 473, 475, 477, 506, 594, 610, 712, 716, 730, 930, 938, 962, 970, 1026, 1104, 1106, 8209, 8215, 8218, 8222, 8231, 8241, 8244, 8246, 8252, 8365, 8452, 8454, 8458, 8471, 8482, 8556, 8570, 8596, 8602, 8713, 8720, 8722, 8726, 8731, 8737, 8740, 8742, 8748, 8751, 8760, 8766, 8777, 8781, 8787, 8802, 8808, 8816, 8854, 8858, 8870, 8896, 8979, 9322, 9372, 9548, 9588, 9616, 9622, 9634, 9652, 9662, 9672, 9676, 9680, 9702, 9735, 9738, 9793, 9795, 11906, 11909, 11913, 11917, 11928, 11944, 11947, 11951, 11956, 11960, 11964, 11979, 12284, 12292, 12312, 12319, 12330, 12351, 12436, 12447, 12535, 12543, 12586, 12842, 12850, 12964, 13200, 13215, 13218, 13253, 13263, 13267, 13270, 13384, 13428, 13727, 13839, 13851, 14617, 14703, 14801, 14816, 14964, 15183, 15471, 15585, 16471, 16736, 17208, 17325, 17330, 17374, 17623, 17997, 18018, 18212, 18218, 18301, 18318, 18760, 18811, 18814, 18820, 18823, 18844, 18848, 18872, 19576, 19620, 19738, 19887, 40870, 59244, 59336, 59367, 59413, 59417, 59423, 59431, 59437, 59443, 59452, 59460, 59478, 59493, 63789, 63866, 63894, 63976, 63986, 64016, 64018, 64021, 64025, 64034, 64037, 64042, 65074, 65093, 65107, 65112, 65127, 65132, 65375, 65510, 65536], gbChars: [0, 36, 38, 45, 50, 81, 89, 95, 96, 100, 103, 104, 105, 109, 126, 133, 148, 172, 175, 179, 208, 306, 307, 308, 309, 310, 311, 312, 313, 341, 428, 443, 544, 545, 558, 741, 742, 749, 750, 805, 819, 820, 7922, 7924, 7925, 7927, 7934, 7943, 7944, 7945, 7950, 8062, 8148, 8149, 8152, 8164, 8174, 8236, 8240, 8262, 8264, 8374, 8380, 8381, 8384, 8388, 8390, 8392, 8393, 8394, 8396, 8401, 8406, 8416, 8419, 8424, 8437, 8439, 8445, 8482, 8485, 8496, 8521, 8603, 8936, 8946, 9046, 9050, 9063, 9066, 9076, 9092, 9100, 9108, 9111, 9113, 9131, 9162, 9164, 9218, 9219, 11329, 11331, 11334, 11336, 11346, 11361, 11363, 11366, 11370, 11372, 11375, 11389, 11682, 11686, 11687, 11692, 11694, 11714, 11716, 11723, 11725, 11730, 11736, 11982, 11989, 12102, 12336, 12348, 12350, 12384, 12393, 12395, 12397, 12510, 12553, 12851, 12962, 12973, 13738, 13823, 13919, 13933, 14080, 14298, 14585, 14698, 15583, 15847, 16318, 16434, 16438, 16481, 16729, 17102, 17122, 17315, 17320, 17402, 17418, 17859, 17909, 17911, 17915, 17916, 17936, 17939, 17961, 18664, 18703, 18814, 18962, 19043, 33469, 33470, 33471, 33484, 33485, 33490, 33497, 33501, 33505, 33513, 33520, 33536, 33550, 37845, 37921, 37948, 38029, 38038, 38064, 38065, 38066, 38069, 38075, 38076, 38078, 39108, 39109, 39113, 39114, 39115, 39116, 39265, 39394, 189e3] };
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/cp949.json
+// ../../../node_modules/iconv-lite/encodings/tables/cp949.json
 var require_cp949 = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/cp949.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/cp949.json"(exports2, module2) {
     module2.exports = [
       ["0", "\0", 127],
       ["8141", "\uAC02\uAC03\uAC05\uAC06\uAC0B", 4, "\uAC18\uAC1E\uAC1F\uAC21\uAC22\uAC23\uAC25", 6, "\uAC2E\uAC32\uAC33\uAC34"],
@@ -5045,9 +5045,9 @@ var require_cp949 = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/cp950.json
+// ../../../node_modules/iconv-lite/encodings/tables/cp950.json
 var require_cp950 = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/cp950.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/cp950.json"(exports2, module2) {
     module2.exports = [
       ["0", "\0", 127],
       ["a140", "\u3000\uFF0C\u3001\u3002\uFF0E\u2027\uFF1B\uFF1A\uFF1F\uFF01\uFE30\u2026\u2025\uFE50\uFE51\uFE52\xB7\uFE54\uFE55\uFE56\uFE57\uFF5C\u2013\uFE31\u2014\uFE33\u2574\uFE34\uFE4F\uFF08\uFF09\uFE35\uFE36\uFF5B\uFF5D\uFE37\uFE38\u3014\u3015\uFE39\uFE3A\u3010\u3011\uFE3B\uFE3C\u300A\u300B\uFE3D\uFE3E\u3008\u3009\uFE3F\uFE40\u300C\u300D\uFE41\uFE42\u300E\u300F\uFE43\uFE44\uFE59\uFE5A"],
@@ -5228,9 +5228,9 @@ var require_cp950 = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/tables/big5-added.json
+// ../../../node_modules/iconv-lite/encodings/tables/big5-added.json
 var require_big5_added = __commonJS({
-  "node_modules/iconv-lite/encodings/tables/big5-added.json"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/tables/big5-added.json"(exports2, module2) {
     module2.exports = [
       ["8740", "\u43F0\u4C32\u4603\u45A6\u4578\u{27267}\u4D77\u45B3\u{27CB1}\u4CE2\u{27CC5}\u3B95\u4736\u4744\u4C47\u4C40\u{242BF}\u{23617}\u{27352}\u{26E8B}\u{270D2}\u4C57\u{2A351}\u474F\u45DA\u4C85\u{27C6C}\u4D07\u4AA4\u46A1\u{26B23}\u7225\u{25A54}\u{21A63}\u{23E06}\u{23F61}\u664D\u56FB"],
       ["8767", "\u7D95\u591D\u{28BB9}\u3DF4\u9734\u{27BEF}\u5BDB\u{21D5E}\u5AA4\u3625\u{29EB0}\u5AD1\u5BB7\u5CFC\u676E\u8593\u{29945}\u7461\u749D\u3875\u{21D53}\u{2369E}\u{26021}\u3EEC"],
@@ -5356,9 +5356,9 @@ var require_big5_added = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/dbcs-data.js
+// ../../../node_modules/iconv-lite/encodings/dbcs-data.js
 var require_dbcs_data = __commonJS({
-  "node_modules/iconv-lite/encodings/dbcs-data.js"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/dbcs-data.js"(exports2, module2) {
     "use strict";
     module2.exports = {
       // == Japanese/ShiftJIS ====================================================
@@ -5603,9 +5603,9 @@ var require_dbcs_data = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/encodings/index.js
+// ../../../node_modules/iconv-lite/encodings/index.js
 var require_encodings = __commonJS({
-  "node_modules/iconv-lite/encodings/index.js"(exports2, module2) {
+  "../../../node_modules/iconv-lite/encodings/index.js"(exports2, module2) {
     "use strict";
     var modules = [
       require_internal(),
@@ -5630,9 +5630,9 @@ var require_encodings = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/lib/streams.js
+// ../../../node_modules/iconv-lite/lib/streams.js
 var require_streams = __commonJS({
-  "node_modules/iconv-lite/lib/streams.js"(exports2, module2) {
+  "../../../node_modules/iconv-lite/lib/streams.js"(exports2, module2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     module2.exports = function(stream_module) {
@@ -5725,9 +5725,9 @@ var require_streams = __commonJS({
   }
 });
 
-// node_modules/iconv-lite/lib/index.js
+// ../../../node_modules/iconv-lite/lib/index.js
 var require_lib = __commonJS({
-  "node_modules/iconv-lite/lib/index.js"(exports2, module2) {
+  "../../../node_modules/iconv-lite/lib/index.js"(exports2, module2) {
     "use strict";
     var Buffer2 = require_safer().Buffer;
     var bomHandling = require_bom_handling();
@@ -5845,9 +5845,9 @@ var require_lib = __commonJS({
   }
 });
 
-// node_modules/needle/lib/decoder.js
+// ../../../node_modules/needle/lib/decoder.js
 var require_decoder = __commonJS({
-  "node_modules/needle/lib/decoder.js"(exports2, module2) {
+  "../../../node_modules/needle/lib/decoder.js"(exports2, module2) {
     var iconv;
     var inherits = require("util").inherits;
     var stream = require("stream");
@@ -5897,9 +5897,9 @@ var require_decoder = __commonJS({
   }
 });
 
-// node_modules/needle/lib/utils.js
+// ../../../node_modules/needle/lib/utils.js
 var require_utils = __commonJS({
-  "node_modules/needle/lib/utils.js"(exports2, module2) {
+  "../../../node_modules/needle/lib/utils.js"(exports2, module2) {
     var fs = require("fs");
     var url2 = require("url");
     var stream = require("stream");
@@ -5980,9 +5980,9 @@ var require_utils = __commonJS({
   }
 });
 
-// node_modules/needle/package.json
+// ../../../node_modules/needle/package.json
 var require_package = __commonJS({
-  "node_modules/needle/package.json"(exports2, module2) {
+  "../../../node_modules/needle/package.json"(exports2, module2) {
     module2.exports = {
       name: "needle",
       version: "3.5.0",
@@ -6056,9 +6056,9 @@ var require_package = __commonJS({
   }
 });
 
-// node_modules/needle/lib/needle.js
+// ../../../node_modules/needle/lib/needle.js
 var require_needle = __commonJS({
-  "node_modules/needle/lib/needle.js"(exports2, module2) {
+  "../../../node_modules/needle/lib/needle.js"(exports2, module2) {
     var fs = require("fs");
     var http = require("http");
     var https = require("https");
@@ -6622,9 +6622,9 @@ var require_needle = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/util.js
+// ../../../node_modules/duck-duck-scrape/lib/util.js
 var require_util = __commonJS({
-  "node_modules/duck-duck-scrape/lib/util.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/util.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -6688,9 +6688,9 @@ var require_util = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/search/images.js
+// ../../../node_modules/duck-duck-scrape/lib/search/images.js
 var require_images = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/images.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/search/images.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -6825,9 +6825,9 @@ var require_images = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/search/news.js
+// ../../../node_modules/duck-duck-scrape/lib/search/news.js
 var require_news = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/news.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/search/news.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -6903,9 +6903,9 @@ var require_news = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/search/search.js
+// ../../../node_modules/duck-duck-scrape/lib/search/search.js
 var require_search = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/search.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/search/search.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7098,9 +7098,9 @@ var require_search = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/search/videos.js
+// ../../../node_modules/duck-duck-scrape/lib/search/videos.js
 var require_videos = __commonJS({
-  "node_modules/duck-duck-scrape/lib/search/videos.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/search/videos.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7207,9 +7207,9 @@ var require_videos = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/currency.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/currency.js
 var require_currency = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/currency.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/currency.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7233,9 +7233,9 @@ var require_currency = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/dictionary/audio.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/dictionary/audio.js
 var require_audio = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/audio.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/dictionary/audio.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7256,9 +7256,9 @@ var require_audio = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/dictionary/definition.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/dictionary/definition.js
 var require_definition = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/definition.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/dictionary/definition.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7280,9 +7280,9 @@ var require_definition = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/dictionary/hyphenation.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/dictionary/hyphenation.js
 var require_hyphenation = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/hyphenation.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/dictionary/hyphenation.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7303,9 +7303,9 @@ var require_hyphenation = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/dictionary/pronunciation.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/dictionary/pronunciation.js
 var require_pronunciation = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dictionary/pronunciation.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/dictionary/pronunciation.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7326,9 +7326,9 @@ var require_pronunciation = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/dns.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/dns.js
 var require_dns = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/dns.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/dns.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7387,9 +7387,9 @@ var require_dns = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/emojipedia.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/emojipedia.js
 var require_emojipedia = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/emojipedia.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/emojipedia.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7409,9 +7409,9 @@ var require_emojipedia = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/expandUrl.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/expandUrl.js
 var require_expandUrl = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/expandUrl.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/expandUrl.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7431,9 +7431,9 @@ var require_expandUrl = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/forecast.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/forecast.js
 var require_forecast = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/forecast.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/forecast.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7456,9 +7456,9 @@ var require_forecast = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/statista.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/statista.js
 var require_statista = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/statista.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/statista.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7476,9 +7476,9 @@ var require_statista = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/stocks.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/stocks.js
 var require_stocks = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/stocks.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/stocks.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7500,9 +7500,9 @@ var require_stocks = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/thesaurus.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/thesaurus.js
 var require_thesaurus = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/thesaurus.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/thesaurus.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7524,9 +7524,9 @@ var require_thesaurus = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/spices/time.js
+// ../../../node_modules/duck-duck-scrape/lib/spices/time.js
 var require_time = __commonJS({
-  "node_modules/duck-duck-scrape/lib/spices/time.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/spices/time.js"(exports2) {
     "use strict";
     var __importDefault = exports2 && exports2.__importDefault || function(mod) {
       return mod && mod.__esModule ? mod : { "default": mod };
@@ -7545,9 +7545,9 @@ var require_time = __commonJS({
   }
 });
 
-// node_modules/duck-duck-scrape/lib/index.js
+// ../../../node_modules/duck-duck-scrape/lib/index.js
 var require_lib2 = __commonJS({
-  "node_modules/duck-duck-scrape/lib/index.js"(exports2) {
+  "../../../node_modules/duck-duck-scrape/lib/index.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -7593,7 +7593,7 @@ var require_lib2 = __commonJS({
   }
 });
 
-// node_modules/zod/v4/classic/external.js
+// ../../../node_modules/zod/v4/classic/external.js
 var external_exports = {};
 __export(external_exports, {
   $brand: () => $brand,
@@ -7836,7 +7836,7 @@ __export(external_exports, {
   xor: () => xor
 });
 
-// node_modules/zod/v4/core/index.js
+// ../../../node_modules/zod/v4/core/index.js
 var core_exports2 = {};
 __export(core_exports2, {
   $ZodAny: () => $ZodAny,
@@ -8115,7 +8115,7 @@ __export(core_exports2, {
   version: () => version
 });
 
-// node_modules/zod/v4/core/core.js
+// ../../../node_modules/zod/v4/core/core.js
 var _a;
 var NEVER = /* @__PURE__ */ Object.freeze({
   status: "aborted"
@@ -8192,7 +8192,7 @@ function config(newConfig) {
   return globalConfig;
 }
 
-// node_modules/zod/v4/core/util.js
+// ../../../node_modules/zod/v4/core/util.js
 var util_exports = {};
 __export(util_exports, {
   BIGINT_FORMAT_RANGES: () => BIGINT_FORMAT_RANGES,
@@ -8888,7 +8888,7 @@ var Class = class {
   }
 };
 
-// node_modules/zod/v4/core/errors.js
+// ../../../node_modules/zod/v4/core/errors.js
 var initializer = (inst, def) => {
   inst.name = "$ZodError";
   Object.defineProperty(inst, "_zod", {
@@ -9027,7 +9027,7 @@ function prettifyError(error51) {
   return lines.join("\n");
 }
 
-// node_modules/zod/v4/core/parse.js
+// ../../../node_modules/zod/v4/core/parse.js
 var _parse = (_Err) => (schema, value, _ctx, _params) => {
   const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
   const result = schema._zod.run({ value, issues: [] }, ctx);
@@ -9115,7 +9115,7 @@ var _safeDecodeAsync = (_Err) => async (schema, value, _ctx) => {
 };
 var safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync($ZodRealError);
 
-// node_modules/zod/v4/core/regexes.js
+// ../../../node_modules/zod/v4/core/regexes.js
 var regexes_exports = {};
 __export(regexes_exports, {
   base64: () => base64,
@@ -9274,7 +9274,7 @@ var sha512_hex = /^[0-9a-fA-F]{128}$/;
 var sha512_base64 = /* @__PURE__ */ fixedBase64(86, "==");
 var sha512_base64url = /* @__PURE__ */ fixedBase64url(86);
 
-// node_modules/zod/v4/core/checks.js
+// ../../../node_modules/zod/v4/core/checks.js
 var $ZodCheck = /* @__PURE__ */ $constructor("$ZodCheck", (inst, def) => {
   var _a3;
   inst._zod ?? (inst._zod = {});
@@ -9822,7 +9822,7 @@ var $ZodCheckOverwrite = /* @__PURE__ */ $constructor("$ZodCheckOverwrite", (ins
   };
 });
 
-// node_modules/zod/v4/core/doc.js
+// ../../../node_modules/zod/v4/core/doc.js
 var Doc = class {
   constructor(args = []) {
     this.content = [];
@@ -9858,14 +9858,14 @@ var Doc = class {
   }
 };
 
-// node_modules/zod/v4/core/versions.js
+// ../../../node_modules/zod/v4/core/versions.js
 var version = {
   major: 4,
   minor: 4,
   patch: 3
 };
 
-// node_modules/zod/v4/core/schemas.js
+// ../../../node_modules/zod/v4/core/schemas.js
 var $ZodType = /* @__PURE__ */ $constructor("$ZodType", (inst, def) => {
   var _a3;
   inst ?? (inst = {});
@@ -11958,7 +11958,7 @@ function handleRefineResult(result, payload, input, inst) {
   }
 }
 
-// node_modules/zod/v4/locales/index.js
+// ../../../node_modules/zod/v4/locales/index.js
 var locales_exports = {};
 __export(locales_exports, {
   ar: () => ar_default,
@@ -12015,7 +12015,7 @@ __export(locales_exports, {
   zhTW: () => zh_TW_default
 });
 
-// node_modules/zod/v4/locales/ar.js
+// ../../../node_modules/zod/v4/locales/ar.js
 var error = () => {
   const Sizable = {
     string: { unit: "\u062D\u0631\u0641", verb: "\u0623\u0646 \u064A\u062D\u0648\u064A" },
@@ -12122,7 +12122,7 @@ function ar_default() {
   };
 }
 
-// node_modules/zod/v4/locales/az.js
+// ../../../node_modules/zod/v4/locales/az.js
 var error2 = () => {
   const Sizable = {
     string: { unit: "simvol", verb: "olmal\u0131d\u0131r" },
@@ -12228,7 +12228,7 @@ function az_default() {
   };
 }
 
-// node_modules/zod/v4/locales/be.js
+// ../../../node_modules/zod/v4/locales/be.js
 function getBelarusianPlural(count, one, few, many) {
   const absCount = Math.abs(count);
   const lastDigit = absCount % 10;
@@ -12385,7 +12385,7 @@ function be_default() {
   };
 }
 
-// node_modules/zod/v4/locales/bg.js
+// ../../../node_modules/zod/v4/locales/bg.js
 var error4 = () => {
   const Sizable = {
     string: { unit: "\u0441\u0438\u043C\u0432\u043E\u043B\u0430", verb: "\u0434\u0430 \u0441\u044A\u0434\u044A\u0440\u0436\u0430" },
@@ -12506,7 +12506,7 @@ function bg_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ca.js
+// ../../../node_modules/zod/v4/locales/ca.js
 var error5 = () => {
   const Sizable = {
     string: { unit: "car\xE0cters", verb: "contenir" },
@@ -12615,7 +12615,7 @@ function ca_default() {
   };
 }
 
-// node_modules/zod/v4/locales/cs.js
+// ../../../node_modules/zod/v4/locales/cs.js
 var error6 = () => {
   const Sizable = {
     string: { unit: "znak\u016F", verb: "m\xEDt" },
@@ -12727,7 +12727,7 @@ function cs_default() {
   };
 }
 
-// node_modules/zod/v4/locales/da.js
+// ../../../node_modules/zod/v4/locales/da.js
 var error7 = () => {
   const Sizable = {
     string: { unit: "tegn", verb: "havde" },
@@ -12843,7 +12843,7 @@ function da_default() {
   };
 }
 
-// node_modules/zod/v4/locales/de.js
+// ../../../node_modules/zod/v4/locales/de.js
 var error8 = () => {
   const Sizable = {
     string: { unit: "Zeichen", verb: "zu haben" },
@@ -12952,7 +12952,7 @@ function de_default() {
   };
 }
 
-// node_modules/zod/v4/locales/el.js
+// ../../../node_modules/zod/v4/locales/el.js
 var error9 = () => {
   const Sizable = {
     string: { unit: "\u03C7\u03B1\u03C1\u03B1\u03BA\u03C4\u03AE\u03C1\u03B5\u03C2", verb: "\u03BD\u03B1 \u03AD\u03C7\u03B5\u03B9" },
@@ -13062,7 +13062,7 @@ function el_default() {
   };
 }
 
-// node_modules/zod/v4/locales/en.js
+// ../../../node_modules/zod/v4/locales/en.js
 var error10 = () => {
   const Sizable = {
     string: { unit: "characters", verb: "to have" },
@@ -13175,7 +13175,7 @@ function en_default() {
   };
 }
 
-// node_modules/zod/v4/locales/eo.js
+// ../../../node_modules/zod/v4/locales/eo.js
 var error11 = () => {
   const Sizable = {
     string: { unit: "karaktrojn", verb: "havi" },
@@ -13285,7 +13285,7 @@ function eo_default() {
   };
 }
 
-// node_modules/zod/v4/locales/es.js
+// ../../../node_modules/zod/v4/locales/es.js
 var error12 = () => {
   const Sizable = {
     string: { unit: "caracteres", verb: "tener" },
@@ -13418,7 +13418,7 @@ function es_default() {
   };
 }
 
-// node_modules/zod/v4/locales/fa.js
+// ../../../node_modules/zod/v4/locales/fa.js
 var error13 = () => {
   const Sizable = {
     string: { unit: "\u06A9\u0627\u0631\u0627\u06A9\u062A\u0631", verb: "\u062F\u0627\u0634\u062A\u0647 \u0628\u0627\u0634\u062F" },
@@ -13533,7 +13533,7 @@ function fa_default() {
   };
 }
 
-// node_modules/zod/v4/locales/fi.js
+// ../../../node_modules/zod/v4/locales/fi.js
 var error14 = () => {
   const Sizable = {
     string: { unit: "merkki\xE4", subject: "merkkijonon" },
@@ -13646,7 +13646,7 @@ function fi_default() {
   };
 }
 
-// node_modules/zod/v4/locales/fr.js
+// ../../../node_modules/zod/v4/locales/fr.js
 var error15 = () => {
   const Sizable = {
     string: { unit: "caract\xE8res", verb: "avoir" },
@@ -13772,7 +13772,7 @@ function fr_default() {
   };
 }
 
-// node_modules/zod/v4/locales/fr-CA.js
+// ../../../node_modules/zod/v4/locales/fr-CA.js
 var error16 = () => {
   const Sizable = {
     string: { unit: "caract\xE8res", verb: "avoir" },
@@ -13880,7 +13880,7 @@ function fr_CA_default() {
   };
 }
 
-// node_modules/zod/v4/locales/he.js
+// ../../../node_modules/zod/v4/locales/he.js
 var error17 = () => {
   const TypeNames = {
     string: { label: "\u05DE\u05D7\u05E8\u05D5\u05D6\u05EA", gender: "f" },
@@ -14075,7 +14075,7 @@ function he_default() {
   };
 }
 
-// node_modules/zod/v4/locales/hr.js
+// ../../../node_modules/zod/v4/locales/hr.js
 var error18 = () => {
   const Sizable = {
     string: { unit: "znakova", verb: "imati" },
@@ -14198,7 +14198,7 @@ function hr_default() {
   };
 }
 
-// node_modules/zod/v4/locales/hu.js
+// ../../../node_modules/zod/v4/locales/hu.js
 var error19 = () => {
   const Sizable = {
     string: { unit: "karakter", verb: "legyen" },
@@ -14307,7 +14307,7 @@ function hu_default() {
   };
 }
 
-// node_modules/zod/v4/locales/hy.js
+// ../../../node_modules/zod/v4/locales/hy.js
 function getArmenianPlural(count, one, many) {
   return Math.abs(count) === 1 ? one : many;
 }
@@ -14455,7 +14455,7 @@ function hy_default() {
   };
 }
 
-// node_modules/zod/v4/locales/id.js
+// ../../../node_modules/zod/v4/locales/id.js
 var error21 = () => {
   const Sizable = {
     string: { unit: "karakter", verb: "memiliki" },
@@ -14562,7 +14562,7 @@ function id_default() {
   };
 }
 
-// node_modules/zod/v4/locales/is.js
+// ../../../node_modules/zod/v4/locales/is.js
 var error22 = () => {
   const Sizable = {
     string: { unit: "stafi", verb: "a\xF0 hafa" },
@@ -14672,7 +14672,7 @@ function is_default() {
   };
 }
 
-// node_modules/zod/v4/locales/it.js
+// ../../../node_modules/zod/v4/locales/it.js
 var error23 = () => {
   const Sizable = {
     string: { unit: "caratteri", verb: "avere" },
@@ -14781,7 +14781,7 @@ function it_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ja.js
+// ../../../node_modules/zod/v4/locales/ja.js
 var error24 = () => {
   const Sizable = {
     string: { unit: "\u6587\u5B57", verb: "\u3067\u3042\u308B" },
@@ -14889,7 +14889,7 @@ function ja_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ka.js
+// ../../../node_modules/zod/v4/locales/ka.js
 var error25 = () => {
   const Sizable = {
     string: { unit: "\u10E1\u10D8\u10DB\u10D1\u10DD\u10DA\u10DD", verb: "\u10E3\u10DC\u10D3\u10D0 \u10E8\u10D4\u10D8\u10EA\u10D0\u10D5\u10D3\u10D4\u10E1" },
@@ -15002,7 +15002,7 @@ function ka_default() {
   };
 }
 
-// node_modules/zod/v4/locales/km.js
+// ../../../node_modules/zod/v4/locales/km.js
 var error26 = () => {
   const Sizable = {
     string: { unit: "\u178F\u17BD\u17A2\u1780\u17D2\u179F\u179A", verb: "\u1782\u17BD\u179A\u1798\u17B6\u1793" },
@@ -15113,12 +15113,12 @@ function km_default() {
   };
 }
 
-// node_modules/zod/v4/locales/kh.js
+// ../../../node_modules/zod/v4/locales/kh.js
 function kh_default() {
   return km_default();
 }
 
-// node_modules/zod/v4/locales/ko.js
+// ../../../node_modules/zod/v4/locales/ko.js
 var error27 = () => {
   const Sizable = {
     string: { unit: "\uBB38\uC790", verb: "to have" },
@@ -15230,7 +15230,7 @@ function ko_default() {
   };
 }
 
-// node_modules/zod/v4/locales/lt.js
+// ../../../node_modules/zod/v4/locales/lt.js
 var capitalizeFirstCharacter = (text) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
@@ -15434,7 +15434,7 @@ function lt_default() {
   };
 }
 
-// node_modules/zod/v4/locales/mk.js
+// ../../../node_modules/zod/v4/locales/mk.js
 var error29 = () => {
   const Sizable = {
     string: { unit: "\u0437\u043D\u0430\u0446\u0438", verb: "\u0434\u0430 \u0438\u043C\u0430\u0430\u0442" },
@@ -15544,7 +15544,7 @@ function mk_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ms.js
+// ../../../node_modules/zod/v4/locales/ms.js
 var error30 = () => {
   const Sizable = {
     string: { unit: "aksara", verb: "mempunyai" },
@@ -15652,7 +15652,7 @@ function ms_default() {
   };
 }
 
-// node_modules/zod/v4/locales/nl.js
+// ../../../node_modules/zod/v4/locales/nl.js
 var error31 = () => {
   const Sizable = {
     string: { unit: "tekens", verb: "heeft" },
@@ -15763,7 +15763,7 @@ function nl_default() {
   };
 }
 
-// node_modules/zod/v4/locales/no.js
+// ../../../node_modules/zod/v4/locales/no.js
 var error32 = () => {
   const Sizable = {
     string: { unit: "tegn", verb: "\xE5 ha" },
@@ -15872,7 +15872,7 @@ function no_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ota.js
+// ../../../node_modules/zod/v4/locales/ota.js
 var error33 = () => {
   const Sizable = {
     string: { unit: "harf", verb: "olmal\u0131d\u0131r" },
@@ -15982,7 +15982,7 @@ function ota_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ps.js
+// ../../../node_modules/zod/v4/locales/ps.js
 var error34 = () => {
   const Sizable = {
     string: { unit: "\u062A\u0648\u06A9\u064A", verb: "\u0648\u0644\u0631\u064A" },
@@ -16097,7 +16097,7 @@ function ps_default() {
   };
 }
 
-// node_modules/zod/v4/locales/pl.js
+// ../../../node_modules/zod/v4/locales/pl.js
 var error35 = () => {
   const Sizable = {
     string: { unit: "znak\xF3w", verb: "mie\u0107" },
@@ -16207,7 +16207,7 @@ function pl_default() {
   };
 }
 
-// node_modules/zod/v4/locales/pt.js
+// ../../../node_modules/zod/v4/locales/pt.js
 var error36 = () => {
   const Sizable = {
     string: { unit: "caracteres", verb: "ter" },
@@ -16316,7 +16316,7 @@ function pt_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ro.js
+// ../../../node_modules/zod/v4/locales/ro.js
 var error37 = () => {
   const Sizable = {
     string: { unit: "caractere", verb: "s\u0103 aib\u0103" },
@@ -16436,7 +16436,7 @@ function ro_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ru.js
+// ../../../node_modules/zod/v4/locales/ru.js
 function getRussianPlural(count, one, few, many) {
   const absCount = Math.abs(count);
   const lastDigit = absCount % 10;
@@ -16593,7 +16593,7 @@ function ru_default() {
   };
 }
 
-// node_modules/zod/v4/locales/sl.js
+// ../../../node_modules/zod/v4/locales/sl.js
 var error39 = () => {
   const Sizable = {
     string: { unit: "znakov", verb: "imeti" },
@@ -16703,7 +16703,7 @@ function sl_default() {
   };
 }
 
-// node_modules/zod/v4/locales/sv.js
+// ../../../node_modules/zod/v4/locales/sv.js
 var error40 = () => {
   const Sizable = {
     string: { unit: "tecken", verb: "att ha" },
@@ -16814,7 +16814,7 @@ function sv_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ta.js
+// ../../../node_modules/zod/v4/locales/ta.js
 var error41 = () => {
   const Sizable = {
     string: { unit: "\u0B8E\u0BB4\u0BC1\u0BA4\u0BCD\u0BA4\u0BC1\u0B95\u0BCD\u0B95\u0BB3\u0BCD", verb: "\u0B95\u0BCA\u0BA3\u0BCD\u0B9F\u0BBF\u0BB0\u0BC1\u0B95\u0BCD\u0B95 \u0BB5\u0BC7\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD" },
@@ -16925,7 +16925,7 @@ function ta_default() {
   };
 }
 
-// node_modules/zod/v4/locales/th.js
+// ../../../node_modules/zod/v4/locales/th.js
 var error42 = () => {
   const Sizable = {
     string: { unit: "\u0E15\u0E31\u0E27\u0E2D\u0E31\u0E01\u0E29\u0E23", verb: "\u0E04\u0E27\u0E23\u0E21\u0E35" },
@@ -17036,7 +17036,7 @@ function th_default() {
   };
 }
 
-// node_modules/zod/v4/locales/tr.js
+// ../../../node_modules/zod/v4/locales/tr.js
 var error43 = () => {
   const Sizable = {
     string: { unit: "karakter", verb: "olmal\u0131" },
@@ -17142,7 +17142,7 @@ function tr_default() {
   };
 }
 
-// node_modules/zod/v4/locales/uk.js
+// ../../../node_modules/zod/v4/locales/uk.js
 var error44 = () => {
   const Sizable = {
     string: { unit: "\u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432", verb: "\u043C\u0430\u0442\u0438\u043C\u0435" },
@@ -17251,12 +17251,12 @@ function uk_default() {
   };
 }
 
-// node_modules/zod/v4/locales/ua.js
+// ../../../node_modules/zod/v4/locales/ua.js
 function ua_default() {
   return uk_default();
 }
 
-// node_modules/zod/v4/locales/ur.js
+// ../../../node_modules/zod/v4/locales/ur.js
 var error45 = () => {
   const Sizable = {
     string: { unit: "\u062D\u0631\u0648\u0641", verb: "\u06C1\u0648\u0646\u0627" },
@@ -17367,7 +17367,7 @@ function ur_default() {
   };
 }
 
-// node_modules/zod/v4/locales/uz.js
+// ../../../node_modules/zod/v4/locales/uz.js
 var error46 = () => {
   const Sizable = {
     string: { unit: "belgi", verb: "bo\u2018lishi kerak" },
@@ -17478,7 +17478,7 @@ function uz_default() {
   };
 }
 
-// node_modules/zod/v4/locales/vi.js
+// ../../../node_modules/zod/v4/locales/vi.js
 var error47 = () => {
   const Sizable = {
     string: { unit: "k\xFD t\u1EF1", verb: "c\xF3" },
@@ -17587,7 +17587,7 @@ function vi_default() {
   };
 }
 
-// node_modules/zod/v4/locales/zh-CN.js
+// ../../../node_modules/zod/v4/locales/zh-CN.js
 var error48 = () => {
   const Sizable = {
     string: { unit: "\u5B57\u7B26", verb: "\u5305\u542B" },
@@ -17697,7 +17697,7 @@ function zh_CN_default() {
   };
 }
 
-// node_modules/zod/v4/locales/zh-TW.js
+// ../../../node_modules/zod/v4/locales/zh-TW.js
 var error49 = () => {
   const Sizable = {
     string: { unit: "\u5B57\u5143", verb: "\u64C1\u6709" },
@@ -17805,7 +17805,7 @@ function zh_TW_default() {
   };
 }
 
-// node_modules/zod/v4/locales/yo.js
+// ../../../node_modules/zod/v4/locales/yo.js
 var error50 = () => {
   const Sizable = {
     string: { unit: "\xE0mi", verb: "n\xED" },
@@ -17913,7 +17913,7 @@ function yo_default() {
   };
 }
 
-// node_modules/zod/v4/core/registries.js
+// ../../../node_modules/zod/v4/core/registries.js
 var _a2;
 var $output = /* @__PURE__ */ Symbol("ZodOutput");
 var $input = /* @__PURE__ */ Symbol("ZodInput");
@@ -17963,7 +17963,7 @@ function registry() {
 (_a2 = globalThis).__zod_globalRegistry ?? (_a2.__zod_globalRegistry = registry());
 var globalRegistry = globalThis.__zod_globalRegistry;
 
-// node_modules/zod/v4/core/api.js
+// ../../../node_modules/zod/v4/core/api.js
 // @__NO_SIDE_EFFECTS__
 function _string(Class2, params) {
   return new Class2({
@@ -19002,7 +19002,7 @@ function _stringFormat(Class2, format, fnOrRegex, _params = {}) {
   return inst;
 }
 
-// node_modules/zod/v4/core/to-json-schema.js
+// ../../../node_modules/zod/v4/core/to-json-schema.js
 function initializeContext(params) {
   let target = params?.target ?? "draft-2020-12";
   if (target === "draft-4")
@@ -19361,7 +19361,7 @@ var createStandardJSONSchemaMethod = (schema, io, processors = {}) => (params) =
   return finalize(ctx, schema);
 };
 
-// node_modules/zod/v4/core/json-schema-processors.js
+// ../../../node_modules/zod/v4/core/json-schema-processors.js
 var formatMap = {
   guid: "uuid",
   url: "uri",
@@ -19905,7 +19905,7 @@ function toJSONSchema(input, params) {
   return finalize(ctx, input);
 }
 
-// node_modules/zod/v4/core/json-schema-generator.js
+// ../../../node_modules/zod/v4/core/json-schema-generator.js
 var JSONSchemaGenerator = class {
   /** @deprecated Access via ctx instead */
   get metadataRegistry() {
@@ -19980,10 +19980,10 @@ var JSONSchemaGenerator = class {
   }
 };
 
-// node_modules/zod/v4/core/json-schema.js
+// ../../../node_modules/zod/v4/core/json-schema.js
 var json_schema_exports = {};
 
-// node_modules/zod/v4/classic/schemas.js
+// ../../../node_modules/zod/v4/classic/schemas.js
 var schemas_exports2 = {};
 __export(schemas_exports2, {
   ZodAny: () => ZodAny,
@@ -20154,7 +20154,7 @@ __export(schemas_exports2, {
   xor: () => xor
 });
 
-// node_modules/zod/v4/classic/checks.js
+// ../../../node_modules/zod/v4/classic/checks.js
 var checks_exports2 = {};
 __export(checks_exports2, {
   endsWith: () => _endsWith,
@@ -20188,7 +20188,7 @@ __export(checks_exports2, {
   uppercase: () => _uppercase
 });
 
-// node_modules/zod/v4/classic/iso.js
+// ../../../node_modules/zod/v4/classic/iso.js
 var iso_exports = {};
 __export(iso_exports, {
   ZodISODate: () => ZodISODate,
@@ -20229,7 +20229,7 @@ function duration2(params) {
   return _isoDuration(ZodISODuration, params);
 }
 
-// node_modules/zod/v4/classic/errors.js
+// ../../../node_modules/zod/v4/classic/errors.js
 var initializer2 = (inst, issues) => {
   $ZodError.init(inst, issues);
   inst.name = "ZodError";
@@ -20269,7 +20269,7 @@ var ZodRealError = /* @__PURE__ */ $constructor("ZodError", initializer2, {
   Parent: Error
 });
 
-// node_modules/zod/v4/classic/parse.js
+// ../../../node_modules/zod/v4/classic/parse.js
 var parse2 = /* @__PURE__ */ _parse(ZodRealError);
 var parseAsync2 = /* @__PURE__ */ _parseAsync(ZodRealError);
 var safeParse2 = /* @__PURE__ */ _safeParse(ZodRealError);
@@ -20283,7 +20283,7 @@ var safeDecode2 = /* @__PURE__ */ _safeDecode(ZodRealError);
 var safeEncodeAsync2 = /* @__PURE__ */ _safeEncodeAsync(ZodRealError);
 var safeDecodeAsync2 = /* @__PURE__ */ _safeDecodeAsync(ZodRealError);
 
-// node_modules/zod/v4/classic/schemas.js
+// ../../../node_modules/zod/v4/classic/schemas.js
 var _installedGroups = /* @__PURE__ */ new WeakMap();
 function _installLazyMethods(inst, group, methods) {
   const proto = Object.getPrototypeOf(inst);
@@ -21573,7 +21573,7 @@ function preprocess(fn, schema) {
   });
 }
 
-// node_modules/zod/v4/classic/compat.js
+// ../../../node_modules/zod/v4/classic/compat.js
 var ZodIssueCode = {
   invalid_type: "invalid_type",
   too_big: "too_big",
@@ -21599,7 +21599,7 @@ var ZodFirstPartyTypeKind;
 /* @__PURE__ */ (function(ZodFirstPartyTypeKind2) {
 })(ZodFirstPartyTypeKind || (ZodFirstPartyTypeKind = {}));
 
-// node_modules/zod/v4/classic/from-json-schema.js
+// ../../../node_modules/zod/v4/classic/from-json-schema.js
 var z = {
   ...schemas_exports2,
   ...checks_exports2,
@@ -22079,7 +22079,7 @@ function fromJSONSchema(schema, params) {
   return convertSchema(normalized, ctx);
 }
 
-// node_modules/zod/v4/classic/coerce.js
+// ../../../node_modules/zod/v4/classic/coerce.js
 var coerce_exports = {};
 __export(coerce_exports, {
   bigint: () => bigint3,
@@ -22104,7 +22104,7 @@ function date4(params) {
   return _coercedDate(ZodDate, params);
 }
 
-// node_modules/zod/v4/classic/external.js
+// ../../../node_modules/zod/v4/classic/external.js
 config(en_default());
 
 // src/lib/input.ts
@@ -22118,6 +22118,9 @@ var WebFetchInputSchema = external_exports.strictObject({
   prompt: external_exports.string().min(1, "Prompt is required")
 });
 async function readStdin(schema) {
+  if (process.stdin.isTTY) {
+    throw new Error("No input provided. Pipe JSON to stdin or use --query / --url flags.");
+  }
   const chunks = [];
   for await (const chunk of process.stdin) {
     chunks.push(chunk);
@@ -22329,7 +22332,7 @@ function sleep(ms) {
 async function withTimeout(promise2, ms) {
   let timeoutId;
   const timeoutPromise = new Promise((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error(`Operation timed out after ${ms}ms`)), ms);
+    timeoutId = setTimeout(() => reject(new Error(`Request timed out after ${ms}ms (ETIMEDOUT)`)), ms);
   });
   try {
     return await Promise.race([promise2, timeoutPromise]);
