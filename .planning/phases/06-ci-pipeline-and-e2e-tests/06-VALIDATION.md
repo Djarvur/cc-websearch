@@ -1,9 +1,9 @@
 ---
 phase: 6
 slug: ci-pipeline-and-e2e-tests
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: completed
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-05-21
 ---
 
@@ -81,6 +81,6 @@ _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 - [x] Wave 0 covers all MISSING references
 - [x] No watch-mode flags
 - [x] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] `nyquist_compliant: true` set in frontmatter
 
 **Approval:** approved 2026-05-21

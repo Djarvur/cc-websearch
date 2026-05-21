@@ -1,7 +1,7 @@
 ---
 phase: 4
 slug: config-file-and-logging
-status: draft
+status: completed
 nyquist_compliant: true
 wave_0_complete: true
 created: 2026-05-20
