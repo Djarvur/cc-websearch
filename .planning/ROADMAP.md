@@ -164,7 +164,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. WebFetch Content Pipeline            | 2/2            | Complete    | 2026-05-20 |
 | 4. Config File and Logging              | 3/3            | Complete    | 2026-05-20 |
 | 5. DDG-Only with Citations              | 2/2            | Complete    | 2026-05-21 |
-| 6. CI Pipeline and E2E Tests            | 1/3            | In progress |            |
+| 6. CI Pipeline and E2E Tests            | 2/3            | In progress |            |
 
 ### Phase 6: CI Pipeline and E2E Tests
 
@@ -189,7 +189,7 @@ Plans:
 **Wave 2** _(blocked on Wave 1 completion)_
 
 - [ ] 06-02-PLAN.md: E2E tests and PR gate -- E2E test suite (WebSearch, WebFetch, errors, domain filtering), GitHub Actions CI workflow
-- [ ] 06-03-PLAN.md: Cron workflow and Dependabot -- periodic audit/E2E workflow, automated dependency updates
+- [x] 06-03-PLAN.md: Cron workflow and Dependabot -- periodic audit/E2E workflow, automated dependency updates (completed 2026-05-21)
 
 ## Progress
 
@@ -203,4 +203,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. WebFetch Content Pipeline            | 2/2            | Complete    | 2026-05-20 |
 | 4. Config File and Logging              | 3/3            | Complete    | 2026-05-20 |
 | 5. DDG-Only with Citations              | 2/2            | Complete    | 2026-05-21 |
-| 6. CI Pipeline and E2E Tests            | 1/3            | In progress |            |
+| 6. CI Pipeline and E2E Tests            | 2/3            | In progress |            |
