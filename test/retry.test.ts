@@ -105,9 +105,15 @@ describe('withTimeout (via retryWithBackoff)', () => {
       timeout: 100,
     });
 
+    // Attach rejection handler before advancing timers to prevent Node from
+    // detecting the rejection as unhandled during fake timer advancement.
+    const errPromise = promise.catch((e: unknown) => e);
+
     await vi.advanceTimersByTimeAsync(200);
 
-    await expect(promise).rejects.toThrow(/ETIMEDOUT/);
+    const err = await errPromise;
+    expect(err).toBeInstanceOf(Error);
+    expect((err as Error).message).toMatch(/ETIMEDOUT/);
   });
 
   it('should retry on timeout errors when using isDDGTransientError', async () => {
@@ -123,10 +129,15 @@ describe('withTimeout (via retryWithBackoff)', () => {
       timeout: 100,
     });
 
+    // Attach rejection handler before advancing timers
+    const errPromise = promise.catch((e: unknown) => e);
+
     // Advance past timeout (100ms) + retry jitter (0-2ms) + second timeout
     await vi.advanceTimersByTimeAsync(500);
 
-    await expect(promise).rejects.toThrow(/ETIMEDOUT/);
+    const err = await errPromise;
+    expect(err).toBeInstanceOf(Error);
+    expect((err as Error).message).toMatch(/ETIMEDOUT/);
     // 1 initial + 1 retry = 2 calls (timeout error is now transient)
     expect(fn).toHaveBeenCalledTimes(2);
   });

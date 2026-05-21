@@ -38,6 +38,10 @@ async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
       ms,
     );
   });
+  // Suppress zombie rejections: if the main promise wins the race, the timeout
+  // rejection may fire after Promise.race settles. Attach a no-op catch to prevent
+  // Node.js from detecting it as unhandled.
+  timeoutPromise.catch(() => {});
   try {
     return await Promise.race([promise, timeoutPromise]);
   } finally {

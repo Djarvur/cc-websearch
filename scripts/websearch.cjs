@@ -61103,6 +61103,8 @@ async function withTimeout(promise2, ms) {
       ms
     );
   });
+  timeoutPromise.catch(() => {
+  });
   try {
     return await Promise.race([promise2, timeoutPromise]);
   } finally {
