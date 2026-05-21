@@ -7,18 +7,18 @@
 
 ### Plugin Structure
 
-- [ ] **PLUG-01**: Plugin installs via `claude plugin add` with correct `.claude-plugin/plugin.json` manifest
-- [ ] **PLUG-02**: WebSearch skill defined in `skills/websearch/SKILL.md`, invokes script via `node "${CLAUDE_SKILL_DIR}/../scripts/websearch.js"` using Bash tool
-- [ ] **PLUG-03**: WebFetch skill defined in `skills/webfetch/SKILL.md`, invokes script via `node "${CLAUDE_SKILL_DIR}/../scripts/webfetch.js"` using Bash tool
-- [ ] **PLUG-04**: Scripts accept JSON on stdin matching exact Claude Code tool schemas
-- [ ] **PLUG-05**: Scripts output results to stdout, errors and logs to stderr
+- [x] **PLUG-01**: Plugin installs via `claude plugin add` with correct `.claude-plugin/plugin.json` manifest
+- [x] **PLUG-02**: WebSearch skill defined in `skills/websearch/SKILL.md`, invokes script via `node "${CLAUDE_PLUGIN_ROOT}/scripts/websearch.cjs"` using Bash tool
+- [x] **PLUG-03**: WebFetch skill defined in `skills/webfetch/SKILL.md`, invokes script via `node "${CLAUDE_PLUGIN_ROOT}/scripts/webfetch.cjs"` using Bash tool
+- [x] **PLUG-04**: Scripts accept JSON on stdin matching exact Claude Code tool schemas
+- [x] **PLUG-05**: Scripts output results to stdout, errors and logs to stderr
 
 ### WebSearch
 
-- [ ] **SRCH-01**: Script accepts `{query: string (required, >= 2 chars), allowed_domains?: string[], blocked_domains?: string[]}`
-- [ ] **SRCH-02**: Script outputs `<search_results>` XML format with `<result>`, `<title>`, `<url>` tags matching Claude Code exactly
+- [x] **SRCH-01**: Script accepts `{query: string (required, >= 2 chars), allowed_domains?: string[], blocked_domains?: string[]}`
+- [x] **SRCH-02**: Script outputs `<search_results>` XML format with `<result>`, `<title>`, `<url>`, `<snippet>` tags matching Claude Code exactly
 - [x] **SRCH-03**: `allowed_domains` and `blocked_domains` cannot be combined in same call — returns error if both provided
-- [ ] **SRCH-04**: Perplexity Chat Completions API as primary search provider — extracts results from response citations and content
+- [x] **SRCH-04**: DuckDuckGo Lite HTML is sole search provider — search results include citation URLs and `<snippet>` descriptions extracted from DDG result HTML
 - [x] **SRCH-05**: DuckDuckGo Lite HTML scraping as fallback when Perplexity unavailable, no API key, or credits exhausted
 - [x] **SRCH-06**: Domain filtering applied post-results for DDG, via `search_domain_filter` API param for Perplexity
 - [x] **SRCH-07**: Exponential backoff with full jitter retry on rate limit (429) responses from either provider
@@ -29,15 +29,25 @@
 - [x] **FTEC-01**: Script accepts `{url: string (required), prompt: string (required)}`
 - [x] **FTEC-02**: URL normalization: HTTP auto-upgraded to HTTPS
 - [x] **FTEC-03**: HTML-to-Markdown conversion using Readability (content extraction) + Turndown (HTML→MD), with fallback to raw Turndown when Readability returns null
-- [x] **FTEC-04**: LLM summarization via Perplexity Chat Completions — sends extracted markdown + user prompt, returns summarized answer (not raw content)
 - [x] **FTEC-05**: Same-host redirects followed automatically; cross-host redirects return redirect metadata instead of following
+
+### CI Pipeline
+
+- [ ] **CI-01**: GitHub Actions PR gate workflow — runs on push/PR, installs deps, builds, runs lint, typecheck, unit tests with coverage
+- [ ] **CI-02**: E2E test suite validates real plugin behavior — bundled scripts produce correct XML output against live DDG and web
+- [ ] **CI-03**: Periodic cron workflow (weekly) runs npm audit and E2E tests against live services
+- [ ] **CI-04**: CI fails on test failures, type errors, lint violations, coverage threshold drops — no silent passes
+- [ ] **CI-05**: Local toolchain mirrors CI: ESLint flat config, Prettier formatting, mise task runner
+- [ ] **CI-06**: Coverage thresholds enforced (80% statements, 70% branches, 80% functions)
+- [ ] **CI-07**: mise task runner provides `mise run check-all` for local CI parity
+- [ ] **CI-08**: Dependabot configured for npm and GitHub Actions ecosystem with weekly updates
 
 ### Config & Infrastructure
 
-- [ ] **CONF-01**: API keys read from environment variables (`PPLX_API_KEY`, etc.) as primary config source
+- [x] **CONF-01**: No API keys required — DDG is sole provider, zero-config setup
 - [x] **CONF-02**: Config file at `~/.config/websearch/config.json` with env variable override (env > file > defaults)
-- [x] **CONF-03**: Config file supports: API keys, retry params (max retries, base delay, max delay), Perplexity model selection, log level
-- [ ] **CONF-04**: Configurable logging levels (debug, info, warn, error) output to stderr
+- [x] **CONF-03**: Config file supports: retry params (max retries, base delay, max delay), log level
+- [x] **CONF-04**: Configurable logging levels (debug, info, warn, error) output to stderr
 
 ## v2 Requirements
 
@@ -61,6 +71,7 @@
 | Three-tier or deeper fallback chains       | Adds complexity without proportional value                                                  |
 | Streaming results                          | Architecturally different from CLI script output; future consideration                      |
 | Custom search backend configuration        | Increases testing burden and config complexity                                              |
+| LLM summarization via Perplexity (FTEC-04) | removed Phase 5 — Perplexity summarization no longer needed |
 
 ## Traceability
 
@@ -68,33 +79,41 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase   | Status   |
 | ----------- | ------- | -------- |
-| PLUG-01     | Phase 1 | Pending  |
-| PLUG-02     | Phase 1 | Pending  |
-| PLUG-03     | Phase 1 | Pending  |
-| PLUG-04     | Phase 1 | Pending  |
-| PLUG-05     | Phase 1 | Pending  |
-| SRCH-01     | Phase 1 | Pending  |
-| SRCH-02     | Phase 1 | Pending  |
-| SRCH-03     | Phase 2 | Done     |
-| SRCH-04     | Phase 1 | Pending  |
+| PLUG-01     | Phase 1 | Not started  |
+| PLUG-02     | Phase 1 | Not started  |
+| PLUG-03     | Phase 1 | Not started  |
+| PLUG-04     | Phase 1 | Not started  |
+| PLUG-05     | Phase 1 | Not started  |
+| SRCH-01     | Phase 1 | Not started  |
+| SRCH-02     | Phase 1 | Not started  |
+| SRCH-03     | Phase 2 | Complete     |
+| SRCH-04     | Phase 1 | Not started  |
 | SRCH-05     | Phase 2 | Complete |
-| SRCH-06     | Phase 2 | Done     |
+| SRCH-06     | Phase 2 | Complete     |
 | SRCH-07     | Phase 2 | Complete |
 | SRCH-08     | Phase 2 | Complete |
-| FTEC-01     | Phase 3 | Done     |
-| FTEC-02     | Phase 3 | Done     |
-| FTEC-03     | Phase 3 | Done     |
-| FTEC-04     | Phase 3 | Done     |
-| FTEC-05     | Phase 3 | Done     |
-| CONF-01     | Phase 1 | Pending  |
-| CONF-02     | Phase 4 | Done     |
-| CONF-03     | Phase 4 | Done     |
-| CONF-04     | Phase 1 | Pending  |
+| FTEC-01     | Phase 3 | Complete     |
+| FTEC-02     | Phase 3 | Complete     |
+| FTEC-03     | Phase 3 | Complete     |
+| FTEC-04     | Phase 3 | Complete     |
+| FTEC-05     | Phase 3 | Complete     |
+| CONF-01     | Phase 1 | Not started  |
+| CONF-02     | Phase 4 | Complete     |
+| CONF-03     | Phase 4 | Complete     |
+| CONF-04     | Phase 1 | Not started  |
+| CI-01      | Phase 6 | Complete |
+| CI-02      | Phase 6 | Complete |
+| CI-03      | Phase 6 | Complete |
+| CI-04      | Phase 6 | Complete |
+| CI-05      | Phase 6 | Complete |
+| CI-06      | Phase 6 | Complete |
+| CI-07      | Phase 6 | Complete |
+| CI-08      | Phase 6 | Complete |
 
 **Coverage:**
 
-- v1 requirements: 22 total
-- Mapped to phases: 22
+- v1 requirements: 30 total
+- Mapped to phases: 30
 - Unmapped: 0
 
 ---

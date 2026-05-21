@@ -16,6 +16,7 @@ dependency_graph:
 tech_stack:
   added: []
   patterns: [native-fetch-redirect-manual, zod-strict-object-schema, iife-main-pattern]
+requirements-completed: [FTEC-01, FTEC-02, FTEC-05]
 key_files:
   created:
     - src/lib/fetch.ts
