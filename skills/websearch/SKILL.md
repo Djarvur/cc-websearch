@@ -1,5 +1,5 @@
 ---
-description: Search the web using Perplexity AI. Use this skill when the user needs current information, web search results, or to find web pages about a topic.
+description: Search the web using DuckDuckGo. Use this skill when the user needs current information, web search results, or to find web pages about a topic.
 allowed-tools: Bash(node *)
 ---
 
@@ -12,7 +12,7 @@ Execute a web search by piping JSON input to the search script.
 Run the search script with the query as JSON stdin:
 
 ```bash
-echo '{"query":"SEARCH_TERMS"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/websearch.cjs"
+echo '{"query":"SEARCH_TERMS"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/websearch.js"
 ```
 
 The script accepts JSON on stdin with this schema:

@@ -57,11 +57,11 @@ describe('createLogger', () => {
 
   it('should include module name in output prefix', async () => {
     const { createLogger } = await import('../src/lib/logger.js');
-    const logger = createLogger('perplexity', 'info');
+    const logger = createLogger('ddg', 'info');
     logger.info('testing');
 
     expect(stderrWriteSpy).toHaveBeenCalledWith(
-      expect.stringContaining('[info:perplexity]'),
+      expect.stringContaining('[info:ddg]'),
     );
   });
 });

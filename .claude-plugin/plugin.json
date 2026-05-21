@@ -2,5 +2,5 @@
   "name": "cc-websearch",
   "displayName": "WebSearch",
   "version": "0.1.0",
-  "description": "Perplexity-powered WebSearch and WebFetch replacement for Claude Code"
+  "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code"
 }
