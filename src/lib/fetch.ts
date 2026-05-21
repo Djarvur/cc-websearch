@@ -18,6 +18,9 @@ export class CrossHostRedirectError extends Error {
 
 export function normalizeUrl(rawUrl: string): URL {
   const url = new URL(rawUrl);
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    throw new Error(`Unsupported URL scheme: ${url.protocol}. Only HTTP and HTTPS are allowed.`);
+  }
   if (url.protocol === 'http:') {
     url.protocol = 'https:';
   }
