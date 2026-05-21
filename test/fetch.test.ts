@@ -42,6 +42,21 @@ describe('fetch module', () => {
       expect(url.protocol).toBe('https:');
       expect(url.hostname).toBe('example.com');
     });
+
+    it('should reject ftp:// scheme', async () => {
+      const { normalizeUrl } = await import('../src/lib/fetch.js');
+      expect(() => normalizeUrl('ftp://files.example.com')).toThrow(/Unsupported URL scheme/);
+    });
+
+    it('should reject file:// scheme', async () => {
+      const { normalizeUrl } = await import('../src/lib/fetch.js');
+      expect(() => normalizeUrl('file:///etc/passwd')).toThrow(/Unsupported URL scheme/);
+    });
+
+    it('should reject data: scheme', async () => {
+      const { normalizeUrl } = await import('../src/lib/fetch.js');
+      expect(() => normalizeUrl('data:text/plain,hello')).toThrow(/Unsupported URL scheme/);
+    });
   });
 
   // fetchWithRedirects tests
