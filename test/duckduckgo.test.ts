@@ -27,7 +27,7 @@ describe('searchDDG', () => {
     vi.restoreAllMocks();
   });
 
-  it('should return mapped title+URL results from duck-duck-scrape', async () => {
+  it('should return mapped title+URL+snippet results from duck-duck-scrape', async () => {
     mockDdgSearch.mockResolvedValue({
       noResults: false,
       vqd: 'test-vqd',
@@ -41,8 +41,8 @@ describe('searchDDG', () => {
     const results = await searchDDG('test query');
 
     expect(results).toEqual([
-      { title: 'Result 1', url: 'https://example.com/1' },
-      { title: 'Result 2', url: 'https://example.com/2' },
+      { title: 'Result 1', url: 'https://example.com/1', snippet: 'desc 1' },
+      { title: 'Result 2', url: 'https://example.com/2', snippet: 'desc 2' },
     ]);
   });
 
@@ -78,5 +78,50 @@ describe('searchDDG', () => {
     await searchDDG('my search terms');
 
     expect(mockDdgSearch).toHaveBeenCalledWith('my search terms');
+  });
+
+  it('should strip HTML tags from description for snippet', async () => {
+    mockDdgSearch.mockResolvedValue({
+      noResults: false,
+      vqd: 'test-vqd',
+      results: [
+        { title: 'Result', url: 'https://example.com', hostname: 'example.com', description: 'This is a <b>bold</b> term' },
+      ],
+    });
+
+    const { searchDDG } = await import('../src/lib/duckduckgo.js');
+    const results = await searchDDG('test query');
+
+    expect(results[0].snippet).toBe('This is a bold term');
+  });
+
+  it('should return empty string for snippet when description is undefined', async () => {
+    mockDdgSearch.mockResolvedValue({
+      noResults: false,
+      vqd: 'test-vqd',
+      results: [
+        { title: 'Result', url: 'https://example.com', hostname: 'example.com' },
+      ],
+    });
+
+    const { searchDDG } = await import('../src/lib/duckduckgo.js');
+    const results = await searchDDG('test query');
+
+    expect(results[0].snippet).toBe('');
+  });
+
+  it('should return empty string for snippet when description is empty string', async () => {
+    mockDdgSearch.mockResolvedValue({
+      noResults: false,
+      vqd: 'test-vqd',
+      results: [
+        { title: 'Result', url: 'https://example.com', hostname: 'example.com', description: '' },
+      ],
+    });
+
+    const { searchDDG } = await import('../src/lib/duckduckgo.js');
+    const results = await searchDDG('test query');
+
+    expect(results[0].snippet).toBe('');
   });
 });
