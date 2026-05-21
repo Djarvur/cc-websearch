@@ -1,0 +1,27 @@
+# mise task definitions mirroring CI steps
+# All tasks delegate to npm scripts. mise is optional -- npm scripts are the primary interface.
+
+[tasks.lint]
+description = "Run ESLint and Prettier checks"
+run = "npm run lint"
+
+[tasks.typecheck]
+description = "TypeScript type checking"
+run = "npm run typecheck"
+
+[tasks.test]
+description = "Run unit tests with coverage"
+run = "npm test -- --coverage"
+
+[tasks.build]
+description = "Build bundles"
+run = "npm run build"
+
+[tasks.e2e]
+description = "Run end-to-end tests"
+run = "npm run e2e"
+
+[tasks.check-all]
+description = "Run all CI checks locally"
+depends = ["lint", "typecheck", "test", "build"]
+run = "echo 'All checks passed'"
