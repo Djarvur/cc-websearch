@@ -650,19 +650,19 @@ jobs:
 | A5 | The jsdom external approach (marking jsdom as external in esbuild) is the correct fix for the bundle issue | jsdom Bundle | Alternative: esbuild plugin to inline the CSS, or copy CSS to a known path |
 | A6 | vitest 4.1.6 (installed) is compatible with @vitest/coverage-v8@4.1.7 (minor version diff) | Coverage | May need to align exact versions |
 
-## Open Questions
+## Open Questions (ALL RESOLVED)
 
-1. **Current coverage percentages**
+1. (RESOLVED) **Current coverage percentages**
    - What we know: 127 tests across 14 test files, covering 9 source modules in `src/lib/` plus 2 entry points.
    - What's unclear: Exact line/branch/function coverage percentages right now.
    - Recommendation: Run `npx vitest run --coverage` before planning to establish baseline. If below thresholds, adjust thresholds or add tests.
 
-2. **jsdom external -- runtime dependency implications**
+2. (RESOLVED) **jsdom external -- runtime dependency implications**
    - What we know: Marking jsdom as external means the bundled webfetch.cjs requires `node_modules/jsdom` at runtime.
    - What's unclear: Whether the Claude Code plugin runtime has access to node_modules when running skills.
    - Recommendation: Verify that the plugin's hooks/hooks.json SessionStart hook installs node_modules (it does -- this is the documented pattern for plugins with npm dependencies).
 
-3. **ESLint strict config cleanup scope**
+3. (RESOLVED) **ESLint strict config cleanup scope**
    - What we know: D-06 specifies "recommended + strict". `tseslint.configs.strict` adds many rules.
    - What's unclear: How many existing lint errors strict mode will produce.
    - Recommendation: Plan a lint cleanup task. Run ESLint with strict config on existing code to assess scope.
