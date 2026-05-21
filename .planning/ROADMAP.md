@@ -203,4 +203,15 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. WebFetch Content Pipeline            | 2/2            | Complete    | 2026-05-20 |
 | 4. Config File and Logging              | 3/3            | Complete    | 2026-05-20 |
 | 5. DDG-Only with Citations              | 2/2            | Complete    | 2026-05-21 |
-| 6. CI Pipeline and E2E Tests            | 2/3            | In progress |            |
+| 6. CI Pipeline and E2E Tests            | 3/3            | Human verification needed | 2026-05-21 |
+
+### Phase 7: update README and the other docs if necessary
+
+**Goal:** Update README and other project docs. Verify repo is production-ready for `claude plugin install` — confirm plugin.json, skill definitions, SKILL.md, hooks, and dependency management are correct for distribution.
+**Mode**: mvp
+**Requirements**: TBD
+**Depends on:** Phase 6
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 7 to break down)
