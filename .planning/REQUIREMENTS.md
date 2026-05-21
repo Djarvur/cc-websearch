@@ -79,15 +79,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase   | Status   |
 | ----------- | ------- | -------- |
-| PLUG-01     | Phase 1 | Not started  |
-| PLUG-02     | Phase 1 | Not started  |
-| PLUG-03     | Phase 1 | Not started  |
-| PLUG-04     | Phase 1 | Not started  |
-| PLUG-05     | Phase 1 | Not started  |
-| SRCH-01     | Phase 1 | Not started  |
-| SRCH-02     | Phase 1 | Not started  |
+| PLUG-01     | Phase 1 | Complete     |
+| PLUG-02     | Phase 1 | Complete     |
+| PLUG-03     | Phase 1 | Complete     |
+| PLUG-04     | Phase 1 | Complete     |
+| PLUG-05     | Phase 1 | Complete     |
+| SRCH-01     | Phase 1 | Complete     |
+| SRCH-02     | Phase 1 | Complete     |
 | SRCH-03     | Phase 2 | Complete     |
-| SRCH-04     | Phase 1 | Not started  |
+| SRCH-04     | Phase 1 | Complete     |
 | SRCH-05     | Phase 2 | Complete |
 | SRCH-06     | Phase 2 | Complete     |
 | SRCH-07     | Phase 2 | Complete |
@@ -97,10 +97,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FTEC-03     | Phase 3 | Complete     |
 | FTEC-04     | Phase 3 | Complete     |
 | FTEC-05     | Phase 3 | Complete     |
-| CONF-01     | Phase 1 | Not started  |
+| CONF-01     | Phase 1 | Complete     |
 | CONF-02     | Phase 4 | Complete     |
 | CONF-03     | Phase 4 | Complete     |
-| CONF-04     | Phase 1 | Not started  |
+| CONF-04     | Phase 1 | Complete     |
 | CI-01      | Phase 6 | Complete |
 | CI-02      | Phase 6 | Complete |
 | CI-03      | Phase 6 | Complete |
