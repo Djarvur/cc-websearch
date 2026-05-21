@@ -1,6 +1,11 @@
 import { createLogger } from './logger.js';
+import type { LogLevel } from './logger.js';
 
 const logger = createLogger('fetch');
+
+export function configureLogger(level: LogLevel): void {
+  logger.setLevel(level);
+}
 
 export class CrossHostRedirectError extends Error {
   constructor(

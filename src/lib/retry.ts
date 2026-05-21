@@ -5,6 +5,7 @@ import {
   APIConnectionTimeoutError,
 } from '@perplexity-ai/perplexity_ai/error.js';
 import { createLogger } from './logger.js';
+import type { LogLevel } from './logger.js';
 import type { ResolvedConfig } from './config.js';
 
 export interface RetryConfig {
@@ -15,6 +16,10 @@ export interface RetryConfig {
 }
 
 const logger = createLogger('retry');
+
+export function configureLogger(level: LogLevel): void {
+  logger.setLevel(level);
+}
 
 const DEFAULTS: RetryConfig = { maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 };
 

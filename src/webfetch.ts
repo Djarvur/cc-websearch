@@ -1,14 +1,25 @@
 import { readStdin, WebFetchInputSchema } from './lib/input.js';
 import { createLogger } from './lib/logger.js';
+import type { LogLevel } from './lib/logger.js';
 import { loadConfig } from './lib/config.js';
 import { normalizeUrl, fetchWithRedirects, CrossHostRedirectError } from './lib/fetch.js';
 import { extractMarkdown } from './lib/content.js';
 import { hasApiKey, summarize } from './lib/perplexity.js';
 import { retryWithBackoff, getRetryConfig, isTransientError } from './lib/retry.js';
+import * as perplexityModule from './lib/perplexity.js';
+import * as fetchModule from './lib/fetch.js';
+import * as retryModule from './lib/retry.js';
+
+function configureModuleLoggers(level: LogLevel): void {
+  perplexityModule.configureLogger(level);
+  fetchModule.configureLogger(level);
+  retryModule.configureLogger(level);
+}
 
 async function main(): Promise<void> {
   const config = loadConfig();
   const logger = createLogger('webfetch', config.logging.level);
+  configureModuleLoggers(config.logging.level);
 
   try {
     const input = await readStdin(WebFetchInputSchema);

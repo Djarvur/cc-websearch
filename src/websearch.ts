@@ -1,12 +1,24 @@
 import { readStdin, WebSearchInputSchema, validateDomainExclusivity } from './lib/input.js';
 import { formatSearchResults } from './lib/output.js';
 import { createLogger } from './lib/logger.js';
+import type { LogLevel } from './lib/logger.js';
 import { loadConfig } from './lib/config.js';
 import { hasApiKey, search } from './lib/perplexity.js';
 import { searchDDG } from './lib/duckduckgo.js';
 import { retryWithBackoff, getRetryConfig, isTransientError, isDDGTransientError } from './lib/retry.js';
 import { filterByDomains, buildPerplexityDomainFilter } from './lib/filter.js';
 import type { SearchResult } from './types.js';
+import * as perplexityModule from './lib/perplexity.js';
+import * as ddgModule from './lib/duckduckgo.js';
+import * as retryModule from './lib/retry.js';
+import * as fetchModule from './lib/fetch.js';
+
+function configureModuleLoggers(level: LogLevel): void {
+  perplexityModule.configureLogger(level);
+  ddgModule.configureLogger(level);
+  retryModule.configureLogger(level);
+  fetchModule.configureLogger(level);
+}
 
 /**
  * Deduplicate and merge results: Perplexity results first, DDG appended.
@@ -21,6 +33,7 @@ function dedupeAndMerge(pplxResults: SearchResult[], ddgResults: SearchResult[])
 async function main(): Promise<void> {
   const config = loadConfig();
   const logger = createLogger('websearch', config.logging.level);
+  configureModuleLoggers(config.logging.level);
 
   try {
     const parsed = await readStdin(WebSearchInputSchema);

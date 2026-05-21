@@ -1,8 +1,13 @@
 import Perplexity from '@perplexity-ai/perplexity_ai';
 import { createLogger } from './logger.js';
+import type { LogLevel } from './logger.js';
 import type { ResolvedConfig } from './config.js';
 
 const logger = createLogger('perplexity');
+
+export function configureLogger(level: LogLevel): void {
+  logger.setLevel(level);
+}
 
 export function getApiKey(config: ResolvedConfig): string {
   if (config.perplexity.apiKey) {
