@@ -43,6 +43,8 @@ export async function fetchWithRedirects(
 
     // Handle redirects
     if (response.status >= 300 && response.status < 400) {
+      // Consume response body to avoid leaking file descriptors
+      await response.text().catch(() => {});
       const location = response.headers.get('location');
       if (!location) {
         throw new Error(`Redirect (${response.status}) without Location header at ${currentUrl.href}`);
