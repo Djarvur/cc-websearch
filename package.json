@@ -1,0 +1,40 @@
+{
+  "name": "cc-websearch",
+  "version": "0.1.0",
+  "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code",
+  "type": "module",
+  "scripts": {
+    "build": "tsx build.ts",
+    "test": "vitest run --reporter=verbose",
+    "test:watch": "vitest --reporter=verbose",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . && prettier --check .",
+    "e2e": "npm run build && vitest run --config vitest.config.e2e.ts test/e2e/",
+    "check": "npm run lint && npm run typecheck && npm test -- --coverage && npm run build"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "cheerio": "^1.2.0",
+    "commander": "14.0.3",
+    "duck-duck-scrape": "^2.2.7",
+    "jsdom": "^28.1.0",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/jsdom": "^28.0.3",
+    "@types/node": "25.9.1",
+    "@types/turndown": "^5.0.6",
+    "@vitest/coverage-v8": "^4.1.6",
+    "esbuild": "0.28.0",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.3",
+    "tsx": "4.22.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.59.4",
+    "vitest": "4.1.6"
+  }
+}
