@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Search Resilience** - DuckDuckGo fallback, domain filtering, and retry logic for rate limits (completed 2026-05-20)
 - [x] **Phase 3: WebFetch Content Pipeline** - Page fetching, content extraction, markdown conversion, and LLM summarization (completed 2026-05-20)
 - [x] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels (completed 2026-05-20)
-- [ ] **Phase 5: DDG-Only with Citations** - Remove Perplexity dependency, make DDG sole search provider, add citations to DDG results
+- [x] **Phase 5: DDG-Only with Citations** - Remove Perplexity dependency, make DDG sole search provider, add citations to DDG results (completed 2026-05-21)
 
 ## Phase Details
 
@@ -145,11 +145,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 05-01: Snippet support and Perplexity purge -- add snippet field to SearchResult, extract DDG descriptions, add <snippet> XML tags, remove provider comment, simplify config/retry/entry points, delete perplexity.ts, remove dependency
+- [x] 05-01: Snippet support and Perplexity purge -- add snippet field to SearchResult, extract DDG descriptions, add <snippet> XML tags, remove provider comment, simplify config/retry/entry points, delete perplexity.ts, remove dependency (completed 2026-05-21)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 05-02: Test cleanup and bundle rebuild -- delete perplexity tests, update all test files for simplified flow, rebuild bundles, full suite green
+- [x] 05-02: Test cleanup and bundle rebuild -- delete perplexity tests, update all test files for simplified flow, rebuild bundles, full suite green (completed 2026-05-21)
 
 ## Progress
 
@@ -162,4 +162,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
 | 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
 | 4. Config File and Logging | 3/3 | Complete | 2026-05-20 |
-| 5. DDG-Only with Citations | 0/2 | Planned | - |
+| 5. DDG-Only with Citations | 2/2 | Complete | 2026-05-21 |

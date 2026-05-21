@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 05 executing
-last_updated: "2026-05-21T12:00:00.000Z"
-last_activity: 2026-05-21 -- Phase 05 executing wave 1
+status: complete
+stopped_at: Milestone v1.0 complete
+last_updated: "2026-05-21T16:15:00.000Z"
+last_activity: 2026-05-21 -- Phase 05 complete, milestone v1.0 finished
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 12
-  completed_plans: 10
-  percent: 80
+  completed_plans: 12
+  percent: 100
 ---
 
 # Project State
@@ -20,25 +20,25 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-05-20)
 
-**Core value:** Exact drop-in replacement for Claude Code's WebSearch and WebFetch -- same interface, same output format, no behavior changes for the user.
-**Current focus:** Phase 5 added -- DDG-only with citations
+**Core value:** DDG-powered drop-in replacement for Claude Code's WebSearch and WebFetch -- same interface, same output format, no behavior changes for the user. Zero API keys required.
+**Current focus:** Milestone v1.0 complete
 
 ## Current Position
 
-Phase: 5
-Plan: (not yet planned)
-Status: Ready to execute
-Last activity: 2026-05-21 -- Phase 05 planning complete
+Phase: 5 (complete)
+Plan: 05-02 (complete)
+Status: Milestone complete
+Last activity: 2026-05-21 -- All 5 phases complete
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 10
-- Average duration: -
-- Total execution time: 0 hours
+- Total plans completed: 12
+- Average duration: ~7min
+- Total execution time: ~1.5 hours
 
 **By Phase:**
 
@@ -48,11 +48,12 @@ Progress: [████████░░] 80%
 | 02 | 3 | 24min | 8min |
 | 03 | 2 | - | - |
 | 04 | 3/3 | 11min | 3.7min |
+| 05 | 2/2 | 13min | 6.5min |
 
 **Recent Trend:**
 
-- Last 5 plans: (none)
-- Trend: -
+- Last 5 plans: Phase 04-05
+- Trend: Accelerating
 
 *Updated after each plan completion*
 
@@ -63,44 +64,26 @@ Progress: [████████░░] 80%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- filterByDomains returns original array when no filters specified (no-copy optimization)
-- Perplexity results get post-filter safety net only for blocked_domains, not allowed_domains
-- buildPerplexityDomainFilter returns undefined for empty arrays, triggering no API parameter
-- fetchWithRedirects uses native fetch with redirect:manual for custom redirect logic
-- CrossHostRedirectError written to stdout (not stderr) per D-10
-- HTTP URLs auto-upgraded to HTTPS via normalizeUrl
-- Readability extracts article.content; h1 title is stripped from content (moved to article.title)
-- Turndown configured with ATX headings, fenced code blocks, GFM plugin for tables
-- 100KB truncation with marker suffix before sending to Perplexity
-- summarize() uses disable_search:true with system=userPrompt, user=content message structure
-- No API key path writes raw markdown directly to stdout
-- Config writes warnings directly to process.stderr.write to avoid circular dependency with logger
-- z.strictObject used for all config nested sections to catch unknown keys at every level
-- apiKey defaults to undefined; all other config fields have concrete defaults
-- search() and summarize() accept ResolvedConfig as parameter instead of reading env vars
-- retryWithBackoff uses inline DEFAULTS constant instead of calling getRetryConfig internally
-- Module-scoped loggers use default info level; entry points set proper level via setLevel in Plan 03
-- getRetryConfig is a pure utility: config in, RetryConfig out
-- Entry points create scoped loggers via createLogger(module, config.logging.level) after loadConfig()
-- retryWithBackoff receives getRetryConfig(config) as explicit third argument in all entry point calls
-- search() called with (query, config, domainFilter) -- config as second positional arg
+- DDG-only search with citation snippets (Phase 05)
+- Snippet field uses HTML tag stripping via regex
+- Config simplified to {retry, logging} only
+- WebFetch is pure fetch-extract-markdown pipeline (no LLM)
 
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
-None yet.
+- jsdom bundling issue: webfetch.cjs fails at runtime because jsdom requires a default-stylesheet.css file not available in the bundled context. This is a pre-existing architecture issue from Phase 03.
 
 ## Deferred Items
 
 | Category | Item | Status | Deferred At |
 |----------|------|--------|-------------|
-| *(none)* | | | |
+| Architecture | jsdom bundle runtime error (needs external or plugin-data approach) | Known | Phase 05 |
 
 ## Session Continuity
 
-Last session: 2026-05-21T11:12:13.806Z
-Stopped at: Phase 05 context gathered
-Resume file: .planning/phases/05-ddg-only-with-citations/05-CONTEXT.md
+Last session: 2026-05-21T16:15:00.000Z
+Stopped at: Milestone v1.0 complete
