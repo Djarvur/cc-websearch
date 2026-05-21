@@ -20,5 +20,6 @@ export async function searchDDG(query: string): Promise<SearchResult[]> {
   return searchResults.results.map((r) => ({
     title: r.title,
     url: r.url,
+    snippet: r.description?.replace(/<[^>]*>/g, '') || '',
   }));
 }
