@@ -66,13 +66,13 @@ describe('WebFetch SKILL.md', () => {
 });
 
 describe('Compiled bundle existence', () => {
-  it('scripts/websearch.js should exist at the path referenced by SKILL.md', () => {
-    const websearchJsPath = resolve(ROOT, 'scripts', 'websearch.js');
-    expect(existsSync(websearchJsPath)).toBe(true);
+  it('scripts/websearch.cjs should exist at the path referenced by SKILL.md', () => {
+    const websearchCjsPath = resolve(ROOT, 'scripts', 'websearch.cjs');
+    expect(existsSync(websearchCjsPath)).toBe(true);
   });
 
-  it('scripts/webfetch.js should exist at the path referenced by SKILL.md', () => {
-    const webfetchJsPath = resolve(ROOT, 'scripts', 'webfetch.js');
-    expect(existsSync(webfetchJsPath)).toBe(true);
+  it('scripts/webfetch.cjs should exist at the path referenced by SKILL.md', () => {
+    const webfetchCjsPath = resolve(ROOT, 'scripts', 'webfetch.cjs');
+    expect(existsSync(webfetchCjsPath)).toBe(true);
   });
 });
