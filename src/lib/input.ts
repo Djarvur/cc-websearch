@@ -20,7 +20,10 @@ export async function readStdin<T>(schema: z.ZodType<T>): Promise<T> {
   for await (const chunk of process.stdin) {
     chunks.push(chunk as Buffer);
   }
-  const raw = Buffer.concat(chunks).toString('utf8');
+  const raw = Buffer.concat(chunks).toString('utf8').trim();
+  if (!raw) {
+    throw new Error('No input received on stdin. Provide JSON input via pipe.');
+  }
   const parsed = JSON.parse(raw);
   return schema.parse(parsed);
 }
