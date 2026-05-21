@@ -16,6 +16,7 @@ vi.mock('../src/lib/fetch.js', () => ({
   fetchWithRedirects: (...args: any[]) => mockFetchWithRedirects(...args),
   normalizeUrl: (...args: any[]) => mockNormalizeUrl(...args),
   CrossHostRedirectError: MockCrossHostRedirectError,
+  configureLogger: vi.fn(),
 }));
 
 // Mock content module
@@ -34,6 +35,7 @@ vi.mock('../src/lib/perplexity.js', () => ({
   summarize: (...args: any[]) => mockSummarize(...args),
   getApiKey: vi.fn().mockReturnValue('test-key'),
   search: vi.fn(),
+  configureLogger: vi.fn(),
 }));
 
 // Mock retry module
@@ -43,6 +45,7 @@ vi.mock('../src/lib/retry.js', () => ({
   retryWithBackoff: (...args: any[]) => mockRetryWithBackoff(...args),
   getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
   isTransientError: vi.fn(),
+  configureLogger: vi.fn(),
 }));
 
 // Mock config

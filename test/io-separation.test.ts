@@ -8,10 +8,12 @@ vi.mock('../src/lib/perplexity.js', () => ({
   search: (...args: any[]) => mockSearch(...args),
   hasApiKey: vi.fn().mockReturnValue(true),
   getApiKey: vi.fn().mockReturnValue('test-key'),
+  configureLogger: vi.fn(),
 }));
 
 vi.mock('../src/lib/duckduckgo.js', () => ({
   searchDDG: (...args: any[]) => mockSearchDDG(...args),
+  configureLogger: vi.fn(),
 }));
 
 vi.mock('../src/lib/retry.js', () => ({
@@ -19,6 +21,7 @@ vi.mock('../src/lib/retry.js', () => ({
   getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
   isTransientError: vi.fn(),
   isDDGTransientError: vi.fn(),
+  configureLogger: vi.fn(),
 }));
 
 vi.mock('../src/lib/config.js', () => ({
@@ -50,6 +53,13 @@ vi.mock('../src/lib/input.js', () => ({
 vi.mock('../src/lib/filter.js', () => ({
   buildPerplexityDomainFilter: vi.fn().mockReturnValue(undefined),
   filterByDomains: vi.fn((results: any[]) => results),
+}));
+
+vi.mock('../src/lib/fetch.js', () => ({
+  fetchWithRedirects: vi.fn(),
+  normalizeUrl: vi.fn((u: string) => u),
+  CrossHostRedirectError: class extends Error {},
+  configureLogger: vi.fn(),
 }));
 
 vi.mock('../src/lib/output.js', () => ({
