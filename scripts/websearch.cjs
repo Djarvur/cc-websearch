@@ -175,8 +175,8 @@ var require_commonjs = __commonJS({
       level: "all",
       numeric: "decimal"
     };
-    function encode3(text, _a4) {
-      var _b = _a4 === void 0 ? defaultEncodeOptions : _a4, _c = _b.mode, mode = _c === void 0 ? "specialChars" : _c, _d = _b.numeric, numeric = _d === void 0 ? "decimal" : _d, _e = _b.level, level = _e === void 0 ? "all" : _e;
+    function encode3(text, _a3) {
+      var _b = _a3 === void 0 ? defaultEncodeOptions : _a3, _c = _b.mode, mode = _c === void 0 ? "specialChars" : _c, _d = _b.numeric, numeric = _d === void 0 ? "decimal" : _d, _e = _b.level, level = _e === void 0 ? "all" : _e;
       if (!text) {
         return "";
       }
@@ -240,15 +240,15 @@ var require_commonjs = __commonJS({
       }
       return decodeResult;
     }
-    function decodeEntity(entity, _a4) {
-      var _b = _a4 === void 0 ? defaultDecodeEntityOptions : _a4, _c = _b.level, level = _c === void 0 ? "all" : _c;
+    function decodeEntity(entity, _a3) {
+      var _b = _a3 === void 0 ? defaultDecodeEntityOptions : _a3, _c = _b.level, level = _c === void 0 ? "all" : _c;
       if (!entity) {
         return "";
       }
       return getDecodedEntity(entity, allNamedReferences[level].entities, false, false);
     }
-    function decode3(text, _a4) {
-      var _b = _a4 === void 0 ? defaultDecodeOptions : _a4, _c = _b.level, level = _c === void 0 ? "all" : _c, _d = _b.scope, scope = _d === void 0 ? level === "xml" ? "strict" : "body" : _d;
+    function decode3(text, _a3) {
+      var _b = _a3 === void 0 ? defaultDecodeOptions : _a3, _c = _b.level, level = _c === void 0 ? "all" : _c, _d = _b.scope, scope = _d === void 0 ? level === "xml" ? "strict" : "body" : _d;
       if (!text) {
         return "";
       }
@@ -422,9 +422,9 @@ var require_auth = __commonJS({
       nc = nc + "";
       return padding.substr(0, 8 - nc.length) + nc;
     };
-    digest.generate = function(header, user, pass, method, path2) {
+    digest.generate = function(header, user, pass, method, path) {
       var nc = 1, cnonce = null, challenge = digest.parse_header(header);
-      var ha1 = md5(user + ":" + challenge.realm + ":" + pass), ha2 = md5(method.toUpperCase() + ":" + path2), resp = [ha1, challenge.nonce];
+      var ha1 = md5(user + ":" + challenge.realm + ":" + pass), ha2 = md5(method.toUpperCase() + ":" + path), resp = [ha1, challenge.nonce];
       if (typeof challenge.qop === "string") {
         cnonce = md5(Math.random().toString(36)).substr(0, 8);
         nc = digest.update_nc(nc);
@@ -434,7 +434,7 @@ var require_auth = __commonJS({
         resp = resp.concat(ha2);
       }
       var params = {
-        uri: path2,
+        uri: path,
         realm: challenge.realm,
         nonce: challenge.nonce,
         username: user,
@@ -670,14 +670,14 @@ var require_sax = __commonJS({
           flushBuffers(this);
         }
       };
-      var Stream2;
+      var Stream;
       try {
-        Stream2 = require("stream").Stream;
+        Stream = require("stream").Stream;
       } catch (ex) {
-        Stream2 = function() {
+        Stream = function() {
         };
       }
-      if (!Stream2) Stream2 = function() {
+      if (!Stream) Stream = function() {
       };
       var streamWraps = sax.EVENTS.filter(function(ev) {
         return ev !== "error" && ev !== "end";
@@ -712,7 +712,7 @@ var require_sax = __commonJS({
         if (!(this instanceof SAXStream)) {
           return new SAXStream(strict, opt);
         }
-        Stream2.apply(this);
+        Stream.apply(this);
         this._parser = new SAXParser(strict, opt);
         this.writable = true;
         this.readable = true;
@@ -744,7 +744,7 @@ var require_sax = __commonJS({
           });
         });
       }
-      SAXStream.prototype = Object.create(Stream2.prototype, {
+      SAXStream.prototype = Object.create(Stream.prototype, {
         constructor: {
           value: SAXStream
         }
@@ -808,7 +808,7 @@ var require_sax = __commonJS({
             me.emit.apply(me, args);
           };
         }
-        return Stream2.prototype.on.call(me, ev, handler);
+        return Stream.prototype.on.call(me, ev, handler);
       };
       var CDATA = "[CDATA[";
       var DOCTYPE = "DOCTYPE";
@@ -6580,9 +6580,9 @@ var require_needle = __commonJS({
           verb = args.shift();
         if (verb.match(/get|head/i) && args.length == 2)
           args.splice(1, 0, null);
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve2, reject) {
           module2.exports.request(verb, args[0], args[1], args[2], function(err, resp) {
-            return err ? reject(err) : resolve(resp);
+            return err ? reject(err) : resolve2(resp);
           });
         });
       };
@@ -6928,7 +6928,7 @@ var require_search = __commonJS({
     var NEWS_REGEX = /;DDG\.duckbar\.load\('news', ({"ads":.+"vqd":{".+":"\d-\d+-\d+"}})\);DDG\.duckbar\.load\('videos/;
     var VIDEOS_REGEX = /;DDG\.duckbar\.load\('videos', ({"ads":.+"vqd":{".+":"\d-\d+-\d+"}})\);DDG\.duckbar\.loadModule\('related_searches/;
     var RELATED_SEARCHES_REGEX = /DDG\.duckbar\.loadModule\('related_searches', ({"ads":.+"vqd":{".+":"\d-\d+-\d+"}})\);DDG\.duckbar\.load\('products/;
-    async function search2(query, options, needleOptions) {
+    async function search(query, options, needleOptions) {
       if (!query)
         throw new Error("Query cannot be empty!");
       if (!options)
@@ -6990,21 +6990,21 @@ var require_search = __commonJS({
         vqd,
         results: []
       };
-      for (const search3 of searchResults) {
-        if ("n" in search3)
+      for (const search2 of searchResults) {
+        if ("n" in search2)
           continue;
         let bang;
-        if (search3.b) {
-          const [prefix, title, domain2] = search3.b.split("	");
+        if (search2.b) {
+          const [prefix, title, domain2] = search2.b.split("	");
           bang = { prefix, title, domain: domain2 };
         }
         results.results.push({
-          title: search3.t,
-          description: (0, html_entities_1.decode)(search3.a),
-          rawDescription: search3.a,
-          hostname: search3.i,
-          icon: `https://external-content.duckduckgo.com/ip3/${search3.i}.ico`,
-          url: search3.u,
+          title: search2.t,
+          description: (0, html_entities_1.decode)(search2.a),
+          rawDescription: search2.a,
+          hostname: search2.i,
+          icon: `https://external-content.duckduckgo.com/ip3/${search2.i}.ico`,
+          url: search2.u,
           bang
         });
       }
@@ -7061,7 +7061,7 @@ var require_search = __commonJS({
       }
       return results;
     }
-    exports2.search = search2;
+    exports2.search = search;
     function sanityCheck(options) {
       options = Object.assign({}, defaultOptions, options);
       if (!(options.safeSearch in util_1.SafeSearchType))
@@ -7590,247 +7590,6 @@ var require_lib2 = __commonJS({
     Object.defineProperty(exports2, "SearchTimeType", { enumerable: true, get: function() {
       return util_1.SearchTimeType;
     } });
-  }
-});
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/tslib.js
-var require_tslib = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/internal/tslib.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.__setModuleDefault = exports2.__createBinding = void 0;
-    exports2.__classPrivateFieldSet = __classPrivateFieldSet2;
-    exports2.__classPrivateFieldGet = __classPrivateFieldGet2;
-    exports2.__importStar = __importStar;
-    exports2.__exportStar = __exportStar;
-    function __classPrivateFieldSet2(receiver, state, value, kind, f) {
-      if (kind === "m")
-        throw new TypeError("Private method is not writable");
-      if (kind === "a" && !f)
-        throw new TypeError("Private accessor was defined without a setter");
-      if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-        throw new TypeError("Cannot write private member to an object whose class did not declare it");
-      return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
-    }
-    function __classPrivateFieldGet2(receiver, state, kind, f) {
-      if (kind === "a" && !f)
-        throw new TypeError("Private accessor was defined without a getter");
-      if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-        throw new TypeError("Cannot read private member from an object whose class did not declare it");
-      return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-    }
-    var __createBinding = Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      var desc = Object.getOwnPropertyDescriptor(m, k);
-      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = {
-          enumerable: true,
-          get: function() {
-            return m[k];
-          }
-        };
-      }
-      Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    };
-    exports2.__createBinding = __createBinding;
-    var __setModuleDefault = Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    };
-    exports2.__setModuleDefault = __setModuleDefault;
-    var ownKeys = function(o) {
-      ownKeys = Object.getOwnPropertyNames || function(o2) {
-        var ar = [];
-        for (var k in o2)
-          if (Object.prototype.hasOwnProperty.call(o2, k))
-            ar[ar.length] = k;
-        return ar;
-      };
-      return ownKeys(o);
-    };
-    function __importStar(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k = ownKeys(mod), i = 0; i < k.length; i++)
-          if (k[i] !== "default")
-            __createBinding(result, mod, k[i]);
-      }
-      __setModuleDefault(result, mod);
-      return result;
-    }
-    function __exportStar(m, o) {
-      for (var p in m)
-        if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
-          __createBinding(o, m, p);
-    }
-  }
-});
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/errors.js
-var require_errors = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/internal/errors.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.castToError = void 0;
-    exports2.isAbortError = isAbortError2;
-    function isAbortError2(err) {
-      return typeof err === "object" && err !== null && // Spec-compliant fetch implementations
-      ("name" in err && err.name === "AbortError" || // Expo fetch
-      "message" in err && String(err.message).includes("FetchRequestCanceledException"));
-    }
-    var castToError2 = (err) => {
-      if (err instanceof Error)
-        return err;
-      if (typeof err === "object" && err !== null) {
-        try {
-          if (Object.prototype.toString.call(err) === "[object Error]") {
-            const error51 = new Error(err.message, err.cause ? { cause: err.cause } : {});
-            if (err.stack)
-              error51.stack = err.stack;
-            if (err.cause && !error51.cause)
-              error51.cause = err.cause;
-            if (err.name)
-              error51.name = err.name;
-            return error51;
-          }
-        } catch {
-        }
-        try {
-          return new Error(JSON.stringify(err));
-        } catch {
-        }
-      }
-      return new Error(err);
-    };
-    exports2.castToError = castToError2;
-  }
-});
-
-// node_modules/@perplexity-ai/perplexity_ai/core/error.js
-var require_error = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/core/error.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.InternalServerError = exports2.RateLimitError = exports2.UnprocessableEntityError = exports2.ConflictError = exports2.NotFoundError = exports2.PermissionDeniedError = exports2.AuthenticationError = exports2.BadRequestError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIUserAbortError = exports2.APIError = exports2.PerplexityError = void 0;
-    var errors_1 = require_errors();
-    var PerplexityError2 = class extends Error {
-    };
-    exports2.PerplexityError = PerplexityError2;
-    var APIError2 = class _APIError extends PerplexityError2 {
-      constructor(status, error51, message, headers) {
-        super(`${_APIError.makeMessage(status, error51, message)}`);
-        this.status = status;
-        this.headers = headers;
-        this.error = error51;
-      }
-      static makeMessage(status, error51, message) {
-        const msg = error51?.message ? typeof error51.message === "string" ? error51.message : JSON.stringify(error51.message) : error51 ? JSON.stringify(error51) : message;
-        if (status && msg) {
-          return `${status} ${msg}`;
-        }
-        if (status) {
-          return `${status} status code (no body)`;
-        }
-        if (msg) {
-          return msg;
-        }
-        return "(no status code or body)";
-      }
-      static generate(status, errorResponse, message, headers) {
-        if (!status || !headers) {
-          return new APIConnectionError3({ message, cause: (0, errors_1.castToError)(errorResponse) });
-        }
-        const error51 = errorResponse;
-        if (status === 400) {
-          return new BadRequestError2(status, error51, message, headers);
-        }
-        if (status === 401) {
-          return new AuthenticationError2(status, error51, message, headers);
-        }
-        if (status === 403) {
-          return new PermissionDeniedError2(status, error51, message, headers);
-        }
-        if (status === 404) {
-          return new NotFoundError2(status, error51, message, headers);
-        }
-        if (status === 409) {
-          return new ConflictError2(status, error51, message, headers);
-        }
-        if (status === 422) {
-          return new UnprocessableEntityError2(status, error51, message, headers);
-        }
-        if (status === 429) {
-          return new RateLimitError3(status, error51, message, headers);
-        }
-        if (status >= 500) {
-          return new InternalServerError3(status, error51, message, headers);
-        }
-        return new _APIError(status, error51, message, headers);
-      }
-    };
-    exports2.APIError = APIError2;
-    var APIUserAbortError2 = class extends APIError2 {
-      constructor({ message } = {}) {
-        super(void 0, void 0, message || "Request was aborted.", void 0);
-      }
-    };
-    exports2.APIUserAbortError = APIUserAbortError2;
-    var APIConnectionError3 = class extends APIError2 {
-      constructor({ message, cause }) {
-        super(void 0, void 0, message || "Connection error.", void 0);
-        if (cause)
-          this.cause = cause;
-      }
-    };
-    exports2.APIConnectionError = APIConnectionError3;
-    var APIConnectionTimeoutError3 = class extends APIConnectionError3 {
-      constructor({ message } = {}) {
-        super({ message: message ?? "Request timed out." });
-      }
-    };
-    exports2.APIConnectionTimeoutError = APIConnectionTimeoutError3;
-    var BadRequestError2 = class extends APIError2 {
-    };
-    exports2.BadRequestError = BadRequestError2;
-    var AuthenticationError2 = class extends APIError2 {
-    };
-    exports2.AuthenticationError = AuthenticationError2;
-    var PermissionDeniedError2 = class extends APIError2 {
-    };
-    exports2.PermissionDeniedError = PermissionDeniedError2;
-    var NotFoundError2 = class extends APIError2 {
-    };
-    exports2.NotFoundError = NotFoundError2;
-    var ConflictError2 = class extends APIError2 {
-    };
-    exports2.ConflictError = ConflictError2;
-    var UnprocessableEntityError2 = class extends APIError2 {
-    };
-    exports2.UnprocessableEntityError = UnprocessableEntityError2;
-    var RateLimitError3 = class extends APIError2 {
-    };
-    exports2.RateLimitError = RateLimitError3;
-    var InternalServerError3 = class extends APIError2 {
-    };
-    exports2.InternalServerError = InternalServerError3;
-  }
-});
-
-// node_modules/@perplexity-ai/perplexity_ai/error.js
-var require_error2 = __commonJS({
-  "node_modules/@perplexity-ai/perplexity_ai/error.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    var tslib_1 = require_tslib();
-    tslib_1.__exportStar(require_error(), exports2);
   }
 });
 
@@ -8393,10 +8152,10 @@ function $constructor(name, initializer3, params) {
   }
   Object.defineProperty(Definition, "name", { value: name });
   function _(def) {
-    var _a4;
+    var _a3;
     const inst = params?.Parent ? new Definition() : this;
     init(inst, def);
-    (_a4 = inst._zod).deferred ?? (_a4.deferred = []);
+    (_a3 = inst._zod).deferred ?? (_a3.deferred = []);
     for (const fn of inst._zod.deferred) {
       fn();
     }
@@ -8600,10 +8359,10 @@ function mergeDefs(...defs) {
 function cloneDef(schema) {
   return mergeDefs(schema._zod.def);
 }
-function getElementAtPath(obj, path2) {
-  if (!path2)
+function getElementAtPath(obj, path) {
+  if (!path)
     return obj;
-  return path2.reduce((acc, key) => acc?.[key], obj);
+  return path.reduce((acc, key) => acc?.[key], obj);
 }
 function promiseAllObject(promisesObj) {
   const keys = Object.keys(promisesObj);
@@ -9012,11 +8771,11 @@ function explicitlyAborted(x, startIndex = 0) {
   }
   return false;
 }
-function prefixIssues(path2, issues) {
+function prefixIssues(path, issues) {
   return issues.map((iss) => {
-    var _a4;
-    (_a4 = iss).path ?? (_a4.path = []);
-    iss.path.unshift(path2);
+    var _a3;
+    (_a3 = iss).path ?? (_a3.path = []);
+    iss.path.unshift(path);
     return iss;
   });
 }
@@ -9163,16 +8922,16 @@ function flattenError(error51, mapper = (issue2) => issue2.message) {
 }
 function formatError(error51, mapper = (issue2) => issue2.message) {
   const fieldErrors = { _errors: [] };
-  const processError = (error52, path2 = []) => {
+  const processError = (error52, path = []) => {
     for (const issue2 of error52.issues) {
       if (issue2.code === "invalid_union" && issue2.errors.length) {
-        issue2.errors.map((issues) => processError({ issues }, [...path2, ...issue2.path]));
+        issue2.errors.map((issues) => processError({ issues }, [...path, ...issue2.path]));
       } else if (issue2.code === "invalid_key") {
-        processError({ issues: issue2.issues }, [...path2, ...issue2.path]);
+        processError({ issues: issue2.issues }, [...path, ...issue2.path]);
       } else if (issue2.code === "invalid_element") {
-        processError({ issues: issue2.issues }, [...path2, ...issue2.path]);
+        processError({ issues: issue2.issues }, [...path, ...issue2.path]);
       } else {
-        const fullpath = [...path2, ...issue2.path];
+        const fullpath = [...path, ...issue2.path];
         if (fullpath.length === 0) {
           fieldErrors._errors.push(mapper(issue2));
         } else {
@@ -9199,17 +8958,17 @@ function formatError(error51, mapper = (issue2) => issue2.message) {
 }
 function treeifyError(error51, mapper = (issue2) => issue2.message) {
   const result = { errors: [] };
-  const processError = (error52, path2 = []) => {
-    var _a4, _b;
+  const processError = (error52, path = []) => {
+    var _a3, _b;
     for (const issue2 of error52.issues) {
       if (issue2.code === "invalid_union" && issue2.errors.length) {
-        issue2.errors.map((issues) => processError({ issues }, [...path2, ...issue2.path]));
+        issue2.errors.map((issues) => processError({ issues }, [...path, ...issue2.path]));
       } else if (issue2.code === "invalid_key") {
-        processError({ issues: issue2.issues }, [...path2, ...issue2.path]);
+        processError({ issues: issue2.issues }, [...path, ...issue2.path]);
       } else if (issue2.code === "invalid_element") {
-        processError({ issues: issue2.issues }, [...path2, ...issue2.path]);
+        processError({ issues: issue2.issues }, [...path, ...issue2.path]);
       } else {
-        const fullpath = [...path2, ...issue2.path];
+        const fullpath = [...path, ...issue2.path];
         if (fullpath.length === 0) {
           result.errors.push(mapper(issue2));
           continue;
@@ -9221,7 +8980,7 @@ function treeifyError(error51, mapper = (issue2) => issue2.message) {
           const terminal = i === fullpath.length - 1;
           if (typeof el === "string") {
             curr.properties ?? (curr.properties = {});
-            (_a4 = curr.properties)[el] ?? (_a4[el] = { errors: [] });
+            (_a3 = curr.properties)[el] ?? (_a3[el] = { errors: [] });
             curr = curr.properties[el];
           } else {
             curr.items ?? (curr.items = []);
@@ -9241,8 +9000,8 @@ function treeifyError(error51, mapper = (issue2) => issue2.message) {
 }
 function toDotPath(_path) {
   const segs = [];
-  const path2 = _path.map((seg) => typeof seg === "object" ? seg.key : seg);
-  for (const seg of path2) {
+  const path = _path.map((seg) => typeof seg === "object" ? seg.key : seg);
+  for (const seg of path) {
     if (typeof seg === "number")
       segs.push(`[${seg}]`);
     else if (typeof seg === "symbol")
@@ -9517,10 +9276,10 @@ var sha512_base64url = /* @__PURE__ */ fixedBase64url(86);
 
 // node_modules/zod/v4/core/checks.js
 var $ZodCheck = /* @__PURE__ */ $constructor("$ZodCheck", (inst, def) => {
-  var _a4;
+  var _a3;
   inst._zod ?? (inst._zod = {});
   inst._zod.def = def;
-  (_a4 = inst._zod).onattach ?? (_a4.onattach = []);
+  (_a3 = inst._zod).onattach ?? (_a3.onattach = []);
 });
 var numericOriginMap = {
   number: "number",
@@ -9586,8 +9345,8 @@ var $ZodCheckGreaterThan = /* @__PURE__ */ $constructor("$ZodCheckGreaterThan", 
 var $ZodCheckMultipleOf = /* @__PURE__ */ $constructor("$ZodCheckMultipleOf", (inst, def) => {
   $ZodCheck.init(inst, def);
   inst._zod.onattach.push((inst2) => {
-    var _a4;
-    (_a4 = inst2._zod.bag).multipleOf ?? (_a4.multipleOf = def.value);
+    var _a3;
+    (_a3 = inst2._zod.bag).multipleOf ?? (_a3.multipleOf = def.value);
   });
   inst._zod.check = (payload) => {
     if (typeof payload.value !== typeof def.value)
@@ -9720,9 +9479,9 @@ var $ZodCheckBigIntFormat = /* @__PURE__ */ $constructor("$ZodCheckBigIntFormat"
   };
 });
 var $ZodCheckMaxSize = /* @__PURE__ */ $constructor("$ZodCheckMaxSize", (inst, def) => {
-  var _a4;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a4 = inst._zod.def).when ?? (_a4.when = (payload) => {
+  (_a3 = inst._zod.def).when ?? (_a3.when = (payload) => {
     const val = payload.value;
     return !nullish(val) && val.size !== void 0;
   });
@@ -9748,9 +9507,9 @@ var $ZodCheckMaxSize = /* @__PURE__ */ $constructor("$ZodCheckMaxSize", (inst, d
   };
 });
 var $ZodCheckMinSize = /* @__PURE__ */ $constructor("$ZodCheckMinSize", (inst, def) => {
-  var _a4;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a4 = inst._zod.def).when ?? (_a4.when = (payload) => {
+  (_a3 = inst._zod.def).when ?? (_a3.when = (payload) => {
     const val = payload.value;
     return !nullish(val) && val.size !== void 0;
   });
@@ -9776,9 +9535,9 @@ var $ZodCheckMinSize = /* @__PURE__ */ $constructor("$ZodCheckMinSize", (inst, d
   };
 });
 var $ZodCheckSizeEquals = /* @__PURE__ */ $constructor("$ZodCheckSizeEquals", (inst, def) => {
-  var _a4;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a4 = inst._zod.def).when ?? (_a4.when = (payload) => {
+  (_a3 = inst._zod.def).when ?? (_a3.when = (payload) => {
     const val = payload.value;
     return !nullish(val) && val.size !== void 0;
   });
@@ -9806,9 +9565,9 @@ var $ZodCheckSizeEquals = /* @__PURE__ */ $constructor("$ZodCheckSizeEquals", (i
   };
 });
 var $ZodCheckMaxLength = /* @__PURE__ */ $constructor("$ZodCheckMaxLength", (inst, def) => {
-  var _a4;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a4 = inst._zod.def).when ?? (_a4.when = (payload) => {
+  (_a3 = inst._zod.def).when ?? (_a3.when = (payload) => {
     const val = payload.value;
     return !nullish(val) && val.length !== void 0;
   });
@@ -9835,9 +9594,9 @@ var $ZodCheckMaxLength = /* @__PURE__ */ $constructor("$ZodCheckMaxLength", (ins
   };
 });
 var $ZodCheckMinLength = /* @__PURE__ */ $constructor("$ZodCheckMinLength", (inst, def) => {
-  var _a4;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a4 = inst._zod.def).when ?? (_a4.when = (payload) => {
+  (_a3 = inst._zod.def).when ?? (_a3.when = (payload) => {
     const val = payload.value;
     return !nullish(val) && val.length !== void 0;
   });
@@ -9864,9 +9623,9 @@ var $ZodCheckMinLength = /* @__PURE__ */ $constructor("$ZodCheckMinLength", (ins
   };
 });
 var $ZodCheckLengthEquals = /* @__PURE__ */ $constructor("$ZodCheckLengthEquals", (inst, def) => {
-  var _a4;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a4 = inst._zod.def).when ?? (_a4.when = (payload) => {
+  (_a3 = inst._zod.def).when ?? (_a3.when = (payload) => {
     const val = payload.value;
     return !nullish(val) && val.length !== void 0;
   });
@@ -9895,7 +9654,7 @@ var $ZodCheckLengthEquals = /* @__PURE__ */ $constructor("$ZodCheckLengthEquals"
   };
 });
 var $ZodCheckStringFormat = /* @__PURE__ */ $constructor("$ZodCheckStringFormat", (inst, def) => {
-  var _a4, _b;
+  var _a3, _b;
   $ZodCheck.init(inst, def);
   inst._zod.onattach.push((inst2) => {
     const bag = inst2._zod.bag;
@@ -9906,7 +9665,7 @@ var $ZodCheckStringFormat = /* @__PURE__ */ $constructor("$ZodCheckStringFormat"
     }
   });
   if (def.pattern)
-    (_a4 = inst._zod).check ?? (_a4.check = (payload) => {
+    (_a3 = inst._zod).check ?? (_a3.check = (payload) => {
       def.pattern.lastIndex = 0;
       if (def.pattern.test(payload.value))
         return;
@@ -10108,7 +9867,7 @@ var version = {
 
 // node_modules/zod/v4/core/schemas.js
 var $ZodType = /* @__PURE__ */ $constructor("$ZodType", (inst, def) => {
-  var _a4;
+  var _a3;
   inst ?? (inst = {});
   inst._zod.def = def;
   inst._zod.bag = inst._zod.bag || {};
@@ -10123,7 +9882,7 @@ var $ZodType = /* @__PURE__ */ $constructor("$ZodType", (inst, def) => {
     }
   }
   if (checks.length === 0) {
-    (_a4 = inst._zod).deferred ?? (_a4.deferred = []);
+    (_a3 = inst._zod).deferred ?? (_a3.deferred = []);
     inst._zod.deferred?.push(() => {
       inst._zod.run = inst._zod.parse;
     });
@@ -19266,7 +19025,7 @@ function initializeContext(params) {
   };
 }
 function process2(schema, ctx, _params = { path: [], schemaPath: [] }) {
-  var _a4;
+  var _a3;
   const def = schema._zod.def;
   const seen = ctx.seen.get(schema);
   if (seen) {
@@ -19314,7 +19073,7 @@ function process2(schema, ctx, _params = { path: [], schemaPath: [] }) {
     delete result.schema.default;
   }
   if (ctx.io === "input" && "_prefault" in result.schema)
-    (_a4 = result.schema).default ?? (_a4.default = result.schema._prefault);
+    (_a3 = result.schema).default ?? (_a3.default = result.schema._prefault);
   delete result.schema._prefault;
   const _result = ctx.seen.get(schema);
   return _result.schema;
@@ -21934,13 +21693,13 @@ function resolveRef(ref, ctx) {
   if (!ref.startsWith("#")) {
     throw new Error("External $ref is not supported, only local refs (#/...) are allowed");
   }
-  const path2 = ref.slice(1).split("/").filter(Boolean);
-  if (path2.length === 0) {
+  const path = ref.slice(1).split("/").filter(Boolean);
+  if (path.length === 0) {
     return ctx.rootSchema;
   }
   const defsKey = ctx.version === "draft-2020-12" ? "$defs" : "definitions";
-  if (path2[0] === defsKey) {
-    const key = path2[1];
+  if (path[0] === defsKey) {
+    const key = path[1];
     if (!key || !ctx.defs[key]) {
       throw new Error(`Reference not found: ${ref}`);
     }
@@ -22354,12 +22113,19 @@ var WebSearchInputSchema = external_exports.strictObject({
   allowed_domains: external_exports.array(external_exports.string()).optional(),
   blocked_domains: external_exports.array(external_exports.string()).optional()
 });
+var WebFetchInputSchema = external_exports.strictObject({
+  url: external_exports.string().url("Invalid URL format"),
+  prompt: external_exports.string().min(1, "Prompt is required")
+});
 async function readStdin(schema) {
   const chunks = [];
   for await (const chunk of process.stdin) {
     chunks.push(chunk);
   }
-  const raw = Buffer.concat(chunks).toString("utf8");
+  const raw = Buffer.concat(chunks).toString("utf8").trim();
+  if (!raw) {
+    throw new Error("No input received on stdin. Provide JSON input via pipe.");
+  }
   const parsed = JSON.parse(raw);
   return schema.parse(parsed);
 }
@@ -22375,16 +22141,14 @@ function validateDomainExclusivity(input) {
 function escapeXml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
-function formatSearchResults(results, provider) {
+function formatSearchResults(results) {
   const lines = [];
-  if (provider) {
-    lines.push(`<!-- provider: ${provider} -->`);
-  }
   lines.push("<search_results>");
   for (const result of results) {
     lines.push("  <result>");
     lines.push(`    <title>${escapeXml(result.title)}</title>`);
     lines.push(`    <url>${escapeXml(result.url)}</url>`);
+    lines.push(`    <snippet>${escapeXml(result.snippet ?? "")}</snippet>`);
     lines.push("  </result>");
   }
   lines.push("</search_results>");
@@ -22392,1801 +22156,140 @@ function formatSearchResults(results, provider) {
 }
 
 // src/lib/logger.ts
-var currentLevel = process.env.LOG_LEVEL || "info";
 var LEVEL_ORDER = {
   debug: 0,
   info: 1,
   warn: 2,
   error: 3
 };
-function log(level, message) {
-  if (LEVEL_ORDER[level] >= LEVEL_ORDER[currentLevel]) {
-    process.stderr.write(`[${level}] ${message}
+function createLogger(module2, level = "info") {
+  let currentLevel = level;
+  function log(level2, message) {
+    if (LEVEL_ORDER[level2] >= LEVEL_ORDER[currentLevel]) {
+      const timestamp = (/* @__PURE__ */ new Date()).toISOString();
+      process.stderr.write(`[${timestamp}] [${level2}:${module2}] ${message}
 `);
+    }
   }
-}
-var logger = {
-  debug: (msg) => log("debug", msg),
-  info: (msg) => log("info", msg),
-  warn: (msg) => log("warn", msg),
-  error: (msg) => log("error", msg)
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/tslib.mjs
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
-  if (kind === "m")
-    throw new TypeError("Private method is not writable");
-  if (kind === "a" && !f)
-    throw new TypeError("Private accessor was defined without a setter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-    throw new TypeError("Cannot write private member to an object whose class did not declare it");
-  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
-}
-function __classPrivateFieldGet(receiver, state, kind, f) {
-  if (kind === "a" && !f)
-    throw new TypeError("Private accessor was defined without a getter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-    throw new TypeError("Cannot read private member from an object whose class did not declare it");
-  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+  return {
+    debug: (msg) => log("debug", msg),
+    info: (msg) => log("info", msg),
+    warn: (msg) => log("warn", msg),
+    error: (msg) => log("error", msg),
+    setLevel: (newLevel) => {
+      currentLevel = newLevel;
+    }
+  };
 }
 
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/uuid.mjs
-var uuid42 = function() {
-  const { crypto } = globalThis;
-  if (crypto?.randomUUID) {
-    uuid42 = crypto.randomUUID.bind(crypto);
-    return crypto.randomUUID();
-  }
-  const u8 = new Uint8Array(1);
-  const randomByte = crypto ? () => crypto.getRandomValues(u8)[0] : () => Math.random() * 255 & 255;
-  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => (+c ^ randomByte() & 15 >> +c / 4).toString(16));
+// src/lib/config.ts
+var import_fs = require("fs");
+var import_path = require("path");
+var import_os = require("os");
+var ConfigSchema = external_exports.strictObject({
+  retry: external_exports.strictObject({
+    maxRetries: external_exports.number().int().min(0).optional(),
+    baseDelay: external_exports.number().int().min(0).optional(),
+    maxDelay: external_exports.number().int().min(0).optional(),
+    timeout: external_exports.number().int().min(0).optional()
+  }).optional(),
+  logging: external_exports.strictObject({
+    level: external_exports.enum(["debug", "info", "warn", "error"]).optional()
+  }).optional()
+});
+var DEFAULTS = {
+  retry: { maxRetries: 4, baseDelay: 1e3, maxDelay: 16e3, timeout: 3e4 },
+  logging: { level: "info" }
 };
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/errors.mjs
-function isAbortError(err) {
-  return typeof err === "object" && err !== null && // Spec-compliant fetch implementations
-  ("name" in err && err.name === "AbortError" || // Expo fetch
-  "message" in err && String(err.message).includes("FetchRequestCanceledException"));
-}
-var castToError = (err) => {
-  if (err instanceof Error)
-    return err;
-  if (typeof err === "object" && err !== null) {
-    try {
-      if (Object.prototype.toString.call(err) === "[object Error]") {
-        const error51 = new Error(err.message, err.cause ? { cause: err.cause } : {});
-        if (err.stack)
-          error51.stack = err.stack;
-        if (err.cause && !error51.cause)
-          error51.cause = err.cause;
-        if (err.name)
-          error51.name = err.name;
-        return error51;
-      }
-    } catch {
-    }
-    try {
-      return new Error(JSON.stringify(err));
-    } catch {
-    }
-  }
-  return new Error(err);
+var ENV_MAP = {
+  "retry.maxRetries": "WEBSEARCH_RETRY_MAX_RETRIES",
+  "retry.baseDelay": "WEBSEARCH_RETRY_BASE_DELAY",
+  "retry.maxDelay": "WEBSEARCH_RETRY_MAX_DELAY",
+  "retry.timeout": "WEBSEARCH_RETRY_TIMEOUT",
+  "logging.level": "WEBSEARCH_LOGGING_LEVEL"
 };
-
-// node_modules/@perplexity-ai/perplexity_ai/core/error.mjs
-var PerplexityError = class extends Error {
-};
-var APIError = class _APIError extends PerplexityError {
-  constructor(status, error51, message, headers) {
-    super(`${_APIError.makeMessage(status, error51, message)}`);
-    this.status = status;
-    this.headers = headers;
-    this.error = error51;
-  }
-  static makeMessage(status, error51, message) {
-    const msg = error51?.message ? typeof error51.message === "string" ? error51.message : JSON.stringify(error51.message) : error51 ? JSON.stringify(error51) : message;
-    if (status && msg) {
-      return `${status} ${msg}`;
-    }
-    if (status) {
-      return `${status} status code (no body)`;
-    }
-    if (msg) {
-      return msg;
-    }
-    return "(no status code or body)";
-  }
-  static generate(status, errorResponse, message, headers) {
-    if (!status || !headers) {
-      return new APIConnectionError({ message, cause: castToError(errorResponse) });
-    }
-    const error51 = errorResponse;
-    if (status === 400) {
-      return new BadRequestError(status, error51, message, headers);
-    }
-    if (status === 401) {
-      return new AuthenticationError(status, error51, message, headers);
-    }
-    if (status === 403) {
-      return new PermissionDeniedError(status, error51, message, headers);
-    }
-    if (status === 404) {
-      return new NotFoundError(status, error51, message, headers);
-    }
-    if (status === 409) {
-      return new ConflictError(status, error51, message, headers);
-    }
-    if (status === 422) {
-      return new UnprocessableEntityError(status, error51, message, headers);
-    }
-    if (status === 429) {
-      return new RateLimitError(status, error51, message, headers);
-    }
-    if (status >= 500) {
-      return new InternalServerError(status, error51, message, headers);
-    }
-    return new _APIError(status, error51, message, headers);
-  }
-};
-var APIUserAbortError = class extends APIError {
-  constructor({ message } = {}) {
-    super(void 0, void 0, message || "Request was aborted.", void 0);
-  }
-};
-var APIConnectionError = class extends APIError {
-  constructor({ message, cause }) {
-    super(void 0, void 0, message || "Connection error.", void 0);
-    if (cause)
-      this.cause = cause;
-  }
-};
-var APIConnectionTimeoutError = class extends APIConnectionError {
-  constructor({ message } = {}) {
-    super({ message: message ?? "Request timed out." });
-  }
-};
-var BadRequestError = class extends APIError {
-};
-var AuthenticationError = class extends APIError {
-};
-var PermissionDeniedError = class extends APIError {
-};
-var NotFoundError = class extends APIError {
-};
-var ConflictError = class extends APIError {
-};
-var UnprocessableEntityError = class extends APIError {
-};
-var RateLimitError = class extends APIError {
-};
-var InternalServerError = class extends APIError {
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/values.mjs
-var startsWithSchemeRegexp = /^[a-z][a-z0-9+.-]*:/i;
-var isAbsoluteURL = (url2) => {
-  return startsWithSchemeRegexp.test(url2);
-};
-var isArray = (val) => (isArray = Array.isArray, isArray(val));
-var isReadonlyArray = isArray;
-function isEmptyObj(obj) {
-  if (!obj)
-    return true;
-  for (const _k in obj)
-    return false;
-  return true;
-}
-function hasOwn(obj, key) {
-  return Object.prototype.hasOwnProperty.call(obj, key);
-}
-var validatePositiveInteger = (name, n) => {
-  if (typeof n !== "number" || !Number.isInteger(n)) {
-    throw new PerplexityError(`${name} must be an integer`);
-  }
-  if (n < 0) {
-    throw new PerplexityError(`${name} must be a positive integer`);
-  }
-  return n;
-};
-var safeJSON = (text) => {
+var CONFIG_PATH = (0, import_path.join)((0, import_os.homedir)(), ".config", "websearch", "config.json");
+function readConfigFile() {
+  if (!(0, import_fs.existsSync)(CONFIG_PATH)) return null;
   try {
-    return JSON.parse(text);
-  } catch (err) {
-    return void 0;
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/sleep.mjs
-var sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// node_modules/@perplexity-ai/perplexity_ai/version.mjs
-var VERSION = "0.29.0";
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/detect-platform.mjs
-function getDetectedPlatform() {
-  if (typeof Deno !== "undefined" && Deno.build != null) {
-    return "deno";
-  }
-  if (typeof EdgeRuntime !== "undefined") {
-    return "edge";
-  }
-  if (Object.prototype.toString.call(typeof globalThis.process !== "undefined" ? globalThis.process : 0) === "[object process]") {
-    return "node";
-  }
-  return "unknown";
-}
-var getPlatformProperties = () => {
-  const detectedPlatform = getDetectedPlatform();
-  if (detectedPlatform === "deno") {
-    return {
-      "X-Stainless-Lang": "js",
-      "X-Stainless-Package-Version": VERSION,
-      "X-Stainless-OS": normalizePlatform(Deno.build.os),
-      "X-Stainless-Arch": normalizeArch(Deno.build.arch),
-      "X-Stainless-Runtime": "deno",
-      "X-Stainless-Runtime-Version": typeof Deno.version === "string" ? Deno.version : Deno.version?.deno ?? "unknown"
-    };
-  }
-  if (typeof EdgeRuntime !== "undefined") {
-    return {
-      "X-Stainless-Lang": "js",
-      "X-Stainless-Package-Version": VERSION,
-      "X-Stainless-OS": "Unknown",
-      "X-Stainless-Arch": `other:${EdgeRuntime}`,
-      "X-Stainless-Runtime": "edge",
-      "X-Stainless-Runtime-Version": globalThis.process.version
-    };
-  }
-  if (detectedPlatform === "node") {
-    return {
-      "X-Stainless-Lang": "js",
-      "X-Stainless-Package-Version": VERSION,
-      "X-Stainless-OS": normalizePlatform(globalThis.process.platform ?? "unknown"),
-      "X-Stainless-Arch": normalizeArch(globalThis.process.arch ?? "unknown"),
-      "X-Stainless-Runtime": "node",
-      "X-Stainless-Runtime-Version": globalThis.process.version ?? "unknown"
-    };
-  }
-  const browserInfo = getBrowserInfo();
-  if (browserInfo) {
-    return {
-      "X-Stainless-Lang": "js",
-      "X-Stainless-Package-Version": VERSION,
-      "X-Stainless-OS": "Unknown",
-      "X-Stainless-Arch": "unknown",
-      "X-Stainless-Runtime": `browser:${browserInfo.browser}`,
-      "X-Stainless-Runtime-Version": browserInfo.version
-    };
-  }
-  return {
-    "X-Stainless-Lang": "js",
-    "X-Stainless-Package-Version": VERSION,
-    "X-Stainless-OS": "Unknown",
-    "X-Stainless-Arch": "unknown",
-    "X-Stainless-Runtime": "unknown",
-    "X-Stainless-Runtime-Version": "unknown"
-  };
-};
-function getBrowserInfo() {
-  if (typeof navigator === "undefined" || !navigator) {
+    return JSON.parse((0, import_fs.readFileSync)(CONFIG_PATH, "utf-8"));
+  } catch {
+    process.stderr.write("[warn] Failed to parse config file\n");
     return null;
   }
-  const browserPatterns = [
-    { key: "edge", pattern: /Edge(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: "ie", pattern: /MSIE(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: "ie", pattern: /Trident(?:.*rv\:(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: "chrome", pattern: /Chrome(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: "firefox", pattern: /Firefox(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
-    { key: "safari", pattern: /(?:Version\W+(\d+)\.(\d+)(?:\.(\d+))?)?(?:\W+Mobile\S*)?\W+Safari/ }
-  ];
-  for (const { key, pattern } of browserPatterns) {
-    const match = pattern.exec(navigator.userAgent);
-    if (match) {
-      const major = match[1] || 0;
-      const minor = match[2] || 0;
-      const patch = match[3] || 0;
-      return { browser: key, version: `${major}.${minor}.${patch}` };
+}
+function validateFileConfig(raw) {
+  const result = ConfigSchema.safeParse(raw);
+  if (!result.success) {
+    process.stderr.write("[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n");
+    for (const issue2 of result.error.issues) {
+      const path = issue2.path.join(".");
+      process.stderr.write(`[warn] Invalid config at ${path}: ${issue2.message}
+`);
     }
+    return {};
   }
-  return null;
+  return result.data;
 }
-var normalizeArch = (arch) => {
-  if (arch === "x32")
-    return "x32";
-  if (arch === "x86_64" || arch === "x64")
-    return "x64";
-  if (arch === "arm")
-    return "arm";
-  if (arch === "aarch64" || arch === "arm64")
-    return "arm64";
-  if (arch)
-    return `other:${arch}`;
-  return "unknown";
-};
-var normalizePlatform = (platform) => {
-  platform = platform.toLowerCase();
-  if (platform.includes("ios"))
-    return "iOS";
-  if (platform === "android")
-    return "Android";
-  if (platform === "darwin")
-    return "MacOS";
-  if (platform === "win32")
-    return "Windows";
-  if (platform === "freebsd")
-    return "FreeBSD";
-  if (platform === "openbsd")
-    return "OpenBSD";
-  if (platform === "linux")
-    return "Linux";
-  if (platform)
-    return `Other:${platform}`;
-  return "Unknown";
-};
-var _platformHeaders;
-var getPlatformHeaders = () => {
-  return _platformHeaders ?? (_platformHeaders = getPlatformProperties());
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/shims.mjs
-function getDefaultFetch() {
-  if (typeof fetch !== "undefined") {
-    return fetch;
-  }
-  throw new Error("`fetch` is not defined as a global; Either pass `fetch` to the client, `new Perplexity({ fetch })` or polyfill the global, `globalThis.fetch = fetch`");
-}
-function makeReadableStream(...args) {
-  const ReadableStream = globalThis.ReadableStream;
-  if (typeof ReadableStream === "undefined") {
-    throw new Error("`ReadableStream` is not defined as a global; You will need to polyfill it, `globalThis.ReadableStream = ReadableStream`");
-  }
-  return new ReadableStream(...args);
-}
-function ReadableStreamFrom(iterable) {
-  let iter = Symbol.asyncIterator in iterable ? iterable[Symbol.asyncIterator]() : iterable[Symbol.iterator]();
-  return makeReadableStream({
-    start() {
-    },
-    async pull(controller) {
-      const { done, value } = await iter.next();
-      if (done) {
-        controller.close();
-      } else {
-        controller.enqueue(value);
-      }
-    },
-    async cancel() {
-      await iter.return?.();
+var NUMBER_KEYS = /* @__PURE__ */ new Set([
+  "retry.maxRetries",
+  "retry.baseDelay",
+  "retry.maxDelay",
+  "retry.timeout"
+]);
+var VALID_LEVELS = /* @__PURE__ */ new Set(["debug", "info", "warn", "error"]);
+function resolveFromEnv(key) {
+  const envName = ENV_MAP[key];
+  if (!envName) return void 0;
+  const envValue = process.env[envName];
+  if (envValue === void 0 || envValue === "") return void 0;
+  if (NUMBER_KEYS.has(key)) {
+    const num = Number(envValue);
+    if (Number.isNaN(num) || !Number.isInteger(num) || num < 0) {
+      process.stderr.write(`[warn] Invalid number for ${envName}: "${envValue}"
+`);
+      return void 0;
     }
-  });
+    return num;
+  }
+  if (key === "logging.level") {
+    if (!VALID_LEVELS.has(envValue)) {
+      process.stderr.write(`[warn] Invalid log level: "${envValue}"
+`);
+      return void 0;
+    }
+    return envValue;
+  }
+  return envValue;
 }
-function ReadableStreamToAsyncIterable(stream) {
-  if (stream[Symbol.asyncIterator])
-    return stream;
-  const reader = stream.getReader();
+function resolve(key, fileValue, defaultValue) {
+  const envValue = resolveFromEnv(key);
+  if (envValue !== void 0) return envValue;
+  if (fileValue !== void 0) return fileValue;
+  return defaultValue;
+}
+function loadConfig() {
+  const rawFile = readConfigFile();
+  const fileConfig = rawFile ? validateFileConfig(rawFile) : {};
   return {
-    async next() {
-      try {
-        const result = await reader.read();
-        if (result?.done)
-          reader.releaseLock();
-        return result;
-      } catch (e) {
-        reader.releaseLock();
-        throw e;
-      }
+    retry: {
+      maxRetries: resolve("retry.maxRetries", fileConfig.retry?.maxRetries, DEFAULTS.retry.maxRetries),
+      baseDelay: resolve("retry.baseDelay", fileConfig.retry?.baseDelay, DEFAULTS.retry.baseDelay),
+      maxDelay: resolve("retry.maxDelay", fileConfig.retry?.maxDelay, DEFAULTS.retry.maxDelay),
+      timeout: resolve("retry.timeout", fileConfig.retry?.timeout, DEFAULTS.retry.timeout)
     },
-    async return() {
-      const cancelPromise = reader.cancel();
-      reader.releaseLock();
-      await cancelPromise;
-      return { done: true, value: void 0 };
-    },
-    [Symbol.asyncIterator]() {
-      return this;
+    logging: {
+      level: resolve("logging.level", fileConfig.logging?.level, DEFAULTS.logging.level)
     }
   };
-}
-async function CancelReadableStream(stream) {
-  if (stream === null || typeof stream !== "object")
-    return;
-  if (stream[Symbol.asyncIterator]) {
-    await stream[Symbol.asyncIterator]().return?.();
-    return;
-  }
-  const reader = stream.getReader();
-  const cancelPromise = reader.cancel();
-  reader.releaseLock();
-  await cancelPromise;
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/request-options.mjs
-var FallbackEncoder = ({ headers, body }) => {
-  return {
-    bodyHeaders: {
-      "content-type": "application/json"
-    },
-    body: JSON.stringify(body)
-  };
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/query.mjs
-function stringifyQuery(query) {
-  return Object.entries(query).filter(([_, value]) => typeof value !== "undefined").map(([key, value]) => {
-    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-    }
-    if (value === null) {
-      return `${encodeURIComponent(key)}=`;
-    }
-    throw new PerplexityError(`Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`);
-  }).join("&");
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/uploads.mjs
-var checkFileSupport = () => {
-  if (typeof File === "undefined") {
-    const { process: process3 } = globalThis;
-    const isOldNode = typeof process3?.versions?.node === "string" && parseInt(process3.versions.node.split(".")) < 20;
-    throw new Error("`File` is not defined as a global, which is required for file uploads." + (isOldNode ? " Update to Node 20 LTS or newer, or set `globalThis.File` to `import('node:buffer').File`." : ""));
-  }
-};
-function makeFile(fileBits, fileName, options) {
-  checkFileSupport();
-  return new File(fileBits, fileName ?? "unknown_file", options);
-}
-function getName(value) {
-  return (typeof value === "object" && value !== null && ("name" in value && value.name && String(value.name) || "url" in value && value.url && String(value.url) || "filename" in value && value.filename && String(value.filename) || "path" in value && value.path && String(value.path)) || "").split(/[\\/]/).pop() || void 0;
-}
-var isAsyncIterable = (value) => value != null && typeof value === "object" && typeof value[Symbol.asyncIterator] === "function";
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/to-file.mjs
-var isBlobLike = (value) => value != null && typeof value === "object" && typeof value.size === "number" && typeof value.type === "string" && typeof value.text === "function" && typeof value.slice === "function" && typeof value.arrayBuffer === "function";
-var isFileLike = (value) => value != null && typeof value === "object" && typeof value.name === "string" && typeof value.lastModified === "number" && isBlobLike(value);
-var isResponseLike = (value) => value != null && typeof value === "object" && typeof value.url === "string" && typeof value.blob === "function";
-async function toFile(value, name, options) {
-  checkFileSupport();
-  value = await value;
-  if (isFileLike(value)) {
-    if (value instanceof File) {
-      return value;
-    }
-    return makeFile([await value.arrayBuffer()], value.name);
-  }
-  if (isResponseLike(value)) {
-    const blob = await value.blob();
-    name || (name = new URL(value.url).pathname.split(/[\\/]/).pop());
-    return makeFile(await getBytes(blob), name, options);
-  }
-  const parts = await getBytes(value);
-  name || (name = getName(value));
-  if (!options?.type) {
-    const type = parts.find((part) => typeof part === "object" && "type" in part && part.type);
-    if (typeof type === "string") {
-      options = { ...options, type };
-    }
-  }
-  return makeFile(parts, name, options);
-}
-async function getBytes(value) {
-  let parts = [];
-  if (typeof value === "string" || ArrayBuffer.isView(value) || // includes Uint8Array, Buffer, etc.
-  value instanceof ArrayBuffer) {
-    parts.push(value);
-  } else if (isBlobLike(value)) {
-    parts.push(value instanceof Blob ? value : await value.arrayBuffer());
-  } else if (isAsyncIterable(value)) {
-    for await (const chunk of value) {
-      parts.push(...await getBytes(chunk));
-    }
-  } else {
-    const constructor = value?.constructor?.name;
-    throw new Error(`Unexpected data type: ${typeof value}${constructor ? `; constructor: ${constructor}` : ""}${propsForError(value)}`);
-  }
-  return parts;
-}
-function propsForError(value) {
-  if (typeof value !== "object" || value === null)
-    return "";
-  const props = Object.getOwnPropertyNames(value);
-  return `; props: [${props.map((p) => `"${p}"`).join(", ")}]`;
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/core/resource.mjs
-var APIResource = class {
-  constructor(client) {
-    this._client = client;
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/headers.mjs
-var brand_privateNullableHeaders = /* @__PURE__ */ Symbol("brand.privateNullableHeaders");
-function* iterateHeaders(headers) {
-  if (!headers)
-    return;
-  if (brand_privateNullableHeaders in headers) {
-    const { values, nulls } = headers;
-    yield* values.entries();
-    for (const name of nulls) {
-      yield [name, null];
-    }
-    return;
-  }
-  let shouldClear = false;
-  let iter;
-  if (headers instanceof Headers) {
-    iter = headers.entries();
-  } else if (isReadonlyArray(headers)) {
-    iter = headers;
-  } else {
-    shouldClear = true;
-    iter = Object.entries(headers ?? {});
-  }
-  for (let row of iter) {
-    const name = row[0];
-    if (typeof name !== "string")
-      throw new TypeError("expected header name to be a string");
-    const values = isReadonlyArray(row[1]) ? row[1] : [row[1]];
-    let didClear = false;
-    for (const value of values) {
-      if (value === void 0)
-        continue;
-      if (shouldClear && !didClear) {
-        didClear = true;
-        yield [name, null];
-      }
-      yield [name, value];
-    }
-  }
-}
-var buildHeaders = (newHeaders) => {
-  const targetHeaders = new Headers();
-  const nullHeaders = /* @__PURE__ */ new Set();
-  for (const headers of newHeaders) {
-    const seenHeaders = /* @__PURE__ */ new Set();
-    for (const [name, value] of iterateHeaders(headers)) {
-      const lowerName = name.toLowerCase();
-      if (!seenHeaders.has(lowerName)) {
-        targetHeaders.delete(name);
-        seenHeaders.add(lowerName);
-      }
-      if (value === null) {
-        targetHeaders.delete(name);
-        nullHeaders.add(lowerName);
-      } else {
-        targetHeaders.append(name, value);
-        nullHeaders.delete(lowerName);
-      }
-    }
-  }
-  return { [brand_privateNullableHeaders]: true, values: targetHeaders, nulls: nullHeaders };
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/path.mjs
-function encodeURIPath(str) {
-  return str.replace(/[^A-Za-z0-9\-._~!$&'()*+,;=:@]+/g, encodeURIComponent);
-}
-var EMPTY = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.create(null));
-var createPathTagFunction = (pathEncoder = encodeURIPath) => function path2(statics, ...params) {
-  if (statics.length === 1)
-    return statics[0];
-  let postPath = false;
-  const invalidSegments = [];
-  const path3 = statics.reduce((previousValue, currentValue, index) => {
-    if (/[?#]/.test(currentValue)) {
-      postPath = true;
-    }
-    const value = params[index];
-    let encoded = (postPath ? encodeURIComponent : pathEncoder)("" + value);
-    if (index !== params.length && (value == null || typeof value === "object" && // handle values from other realms
-    value.toString === Object.getPrototypeOf(Object.getPrototypeOf(value.hasOwnProperty ?? EMPTY) ?? EMPTY)?.toString)) {
-      encoded = value + "";
-      invalidSegments.push({
-        start: previousValue.length + currentValue.length,
-        length: encoded.length,
-        error: `Value of type ${Object.prototype.toString.call(value).slice(8, -1)} is not a valid path parameter`
-      });
-    }
-    return previousValue + currentValue + (index === params.length ? "" : encoded);
-  }, "");
-  const pathOnly = path3.split(/[?#]/, 1)[0];
-  const invalidSegmentPattern = /(?<=^|\/)(?:\.|%2e){1,2}(?=\/|$)/gi;
-  let match;
-  while ((match = invalidSegmentPattern.exec(pathOnly)) !== null) {
-    invalidSegments.push({
-      start: match.index,
-      length: match[0].length,
-      error: `Value "${match[0]}" can't be safely passed as a path parameter`
-    });
-  }
-  invalidSegments.sort((a, b) => a.start - b.start);
-  if (invalidSegments.length > 0) {
-    let lastEnd = 0;
-    const underline = invalidSegments.reduce((acc, segment) => {
-      const spaces = " ".repeat(segment.start - lastEnd);
-      const arrows = "^".repeat(segment.length);
-      lastEnd = segment.start + segment.length;
-      return acc + spaces + arrows;
-    }, "");
-    throw new PerplexityError(`Path parameters result in path with invalid segments:
-${invalidSegments.map((e) => e.error).join("\n")}
-${path3}
-${underline}`);
-  }
-  return path3;
-};
-var path = /* @__PURE__ */ createPathTagFunction(encodeURIPath);
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/async/chat/completions.mjs
-var Completions = class extends APIResource {
-  /**
-   * Submit an asynchronous chat completion request.
-   */
-  create(body, options) {
-    return this._client.post("/async/chat/completions", { body, ...options });
-  }
-  /**
-   * Retrieve a list of all asynchronous chat completion requests for a given user.
-   */
-  list(options) {
-    return this._client.get("/async/chat/completions", options);
-  }
-  /**
-   * Retrieve the response for a given asynchronous chat completion request.
-   */
-  get(apiRequest, params = {}, options) {
-    const { "x-client-env": xClientEnv, "x-client-name": xClientName, "x-created-at-epoch-seconds": xCreatedAtEpochSeconds, "x-request-time": xRequestTime, "x-usage-tier": xUsageTier, "x-user-id": xUserID, ...query } = params ?? {};
-    return this._client.get(path`/async/chat/completions/${apiRequest}`, {
-      query,
-      ...options,
-      headers: buildHeaders([
-        {
-          ...xClientEnv != null ? { "x-client-env": xClientEnv } : void 0,
-          ...xClientName != null ? { "x-client-name": xClientName } : void 0,
-          ...xCreatedAtEpochSeconds != null ? { "x-created-at-epoch-seconds": xCreatedAtEpochSeconds } : void 0,
-          ...xRequestTime != null ? { "x-request-time": xRequestTime } : void 0,
-          ...xUsageTier != null ? { "x-usage-tier": xUsageTier } : void 0,
-          ...xUserID != null ? { "x-user-id": xUserID } : void 0
-        },
-        options?.headers
-      ])
-    });
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/async/chat/chat.mjs
-var Chat = class extends APIResource {
-  constructor() {
-    super(...arguments);
-    this.completions = new Completions(this._client);
-  }
-};
-Chat.Completions = Completions;
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/async/async.mjs
-var Async = class extends APIResource {
-  constructor() {
-    super(...arguments);
-    this.chat = new Chat(this._client);
-  }
-};
-Async.Chat = Chat;
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/browser/sessions.mjs
-var Sessions = class extends APIResource {
-  /**
-   * Create a new remote browser session for CDP-based automation.
-   */
-  create(body, options) {
-    return this._client.post("/v1/browser/sessions", { body, ...options });
-  }
-  /**
-   * Stop and clean up a remote browser session.
-   */
-  delete(sessionID, options) {
-    return this._client.delete(path`/v1/browser/sessions/${sessionID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: "*/*" }, options?.headers])
-    });
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/browser/browser.mjs
-var Browser = class extends APIResource {
-  constructor() {
-    super(...arguments);
-    this.sessions = new Sessions(this._client);
-  }
-};
-Browser.Sessions = Sessions;
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/chat/completions.mjs
-var Completions2 = class extends APIResource {
-  create(body, options) {
-    return this._client.post("/chat/completions", { body, ...options, stream: body.stream ?? false });
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/chat/chat.mjs
-var Chat2 = class extends APIResource {
-  constructor() {
-    super(...arguments);
-    this.completions = new Completions2(this._client);
-  }
-};
-Chat2.Completions = Completions2;
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/contextualized-embeddings.mjs
-var ContextualizedEmbeddings = class extends APIResource {
-  /**
-   * Generate contextualized embeddings for document chunks. Chunks from the same
-   * document share context awareness, improving retrieval quality for document-based
-   * applications.
-   */
-  create(body, options) {
-    return this._client.post("/v1/contextualizedembeddings", { body, ...options });
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/embeddings.mjs
-var Embeddings = class extends APIResource {
-  /**
-   * Generate embeddings for a list of texts. Use these embeddings for semantic
-   * search, clustering, and other machine learning applications.
-   */
-  create(body, options) {
-    return this._client.post("/v1/embeddings", { body, ...options });
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/lib/add-output-text.mjs
-function addOutputText(rsp) {
-  const texts = [];
-  for (const output of rsp.output) {
-    if (output.type !== "message") {
-      continue;
-    }
-    for (const content of output.content || []) {
-      if (content.type === "output_text" && content.text) {
-        texts.push(content.text);
-      }
-    }
-  }
-  rsp.output_text = texts.join("");
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/responses.mjs
-var Responses = class extends APIResource {
-  create(body, options) {
-    const promise2 = this._client.post("/v1/responses", { body, ...options, stream: body.stream ?? false });
-    if (!body.stream) {
-      return promise2._thenUnwrap((rsp) => {
-        if ("object" in rsp && rsp.object === "response") {
-          addOutputText(rsp);
-        }
-        return rsp;
-      });
-    }
-    return promise2;
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/resources/search.mjs
-var Search = class extends APIResource {
-  /**
-   * Search the web and retrieve relevant web page contents.
-   */
-  create(body, options) {
-    return this._client.post("/search", { body, ...options });
-  }
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/bytes.mjs
-function concatBytes(buffers) {
-  let length = 0;
-  for (const buffer of buffers) {
-    length += buffer.length;
-  }
-  const output = new Uint8Array(length);
-  let index = 0;
-  for (const buffer of buffers) {
-    output.set(buffer, index);
-    index += buffer.length;
-  }
-  return output;
-}
-var encodeUTF8_;
-function encodeUTF8(str) {
-  let encoder;
-  return (encodeUTF8_ ?? (encoder = new globalThis.TextEncoder(), encodeUTF8_ = encoder.encode.bind(encoder)))(str);
-}
-var decodeUTF8_;
-function decodeUTF8(bytes) {
-  let decoder;
-  return (decodeUTF8_ ?? (decoder = new globalThis.TextDecoder(), decodeUTF8_ = decoder.decode.bind(decoder)))(bytes);
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/decoders/line.mjs
-var _LineDecoder_buffer;
-var _LineDecoder_carriageReturnIndex;
-var LineDecoder = class {
-  constructor() {
-    _LineDecoder_buffer.set(this, void 0);
-    _LineDecoder_carriageReturnIndex.set(this, void 0);
-    __classPrivateFieldSet(this, _LineDecoder_buffer, new Uint8Array(), "f");
-    __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, null, "f");
-  }
-  decode(chunk) {
-    if (chunk == null) {
-      return [];
-    }
-    const binaryChunk = chunk instanceof ArrayBuffer ? new Uint8Array(chunk) : typeof chunk === "string" ? encodeUTF8(chunk) : chunk;
-    __classPrivateFieldSet(this, _LineDecoder_buffer, concatBytes([__classPrivateFieldGet(this, _LineDecoder_buffer, "f"), binaryChunk]), "f");
-    const lines = [];
-    let patternIndex;
-    while ((patternIndex = findNewlineIndex(__classPrivateFieldGet(this, _LineDecoder_buffer, "f"), __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f"))) != null) {
-      if (patternIndex.carriage && __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") == null) {
-        __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, patternIndex.index, "f");
-        continue;
-      }
-      if (__classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") != null && (patternIndex.index !== __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") + 1 || patternIndex.carriage)) {
-        lines.push(decodeUTF8(__classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(0, __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") - 1)));
-        __classPrivateFieldSet(this, _LineDecoder_buffer, __classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(__classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f")), "f");
-        __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, null, "f");
-        continue;
-      }
-      const endIndex = __classPrivateFieldGet(this, _LineDecoder_carriageReturnIndex, "f") !== null ? patternIndex.preceding - 1 : patternIndex.preceding;
-      const line = decodeUTF8(__classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(0, endIndex));
-      lines.push(line);
-      __classPrivateFieldSet(this, _LineDecoder_buffer, __classPrivateFieldGet(this, _LineDecoder_buffer, "f").subarray(patternIndex.index), "f");
-      __classPrivateFieldSet(this, _LineDecoder_carriageReturnIndex, null, "f");
-    }
-    return lines;
-  }
-  flush() {
-    if (!__classPrivateFieldGet(this, _LineDecoder_buffer, "f").length) {
-      return [];
-    }
-    return this.decode("\n");
-  }
-};
-_LineDecoder_buffer = /* @__PURE__ */ new WeakMap(), _LineDecoder_carriageReturnIndex = /* @__PURE__ */ new WeakMap();
-LineDecoder.NEWLINE_CHARS = /* @__PURE__ */ new Set(["\n", "\r"]);
-LineDecoder.NEWLINE_REGEXP = /\r\n|[\n\r]/g;
-function findNewlineIndex(buffer, startIndex) {
-  const newline = 10;
-  const carriage = 13;
-  for (let i = startIndex ?? 0; i < buffer.length; i++) {
-    if (buffer[i] === newline) {
-      return { preceding: i, index: i + 1, carriage: false };
-    }
-    if (buffer[i] === carriage) {
-      return { preceding: i, index: i + 1, carriage: true };
-    }
-  }
-  return null;
-}
-function findDoubleNewlineIndex(buffer) {
-  const newline = 10;
-  const carriage = 13;
-  for (let i = 0; i < buffer.length - 1; i++) {
-    if (buffer[i] === newline && buffer[i + 1] === newline) {
-      return i + 2;
-    }
-    if (buffer[i] === carriage && buffer[i + 1] === carriage) {
-      return i + 2;
-    }
-    if (buffer[i] === carriage && buffer[i + 1] === newline && i + 3 < buffer.length && buffer[i + 2] === carriage && buffer[i + 3] === newline) {
-      return i + 4;
-    }
-  }
-  return -1;
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/log.mjs
-var levelNumbers = {
-  off: 0,
-  error: 200,
-  warn: 300,
-  info: 400,
-  debug: 500
-};
-var parseLogLevel = (maybeLevel, sourceName, client) => {
-  if (!maybeLevel) {
-    return void 0;
-  }
-  if (hasOwn(levelNumbers, maybeLevel)) {
-    return maybeLevel;
-  }
-  loggerFor(client).warn(`${sourceName} was set to ${JSON.stringify(maybeLevel)}, expected one of ${JSON.stringify(Object.keys(levelNumbers))}`);
-  return void 0;
-};
-function noop() {
-}
-function makeLogFn(fnLevel, logger2, logLevel) {
-  if (!logger2 || levelNumbers[fnLevel] > levelNumbers[logLevel]) {
-    return noop;
-  } else {
-    return logger2[fnLevel].bind(logger2);
-  }
-}
-var noopLogger = {
-  error: noop,
-  warn: noop,
-  info: noop,
-  debug: noop
-};
-var cachedLoggers = /* @__PURE__ */ new WeakMap();
-function loggerFor(client) {
-  const logger2 = client.logger;
-  const logLevel = client.logLevel ?? "off";
-  if (!logger2) {
-    return noopLogger;
-  }
-  const cachedLogger = cachedLoggers.get(logger2);
-  if (cachedLogger && cachedLogger[0] === logLevel) {
-    return cachedLogger[1];
-  }
-  const levelLogger = {
-    error: makeLogFn("error", logger2, logLevel),
-    warn: makeLogFn("warn", logger2, logLevel),
-    info: makeLogFn("info", logger2, logLevel),
-    debug: makeLogFn("debug", logger2, logLevel)
-  };
-  cachedLoggers.set(logger2, [logLevel, levelLogger]);
-  return levelLogger;
-}
-var formatRequestDetails = (details) => {
-  if (details.options) {
-    details.options = { ...details.options };
-    delete details.options["headers"];
-  }
-  if (details.headers) {
-    details.headers = Object.fromEntries((details.headers instanceof Headers ? [...details.headers] : Object.entries(details.headers)).map(([name, value]) => [
-      name,
-      name.toLowerCase() === "authorization" || name.toLowerCase() === "api-key" || name.toLowerCase() === "x-api-key" || name.toLowerCase() === "cookie" || name.toLowerCase() === "set-cookie" ? "***" : value
-    ]));
-  }
-  if ("retryOfRequestLogID" in details) {
-    if (details.retryOfRequestLogID) {
-      details.retryOf = details.retryOfRequestLogID;
-    }
-    delete details.retryOfRequestLogID;
-  }
-  return details;
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/core/streaming.mjs
-var _Stream_client;
-var Stream = class _Stream {
-  constructor(iterator, controller, client) {
-    this.iterator = iterator;
-    _Stream_client.set(this, void 0);
-    this.controller = controller;
-    __classPrivateFieldSet(this, _Stream_client, client, "f");
-  }
-  static fromSSEResponse(response, controller, client) {
-    let consumed = false;
-    const logger2 = client ? loggerFor(client) : console;
-    async function* iterator() {
-      if (consumed) {
-        throw new PerplexityError("Cannot iterate over a consumed stream, use `.tee()` to split the stream.");
-      }
-      consumed = true;
-      let done = false;
-      try {
-        for await (const sse of _iterSSEMessages(response, controller)) {
-          if (done)
-            continue;
-          if (sse.data.startsWith("[DONE]")) {
-            done = true;
-            continue;
-          }
-          if (sse.event === "error") {
-            throw new APIError(void 0, safeJSON(sse.data) ?? sse.data, void 0, response.headers);
-          }
-          if (sse.event === null) {
-            try {
-              yield JSON.parse(sse.data);
-            } catch (e) {
-              logger2.error(`Could not parse message into JSON:`, sse.data);
-              logger2.error(`From chunk:`, sse.raw);
-              throw e;
-            }
-          }
-        }
-        done = true;
-      } catch (e) {
-        if (isAbortError(e))
-          return;
-        throw e;
-      } finally {
-        if (!done)
-          controller.abort();
-      }
-    }
-    return new _Stream(iterator, controller, client);
-  }
-  /**
-   * Generates a Stream from a newline-separated ReadableStream
-   * where each item is a JSON value.
-   */
-  static fromReadableStream(readableStream, controller, client) {
-    let consumed = false;
-    async function* iterLines() {
-      const lineDecoder = new LineDecoder();
-      const iter = ReadableStreamToAsyncIterable(readableStream);
-      for await (const chunk of iter) {
-        for (const line of lineDecoder.decode(chunk)) {
-          yield line;
-        }
-      }
-      for (const line of lineDecoder.flush()) {
-        yield line;
-      }
-    }
-    async function* iterator() {
-      if (consumed) {
-        throw new PerplexityError("Cannot iterate over a consumed stream, use `.tee()` to split the stream.");
-      }
-      consumed = true;
-      let done = false;
-      try {
-        for await (const line of iterLines()) {
-          if (done)
-            continue;
-          if (line)
-            yield JSON.parse(line);
-        }
-        done = true;
-      } catch (e) {
-        if (isAbortError(e))
-          return;
-        throw e;
-      } finally {
-        if (!done)
-          controller.abort();
-      }
-    }
-    return new _Stream(iterator, controller, client);
-  }
-  [(_Stream_client = /* @__PURE__ */ new WeakMap(), Symbol.asyncIterator)]() {
-    return this.iterator();
-  }
-  /**
-   * Splits the stream into two streams which can be
-   * independently read from at different speeds.
-   */
-  tee() {
-    const left = [];
-    const right = [];
-    const iterator = this.iterator();
-    const teeIterator = (queue) => {
-      return {
-        next: () => {
-          if (queue.length === 0) {
-            const result = iterator.next();
-            left.push(result);
-            right.push(result);
-          }
-          return queue.shift();
-        }
-      };
-    };
-    return [
-      new _Stream(() => teeIterator(left), this.controller, __classPrivateFieldGet(this, _Stream_client, "f")),
-      new _Stream(() => teeIterator(right), this.controller, __classPrivateFieldGet(this, _Stream_client, "f"))
-    ];
-  }
-  /**
-   * Converts this stream to a newline-separated ReadableStream of
-   * JSON stringified values in the stream
-   * which can be turned back into a Stream with `Stream.fromReadableStream()`.
-   */
-  toReadableStream() {
-    const self = this;
-    let iter;
-    return makeReadableStream({
-      async start() {
-        iter = self[Symbol.asyncIterator]();
-      },
-      async pull(ctrl) {
-        try {
-          const { value, done } = await iter.next();
-          if (done)
-            return ctrl.close();
-          const bytes = encodeUTF8(JSON.stringify(value) + "\n");
-          ctrl.enqueue(bytes);
-        } catch (err) {
-          ctrl.error(err);
-        }
-      },
-      async cancel() {
-        await iter.return?.();
-      }
-    });
-  }
-};
-async function* _iterSSEMessages(response, controller) {
-  if (!response.body) {
-    controller.abort();
-    if (typeof globalThis.navigator !== "undefined" && globalThis.navigator.product === "ReactNative") {
-      throw new PerplexityError(`The default react-native fetch implementation does not support streaming. Please use expo/fetch: https://docs.expo.dev/versions/latest/sdk/expo/#expofetch-api`);
-    }
-    throw new PerplexityError(`Attempted to iterate over a response with no body`);
-  }
-  const sseDecoder = new SSEDecoder();
-  const lineDecoder = new LineDecoder();
-  const iter = ReadableStreamToAsyncIterable(response.body);
-  for await (const sseChunk of iterSSEChunks(iter)) {
-    for (const line of lineDecoder.decode(sseChunk)) {
-      const sse = sseDecoder.decode(line);
-      if (sse)
-        yield sse;
-    }
-  }
-  for (const line of lineDecoder.flush()) {
-    const sse = sseDecoder.decode(line);
-    if (sse)
-      yield sse;
-  }
-}
-async function* iterSSEChunks(iterator) {
-  let data = new Uint8Array();
-  for await (const chunk of iterator) {
-    if (chunk == null) {
-      continue;
-    }
-    const binaryChunk = chunk instanceof ArrayBuffer ? new Uint8Array(chunk) : typeof chunk === "string" ? encodeUTF8(chunk) : chunk;
-    let newData = new Uint8Array(data.length + binaryChunk.length);
-    newData.set(data);
-    newData.set(binaryChunk, data.length);
-    data = newData;
-    let patternIndex;
-    while ((patternIndex = findDoubleNewlineIndex(data)) !== -1) {
-      yield data.slice(0, patternIndex);
-      data = data.slice(patternIndex);
-    }
-  }
-  if (data.length > 0) {
-    yield data;
-  }
-}
-var SSEDecoder = class {
-  constructor() {
-    this.event = null;
-    this.data = [];
-    this.chunks = [];
-  }
-  decode(line) {
-    if (line.endsWith("\r")) {
-      line = line.substring(0, line.length - 1);
-    }
-    if (!line) {
-      if (!this.event && !this.data.length)
-        return null;
-      const sse = {
-        event: this.event,
-        data: this.data.join("\n"),
-        raw: this.chunks
-      };
-      this.event = null;
-      this.data = [];
-      this.chunks = [];
-      return sse;
-    }
-    this.chunks.push(line);
-    if (line.startsWith(":")) {
-      return null;
-    }
-    let [fieldname, _, value] = partition(line, ":");
-    if (value.startsWith(" ")) {
-      value = value.substring(1);
-    }
-    if (fieldname === "event") {
-      this.event = value;
-    } else if (fieldname === "data") {
-      this.data.push(value);
-    }
-    return null;
-  }
-};
-function partition(str, delimiter) {
-  const index = str.indexOf(delimiter);
-  if (index !== -1) {
-    return [str.substring(0, index), delimiter, str.substring(index + delimiter.length)];
-  }
-  return [str, "", ""];
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/parse.mjs
-async function defaultParseResponse(client, props) {
-  const { response, requestLogID, retryOfRequestLogID, startTime } = props;
-  const body = await (async () => {
-    if (props.options.stream) {
-      loggerFor(client).debug("response", response.status, response.url, response.headers, response.body);
-      if (props.options.__streamClass) {
-        return props.options.__streamClass.fromSSEResponse(response, props.controller, client);
-      }
-      return Stream.fromSSEResponse(response, props.controller, client);
-    }
-    if (response.status === 204) {
-      return null;
-    }
-    if (props.options.__binaryResponse) {
-      return response;
-    }
-    const contentType = response.headers.get("content-type");
-    const mediaType = contentType?.split(";")[0]?.trim();
-    const isJSON = mediaType?.includes("application/json") || mediaType?.endsWith("+json");
-    if (isJSON) {
-      const contentLength = response.headers.get("content-length");
-      if (contentLength === "0") {
-        return void 0;
-      }
-      const json2 = await response.json();
-      return json2;
-    }
-    const text = await response.text();
-    return text;
-  })();
-  loggerFor(client).debug(`[${requestLogID}] response parsed`, formatRequestDetails({
-    retryOfRequestLogID,
-    url: response.url,
-    status: response.status,
-    body,
-    durationMs: Date.now() - startTime
-  }));
-  return body;
-}
-
-// node_modules/@perplexity-ai/perplexity_ai/core/api-promise.mjs
-var _APIPromise_client;
-var APIPromise = class _APIPromise extends Promise {
-  constructor(client, responsePromise, parseResponse = defaultParseResponse) {
-    super((resolve) => {
-      resolve(null);
-    });
-    this.responsePromise = responsePromise;
-    this.parseResponse = parseResponse;
-    _APIPromise_client.set(this, void 0);
-    __classPrivateFieldSet(this, _APIPromise_client, client, "f");
-  }
-  _thenUnwrap(transform2) {
-    return new _APIPromise(__classPrivateFieldGet(this, _APIPromise_client, "f"), this.responsePromise, async (client, props) => transform2(await this.parseResponse(client, props), props));
-  }
-  /**
-   * Gets the raw `Response` instance instead of parsing the response
-   * data.
-   *
-   * If you want to parse the response body but still get the `Response`
-   * instance, you can use {@link withResponse()}.
-   *
-   * 👋 Getting the wrong TypeScript type for `Response`?
-   * Try setting `"moduleResolution": "NodeNext"` or add `"lib": ["DOM"]`
-   * to your `tsconfig.json`.
-   */
-  asResponse() {
-    return this.responsePromise.then((p) => p.response);
-  }
-  /**
-   * Gets the parsed response data and the raw `Response` instance.
-   *
-   * If you just want to get the raw `Response` instance without parsing it,
-   * you can use {@link asResponse()}.
-   *
-   * 👋 Getting the wrong TypeScript type for `Response`?
-   * Try setting `"moduleResolution": "NodeNext"` or add `"lib": ["DOM"]`
-   * to your `tsconfig.json`.
-   */
-  async withResponse() {
-    const [data, response] = await Promise.all([this.parse(), this.asResponse()]);
-    return { data, response };
-  }
-  parse() {
-    if (!this.parsedPromise) {
-      this.parsedPromise = this.responsePromise.then((data) => this.parseResponse(__classPrivateFieldGet(this, _APIPromise_client, "f"), data));
-    }
-    return this.parsedPromise;
-  }
-  then(onfulfilled, onrejected) {
-    return this.parse().then(onfulfilled, onrejected);
-  }
-  catch(onrejected) {
-    return this.parse().catch(onrejected);
-  }
-  finally(onfinally) {
-    return this.parse().finally(onfinally);
-  }
-};
-_APIPromise_client = /* @__PURE__ */ new WeakMap();
-
-// node_modules/@perplexity-ai/perplexity_ai/internal/utils/env.mjs
-var readEnv = (env) => {
-  if (typeof globalThis.process !== "undefined") {
-    return globalThis.process.env?.[env]?.trim() || void 0;
-  }
-  if (typeof globalThis.Deno !== "undefined") {
-    return globalThis.Deno.env?.get?.(env)?.trim() || void 0;
-  }
-  return void 0;
-};
-
-// node_modules/@perplexity-ai/perplexity_ai/client.mjs
-var _Perplexity_instances;
-var _a3;
-var _Perplexity_encoder;
-var _Perplexity_baseURLOverridden;
-var Perplexity = class {
-  /**
-   * API Client for interfacing with the Perplexity API.
-   *
-   * @param {string | undefined} [opts.apiKey=process.env['PERPLEXITY_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['PERPLEXITY_BASE_URL'] ?? https://api.perplexity.ai] - Override the default base URL for the API.
-   * @param {number} [opts.timeout=15 minutes] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
-   * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
-   * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
-   * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
-   * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request to the API.
-   * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
-   */
-  constructor({ baseURL = readEnv("PERPLEXITY_BASE_URL"), apiKey = readEnv("PERPLEXITY_API_KEY"), ...opts } = {}) {
-    _Perplexity_instances.add(this);
-    _Perplexity_encoder.set(this, void 0);
-    this.chat = new Chat2(this);
-    this.search = new Search(this);
-    this.responses = new Responses(this);
-    this.embeddings = new Embeddings(this);
-    this.contextualizedEmbeddings = new ContextualizedEmbeddings(this);
-    this.browser = new Browser(this);
-    this.async = new Async(this);
-    if (apiKey === void 0) {
-      throw new PerplexityError("The PERPLEXITY_API_KEY environment variable is missing or empty; either provide it, or instantiate the Perplexity client with an apiKey option, like new Perplexity({ apiKey: 'My API Key' }).");
-    }
-    const options = {
-      apiKey,
-      ...opts,
-      baseURL: baseURL || `https://api.perplexity.ai`
-    };
-    this.baseURL = options.baseURL;
-    this.timeout = options.timeout ?? _a3.DEFAULT_TIMEOUT;
-    this.logger = options.logger ?? console;
-    const defaultLogLevel = "warn";
-    this.logLevel = defaultLogLevel;
-    this.logLevel = parseLogLevel(options.logLevel, "ClientOptions.logLevel", this) ?? parseLogLevel(readEnv("PERPLEXITY_LOG"), "process.env['PERPLEXITY_LOG']", this) ?? defaultLogLevel;
-    this.fetchOptions = options.fetchOptions;
-    this.maxRetries = options.maxRetries ?? 2;
-    this.fetch = options.fetch ?? getDefaultFetch();
-    __classPrivateFieldSet(this, _Perplexity_encoder, FallbackEncoder, "f");
-    const customHeadersEnv = readEnv("PERPLEXITY_CUSTOM_HEADERS");
-    if (customHeadersEnv) {
-      const parsed = {};
-      for (const line of customHeadersEnv.split("\n")) {
-        const colon = line.indexOf(":");
-        if (colon >= 0) {
-          parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
-        }
-      }
-      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
-    }
-    this._options = options;
-    this.apiKey = apiKey;
-  }
-  /**
-   * Create a new client instance re-using the same options given to the current client with optional overriding.
-   */
-  withOptions(options) {
-    const client = new this.constructor({
-      ...this._options,
-      baseURL: this.baseURL,
-      maxRetries: this.maxRetries,
-      timeout: this.timeout,
-      logger: this.logger,
-      logLevel: this.logLevel,
-      fetch: this.fetch,
-      fetchOptions: this.fetchOptions,
-      apiKey: this.apiKey,
-      ...options
-    });
-    return client;
-  }
-  defaultQuery() {
-    return this._options.defaultQuery;
-  }
-  validateHeaders({ values, nulls }) {
-    return;
-  }
-  async authHeaders(opts) {
-    return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
-  }
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
-  stringifyQuery(query) {
-    return stringifyQuery(query);
-  }
-  getUserAgent() {
-    return `${this.constructor.name}/JS ${VERSION}`;
-  }
-  defaultIdempotencyKey() {
-    return `stainless-node-retry-${uuid42()}`;
-  }
-  makeStatusError(status, error51, message, headers) {
-    return APIError.generate(status, error51, message, headers);
-  }
-  buildURL(path2, query, defaultBaseURL) {
-    const baseURL = !__classPrivateFieldGet(this, _Perplexity_instances, "m", _Perplexity_baseURLOverridden).call(this) && defaultBaseURL || this.baseURL;
-    const url2 = isAbsoluteURL(path2) ? new URL(path2) : new URL(baseURL + (baseURL.endsWith("/") && path2.startsWith("/") ? path2.slice(1) : path2));
-    const defaultQuery = this.defaultQuery();
-    const pathQuery = Object.fromEntries(url2.searchParams);
-    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
-      query = { ...pathQuery, ...defaultQuery, ...query };
-    }
-    if (typeof query === "object" && query && !Array.isArray(query)) {
-      url2.search = this.stringifyQuery(query);
-    }
-    return url2.toString();
-  }
-  /**
-   * Used as a callback for mutating the given `FinalRequestOptions` object.
-   */
-  async prepareOptions(options) {
-  }
-  /**
-   * Used as a callback for mutating the given `RequestInit` object.
-   *
-   * This is useful for cases where you want to add certain headers based off of
-   * the request properties, e.g. `method` or `url`.
-   */
-  async prepareRequest(request, { url: url2, options }) {
-  }
-  get(path2, opts) {
-    return this.methodRequest("get", path2, opts);
-  }
-  post(path2, opts) {
-    return this.methodRequest("post", path2, opts);
-  }
-  patch(path2, opts) {
-    return this.methodRequest("patch", path2, opts);
-  }
-  put(path2, opts) {
-    return this.methodRequest("put", path2, opts);
-  }
-  delete(path2, opts) {
-    return this.methodRequest("delete", path2, opts);
-  }
-  methodRequest(method, path2, opts) {
-    return this.request(Promise.resolve(opts).then((opts2) => {
-      return { method, path: path2, ...opts2 };
-    }));
-  }
-  request(options, remainingRetries = null) {
-    return new APIPromise(this, this.makeRequest(options, remainingRetries, void 0));
-  }
-  async makeRequest(optionsInput, retriesRemaining, retryOfRequestLogID) {
-    const options = await optionsInput;
-    const maxRetries = options.maxRetries ?? this.maxRetries;
-    if (retriesRemaining == null) {
-      retriesRemaining = maxRetries;
-    }
-    await this.prepareOptions(options);
-    const { req, url: url2, timeout } = await this.buildRequest(options, {
-      retryCount: maxRetries - retriesRemaining
-    });
-    await this.prepareRequest(req, { url: url2, options });
-    const requestLogID = "log_" + (Math.random() * (1 << 24) | 0).toString(16).padStart(6, "0");
-    const retryLogStr = retryOfRequestLogID === void 0 ? "" : `, retryOf: ${retryOfRequestLogID}`;
-    const startTime = Date.now();
-    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({
-      retryOfRequestLogID,
-      method: options.method,
-      url: url2,
-      options,
-      headers: req.headers
-    }));
-    if (options.signal?.aborted) {
-      throw new APIUserAbortError();
-    }
-    const controller = new AbortController();
-    const response = await this.fetchWithTimeout(url2, req, timeout, controller).catch(castToError);
-    const headersTime = Date.now();
-    if (response instanceof globalThis.Error) {
-      const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
-      if (options.signal?.aborted) {
-        throw new APIUserAbortError();
-      }
-      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ("cause" in response ? String(response.cause) : ""));
-      if (retriesRemaining) {
-        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} - ${retryMessage}`);
-        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} (${retryMessage})`, formatRequestDetails({
-          retryOfRequestLogID,
-          url: url2,
-          durationMs: headersTime - startTime,
-          message: response.message
-        }));
-        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
-      }
-      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} - error; no more retries left`);
-      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? "timed out" : "failed"} (error; no more retries left)`, formatRequestDetails({
-        retryOfRequestLogID,
-        url: url2,
-        durationMs: headersTime - startTime,
-        message: response.message
-      }));
-      if (isTimeout) {
-        throw new APIConnectionTimeoutError();
-      }
-      throw new APIConnectionError({ cause: response });
-    }
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url2} ${response.ok ? "succeeded" : "failed"} with status ${response.status} in ${headersTime - startTime}ms`;
-    if (!response.ok) {
-      const shouldRetry = await this.shouldRetry(response);
-      if (retriesRemaining && shouldRetry) {
-        const retryMessage2 = `retrying, ${retriesRemaining} attempts remaining`;
-        await CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage2}`);
-        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage2})`, formatRequestDetails({
-          retryOfRequestLogID,
-          url: response.url,
-          status: response.status,
-          headers: response.headers,
-          durationMs: headersTime - startTime
-        }));
-        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
-      }
-      const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
-      const errText = await response.text().catch((err2) => castToError(err2).message);
-      const errJSON = safeJSON(errText);
-      const errMessage = errJSON ? void 0 : errText;
-      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({
-        retryOfRequestLogID,
-        url: response.url,
-        status: response.status,
-        headers: response.headers,
-        message: errMessage,
-        durationMs: Date.now() - startTime
-      }));
-      const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
-      throw err;
-    }
-    loggerFor(this).info(responseInfo);
-    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({
-      retryOfRequestLogID,
-      url: response.url,
-      status: response.status,
-      headers: response.headers,
-      durationMs: headersTime - startTime
-    }));
-    return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
-  }
-  async fetchWithTimeout(url2, init, ms, controller) {
-    const { signal, method, ...options } = init || {};
-    const abort = this._makeAbort(controller);
-    if (signal)
-      signal.addEventListener("abort", abort, { once: true });
-    const timeout = setTimeout(abort, ms);
-    const isReadableBody = globalThis.ReadableStream && options.body instanceof globalThis.ReadableStream || typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body;
-    const fetchOptions = {
-      signal: controller.signal,
-      ...isReadableBody ? { duplex: "half" } : {},
-      method: "GET",
-      ...options
-    };
-    if (method) {
-      fetchOptions.method = method.toUpperCase();
-    }
-    try {
-      return await this.fetch.call(void 0, url2, fetchOptions);
-    } finally {
-      clearTimeout(timeout);
-    }
-  }
-  async shouldRetry(response) {
-    const shouldRetryHeader = response.headers.get("x-should-retry");
-    if (shouldRetryHeader === "true")
-      return true;
-    if (shouldRetryHeader === "false")
-      return false;
-    if (response.status === 408)
-      return true;
-    if (response.status === 409)
-      return true;
-    if (response.status === 429)
-      return true;
-    if (response.status >= 500)
-      return true;
-    return false;
-  }
-  async retryRequest(options, retriesRemaining, requestLogID, responseHeaders) {
-    let timeoutMillis;
-    const retryAfterMillisHeader = responseHeaders?.get("retry-after-ms");
-    if (retryAfterMillisHeader) {
-      const timeoutMs = parseFloat(retryAfterMillisHeader);
-      if (!Number.isNaN(timeoutMs)) {
-        timeoutMillis = timeoutMs;
-      }
-    }
-    const retryAfterHeader = responseHeaders?.get("retry-after");
-    if (retryAfterHeader && !timeoutMillis) {
-      const timeoutSeconds = parseFloat(retryAfterHeader);
-      if (!Number.isNaN(timeoutSeconds)) {
-        timeoutMillis = timeoutSeconds * 1e3;
-      } else {
-        timeoutMillis = Date.parse(retryAfterHeader) - Date.now();
-      }
-    }
-    if (timeoutMillis === void 0) {
-      const maxRetries = options.maxRetries ?? this.maxRetries;
-      timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
-    }
-    await sleep(timeoutMillis);
-    return this.makeRequest(options, retriesRemaining - 1, requestLogID);
-  }
-  calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries) {
-    const initialRetryDelay = 0.5;
-    const maxRetryDelay = 8;
-    const numRetries = maxRetries - retriesRemaining;
-    const sleepSeconds = Math.min(initialRetryDelay * Math.pow(2, numRetries), maxRetryDelay);
-    const jitter = 1 - Math.random() * 0.25;
-    return sleepSeconds * jitter * 1e3;
-  }
-  async buildRequest(inputOptions, { retryCount = 0 } = {}) {
-    const options = { ...inputOptions };
-    const { method, path: path2, query, defaultBaseURL } = options;
-    const url2 = this.buildURL(path2, query, defaultBaseURL);
-    if ("timeout" in options)
-      validatePositiveInteger("timeout", options.timeout);
-    options.timeout = options.timeout ?? this.timeout;
-    const { bodyHeaders, body } = this.buildBody({ options });
-    const reqHeaders = await this.buildHeaders({ options: inputOptions, method, bodyHeaders, retryCount });
-    const req = {
-      method,
-      headers: reqHeaders,
-      ...options.signal && { signal: options.signal },
-      ...globalThis.ReadableStream && body instanceof globalThis.ReadableStream && { duplex: "half" },
-      ...body && { body },
-      ...this.fetchOptions ?? {},
-      ...options.fetchOptions ?? {}
-    };
-    return { req, url: url2, timeout: options.timeout };
-  }
-  async buildHeaders({ options, method, bodyHeaders, retryCount }) {
-    let idempotencyHeaders = {};
-    if (this.idempotencyHeader && method !== "get") {
-      if (!options.idempotencyKey)
-        options.idempotencyKey = this.defaultIdempotencyKey();
-      idempotencyHeaders[this.idempotencyHeader] = options.idempotencyKey;
-    }
-    const headers = buildHeaders([
-      idempotencyHeaders,
-      {
-        Accept: "application/json",
-        "User-Agent": this.getUserAgent(),
-        "X-Stainless-Retry-Count": String(retryCount),
-        ...options.timeout ? { "X-Stainless-Timeout": String(Math.trunc(options.timeout / 1e3)) } : {},
-        ...getPlatformHeaders(),
-        "X-Source": "perplexity-node",
-        "X-Title": "Perplexity Node SDK"
-      },
-      await this.authHeaders(options),
-      this._options.defaultHeaders,
-      bodyHeaders,
-      options.headers
-    ]);
-    this.validateHeaders(headers);
-    return headers.values;
-  }
-  _makeAbort(controller) {
-    return () => controller.abort();
-  }
-  buildBody({ options: { body, headers: rawHeaders } }) {
-    if (!body) {
-      return { bodyHeaders: void 0, body: void 0 };
-    }
-    const headers = buildHeaders([rawHeaders]);
-    if (
-      // Pass raw type verbatim
-      ArrayBuffer.isView(body) || body instanceof ArrayBuffer || body instanceof DataView || typeof body === "string" && // Preserve legacy string encoding behavior for now
-      headers.values.has("content-type") || // `Blob` is superset of `File`
-      globalThis.Blob && body instanceof globalThis.Blob || // `FormData` -> `multipart/form-data`
-      body instanceof FormData || // `URLSearchParams` -> `application/x-www-form-urlencoded`
-      body instanceof URLSearchParams || // Send chunked stream (each chunk has own `length`)
-      globalThis.ReadableStream && body instanceof globalThis.ReadableStream
-    ) {
-      return { bodyHeaders: void 0, body };
-    } else if (typeof body === "object" && (Symbol.asyncIterator in body || Symbol.iterator in body && "next" in body && typeof body.next === "function")) {
-      return { bodyHeaders: void 0, body: ReadableStreamFrom(body) };
-    } else if (typeof body === "object" && headers.values.get("content-type") === "application/x-www-form-urlencoded") {
-      return {
-        bodyHeaders: { "content-type": "application/x-www-form-urlencoded" },
-        body: this.stringifyQuery(body)
-      };
-    } else {
-      return __classPrivateFieldGet(this, _Perplexity_encoder, "f").call(this, { body, headers });
-    }
-  }
-};
-_a3 = Perplexity, _Perplexity_encoder = /* @__PURE__ */ new WeakMap(), _Perplexity_instances = /* @__PURE__ */ new WeakSet(), _Perplexity_baseURLOverridden = function _Perplexity_baseURLOverridden2() {
-  return this.baseURL !== "https://api.perplexity.ai";
-};
-Perplexity.Perplexity = _a3;
-Perplexity.DEFAULT_TIMEOUT = 9e5;
-Perplexity.PerplexityError = PerplexityError;
-Perplexity.APIError = APIError;
-Perplexity.APIConnectionError = APIConnectionError;
-Perplexity.APIConnectionTimeoutError = APIConnectionTimeoutError;
-Perplexity.APIUserAbortError = APIUserAbortError;
-Perplexity.NotFoundError = NotFoundError;
-Perplexity.ConflictError = ConflictError;
-Perplexity.RateLimitError = RateLimitError;
-Perplexity.BadRequestError = BadRequestError;
-Perplexity.AuthenticationError = AuthenticationError;
-Perplexity.InternalServerError = InternalServerError;
-Perplexity.PermissionDeniedError = PermissionDeniedError;
-Perplexity.UnprocessableEntityError = UnprocessableEntityError;
-Perplexity.toFile = toFile;
-Perplexity.Chat = Chat2;
-Perplexity.Search = Search;
-Perplexity.Responses = Responses;
-Perplexity.Embeddings = Embeddings;
-Perplexity.ContextualizedEmbeddings = ContextualizedEmbeddings;
-Perplexity.Browser = Browser;
-Perplexity.Async = Async;
-
-// src/lib/perplexity.ts
-function getApiKey() {
-  const pplxKey = process.env.PPLX_API_KEY;
-  const perpKey = process.env.PERPLEXITY_API_KEY;
-  if (pplxKey) {
-    logger.debug("Using API key from PPLX_API_KEY");
-    return pplxKey;
-  }
-  if (perpKey) {
-    logger.debug("Using API key from PERPLEXITY_API_KEY");
-    return perpKey;
-  }
-  throw new Error("No API key found. Set PPLX_API_KEY or PERPLEXITY_API_KEY environment variable.");
-}
-function hasApiKey() {
-  return !!(process.env.PPLX_API_KEY || process.env.PERPLEXITY_API_KEY);
-}
-async function search(query, domainFilter) {
-  const apiKey = getApiKey();
-  const model = process.env.PPLX_MODEL || "sonar";
-  const client = new Perplexity({ apiKey });
-  const params = {
-    model,
-    messages: [{ role: "user", content: query }]
-  };
-  if (domainFilter && domainFilter.length > 0) {
-    params.search_domain_filter = domainFilter;
-  }
-  const response = await client.chat.completions.create(params);
-  const searchResults = response.search_results;
-  let results;
-  if (searchResults && searchResults.length > 0) {
-    results = searchResults.map((r) => ({
-      title: r.title || r.url,
-      url: r.url
-    }));
-    logger.debug(`Extracted ${results.length} results from search_results array`);
-  } else if (response.citations && response.citations.length > 0) {
-    results = response.citations.map((url2) => ({
-      title: url2,
-      url: url2
-    }));
-    logger.debug(`Extracted ${results.length} results from citations array (fallback)`);
-  } else {
-    results = [];
-    logger.debug("No search_results or citations found in response");
-  }
-  const content = response.choices?.[0]?.message?.content ?? "";
-  return { results, content };
 }
 
 // src/lib/duckduckgo.ts
 var import_duck_duck_scrape = __toESM(require_lib2(), 1);
+var logger = createLogger("ddg");
+function configureLogger(level) {
+  logger.setLevel(level);
+}
 async function searchDDG(query) {
   const searchResults = await (0, import_duck_duck_scrape.search)(query);
   if (searchResults.noResults) {
@@ -24195,38 +22298,38 @@ async function searchDDG(query) {
   }
   return searchResults.results.map((r) => ({
     title: r.title,
-    url: r.url
+    url: r.url,
+    snippet: r.description?.replace(/<\/?[a-zA-Z][^>]*>/g, "") || ""
   }));
 }
 
 // src/lib/retry.ts
-var import_error7 = __toESM(require_error2(), 1);
-function getRetryConfig() {
+var logger2 = createLogger("retry");
+function configureLogger2(level) {
+  logger2.setLevel(level);
+}
+var DEFAULTS2 = { maxRetries: 4, baseDelay: 1e3, maxDelay: 16e3, timeout: 3e4 };
+function getRetryConfig(config2) {
   return {
-    maxRetries: parseInt(process.env.RETRY_MAX_RETRIES || "4", 10),
-    baseDelay: parseInt(process.env.RETRY_BASE_DELAY || "1000", 10),
-    maxDelay: parseInt(process.env.RETRY_MAX_DELAY || "16000", 10),
-    timeout: parseInt(process.env.RETRY_TIMEOUT || "30000", 10)
+    maxRetries: config2.retry.maxRetries,
+    baseDelay: config2.retry.baseDelay,
+    maxDelay: config2.retry.maxDelay,
+    timeout: config2.retry.timeout
   };
 }
-function sleep2(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function sleep(ms) {
+  return new Promise((resolve2) => setTimeout(resolve2, ms));
 }
 async function withTimeout(promise2, ms) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), ms);
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(`Operation timed out after ${ms}ms`)), ms);
+  });
   try {
-    return await promise2;
+    return await Promise.race([promise2, timeoutPromise]);
   } finally {
     clearTimeout(timeoutId);
   }
-}
-function isTransientError(err) {
-  if (err instanceof import_error7.RateLimitError) return true;
-  if (err instanceof import_error7.InternalServerError) return true;
-  if (err instanceof import_error7.APIConnectionError) return true;
-  if (err instanceof import_error7.APIConnectionTimeoutError) return true;
-  return false;
 }
 function isDDGTransientError(err) {
   if (err instanceof Error) {
@@ -24235,7 +22338,7 @@ function isDDGTransientError(err) {
   return false;
 }
 async function retryWithBackoff(fn, isTransient, options) {
-  const config2 = { ...getRetryConfig(), ...options };
+  const config2 = { ...DEFAULTS2, ...options };
   let lastError;
   for (let attempt = 0; attempt <= config2.maxRetries; attempt++) {
     try {
@@ -24246,8 +22349,8 @@ async function retryWithBackoff(fn, isTransient, options) {
         throw err;
       }
       const delay = Math.random() * Math.min(config2.maxDelay, config2.baseDelay * Math.pow(2, attempt));
-      logger.debug(`Retry ${attempt + 1}/${config2.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`);
-      await sleep2(delay);
+      logger2.debug(`Retry ${attempt + 1}/${config2.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`);
+      await sleep(delay);
     }
   }
   throw lastError;
@@ -24278,80 +22381,36 @@ function filterByDomains(results, allowedDomains, blockedDomains) {
   }
   return results;
 }
-function buildPerplexityDomainFilter(allowedDomains, blockedDomains) {
-  if (allowedDomains && allowedDomains.length > 0) {
-    return allowedDomains.slice(0, 20).map((d) => normalizeDomain(d));
-  }
-  if (blockedDomains && blockedDomains.length > 0) {
-    return blockedDomains.slice(0, 20).map((d) => "-" + normalizeDomain(d));
-  }
-  return void 0;
+
+// src/lib/fetch.ts
+var logger3 = createLogger("fetch");
+function configureLogger3(level) {
+  logger3.setLevel(level);
 }
 
 // src/websearch.ts
-function dedupeAndMerge(pplxResults, ddgResults) {
-  const pplxUrls = new Set(pplxResults.map((r) => r.url));
-  const uniqueDdg = ddgResults.filter((r) => !pplxUrls.has(r.url));
-  return [...pplxResults, ...uniqueDdg];
+function configureModuleLoggers(level) {
+  configureLogger(level);
+  configureLogger2(level);
+  configureLogger3(level);
 }
 async function main() {
+  const config2 = loadConfig();
+  const logger4 = createLogger("websearch", config2.logging.level);
+  configureModuleLoggers(config2.logging.level);
   try {
     const parsed = await readStdin(WebSearchInputSchema);
-    logger.info(`Searching for: ${parsed.query}`);
+    logger4.info(`Searching for: ${parsed.query}`);
     validateDomainExclusivity(parsed);
-    const domainFilter = buildPerplexityDomainFilter(parsed.allowed_domains, parsed.blocked_domains);
-    const hasDomainFilter = !!(parsed.allowed_domains?.length || parsed.blocked_domains?.length);
-    let results;
-    let provider;
-    if (hasApiKey()) {
-      let pplxPartial = [];
-      try {
-        const pplxResult = await retryWithBackoff(
-          // Wrap search to capture partial results from any successful attempt
-          async () => {
-            const result = await search(parsed.query, domainFilter);
-            if (result.results.length > 0) {
-              pplxPartial = result.results;
-            }
-            return result;
-          },
-          isTransientError
-        );
-        results = pplxResult.results;
-        provider = "perplexity";
-        logger.debug(`Perplexity content: ${pplxResult.content}`);
-        if (parsed.blocked_domains && parsed.blocked_domains.length > 0) {
-          results = filterByDomains(results, void 0, parsed.blocked_domains);
-        }
-      } catch (pplxErr) {
-        const pplxErrorMsg = pplxErr instanceof Error ? pplxErr.message : String(pplxErr);
-        logger.debug(`Perplexity failed, falling back to DDG: ${pplxPartial.length > 0 ? `(preserving ${pplxPartial.length} partial results) ` : ""}${pplxErrorMsg}`);
-        try {
-          const ddgResults = await retryWithBackoff(
-            () => searchDDG(parsed.query),
-            isDDGTransientError
-          );
-          const filteredDdg = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
-          results = dedupeAndMerge(pplxPartial, filteredDdg);
-          provider = pplxPartial.length > 0 ? "perplexity+duckduckgo" : "duckduckgo";
-        } catch (ddgErr) {
-          const ddgErrorMsg = ddgErr instanceof Error ? ddgErr.message : String(ddgErr);
-          throw new Error(
-            `Search failed: Perplexity error: ${pplxErrorMsg}; DDG error: ${ddgErrorMsg}`
-          );
-        }
-      }
-    } else {
-      const ddgResults = await retryWithBackoff(
-        () => searchDDG(parsed.query),
-        isDDGTransientError
-      );
-      results = filterByDomains(ddgResults, parsed.allowed_domains, parsed.blocked_domains);
-      provider = "duckduckgo";
-    }
-    process.stdout.write(formatSearchResults(results, provider));
+    const results = await retryWithBackoff(
+      () => searchDDG(parsed.query),
+      isDDGTransientError,
+      getRetryConfig(config2)
+    );
+    const filtered = filterByDomains(results, parsed.allowed_domains, parsed.blocked_domains);
+    process.stdout.write(formatSearchResults(filtered));
   } catch (err) {
-    logger.error(err instanceof Error ? err.message : String(err));
+    logger4.error(err instanceof Error ? err.message : String(err));
     process.exitCode = 1;
   }
 }

@@ -13,11 +13,11 @@ await Promise.all([
   build({
     ...commonOptions,
     entryPoints: ['src/websearch.ts'],
-    outfile: 'scripts/websearch.js',
+    outfile: 'scripts/websearch.cjs',
   }),
   build({
     ...commonOptions,
     entryPoints: ['src/webfetch.ts'],
-    outfile: 'scripts/webfetch.js',
+    outfile: 'scripts/webfetch.cjs',
   }),
 ]);
