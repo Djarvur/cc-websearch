@@ -27,7 +27,7 @@ created: 2026-05-21
 
 ## Sampling Rate
 
-- **After every task commit:** Run `npm test` or targeted command
+- **After every task commit:** Run `npm test` or targeted grep command
 - **Before `/gsd:verify-work`:** Full `npm run check` must be green
 - **Max feedback latency:** ~30 seconds
 
@@ -35,12 +35,13 @@ created: 2026-05-21
 
 ## Per-Task Verification Map
 
-| Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
-|---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 07-01-01 | 01 | 1 | — / — | — | N/A | manual doc review | `diff README.md` | ✅ | ⬜ pending |
-| 07-01-02 | 01 | 1 | — / — | — | N/A | vitest (existing) | `npm test` | ✅ | ⬜ pending |
-| 07-02-01 | 02 | 1 | — / — | — | N/A | manual review | `diff .env.example` | ⬜ W0 | ⬜ pending |
-| 07-03-01 | 03 | 1 | — / — | — | N/A | vitest + manual | `npm run check` | ✅ | ⬜ pending |
+| Task ID | Plan | Wave | Automated Command | File Exists | Status |
+|---------|------|------|-------------------|-------------|--------|
+| 07-01-1 | 01 | 1 | `grep -c 'webfetch\\.cjs' skills/webfetch/SKILL.md && npm test -- test/skills.test.ts` | ✅ | ⬜ pending |
+| 07-01-2 | 01 | 1 | `grep -c 'WEBSEARCH_RETRY_MAX_RETRIES' .env.example && ... && ! grep -c -i 'PPLX\\|PERPLEXITY' .env.example` | ⬜ W0 | ⬜ pending |
+| 07-01-3 | 01 | 1 | human review (checkpoint) | ⬜ W0 | ⬜ pending |
+| 07-02-1 | 02 | 2 | `npm test -- test/skills.test.ts && npm test -- test/manifest.test.ts` | ✅ | ⬜ pending |
+| 07-02-2 | 02 | 2 | `npm run check` | ✅ | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -48,24 +49,22 @@ created: 2026-05-21
 
 ## Wave 0 Requirements
 
-- [ ] `test/structure.test.ts` — extend for dry-run plugin structure validation if tests don't already cover
-
-*Existing tests (`manifest.test.ts`, `skills.test.ts`) already validate plugin.json and SKILL.md structure.*
+None — existing test infrastructure covers all phase requirements.
 
 ---
 
 ## Manual-Only Verifications
 
-| Behavior | Requirement | Why Manual | Test Instructions |
-|----------|-------------|------------|-------------------|
-| README content correctness | — | Content quality cannot be automated | Review rendered README for completeness, accuracy, clarity |
-| .env.example accuracy | — | Mirrors config schema exactly | Compare against src/lib/config.ts fields |
+| Behavior | Why Manual | Test Instructions |
+|----------|------------|-------------------|
+| README content correctness (Task 07-01-3) | Content quality cannot be automated | Review rendered README for completeness, accuracy, clarity per acceptance criteria checklist |
+| .env.example accuracy (Task 07-01-2) partial | Automated grep covers field presence; human check verifies values | Compare grep output against src/lib/config.ts fields |
 
 ---
 
 ## Validation Sign-Off
 
-- [ ] All tasks have verification step
+- [ ] All tasks have verification step (automated or checkpoint)
 - [ ] Sampling continuity: no 3 consecutive tasks without verification
 - [ ] Wave 0 covers all MISSING references
 - [ ] No watch-mode flags

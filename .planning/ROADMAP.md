@@ -19,6 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels (completed 2026-05-20)
 - [x] **Phase 5: DDG-Only with Citations** - Remove Perplexity dependency, make DDG sole search provider, add citations to DDG results (completed 2026-05-21)
 - [ ] **Phase 6: CI Pipeline and E2E Tests** - GitHub Actions CI, end-to-end tests, periodic dependency checks
+- [ ] **Phase 7: Update README and verify plugin readiness** - Documentation and verification for distribution
 
 ## Phase Details
 
@@ -155,7 +156,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase                                   | Plans Complete | Status      | Completed  |
 | --------------------------------------- | -------------- | ----------- | ---------- |
@@ -164,7 +165,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. WebFetch Content Pipeline            | 2/2            | Complete    | 2026-05-20 |
 | 4. Config File and Logging              | 3/3            | Complete    | 2026-05-20 |
 | 5. DDG-Only with Citations              | 2/2            | Complete    | 2026-05-21 |
-| 6. CI Pipeline and E2E Tests            | 2/3            | In progress |            |
+| 6. CI Pipeline and E2E Tests            | 3/3            | Human verification needed | 2026-05-21 |
+| 7. Update README and verify plugin readiness | 0/2       | Planned     |            |
 
 ### Phase 6: CI Pipeline and E2E Tests
 
@@ -174,10 +176,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 **Requirements**: CI-01, CI-02, CI-03, CI-04, CI-05, CI-06, CI-07, CI-08
 **Success Criteria** (what must be TRUE):
 
-1. GitHub Actions workflow runs on every PR and push to master — installs deps, builds, runs unit tests
-2. E2E tests validate real plugin behavior — WebSearch returns DDG results, WebFetch fetches and converts pages
+1. GitHub Actions workflow runs on every PR and push to master -- installs deps, builds, runs unit tests
+2. E2E tests validate real plugin behavior -- WebSearch returns DDG results, WebFetch fetches and converts pages
 3. Periodic workflow (cron) runs dependency audit (npm audit / Dependabot) and checks for outdated packages
-4. CI fails on test failures, type errors, or lint issues — no silent passes
+4. CI fails on test failures, type errors, or lint issues -- no silent passes
 
 **Plans**: 3 plans
 
@@ -191,27 +193,19 @@ Plans:
 - [ ] 06-02-PLAN.md: E2E tests and PR gate -- E2E test suite (WebSearch, WebFetch, errors, domain filtering), GitHub Actions CI workflow
 - [x] 06-03-PLAN.md: Cron workflow and Dependabot -- periodic audit/E2E workflow, automated dependency updates (completed 2026-05-21)
 
-## Progress
-
-**Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
-
-| Phase                                   | Plans Complete | Status      | Completed  |
-| --------------------------------------- | -------------- | ----------- | ---------- |
-| 1. Plugin Foundation and Primary Search | 2/2            | Complete    | 2026-05-19 |
-| 2. Search Resilience                    | 3/3            | Complete    | 2026-05-20 |
-| 3. WebFetch Content Pipeline            | 2/2            | Complete    | 2026-05-20 |
-| 4. Config File and Logging              | 3/3            | Complete    | 2026-05-20 |
-| 5. DDG-Only with Citations              | 2/2            | Complete    | 2026-05-21 |
-| 6. CI Pipeline and E2E Tests            | 3/3            | Human verification needed | 2026-05-21 |
-
 ### Phase 7: update README and the other docs if necessary
 
-**Goal:** Update README and other project docs. Verify repo is production-ready for `claude plugin install` — confirm plugin.json, skill definitions, SKILL.md, hooks, and dependency management are correct for distribution.
+**Goal:** Update README and other project docs. Verify repo is production-ready for `claude plugin install` -- confirm plugin.json, skill definitions, SKILL.md, hooks, and dependency management are correct for distribution.
 **Mode**: mvp
-**Requirements**: TBD
+**Requirements**: N/A (documentation/verification phase)
 **Depends on:** Phase 6
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 7 to break down)
+**Wave 1**
+
+- [ ] 07-01-PLAN.md -- Documentation assets: full README, .env.example, fix webfetch SKILL.md extension bug
+
+**Wave 2** _(blocked on Wave 1 completion)_
+
+- [ ] 07-02-PLAN.md -- Verification gate: extend structure validation tests, run full validation check
