@@ -75,6 +75,7 @@ function readConfigFile(): Record<string, unknown> | null {
 function validateFileConfig(raw: Record<string, unknown>): Config {
   const result = ConfigSchema.safeParse(raw);
   if (!result.success) {
+    process.stderr.write('[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n');
     for (const issue of result.error.issues) {
       const path = issue.path.join('.');
       process.stderr.write(`[warn] Invalid config at ${path}: ${issue.message}\n`);
