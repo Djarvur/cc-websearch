@@ -19,7 +19,8 @@ affects: [04-03, src/websearch.ts, src/webfetch.ts]
 # Tech tracking
 tech-stack:
   added: []
-  patterns: [createLogger factory with timestamped module-scoped output, ResolvedConfig parameter injection]
+  patterns:
+    [createLogger factory with timestamped module-scoped output, ResolvedConfig parameter injection]
 
 key-files:
   created: []
@@ -36,15 +37,15 @@ key-files:
     - test/fetch.test.ts
 
 key-decisions:
-  - "search() and summarize() accept ResolvedConfig as second parameter instead of reading env vars"
-  - "retryWithBackoff uses inline DEFAULTS constant instead of calling getRetryConfig internally"
+  - 'search() and summarize() accept ResolvedConfig as second parameter instead of reading env vars'
+  - 'retryWithBackoff uses inline DEFAULTS constant instead of calling getRetryConfig internally'
   - "Module-scoped loggers use default 'info' level; entry points will set proper level via setLevel in Plan 03"
-  - "getRetryConfig becomes a pure utility: config in, RetryConfig out"
+  - 'getRetryConfig becomes a pure utility: config in, RetryConfig out'
 
 patterns-established:
-  - "createLogger(module, level) factory returns object with debug/info/warn/error/setLevel"
-  - "Log format: [ISO8601] [level:module] message via process.stderr.write"
-  - "All lib modules accept ResolvedConfig as parameter instead of reading process.env"
+  - 'createLogger(module, level) factory returns object with debug/info/warn/error/setLevel'
+  - 'Log format: [ISO8601] [level:module] message via process.stderr.write'
+  - 'All lib modules accept ResolvedConfig as parameter instead of reading process.env'
 
 requirements-completed: [CONF-02, CONF-03]
 
@@ -147,5 +148,6 @@ None - no external service configuration required.
 - FOUND: commit 5bb8337
 
 ---
-*Phase: 04-config-file-and-logging*
-*Completed: 2026-05-20*
+
+_Phase: 04-config-file-and-logging_
+_Completed: 2026-05-20_

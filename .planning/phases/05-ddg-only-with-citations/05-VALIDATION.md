@@ -15,13 +15,13 @@ created: 2026-05-21
 
 ## Test Infrastructure
 
-| Property | Value |
-|----------|-------|
-| **Framework** | vitest 4.1.6 |
-| **Config file** | none — uses package.json `test` script |
-| **Quick run command** | `npm test` |
-| **Full suite command** | `npm test && npx tsc --noEmit` |
-| **Estimated runtime** | ~3 seconds |
+| Property               | Value                                  |
+| ---------------------- | -------------------------------------- |
+| **Framework**          | vitest 4.1.6                           |
+| **Config file**        | none — uses package.json `test` script |
+| **Quick run command**  | `npm test`                             |
+| **Full suite command** | `npm test && npx tsc --noEmit`         |
+| **Estimated runtime**  | ~3 seconds                             |
 
 ---
 
@@ -36,14 +36,14 @@ created: 2026-05-21
 
 ## Per-Task Verification Map
 
-| Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
-|---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 05-01-01 | 01 | 1 | SRCH-01, SRCH-04 | — | N/A | unit | `npm test` | ✅ | ⬜ pending |
-| 05-01-02 | 01 | 1 | SRCH-04 | — | escapeXml on snippet | unit | `npm test` | ✅ | ⬜ pending |
-| 05-02-01 | 02 | 2 | SRCH-04 | — | N/A | unit | `npm test` | ✅ | ⬜ pending |
-| 05-02-02 | 02 | 2 | SRCH-04 | — | N/A | integration | `npm test` | ✅ | ⬜ pending |
+| Task ID  | Plan | Wave | Requirement      | Threat Ref | Secure Behavior      | Test Type   | Automated Command | File Exists | Status     |
+| -------- | ---- | ---- | ---------------- | ---------- | -------------------- | ----------- | ----------------- | ----------- | ---------- |
+| 05-01-01 | 01   | 1    | SRCH-01, SRCH-04 | —          | N/A                  | unit        | `npm test`        | ✅          | ⬜ pending |
+| 05-01-02 | 01   | 1    | SRCH-04          | —          | escapeXml on snippet | unit        | `npm test`        | ✅          | ⬜ pending |
+| 05-02-01 | 02   | 2    | SRCH-04          | —          | N/A                  | unit        | `npm test`        | ✅          | ⬜ pending |
+| 05-02-02 | 02   | 2    | SRCH-04          | —          | N/A                  | integration | `npm test`        | ✅          | ⬜ pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+_Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ---
 

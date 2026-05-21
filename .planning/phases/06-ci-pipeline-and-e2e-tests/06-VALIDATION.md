@@ -15,13 +15,13 @@ created: 2026-05-21
 
 ## Test Infrastructure
 
-| Property | Value |
-|----------|-------|
-| **Framework** | vitest 4.x |
-| **Config file** | vitest.config.ts (exists, needs coverage + E2E updates) |
-| **Quick run command** | `npm test` (unit tests only, ~2.4s) |
+| Property               | Value                                                    |
+| ---------------------- | -------------------------------------------------------- |
+| **Framework**          | vitest 4.x                                               |
+| **Config file**        | vitest.config.ts (exists, needs coverage + E2E updates)  |
+| **Quick run command**  | `npm test` (unit tests only, ~2.4s)                      |
 | **Full suite command** | `npm test -- --coverage && npm run build && npm run e2e` |
-| **Estimated runtime** | ~30 seconds |
+| **Estimated runtime**  | ~30 seconds                                              |
 
 ---
 
@@ -36,15 +36,15 @@ created: 2026-05-21
 
 ## Per-Task Verification Map
 
-| Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
-|---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 06-01-01 | 01 | 1 | CI-05, CI-06 | — | N/A | unit | `npx eslint .` | ❌ W0 | ⬜ pending |
-| 06-01-02 | 01 | 1 | CI-07 | — | N/A | manual | `mise run check-all` | ❌ W0 | ⬜ pending |
-| 06-02-01 | 02 | 2 | CI-02 | — | N/A | e2e | `npm run e2e` | ❌ W0 | ⬜ pending |
-| 06-02-02 | 02 | 2 | CI-01, CI-04 | — | Pin action SHAs | integration | `git push` triggers CI | ❌ W0 | ⬜ pending |
-| 06-03-01 | 03 | 2 | CI-03, CI-08 | T-6-01, T-6-02 | npm audit, Dependabot | integration | `workflow_dispatch` | ❌ W0 | ⬜ pending |
+| Task ID  | Plan | Wave | Requirement  | Threat Ref     | Secure Behavior       | Test Type   | Automated Command      | File Exists | Status     |
+| -------- | ---- | ---- | ------------ | -------------- | --------------------- | ----------- | ---------------------- | ----------- | ---------- |
+| 06-01-01 | 01   | 1    | CI-05, CI-06 | —              | N/A                   | unit        | `npx eslint .`         | ❌ W0       | ⬜ pending |
+| 06-01-02 | 01   | 1    | CI-07        | —              | N/A                   | manual      | `mise run check-all`   | ❌ W0       | ⬜ pending |
+| 06-02-01 | 02   | 2    | CI-02        | —              | N/A                   | e2e         | `npm run e2e`          | ❌ W0       | ⬜ pending |
+| 06-02-02 | 02   | 2    | CI-01, CI-04 | —              | Pin action SHAs       | integration | `git push` triggers CI | ❌ W0       | ⬜ pending |
+| 06-03-01 | 03   | 2    | CI-03, CI-08 | T-6-01, T-6-02 | npm audit, Dependabot | integration | `workflow_dispatch`    | ❌ W0       | ⬜ pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+_Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ---
 
@@ -67,10 +67,10 @@ created: 2026-05-21
 
 ## Manual-Only Verifications
 
-| Behavior | Requirement | Why Manual | Test Instructions |
-|----------|-------------|------------|-------------------|
-| Dependabot creates automated PRs | CI-08 | Requires GitHub to run schedule | Check Dependabot tab after config merge |
-| mise tasks mirror CI locally | CI-07 | mise may not be installed | Run `mise run check-all` if available |
+| Behavior                         | Requirement | Why Manual                      | Test Instructions                       |
+| -------------------------------- | ----------- | ------------------------------- | --------------------------------------- |
+| Dependabot creates automated PRs | CI-08       | Requires GitHub to run schedule | Check Dependabot tab after config merge |
+| mise tasks mirror CI locally     | CI-07       | mise may not be installed       | Run `mise run check-all` if available   |
 
 ---
 

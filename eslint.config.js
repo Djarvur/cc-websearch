@@ -9,7 +9,17 @@ export default defineConfig(
   ...tseslint.configs.recommended,
   ...tseslint.configs.strict,
   {
-    ignores: ['scripts/**', 'node_modules/**', 'coverage/**', 'dist/**'],
+    ignores: ['scripts/**', 'node_modules/**', 'coverage/**', 'dist/**', '.claude/**'],
+  },
+  {
+    files: ['test/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+    },
   },
   eslintConfigPrettier, // MUST be last -- disables conflicting rules
 );

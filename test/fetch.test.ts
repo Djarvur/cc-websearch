@@ -71,9 +71,7 @@ describe('fetch module', () => {
         headers: { 'content-type': 'text/html' },
       });
 
-      mockFetch
-        .mockResolvedValueOnce(redirectResponse)
-        .mockResolvedValueOnce(finalResponse);
+      mockFetch.mockResolvedValueOnce(redirectResponse).mockResolvedValueOnce(finalResponse);
 
       const { fetchWithRedirects } = await import('../src/lib/fetch.js');
       const result = await fetchWithRedirects(new URL('https://example.com/old'));
@@ -115,9 +113,9 @@ describe('fetch module', () => {
 
       const { fetchWithRedirects, CrossHostRedirectError } = await import('../src/lib/fetch.js');
 
-      await expect(
-        fetchWithRedirects(new URL('https://example.com/')),
-      ).rejects.toThrow(CrossHostRedirectError);
+      await expect(fetchWithRedirects(new URL('https://example.com/'))).rejects.toThrow(
+        CrossHostRedirectError,
+      );
     });
 
     it('should throw error after exceeding maxHops (default 10) same-host redirects', async () => {
@@ -130,9 +128,9 @@ describe('fetch module', () => {
 
       const { fetchWithRedirects } = await import('../src/lib/fetch.js');
 
-      await expect(
-        fetchWithRedirects(new URL('https://example.com/')),
-      ).rejects.toThrow(/Too many redirects/);
+      await expect(fetchWithRedirects(new URL('https://example.com/'))).rejects.toThrow(
+        /Too many redirects/,
+      );
     });
 
     it('should throw error with HTTP status code for 404 response (D-14)', async () => {
@@ -141,9 +139,9 @@ describe('fetch module', () => {
 
       const { fetchWithRedirects } = await import('../src/lib/fetch.js');
 
-      await expect(
-        fetchWithRedirects(new URL('https://example.com/missing')),
-      ).rejects.toThrow(/HTTP 404/);
+      await expect(fetchWithRedirects(new URL('https://example.com/missing'))).rejects.toThrow(
+        /HTTP 404/,
+      );
     });
 
     it('should throw error with Content-Type for application/pdf response (D-12/D-15)', async () => {
@@ -155,9 +153,9 @@ describe('fetch module', () => {
 
       const { fetchWithRedirects } = await import('../src/lib/fetch.js');
 
-      await expect(
-        fetchWithRedirects(new URL('https://example.com/doc.pdf')),
-      ).rejects.toThrow(/application\/pdf/);
+      await expect(fetchWithRedirects(new URL('https://example.com/doc.pdf'))).rejects.toThrow(
+        /application\/pdf/,
+      );
     });
 
     it('should allow text/html and application/xhtml Content-Type through (D-15)', async () => {

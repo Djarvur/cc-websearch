@@ -16,6 +16,7 @@ echo '{"query":"SEARCH_TERMS"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/websearch.
 ```
 
 The script accepts JSON on stdin with this schema:
+
 - `query` (string, required, minimum 2 characters): The search query
 - `allowed_domains` (string[], optional): Only return results from these domains
 - `blocked_domains` (string[], optional): Exclude results from these domains

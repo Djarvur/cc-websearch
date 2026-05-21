@@ -22221,7 +22221,9 @@ function readConfigFile() {
 function validateFileConfig(raw) {
   const result = ConfigSchema.safeParse(raw);
   if (!result.success) {
-    process.stderr.write("[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n");
+    process.stderr.write(
+      "[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n"
+    );
     for (const issue2 of result.error.issues) {
       const path = issue2.path.join(".");
       process.stderr.write(`[warn] Invalid config at ${path}: ${issue2.message}
@@ -22273,7 +22275,11 @@ function loadConfig() {
   const fileConfig = rawFile ? validateFileConfig(rawFile) : {};
   return {
     retry: {
-      maxRetries: resolve("retry.maxRetries", fileConfig.retry?.maxRetries, DEFAULTS.retry.maxRetries),
+      maxRetries: resolve(
+        "retry.maxRetries",
+        fileConfig.retry?.maxRetries,
+        DEFAULTS.retry.maxRetries
+      ),
       baseDelay: resolve("retry.baseDelay", fileConfig.retry?.baseDelay, DEFAULTS.retry.baseDelay),
       maxDelay: resolve("retry.maxDelay", fileConfig.retry?.maxDelay, DEFAULTS.retry.maxDelay),
       timeout: resolve("retry.timeout", fileConfig.retry?.timeout, DEFAULTS.retry.timeout)
@@ -22328,7 +22334,7 @@ async function withTimeout(promise2, ms) {
   try {
     return await Promise.race([promise2, timeoutPromise]);
   } finally {
-    clearTimeout(timeoutId);
+    if (timeoutId !== void 0) clearTimeout(timeoutId);
   }
 }
 function isDDGTransientError(err) {
@@ -22339,7 +22345,7 @@ function isDDGTransientError(err) {
 }
 async function retryWithBackoff(fn, isTransient, options) {
   const config2 = { ...DEFAULTS2, ...options };
-  let lastError;
+  let lastError = new Error("unreachable");
   for (let attempt = 0; attempt <= config2.maxRetries; attempt++) {
     try {
       return await withTimeout(fn(), config2.timeout);
@@ -22349,7 +22355,9 @@ async function retryWithBackoff(fn, isTransient, options) {
         throw err;
       }
       const delay = Math.random() * Math.min(config2.maxDelay, config2.baseDelay * Math.pow(2, attempt));
-      logger2.debug(`Retry ${attempt + 1}/${config2.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`);
+      logger2.debug(
+        `Retry ${attempt + 1}/${config2.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`
+      );
       await sleep(delay);
     }
   }

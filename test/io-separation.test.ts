@@ -10,7 +10,12 @@ vi.mock('../src/lib/duckduckgo.js', () => ({
 
 vi.mock('../src/lib/retry.js', () => ({
   retryWithBackoff: (fn: () => Promise<any>) => fn(),
-  getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
+  getRetryConfig: vi.fn(() => ({
+    maxRetries: 4,
+    baseDelay: 1000,
+    maxDelay: 16000,
+    timeout: 30000,
+  })),
   isDDGTransientError: vi.fn(),
   configureLogger: vi.fn(),
 }));

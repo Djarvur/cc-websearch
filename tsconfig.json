@@ -9,7 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "types": ["node"]
   },
   "include": ["src/**/*.ts", "test/**/*.ts", "build.ts"],
   "exclude": ["node_modules", "dist", "scripts"]

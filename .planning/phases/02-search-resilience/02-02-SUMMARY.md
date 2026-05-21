@@ -2,7 +2,14 @@
 phase: 02-search-resilience
 plan: 02
 subsystem: search
-tags: [domain-filtering, subdomain-matching, mutual-exclusivity, perplexity-domain-filter, ddg-post-filter]
+tags:
+  [
+    domain-filtering,
+    subdomain-matching,
+    mutual-exclusivity,
+    perplexity-domain-filter,
+    ddg-post-filter,
+  ]
 
 # Dependency graph
 requires: [02-01]
@@ -19,7 +26,8 @@ affects: [02-03]
 # Tech tracking
 tech-stack:
   added: []
-  patterns: [domain-normalization, subdomain-matching, perplexity-domain-filter-api, strict-filtering]
+  patterns:
+    [domain-normalization, subdomain-matching, perplexity-domain-filter-api, strict-filtering]
 
 key-files:
   created:
@@ -34,14 +42,14 @@ key-files:
     - test/io-separation.test.ts
 
 key-decisions:
-  - "filterByDomains returns original array when no filters specified (no-copy optimization)"
-  - "Perplexity results get post-filter safety net only for blocked_domains, not allowed_domains (API handles allowed reliably)"
-  - "buildPerplexityDomainFilter returns undefined for empty arrays, triggering no API parameter"
+  - 'filterByDomains returns original array when no filters specified (no-copy optimization)'
+  - 'Perplexity results get post-filter safety net only for blocked_domains, not allowed_domains (API handles allowed reliably)'
+  - 'buildPerplexityDomainFilter returns undefined for empty arrays, triggering no API parameter'
 
 patterns-established:
-  - "Domain filter pattern: normalizeDomain -> matchesDomain (subdomain-inclusive) -> filterByDomains (strict)"
-  - "Perplexity domain filter pattern: buildPerplexityDomainFilter produces [-domain] for blocked, [domain] for allowed, undefined for none"
-  - "Mutual exclusivity pattern: validateDomainExclusivity throws before provider dispatch, caught by main() error handler"
+  - 'Domain filter pattern: normalizeDomain -> matchesDomain (subdomain-inclusive) -> filterByDomains (strict)'
+  - 'Perplexity domain filter pattern: buildPerplexityDomainFilter produces [-domain] for blocked, [domain] for allowed, undefined for none'
+  - 'Mutual exclusivity pattern: validateDomainExclusivity throws before provider dispatch, caught by main() error handler'
 
 requirements-completed: [SRCH-03, SRCH-06]
 
@@ -63,6 +71,7 @@ completed: 2026-05-20
 - **Files modified:** 8
 
 ## Accomplishments
+
 - Domain filter module (src/lib/filter.ts) with normalizeDomain, matchesDomain, filterByDomains, buildPerplexityDomainFilter
 - Aggressive domain normalization: strips protocol, www prefix, path, trailing slash, lowercases (D-13)
 - Subdomain-inclusive matching: github.com matches docs.github.com, api.github.com (D-11)
@@ -85,6 +94,7 @@ Each task committed atomically with TDD RED/GREEN separation:
 4. **Task 2 GREEN: Wire domain filtering into websearch fallback chain** - `f2b8643` (feat)
 
 ## Files Created/Modified
+
 - `src/lib/filter.ts` - Domain normalization, subdomain matching, allow/block filtering, Perplexity filter builder
 - `src/lib/input.ts` - Added validateDomainExclusivity function for mutual exclusivity check
 - `src/websearch.ts` - Wired domain filtering: validateDomainExclusivity, buildPerplexityDomainFilter, filterByDomains
@@ -95,6 +105,7 @@ Each task committed atomically with TDD RED/GREEN separation:
 - `test/io-separation.test.ts` - Updated mocks for validateDomainExclusivity and filter.js imports
 
 ## Decisions Made
+
 - filterByDomains returns the original array when no filters specified (no-copy optimization) -- since the function is called on every request including those without domain filters
 - Perplexity results get post-filter safety net only for blocked_domains, not allowed_domains -- the API handles allowed_domains reliably per documentation, so no safety net needed
 - buildPerplexityDomainFilter returns undefined for empty arrays -- triggers no search_domain_filter parameter on the API call
@@ -104,6 +115,7 @@ Each task committed atomically with TDD RED/GREEN separation:
 ### Auto-fixed Issues
 
 **1. [Rule 3 - Blocking] Updated io-separation test mocks for new module imports**
+
 - **Found during:** Task 2 GREEN phase
 - **Issue:** io-separation.test.ts failed because websearch.ts now imports validateDomainExclusivity from input.js and filter.js -- both needed to be added to the vi.mock() declarations
 - **Fix:** Added validateDomainExclusivity mock to input.js mock and created filter.js mock in io-separation.test.ts
@@ -111,9 +123,11 @@ Each task committed atomically with TDD RED/GREEN separation:
 - **Commit:** f2b8643
 
 ## Issues Encountered
+
 None beyond auto-fixed issues above.
 
 ## Next Phase Readiness
+
 - Domain filtering fully integrated into Perplexity and DDG paths
 - Mutual exclusivity validation prevents API misuse (SRCH-03)
 - Perplexity API receives search_domain_filter natively for both allowed and blocked modes
@@ -125,5 +139,6 @@ None beyond auto-fixed issues above.
 All 8 files verified present. All 4 commits verified in git log. Full test suite: 109 passed.
 
 ---
-*Phase: 02-search-resilience*
-*Completed: 2026-05-20*
+
+_Phase: 02-search-resilience_
+_Completed: 2026-05-20_

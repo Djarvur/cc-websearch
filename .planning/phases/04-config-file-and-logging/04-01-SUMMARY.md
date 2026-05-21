@@ -26,14 +26,14 @@ key-files:
     - test/config.test.ts
 
 key-decisions:
-  - "Config writes warnings directly to process.stderr.write (no logger import) to avoid circular dependency"
-  - "z.strictObject used for all nested sections to catch unknown keys at every level"
-  - "apiKey defaults to undefined while all other fields have concrete defaults"
+  - 'Config writes warnings directly to process.stderr.write (no logger import) to avoid circular dependency'
+  - 'z.strictObject used for all nested sections to catch unknown keys at every level'
+  - 'apiKey defaults to undefined while all other fields have concrete defaults'
 
 patterns-established:
-  - "Config precedence: env > file > defaults, resolved per-key independently"
-  - "Number env var coercion with NaN validation and stderr warning"
-  - "Invalid config values produce [warn] on stderr and fall back to defaults"
+  - 'Config precedence: env > file > defaults, resolved per-key independently'
+  - 'Number env var coercion with NaN validation and stderr warning'
+  - 'Invalid config values produce [warn] on stderr and fall back to defaults'
 
 requirements-completed: [CONF-02, CONF-03]
 
@@ -57,7 +57,7 @@ completed: 2026-05-20
 ## Accomplishments
 
 - Config module with Zod strictObject schema covering perplexity, retry, and logging sections
-- Per-key env > file > defaults resolution with all 7 WEBSEARCH_* env vars mapped
+- Per-key env > file > defaults resolution with all 7 WEBSEARCH\_\* env vars mapped
 - Invalid value warnings to stderr (malformed JSON, unknown keys, bad types)
 - Comprehensive test suite with 24 passing tests across 7 test groups
 
@@ -84,6 +84,7 @@ Each task was committed atomically:
 ### Auto-fixed Issues
 
 **1. [Rule 1 - Bug] Fixed apiKey default value using model default instead of undefined**
+
 - **Found during:** Task 2 (test writing)
 - **Issue:** `loadConfig()` resolved `perplexity.apiKey` with `DEFAULTS.perplexity.model` (`'sonar'`) as default, meaning apiKey would be `'sonar'` instead of `undefined` when no file/env provided it
 - **Fix:** Changed default parameter to `undefined` with explicit type `resolve<string | undefined>`
@@ -119,5 +120,6 @@ None - no external service configuration required.
 - FOUND: commit 15d820d
 
 ---
-*Phase: 04-config-file-and-logging*
-*Completed: 2026-05-20*
+
+_Phase: 04-config-file-and-logging_
+_Completed: 2026-05-20_

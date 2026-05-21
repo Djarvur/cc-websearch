@@ -57,6 +57,7 @@ One critical issue: the stale `.cjs` bundle `scripts/websearch.cjs` still contai
 
 **Fix:**
 Either rebuild to regenerate the `.cjs` files (`npm run build`), or delete the stale `.cjs` files if they are no longer the target format:
+
 ```bash
 npm run build  # rebuilds .cjs files from current source
 # OR, if .js is the new target format:
@@ -73,9 +74,11 @@ rm scripts/websearch.cjs scripts/webfetch.cjs
 
 **Fix:**
 Use a more conservative regex that only strips actual HTML tags (matching known tag patterns):
+
 ```typescript
 snippet: r.description?.replace(/<\/?[a-zA-Z][^>]*>/g, '') || '',
 ```
+
 This requires tags to start with a letter after `<`, which excludes bare `<` comparison operators while correctly stripping `<b>`, `<span>`, `</strong>`, etc.
 
 ### WR-02: Stale Perplexity references in metadata descriptions
@@ -85,6 +88,7 @@ This requires tags to start with a letter after `<`, which excludes bare `<` com
 
 **Fix:**
 Update both descriptions:
+
 ```json
 "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code"
 ```
@@ -96,6 +100,7 @@ Update both descriptions:
 
 **Fix:**
 Remove `mockPerplexityResults` from `test/helpers/mocks.ts` and update the logger test to use a current module name:
+
 ```typescript
 // test/helpers/mocks.ts -- remove lines 3-5
 export const mockDDGResults: SearchResult[] = [
@@ -106,9 +111,7 @@ export const mockDDGResults: SearchResult[] = [
 // test/logger.test.ts:60 -- change module name
 const logger = createLogger('ddg', 'info');
 // And update assertion on line 64:
-expect(stderrWriteSpy).toHaveBeenCalledWith(
-  expect.stringContaining('[info:ddg]'),
-);
+expect(stderrWriteSpy).toHaveBeenCalledWith(expect.stringContaining('[info:ddg]'));
 ```
 
 ## Info
@@ -120,6 +123,7 @@ expect(stderrWriteSpy).toHaveBeenCalledWith(
 
 **Fix:**
 This is a minor code clarity issue. Either add a comment explaining the unreachable nature, or restructure:
+
 ```typescript
 // After the loop -- TypeScript can't prove this is unreachable
 throw lastError!; // unreachable: loop always throws on maxRetries attempt
@@ -132,6 +136,7 @@ throw lastError!; // unreachable: loop always throws on maxRetries attempt
 
 **Fix:**
 No immediate action required. If entity double-encoding appears in real usage, add an entity decode step after tag stripping:
+
 ```typescript
 import { decode } from 'html-entities';
 // ...

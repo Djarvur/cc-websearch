@@ -48,6 +48,7 @@ Reviewed all 18 source and test files at standard depth. The codebase shows a ge
 **Issue:** The `withTimeout` function creates an `AbortController` and calls `controller.abort()` on timeout, but the `signal` is never passed to the underlying promise. The function simply `await`s the promise with no connection between the timeout and the operation being timed. If the underlying API call hangs, it will never be aborted -- the timeout fires but nothing happens. Meanwhile, `withTimeout` does not reject the promise on timeout either: the `return await promise` just keeps waiting. The `finally` block clears the timer but does not reject. This means the configured `timeout` value in `ResolvedConfig` (default 30000ms) is completely ignored.
 
 **Fix:**
+
 ```typescript
 async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   let timeoutId: ReturnType<typeof setTimeout>;
@@ -68,6 +69,7 @@ async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 **Issue:** When a numeric env var like `WEBSEARCH_RETRY_MAX_RETRIES` is set to `"3.5"` or `"-5"`, the `resolveFromEnv` function converts it with `Number(envValue)`, which succeeds (returns 3.5 or -5), and it is returned as the resolved value. The Zod schema requires `z.number().int().min(0)`, but that schema is only applied during `validateFileConfig` for file-based config. Env var values skip schema validation entirely and are cast directly via `resolveFromEnv`. This means a user setting `WEBSEARCH_RETRY_MAX_RETRIES=-1` gets a negative retry count, or `WEBSEARCH_RETRY_BASE_DELAY=0.5` gets a fractional delay -- both of which would be rejected if set via the config file.
 
 **Fix:**
+
 ```typescript
 if (NUMBER_KEYS.has(key)) {
   const num = Number(envValue);
@@ -85,6 +87,7 @@ if (NUMBER_KEYS.has(key)) {
 **Issue:** The loop condition is `for (let hop = 0; hop <= maxHops; hop++)`, which iterates `maxHops + 1` times (0 through maxHops inclusive). The "too many hops" check on line 53 (`if (hop === maxHops)`) fires on the last iteration but only after a redirect response has already been received and parsed. The final throw on line 71 is dead code -- the loop never reaches it because `hop` never exceeds `maxHops`. The result is that `fetchWithRedirects(url, 10)` actually follows 11 requests, not 10 as the parameter name and error message imply.
 
 **Fix:**
+
 ```typescript
 for (let hop = 0; hop < maxHops; hop++) {
   // ... existing body ...
@@ -122,7 +125,9 @@ The main entry points (`websearch.ts`, `webfetch.ts`) create their own loggers w
 function validateFileConfig(raw: Record<string, unknown>): Config {
   const result = ConfigSchema.safeParse(raw);
   if (!result.success) {
-    process.stderr.write('[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n');
+    process.stderr.write(
+      '[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n',
+    );
     for (const issue of result.error.issues) {
       // ...existing warning logic
     }
@@ -145,6 +150,7 @@ function validateFileConfig(raw: Record<string, unknown>): Config {
 **Issue:** If stdin is completely empty (no input piped), `Buffer.concat(chunks).toString('utf8')` returns an empty string, and `JSON.parse('')` throws `SyntaxError: Unexpected end of JSON input`. This is a confusing error message for the user. The function should check for empty input and produce a clear error.
 
 **Fix:**
+
 ```typescript
 const raw = Buffer.concat(chunks).toString('utf8').trim();
 if (!raw) {

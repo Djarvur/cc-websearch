@@ -22,6 +22,8 @@ export function createLogger(module: string, level: LogLevel = 'info') {
     info: (msg: string) => log('info', msg),
     warn: (msg: string) => log('warn', msg),
     error: (msg: string) => log('error', msg),
-    setLevel: (newLevel: LogLevel) => { currentLevel = newLevel; },
+    setLevel: (newLevel: LogLevel) => {
+      currentLevel = newLevel;
+    },
   };
 }

@@ -34113,7 +34113,9 @@ function readConfigFile() {
 function validateFileConfig(raw) {
   const result = ConfigSchema.safeParse(raw);
   if (!result.success) {
-    process.stderr.write("[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n");
+    process.stderr.write(
+      "[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n"
+    );
     for (const issue2 of result.error.issues) {
       const path = issue2.path.join(".");
       process.stderr.write(`[warn] Invalid config at ${path}: ${issue2.message}
@@ -34165,7 +34167,11 @@ function loadConfig() {
   const fileConfig = rawFile ? validateFileConfig(rawFile) : {};
   return {
     retry: {
-      maxRetries: resolve("retry.maxRetries", fileConfig.retry?.maxRetries, DEFAULTS.retry.maxRetries),
+      maxRetries: resolve(
+        "retry.maxRetries",
+        fileConfig.retry?.maxRetries,
+        DEFAULTS.retry.maxRetries
+      ),
       baseDelay: resolve("retry.baseDelay", fileConfig.retry?.baseDelay, DEFAULTS.retry.baseDelay),
       maxDelay: resolve("retry.maxDelay", fileConfig.retry?.maxDelay, DEFAULTS.retry.maxDelay),
       timeout: resolve("retry.timeout", fileConfig.retry?.timeout, DEFAULTS.retry.timeout)
@@ -34212,7 +34218,9 @@ async function fetchWithRedirects(url2, maxHops = 10) {
       });
       const location = response.headers.get("location");
       if (!location) {
-        throw new Error(`Redirect (${response.status}) without Location header at ${currentUrl.href}`);
+        throw new Error(
+          `Redirect (${response.status}) without Location header at ${currentUrl.href}`
+        );
       }
       const targetUrl = new URL(location, currentUrl);
       if (targetUrl.hostname !== originalHost) {

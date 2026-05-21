@@ -35,12 +35,14 @@ describe('retryWithBackoff', () => {
   it('should retry on transient errors and succeed', async () => {
     vi.useFakeTimers();
     const transientErr = new Error('transient');
-    const fn = vi.fn()
-      .mockRejectedValueOnce(transientErr)
-      .mockResolvedValueOnce('recovered');
+    const fn = vi.fn().mockRejectedValueOnce(transientErr).mockResolvedValueOnce('recovered');
 
     const { retryWithBackoff } = await import('../src/lib/retry.js');
-    const promise = retryWithBackoff(fn, () => true, { maxRetries: 3, baseDelay: 100, maxDelay: 1000 });
+    const promise = retryWithBackoff(fn, () => true, {
+      maxRetries: 3,
+      baseDelay: 100,
+      maxDelay: 1000,
+    });
 
     // Advance past the jitter delay
     await vi.advanceTimersByTimeAsync(200);

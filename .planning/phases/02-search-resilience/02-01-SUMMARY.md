@@ -39,16 +39,16 @@ key-files:
     - package.json
 
 key-decisions:
-  - "Used real timers instead of vi.useFakeTimers for max-retries test to avoid unhandled rejection leaks"
-  - "Import error classes from @perplexity-ai/perplexity_ai/error.js (re-export from core/error.js)"
-  - "retryWithBackoff uses a generic isTransient callback so the same function works for both Perplexity and DDG"
-  - "Updated io-separation test to mock both providers failing, since new fallback chain means single provider failure no longer reaches stderr"
+  - 'Used real timers instead of vi.useFakeTimers for max-retries test to avoid unhandled rejection leaks'
+  - 'Import error classes from @perplexity-ai/perplexity_ai/error.js (re-export from core/error.js)'
+  - 'retryWithBackoff uses a generic isTransient callback so the same function works for both Perplexity and DDG'
+  - 'Updated io-separation test to mock both providers failing, since new fallback chain means single provider failure no longer reaches stderr'
 
 patterns-established:
-  - "DDG provider pattern: import search from duck-duck-scrape, map to SearchResult[], let errors propagate"
-  - "Retry pattern: full jitter (random * min(maxDelay, baseDelay * 2^attempt)), configurable via env vars"
-  - "Fallback pattern: try Perplexity with retry -> catch -> try DDG with retry -> catch -> error with both provider names"
-  - "Provider comment pattern: <!-- provider: NAME --> before <search_results> XML"
+  - 'DDG provider pattern: import search from duck-duck-scrape, map to SearchResult[], let errors propagate'
+  - 'Retry pattern: full jitter (random * min(maxDelay, baseDelay * 2^attempt)), configurable via env vars'
+  - 'Fallback pattern: try Perplexity with retry -> catch -> try DDG with retry -> catch -> error with both provider names'
+  - 'Provider comment pattern: <!-- provider: NAME --> before <search_results> XML'
 
 requirements-completed: [SRCH-05, SRCH-07, SRCH-08]
 
@@ -70,6 +70,7 @@ completed: 2026-05-20
 - **Files modified:** 12
 
 ## Accomplishments
+
 - DDG search provider using duck-duck-scrape library, returns SearchResult[] with title+URL only (D-01)
 - Exponential backoff with full jitter retry module, configurable via RETRY_BASE_DELAY, RETRY_MAX_DELAY, RETRY_MAX_RETRIES, RETRY_TIMEOUT env vars (D-06/D-08/D-09)
 - Two-tier fallback orchestration: Perplexity with retries -> DDG with retries -> descriptive error on stderr (D-04/D-07/D-19)
@@ -91,6 +92,7 @@ Each task committed atomically with TDD RED/GREEN separation:
 4. **Task 2 GREEN: Fallback orchestration implementation** - `005d801` (feat)
 
 ## Files Created/Modified
+
 - `src/lib/duckduckgo.ts` - DDG search via duck-duck-scrape, exports searchDDG(query) returning SearchResult[]
 - `src/lib/retry.ts` - Exponential backoff with full jitter, exports retryWithBackoff, isTransientError, isDDGTransientError
 - `src/lib/perplexity.ts` - Added hasApiKey() boolean and optional domainFilter parameter on search()
@@ -107,6 +109,7 @@ Each task committed atomically with TDD RED/GREEN separation:
 - `package.json` - Added duck-duck-scrape@2.2.7 dependency
 
 ## Decisions Made
+
 - Used real timers with minimal delays instead of vi.useFakeTimers for max-retries exhaustion test -- fake timers caused unhandled rejection leaks because the promise rejects before the test's expect().rejects handler runs
 - Import Perplexity error classes from `@perplexity-ai/perplexity_ai/error.js` (the package re-exports from core/error.js)
 - retryWithBackoff uses a generic `isTransient` callback parameter so the same retry function works for both Perplexity (typed SDK errors) and DDG (message-pattern errors)
@@ -117,6 +120,7 @@ Each task committed atomically with TDD RED/GREEN separation:
 ### Auto-fixed Issues
 
 **1. [Rule 3 - Blocking] Updated io-separation test mocks for new fallback behavior**
+
 - **Found during:** Task 2 GREEN phase
 - **Issue:** io-separation test failed because websearch.ts now falls back to DDG when Perplexity fails. The test mocked only Perplexity to fail, but DDG was mocked to succeed with empty results.
 - **Fix:** Made both providers fail in the error test case, and added DDG mock to the io-separation test file.
@@ -124,6 +128,7 @@ Each task committed atomically with TDD RED/GREEN separation:
 - **Commit:** 005d801
 
 **2. [Rule 1 - Bug] Fixed unhandled rejection in retry max-retries test**
+
 - **Found during:** Task 1 GREEN phase
 - **Issue:** vi.useFakeTimers caused unhandled promise rejection because the retry promise rejected before the test's expect().rejects handler could attach
 - **Fix:** Switched to real timers with minimal delays (1-2ms) for the max-retries exhaustion test
@@ -131,9 +136,11 @@ Each task committed atomically with TDD RED/GREEN separation:
 - **Commit:** 6bbc739
 
 ## Issues Encountered
+
 None beyond auto-fixed issues above. duck-duck-scrape@2.2.7 installed cleanly.
 
 ## Next Phase Readiness
+
 - WebSearch works end-to-end with either Perplexity or DDG as provider
 - Retry with exponential backoff handles 429, 5xx, and network errors for both providers
 - Provider comment in output enables downstream visibility of which provider served results
@@ -145,5 +152,6 @@ None beyond auto-fixed issues above. duck-duck-scrape@2.2.7 installed cleanly.
 All 12 files verified present. All 4 commits verified in git log.
 
 ---
-*Phase: 02-search-resilience*
-*Completed: 2026-05-20*
+
+_Phase: 02-search-resilience_
+_Completed: 2026-05-20_

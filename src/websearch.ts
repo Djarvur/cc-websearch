@@ -33,7 +33,7 @@ async function main(): Promise<void> {
     );
     const filtered = filterByDomains(results, parsed.allowed_domains, parsed.blocked_domains);
     process.stdout.write(formatSearchResults(filtered));
-  } catch (err: any) {
+  } catch (err: unknown) {
     logger.error(err instanceof Error ? err.message : String(err));
     process.exitCode = 1;
   }

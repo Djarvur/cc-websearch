@@ -45,10 +45,12 @@ describe('loadConfig', () => {
   describe('config file reading', () => {
     it('should return file values when config file exists', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        retry: { maxRetries: 8, baseDelay: 2000 },
-        logging: { level: 'debug' },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          retry: { maxRetries: 8, baseDelay: 2000 },
+          logging: { level: 'debug' },
+        }),
+      );
 
       const config = loadConfig();
 
@@ -61,9 +63,11 @@ describe('loadConfig', () => {
 
     it('should use defaults for keys not specified in file', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        retry: { maxRetries: 2 },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          retry: { maxRetries: 2 },
+        }),
+      );
 
       const config = loadConfig();
 
@@ -77,9 +81,11 @@ describe('loadConfig', () => {
     it('should use env var value over file value', () => {
       vi.stubEnv('WEBSEARCH_RETRY_MAX_RETRIES', '10');
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        retry: { maxRetries: 5 },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          retry: { maxRetries: 5 },
+        }),
+      );
 
       const config = loadConfig();
 
@@ -88,9 +94,11 @@ describe('loadConfig', () => {
 
     it('should use file value when env var is not set', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        retry: { maxRetries: 7 },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          retry: { maxRetries: 7 },
+        }),
+      );
 
       const config = loadConfig();
 
@@ -100,9 +108,11 @@ describe('loadConfig', () => {
     it('should resolve each key independently', () => {
       vi.stubEnv('WEBSEARCH_RETRY_MAX_RETRIES', '12');
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        retry: { maxRetries: 3, baseDelay: 500 },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          retry: { maxRetries: 3, baseDelay: 500 },
+        }),
+      );
 
       const config = loadConfig();
 
@@ -139,9 +149,11 @@ describe('loadConfig', () => {
   describe('invalid values', () => {
     it('should warn on stderr for invalid log level', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        logging: { level: 'verbose' },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          logging: { level: 'verbose' },
+        }),
+      );
 
       const config = loadConfig();
 
@@ -153,9 +165,11 @@ describe('loadConfig', () => {
 
     it('should warn on stderr for negative retry value', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        retry: { maxRetries: -1 },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          retry: { maxRetries: -1 },
+        }),
+      );
 
       const config = loadConfig();
 
@@ -167,11 +181,13 @@ describe('loadConfig', () => {
 
     it('should warn on stderr for non-integer retry value', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        retry: { maxRetries: 3.5 },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          retry: { maxRetries: 3.5 },
+        }),
+      );
 
-      const config = loadConfig();
+      const _config = loadConfig();
 
       expect(stderrSpy).toHaveBeenCalledWith(
         expect.stringContaining('[warn] Invalid config at retry.maxRetries'),
@@ -193,28 +209,30 @@ describe('loadConfig', () => {
   describe('unknown keys', () => {
     it('should warn on stderr for unknown top-level key', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        caching: { enabled: true },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          caching: { enabled: true },
+        }),
+      );
 
       loadConfig();
 
-      expect(stderrSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Unrecognized key'),
-      );
+      expect(stderrSpy).toHaveBeenCalledWith(expect.stringContaining('Unrecognized key'));
     });
 
     it('should still resolve known fields even when unknown keys exist', () => {
       vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify({
-        caching: { enabled: true },
-        retry: { maxRetries: 6 },
-      }));
+      vi.mocked(readFileSync).mockReturnValue(
+        JSON.stringify({
+          caching: { enabled: true },
+          retry: { maxRetries: 6 },
+        }),
+      );
 
       // The entire parse fails due to strictObject, so file values are lost
       // and defaults are used. This is correct behavior -- strictObject rejects
       // the whole object when unknown keys are present.
-      const config = loadConfig();
+      const _config = loadConfig();
 
       expect(stderrSpy).toHaveBeenCalled();
     });
@@ -269,9 +287,7 @@ describe('loadConfig', () => {
 
       const config = loadConfig();
 
-      expect(stderrSpy).toHaveBeenCalledWith(
-        expect.stringContaining('[warn] Invalid number'),
-      );
+      expect(stderrSpy).toHaveBeenCalledWith(expect.stringContaining('[warn] Invalid number'));
       expect(config.retry.maxRetries).toBe(4); // default
     });
   });

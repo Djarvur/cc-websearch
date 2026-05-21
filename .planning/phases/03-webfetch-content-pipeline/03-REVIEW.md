@@ -43,12 +43,14 @@ The most severe finding is that the `SKILL.md` invokes `scripts/webfetch.cjs`, w
 **File:** `skills/webfetch/SKILL.md:15`
 **Issue:** The skill definition references `scripts/webfetch.cjs`, which is a 28-line stub that prints "WebFetch is not yet implemented. This feature will be added in a future update." and calls `process.exit(0)`. The actual implementation with Readability extraction, redirect handling, and Perplexity summarization is in `scripts/webfetch.js` (the esbuild bundle). When Claude Code invokes the skill, it will always hit the stub and never reach the real code.
 **Fix:**
+
 ```
 # In skills/webfetch/SKILL.md, change line 15 from:
 echo '{"url":"URL","prompt":"QUESTION"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/webfetch.cjs"
 # to:
 echo '{"url":"URL","prompt":"QUESTION"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/webfetch.js"
 ```
+
 Additionally, delete or update `scripts/webfetch.cjs` so there is no confusion about which file is the entry point.
 
 ### CR-02: withTimeout creates AbortController but never connects signal -- timeout is non-functional
@@ -56,12 +58,10 @@ Additionally, delete or update `scripts/webfetch.cjs` so there is no confusion a
 **File:** `src/lib/retry.ts:29-38`
 **Issue:** The `withTimeout` function creates an `AbortController` and sets a timeout to call `controller.abort()`, but the `controller.signal` is never passed to any operation. The `fn()` call at line 34 is `fn()` which returns a `Promise<T>` -- the promise is already in flight by the time `withTimeout` receives it. There are two problems: (a) the signal is not wired to the fetch call, and (b) even if it were, the function receives a pre-created promise rather than a factory. This means if the Perplexity API hangs, the retry logic will wait indefinitely instead of timing out after `RETRY_TIMEOUT` ms (default 30000).
 **Fix:**
+
 ```typescript
 // Option A: Accept a factory function and pass signal through
-async function withTimeout<T>(
-  fn: (signal: AbortSignal) => Promise<T>,
-  ms: number,
-): Promise<T> {
+async function withTimeout<T>(fn: (signal: AbortSignal) => Promise<T>, ms: number): Promise<T> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), ms);
   try {
@@ -88,6 +88,7 @@ const response = await fetch(currentUrl.toString(), {
 **File:** `src/lib/input.ts:24`
 **Issue:** `JSON.parse(raw)` is called without a try/catch. If stdin is empty (e.g., the script is invoked without piping data), `raw` will be an empty string and `JSON.parse('')` throws `SyntaxError: Unexpected end of JSON input`. This error propagates up to the generic catch in `webfetch.ts` which logs it via `logger.error`, but the message is not user-friendly and does not indicate the root cause (missing stdin input).
 **Fix:**
+
 ```typescript
 export async function readStdin<T>(schema: z.ZodType<T>): Promise<T> {
   const chunks: Buffer[] = [];
@@ -113,6 +114,7 @@ export async function readStdin<T>(schema: z.ZodType<T>): Promise<T> {
 **File:** `test/skills.test.ts:74-77`
 **Issue:** The test "scripts/webfetch.js should exist at the path referenced by SKILL.md" asserts that `scripts/webfetch.js` exists, but the actual `SKILL.md` file references `scripts/webfetch.cjs`. The test passes because both files exist, but it does not verify that the path in SKILL.md matches the path being tested. This test gave a false sense of correctness while the SKILL.md was pointing at the wrong file.
 **Fix:**
+
 ```typescript
 // Parse the actual script path from SKILL.md and verify THAT file exists
 it('should reference a script file that exists', () => {
@@ -131,6 +133,7 @@ it('should reference a script file that exists', () => {
 **File:** `src/lib/fetch.ts:12-18`
 **Issue:** `normalizeUrl` only upgrades `http:` to `https:` but does not reject non-HTTP schemes. `data:` URLs pass through unchanged and Node.js `fetch()` will resolve them, returning the inline content as a response. While this is low-severity in a CLI tool context, it violates the documented contract ("HTTP URLs are automatically upgraded to HTTPS") and could allow unexpected behavior (e.g., a crafted `data:text/html,...` URL bypasses network fetch entirely).
 **Fix:**
+
 ```typescript
 export function normalizeUrl(rawUrl: string): URL {
   const url = new URL(rawUrl);
@@ -151,6 +154,7 @@ export function normalizeUrl(rawUrl: string): URL {
 **File:** `src/lib/perplexity.ts:46`
 **Issue:** `(response as any).search_results` bypasses TypeScript's type system to access a field not present in the SDK's type definitions. This is pragmatically justified since the Perplexity API returns `search_results` in the response body but the SDK types may not expose it. However, it silently accepts any shape of data.
 **Fix:** Define a minimal interface for the expected shape and use a type assertion against that interface rather than bare `any`:
+
 ```typescript
 interface PerplexityResponseWithSearch {
   search_results?: Array<{ title?: string; url: string }>;
@@ -165,6 +169,7 @@ const searchResults = (response as unknown as PerplexityResponseWithSearch).sear
 **File:** `src/lib/content.ts:23`
 **Issue:** `new JSDOM(html, { url })` creates a DOM with potentially running event listeners and timers. While Readability extraction is synchronous and the JSDOM instance will be garbage-collected when `dom` goes out of scope, explicitly calling `dom.window.close()` after extraction would release resources deterministically, especially important if the function is called in a loop.
 **Fix:**
+
 ```typescript
 export function extractMarkdown(html: string, url: string): string {
   const dom = new JSDOM(html, { url });

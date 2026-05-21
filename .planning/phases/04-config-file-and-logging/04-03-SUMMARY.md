@@ -22,7 +22,11 @@ affects: []
 # Tech tracking
 tech-stack:
   added: []
-  patterns: [entry-point config initialization with loadConfig + createLogger, retryWithBackoff with explicit getRetryConfig options]
+  patterns:
+    [
+      entry-point config initialization with loadConfig + createLogger,
+      retryWithBackoff with explicit getRetryConfig options,
+    ]
 
 key-files:
   created: []
@@ -36,12 +40,12 @@ key-files:
     - scripts/webfetch.js
 
 key-decisions:
-  - "Entry points create scoped loggers via createLogger(module, level) after loading config"
-  - "retryWithBackoff receives getRetryConfig(config) as third argument in all entry point calls"
-  - "search() called with (query, config, domainFilter) -- config as second positional arg"
+  - 'Entry points create scoped loggers via createLogger(module, level) after loading config'
+  - 'retryWithBackoff receives getRetryConfig(config) as third argument in all entry point calls'
+  - 'search() called with (query, config, domainFilter) -- config as second positional arg'
 
 patterns-established:
-  - "Entry points: loadConfig() -> createLogger(module, config.logging.level) -> pass config to all lib functions"
+  - 'Entry points: loadConfig() -> createLogger(module, config.logging.level) -> pass config to all lib functions'
   - "Test mocks: vi.mock('../src/lib/config.js') with loadConfig returning fixed ResolvedConfig"
   - "Test mocks: vi.mock('../src/lib/logger.js') with createLogger factory returning spy object"
 
@@ -83,7 +87,7 @@ Each task was committed atomically:
 
 - `src/websearch.ts` - Config-initialized entry point: imports loadConfig/createLogger/getRetryConfig, passes ResolvedConfig to all module calls
 - `src/webfetch.ts` - Config-initialized entry point: imports loadConfig/createLogger/getRetryConfig, passes ResolvedConfig to all module calls
-- `test/websearch.test.ts` - Updated logger mock to createLogger factory, added config mock, removed old PPLX_* env var stubs, updated search call expectations
+- `test/websearch.test.ts` - Updated logger mock to createLogger factory, added config mock, removed old PPLX\_\* env var stubs, updated search call expectations
 - `test/webfetch.test.ts` - Updated logger mock to createLogger factory, added config mock, updated summarize call expectations
 - `test/io-separation.test.ts` - Updated logger mock to createLogger factory, added config mock, removed old env var stubs
 - `scripts/websearch.js` - Rebuilt esbuild bundle
@@ -129,5 +133,6 @@ None - no external service configuration required.
 - FOUND: commit 2fae1b6
 
 ---
-*Phase: 04-config-file-and-logging*
-*Completed: 2026-05-20*
+
+_Phase: 04-config-file-and-logging_
+_Completed: 2026-05-20_

@@ -54,17 +54,17 @@
 
 ### Component Responsibilities
 
-| Component | Responsibility | Implementation |
-|-----------|----------------|----------------|
-| SKILL.md (x2) | Define when/how Claude invokes scripts, pass arguments, declare allowed tools | YAML frontmatter + markdown instructions |
-| Input Parser | Accept hybrid input: CLI flags for simple use, JSON on stdin matching Claude Code tool schema | Commander.js or manual argv/stdin parsing |
-| Config Loader | Load user config, resolve env var fallbacks, validate values | Read `~/.config/websearch/config.json`, merge with `PERPLEXITY_API_KEY` etc. env vars |
-| Cache Layer | Optional disk cache for repeat queries; skip when not configured | File-based: hash query params as cache key, store TTL-stamped JSON in configurable cache dir |
-| Perplexity Provider | Primary search via Sonar API; OpenAI-compatible Chat Completions with citations | `POST https://api.perplexity.ai/v1/sonar` with `search_domain_filter`, `search_recency_filter` |
-| DDG Lite Provider | Fallback search via DuckDuckGo Lite HTML scraping; no API key needed | `GET https://lite.duckduckgo.com/lite/` with cheerio parsing |
-| WebFetch Script | Standalone page retrieval, HTML-to-markdown conversion | Readability + Turndown pipeline |
-| Retry Logic | Exponential backoff with jitter for rate limit responses from any provider | Custom retry wrapper around fetch calls |
-| Output Formatter | Produce exact Claude Code WebSearch/WebFetch output format on stdout | Markdown-formatted search results with citation links |
+| Component           | Responsibility                                                                                | Implementation                                                                                 |
+| ------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| SKILL.md (x2)       | Define when/how Claude invokes scripts, pass arguments, declare allowed tools                 | YAML frontmatter + markdown instructions                                                       |
+| Input Parser        | Accept hybrid input: CLI flags for simple use, JSON on stdin matching Claude Code tool schema | Commander.js or manual argv/stdin parsing                                                      |
+| Config Loader       | Load user config, resolve env var fallbacks, validate values                                  | Read `~/.config/websearch/config.json`, merge with `PERPLEXITY_API_KEY` etc. env vars          |
+| Cache Layer         | Optional disk cache for repeat queries; skip when not configured                              | File-based: hash query params as cache key, store TTL-stamped JSON in configurable cache dir   |
+| Perplexity Provider | Primary search via Sonar API; OpenAI-compatible Chat Completions with citations               | `POST https://api.perplexity.ai/v1/sonar` with `search_domain_filter`, `search_recency_filter` |
+| DDG Lite Provider   | Fallback search via DuckDuckGo Lite HTML scraping; no API key needed                          | `GET https://lite.duckduckgo.com/lite/` with cheerio parsing                                   |
+| WebFetch Script     | Standalone page retrieval, HTML-to-markdown conversion                                        | Readability + Turndown pipeline                                                                |
+| Retry Logic         | Exponential backoff with jitter for rate limit responses from any provider                    | Custom retry wrapper around fetch calls                                                        |
+| Output Formatter    | Produce exact Claude Code WebSearch/WebFetch output format on stdout                          | Markdown-formatted search results with citation links                                          |
 
 ## Recommended Project Structure
 
@@ -115,12 +115,16 @@ cc-websearch/
 **Trade-offs:** Clean separation between prompt logic and execution logic. Skills stay lean. Scripts can be tested independently.
 
 **Example:**
-```markdown
+
+````markdown
 # skills/websearch/SKILL.md
+
 ---
+
 description: This skill should be used when the user asks to "search the web",
-  "look up", "find information", or needs current information beyond training data.
-allowed-tools: Bash(node *)
+"look up", "find information", or needs current information beyond training data.
+allowed-tools: Bash(node \*)
+
 ---
 
 # WebSearch
@@ -130,12 +134,14 @@ Execute a web search using:
 ```bash
 node "${CLAUDE_SKILL_DIR}/../scripts/websearch.js" --query "$ARGUMENTS"
 ```
+````
 
 For structured input matching Claude Code's WebSearch tool schema:
 
 ```bash
 echo '{"query":"...","allowed_domains":[...],"blocked_domains":[...]}' | node "${CLAUDE_SKILL_DIR}/../scripts/websearch.js"
 ```
+
 ```
 
 ### Pattern 2: Two-Tier Provider Fallback
@@ -147,19 +153,21 @@ echo '{"query":"...","allowed_domains":[...],"blocked_domains":[...]}' | node "$
 **Trade-offs:** Results differ between providers (Perplexity returns AI-synthesized answers with citations; DDG returns raw search result snippets). The output formatter must normalize both into Claude Code's expected format.
 
 ```
+
 websearch.ts
-    │
-    ├── Try Perplexity
-    │   ├── Success ──► Format citations + content ──► stdout
-    │   └── Failure (no key / 429 / timeout)
-    │       │
-    │       └── Fall back to DDG Lite
-    │           ├── Success ──► Format snippets as citations ──► stdout
-    │           └── Failure ──► stderr error + exit 1
-    │
-    └── No Perplexity key configured
-        └── Go directly to DDG Lite
-```
+│
+├── Try Perplexity
+│ ├── Success ──► Format citations + content ──► stdout
+│ └── Failure (no key / 429 / timeout)
+│ │
+│ └── Fall back to DDG Lite
+│ ├── Success ──► Format snippets as citations ──► stdout
+│ └── Failure ──► stderr error + exit 1
+│
+└── No Perplexity key configured
+└── Go directly to DDG Lite
+
+````
 
 ### Pattern 3: Hybrid CLI Input
 
@@ -184,7 +192,7 @@ async function parseInput(): Promise<SearchInput> {
     blocked_domains: argv['blocked-domains']?.split(','),
   };
 }
-```
+````
 
 ### Pattern 4: Config File with Env Var Fallback
 
@@ -197,11 +205,11 @@ async function parseInput(): Promise<SearchInput> {
 ```jsonc
 // ~/.config/websearch/config.json (example)
 {
-  "perplexity_api_key": "pplx-...",   // or PERPLEXITY_API_KEY env var
-  "perplexity_model": "sonar",        // or PERPLEXITY_MODEL env var
-  "cache_dir": "~/.cache/websearch",  // or WEBCACHE_DIR env var; omit = no cache
-  "cache_ttl_seconds": 3600,          // default 1 hour
-  "log_level": "warn"                 // debug | info | warn | error
+  "perplexity_api_key": "pplx-...", // or PERPLEXITY_API_KEY env var
+  "perplexity_model": "sonar", // or PERPLEXITY_MODEL env var
+  "cache_dir": "~/.cache/websearch", // or WEBCACHE_DIR env var; omit = no cache
+  "cache_ttl_seconds": 3600, // default 1 hour
+  "log_level": "warn", // debug | info | warn | error
 }
 ```
 
@@ -371,12 +379,12 @@ cc-websearch/
 
 ### Available Models
 
-| Model | Use Case | Cost |
-|-------|----------|------|
-| `sonar` | Lightweight, fast search | Lower |
-| `sonar-pro` | Higher quality answers | Higher |
+| Model                 | Use Case                     | Cost    |
+| --------------------- | ---------------------------- | ------- |
+| `sonar`               | Lightweight, fast search     | Lower   |
+| `sonar-pro`           | Higher quality answers       | Higher  |
 | `sonar-reasoning-pro` | Deep research with reasoning | Highest |
-| `sonar-deep-research` | Extended research tasks | Highest |
+| `sonar-deep-research` | Extended research tasks      | Highest |
 
 ### Domain Filtering Support
 
@@ -390,6 +398,7 @@ Perplexity natively supports domain filtering:
 ```
 
 For blocked domains, prefix with `!`:
+
 ```json
 {
   "search_domain_filter": ["!pinterest.com", "!facebook.com"]
@@ -403,23 +412,24 @@ This maps directly to Claude Code's `allowed_domains` and `blocked_domains` para
 ```jsonc
 {
   "id": "...",
-  "choices": [{
-    "message": {
-      "role": "assistant",
-      "content": "Answer text with [1][2] citation markers"
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "Answer text with [1][2] citation markers",
+      },
+      "finish_reason": "stop",
     },
-    "finish_reason": "stop"
-  }],
-  "citations": [
-    "https://example.com/article1",
-    "https://example.com/article2"
   ],
-  "search_results": [{
-    "title": "Article Title",
-    "url": "https://example.com/article",
-    "date": "2026-01-15",
-    "snippet": "Article snippet text"
-  }]
+  "citations": ["https://example.com/article1", "https://example.com/article2"],
+  "search_results": [
+    {
+      "title": "Article Title",
+      "url": "https://example.com/article",
+      "date": "2026-01-15",
+      "snippet": "Article snippet text",
+    },
+  ],
 }
 ```
 
@@ -441,6 +451,7 @@ This maps directly to Claude Code's `allowed_domains` and `blocked_domains` para
 ### HTML Structure Pattern
 
 DDG Lite returns minimal HTML. Results follow a pattern of:
+
 - Result title in `<a class="result__a">` or similar link elements
 - URL in the `href` attribute
 - Snippet in adjacent `<td>` or `<div>` elements
@@ -472,7 +483,7 @@ The actual CSS selectors depend on DDG's current HTML structure and must be veri
   "provider": "perplexity",
   "created_at": "2026-05-20T10:00:00Z",
   "ttl_seconds": 3600,
-  "result": "... markdown output ..."
+  "result": "... markdown output ...",
 }
 ```
 
@@ -484,12 +495,12 @@ Configurable via `cache_dir` in config.json or `WEBCACHE_DIR` env var.
 
 ## Scaling Considerations
 
-| Concern | Single user (plugin) | Notes |
-|---------|---------------------|-------|
+| Concern                | Single user (plugin)             | Notes                                                                   |
+| ---------------------- | -------------------------------- | ----------------------------------------------------------------------- |
 | Perplexity rate limits | Standard API tier (requests/min) | Exponential backoff handles bursts; DDG fallback prevents total failure |
-| DDG scraping limits | Moderate (a few req/sec) | Backoff + jitter prevents blocking; this is fallback only |
-| Cache disk usage | Minimal (KB per entry) | TTL-based cleanup on read; stale entries removed |
-| Config complexity | Single config file | JSON file + env vars sufficient for single-user plugin |
+| DDG scraping limits    | Moderate (a few req/sec)         | Backoff + jitter prevents blocking; this is fallback only               |
+| Cache disk usage       | Minimal (KB per entry)           | TTL-based cleanup on read; stale entries removed                        |
+| Config complexity      | Single config file               | JSON file + env vars sufficient for single-user plugin                  |
 
 ### Scaling Priorities
 
@@ -526,20 +537,20 @@ Configurable via `cache_dir` in config.json or `WEBCACHE_DIR` env var.
 
 ### External Services
 
-| Service | Integration Pattern | Notes |
-|---------|---------------------|-------|
-| Perplexity Sonar API | `POST /v1/sonar` via fetch/OpenAI SDK | OpenAI-compatible; returns citations + search_results by default |
-| DuckDuckGo Lite | `GET https://lite.duckduckgo.com/lite/` + cheerio scraping | No API key; HTML may change; rate limiting applies |
-| Claude Code Plugin System | `.claude-plugin/plugin.json` + `skills/*/SKILL.md` | Auto-discovery; `${CLAUDE_SKILL_DIR}` for paths |
+| Service                   | Integration Pattern                                        | Notes                                                            |
+| ------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------- |
+| Perplexity Sonar API      | `POST /v1/sonar` via fetch/OpenAI SDK                      | OpenAI-compatible; returns citations + search_results by default |
+| DuckDuckGo Lite           | `GET https://lite.duckduckgo.com/lite/` + cheerio scraping | No API key; HTML may change; rate limiting applies               |
+| Claude Code Plugin System | `.claude-plugin/plugin.json` + `skills/*/SKILL.md`         | Auto-discovery; `${CLAUDE_SKILL_DIR}` for paths                  |
 
 ### Internal Boundaries
 
-| Boundary | Communication | Notes |
-|----------|---------------|-------|
-| SKILL.md to scripts | Bash tool: `node "${CLAUDE_SKILL_DIR}/../scripts/X.js"` | `${CLAUDE_SKILL_DIR}` resolves to skill directory |
-| Scripts to providers | Function calls within same Node process | Provider modules return structured data |
-| Providers to output formatter | Provider returns raw results; formatter normalizes to Claude Code format | Single format contract regardless of provider |
-| Config loader to all components | Config object passed at initialization | Immutable after load |
+| Boundary                        | Communication                                                            | Notes                                             |
+| ------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------- |
+| SKILL.md to scripts             | Bash tool: `node "${CLAUDE_SKILL_DIR}/../scripts/X.js"`                  | `${CLAUDE_SKILL_DIR}` resolves to skill directory |
+| Scripts to providers            | Function calls within same Node process                                  | Provider modules return structured data           |
+| Providers to output formatter   | Provider returns raw results; formatter normalizes to Claude Code format | Single format contract regardless of provider     |
+| Config loader to all components | Config object passed at initialization                                   | Immutable after load                              |
 
 ## Build Order Implications
 
@@ -568,5 +579,6 @@ The phase ordering must respect these dependencies:
 - [A Mental Model for Claude Code](https://levelup.gitconnected.com/a-mental-model-for-claude-code-skills-subagents-and-plugins-3dea9924bf05) -- MEDIUM confidence (community, verified against official)
 
 ---
-*Architecture research for: Claude Code web search plugin (cc-websearch)*
-*Researched: 2026-05-20*
+
+_Architecture research for: Claude Code web search plugin (cc-websearch)_
+_Researched: 2026-05-20_

@@ -11,31 +11,31 @@
 
 ## Distribution Strategy
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Pre-compiled bundles | esbuild bundles each script to single .js. Zero runtime deps, instant startup. | ✓ |
-| Source + SessionStart hook | Ship .ts source. npm install into ${CLAUDE_PLUGIN_DATA} on first run. | |
-| Both | tsx for dev, esbuild for prod bundles committed to repo. | |
+| Option                     | Description                                                                    | Selected |
+| -------------------------- | ------------------------------------------------------------------------------ | -------- |
+| Pre-compiled bundles       | esbuild bundles each script to single .js. Zero runtime deps, instant startup. | ✓        |
+| Source + SessionStart hook | Ship .ts source. npm install into ${CLAUDE_PLUGIN_DATA} on first run.          |          |
+| Both                       | tsx for dev, esbuild for prod bundles committed to repo.                       |          |
 
 **User's choice:** Pre-compiled bundles
 **Notes:** None
 
 ### Committed vs build-on-install
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Commit bundles | Compiled .js committed to repo. Install is instant. | ✓ |
-| Build on install | Build during plugin install via post-install hook. | |
+| Option           | Description                                         | Selected |
+| ---------------- | --------------------------------------------------- | -------- |
+| Commit bundles   | Compiled .js committed to repo. Install is instant. | ✓        |
+| Build on install | Build during plugin install via post-install hook.  |          |
 
 **User's choice:** Commit bundles
 **Notes:** None
 
 ### Dev loop
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Manual rebuild | Skills reference scripts/*.js. Rebuild after changes. | ✓ |
-| Dev mode with tsx | Skills check dev flag, run tsx on src/*.ts. | |
+| Option            | Description                                            | Selected |
+| ----------------- | ------------------------------------------------------ | -------- |
+| Manual rebuild    | Skills reference scripts/\*.js. Rebuild after changes. | ✓        |
+| Dev mode with tsx | Skills check dev flag, run tsx on src/\*.ts.           |          |
 
 **User's choice:** Manual rebuild
 **Notes:** None
@@ -44,11 +44,11 @@
 
 ## Perplexity Model Default
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| sonar | Fast, cheap, $0.001/query. Good for frequent searches. | |
-| sonar-pro | Higher quality, ~5x more expensive. Overkill for simple lookups. | |
-| Configurable, default sonar | PPLX_MODEL env var / config file, defaults to sonar. | ✓ |
+| Option                      | Description                                                      | Selected |
+| --------------------------- | ---------------------------------------------------------------- | -------- |
+| sonar                       | Fast, cheap, $0.001/query. Good for frequent searches.           |          |
+| sonar-pro                   | Higher quality, ~5x more expensive. Overkill for simple lookups. |          |
+| Configurable, default sonar | PPLX_MODEL env var / config file, defaults to sonar.             | ✓        |
 
 **User's choice:** Configurable, default sonar
 **Notes:** None
@@ -57,10 +57,10 @@
 
 ## WebFetch Skill Scope
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Stub WebFetch | Register both skills. WebFetch returns "not yet implemented". | ✓ |
-| Skip until Phase 3 | Only WebSearch skill in Phase 1. | |
+| Option             | Description                                                   | Selected |
+| ------------------ | ------------------------------------------------------------- | -------- |
+| Stub WebFetch      | Register both skills. WebFetch returns "not yet implemented". | ✓        |
+| Skip until Phase 3 | Only WebSearch skill in Phase 1.                              |          |
 
 **User's choice:** Stub WebFetch
 **Notes:** Satisfies PLUG-03 as Phase 1 requirement.
@@ -71,22 +71,22 @@
 
 ### Result content
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Include snippets | Title + URL + description from Perplexity. | |
-| Title + URL only | Minimal XML format per SRCH-02. | |
-| Defer to research | Let researcher determine exact Claude Code format. | ✓ |
+| Option            | Description                                        | Selected |
+| ----------------- | -------------------------------------------------- | -------- |
+| Include snippets  | Title + URL + description from Perplexity.         |          |
+| Title + URL only  | Minimal XML format per SRCH-02.                    |          |
+| Defer to research | Let researcher determine exact Claude Code format. | ✓        |
 
 **User's choice:** Defer to research
 **Notes:** Researcher will examine Claude Code's actual WebSearch output to determine precise format.
 
 ### Result count
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| All available | Return all citations Perplexity provides (5-10). | ✓ |
-| Fixed count | Return a fixed number. | |
-| Defer to research | Let researcher determine. | |
+| Option            | Description                                      | Selected |
+| ----------------- | ------------------------------------------------ | -------- |
+| All available     | Return all citations Perplexity provides (5-10). | ✓        |
+| Fixed count       | Return a fixed number.                           |          |
+| Defer to research | Let researcher determine.                        |          |
 
 **User's choice:** All available
 **Notes:** None

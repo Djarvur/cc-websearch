@@ -52,50 +52,52 @@
 
 ## Out of Scope
 
-| Feature | Reason |
-|---------|--------|
-| MCP server implementation | Skills invoke CLI scripts directly — simpler, no transport layer needed |
-| Additional search providers (Google, Bing) | Two-tier fallback covers use cases; adding providers is scope creep |
-| Auto-following links from search results | Violates WebSearch/WebFetch separation of concerns |
-| Raw content return from WebFetch | Built-in WebFetch never returns raw content; breaking contract breaks Claude's expectations |
-| Three-tier or deeper fallback chains | Adds complexity without proportional value |
-| Streaming results | Architecturally different from CLI script output; future consideration |
-| Custom search backend configuration | Increases testing burden and config complexity |
+| Feature                                    | Reason                                                                                      |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| MCP server implementation                  | Skills invoke CLI scripts directly — simpler, no transport layer needed                     |
+| Additional search providers (Google, Bing) | Two-tier fallback covers use cases; adding providers is scope creep                         |
+| Auto-following links from search results   | Violates WebSearch/WebFetch separation of concerns                                          |
+| Raw content return from WebFetch           | Built-in WebFetch never returns raw content; breaking contract breaks Claude's expectations |
+| Three-tier or deeper fallback chains       | Adds complexity without proportional value                                                  |
+| Streaming results                          | Architecturally different from CLI script output; future consideration                      |
+| Custom search backend configuration        | Increases testing burden and config complexity                                              |
 
 ## Traceability
 
 Which phases cover which requirements. Updated during roadmap creation.
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| PLUG-01 | Phase 1 | Pending |
-| PLUG-02 | Phase 1 | Pending |
-| PLUG-03 | Phase 1 | Pending |
-| PLUG-04 | Phase 1 | Pending |
-| PLUG-05 | Phase 1 | Pending |
-| SRCH-01 | Phase 1 | Pending |
-| SRCH-02 | Phase 1 | Pending |
-| SRCH-03 | Phase 2 | Done |
-| SRCH-04 | Phase 1 | Pending |
-| SRCH-05 | Phase 2 | Complete |
-| SRCH-06 | Phase 2 | Done |
-| SRCH-07 | Phase 2 | Complete |
-| SRCH-08 | Phase 2 | Complete |
-| FTEC-01 | Phase 3 | Done |
-| FTEC-02 | Phase 3 | Done |
-| FTEC-03 | Phase 3 | Done |
-| FTEC-04 | Phase 3 | Done |
-| FTEC-05 | Phase 3 | Done |
-| CONF-01 | Phase 1 | Pending |
-| CONF-02 | Phase 4 | Done |
-| CONF-03 | Phase 4 | Done |
-| CONF-04 | Phase 1 | Pending |
+| Requirement | Phase   | Status   |
+| ----------- | ------- | -------- |
+| PLUG-01     | Phase 1 | Pending  |
+| PLUG-02     | Phase 1 | Pending  |
+| PLUG-03     | Phase 1 | Pending  |
+| PLUG-04     | Phase 1 | Pending  |
+| PLUG-05     | Phase 1 | Pending  |
+| SRCH-01     | Phase 1 | Pending  |
+| SRCH-02     | Phase 1 | Pending  |
+| SRCH-03     | Phase 2 | Done     |
+| SRCH-04     | Phase 1 | Pending  |
+| SRCH-05     | Phase 2 | Complete |
+| SRCH-06     | Phase 2 | Done     |
+| SRCH-07     | Phase 2 | Complete |
+| SRCH-08     | Phase 2 | Complete |
+| FTEC-01     | Phase 3 | Done     |
+| FTEC-02     | Phase 3 | Done     |
+| FTEC-03     | Phase 3 | Done     |
+| FTEC-04     | Phase 3 | Done     |
+| FTEC-05     | Phase 3 | Done     |
+| CONF-01     | Phase 1 | Pending  |
+| CONF-02     | Phase 4 | Done     |
+| CONF-03     | Phase 4 | Done     |
+| CONF-04     | Phase 1 | Pending  |
 
 **Coverage:**
+
 - v1 requirements: 22 total
 - Mapped to phases: 22
 - Unmapped: 0
 
 ---
-*Requirements defined: 2026-05-20*
-*Last updated: 2026-05-20 after roadmap creation*
+
+_Requirements defined: 2026-05-20_
+_Last updated: 2026-05-20 after roadmap creation_

@@ -22,7 +22,11 @@ describe('formatSearchResults', () => {
 
   it('should escape XML entities in title, URL, and snippet', () => {
     const result = formatSearchResults([
-      { title: 'A & B < C > D "E"', url: 'https://example.com?q=1&b=2', snippet: 'foo & bar < baz' },
+      {
+        title: 'A & B < C > D "E"',
+        url: 'https://example.com?q=1&b=2',
+        snippet: 'foo & bar < baz',
+      },
     ]);
     expect(result).toContain('<title>A &amp; B &lt; C &gt; D &quot;E&quot;</title>');
     expect(result).toContain('<url>https://example.com?q=1&amp;b=2</url>');
@@ -46,9 +50,7 @@ describe('formatSearchResults', () => {
   });
 
   it('should always include snippet tag even when snippet is undefined', () => {
-    const result = formatSearchResults([
-      { title: 'Test', url: 'https://example.com' },
-    ]);
+    const result = formatSearchResults([{ title: 'Test', url: 'https://example.com' }]);
     expect(result).toContain('<snippet></snippet>');
   });
 
@@ -71,9 +73,7 @@ describe('formatSearchResults', () => {
   });
 
   it('should NOT include provider comment', () => {
-    const result = formatSearchResults([
-      { title: 'Test', url: 'https://example.com' },
-    ]);
+    const result = formatSearchResults([{ title: 'Test', url: 'https://example.com' }]);
     expect(result).not.toContain('<!-- provider:');
   });
 });

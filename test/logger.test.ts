@@ -60,8 +60,6 @@ describe('createLogger', () => {
     const logger = createLogger('ddg', 'info');
     logger.info('testing');
 
-    expect(stderrWriteSpy).toHaveBeenCalledWith(
-      expect.stringContaining('[info:ddg]'),
-    );
+    expect(stderrWriteSpy).toHaveBeenCalledWith(expect.stringContaining('[info:ddg]'));
   });
 });

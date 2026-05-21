@@ -5,15 +5,19 @@ import { homedir } from 'os';
 
 // Schema (D-01): nested strict objects, same pattern as input.ts
 export const ConfigSchema = z.strictObject({
-  retry: z.strictObject({
-    maxRetries: z.number().int().min(0).optional(),
-    baseDelay: z.number().int().min(0).optional(),
-    maxDelay: z.number().int().min(0).optional(),
-    timeout: z.number().int().min(0).optional(),
-  }).optional(),
-  logging: z.strictObject({
-    level: z.enum(['debug', 'info', 'warn', 'error']).optional(),
-  }).optional(),
+  retry: z
+    .strictObject({
+      maxRetries: z.number().int().min(0).optional(),
+      baseDelay: z.number().int().min(0).optional(),
+      maxDelay: z.number().int().min(0).optional(),
+      timeout: z.number().int().min(0).optional(),
+    })
+    .optional(),
+  logging: z
+    .strictObject({
+      level: z.enum(['debug', 'info', 'warn', 'error']).optional(),
+    })
+    .optional(),
 });
 
 export type Config = z.infer<typeof ConfigSchema>;
@@ -64,7 +68,9 @@ function readConfigFile(): Record<string, unknown> | null {
 function validateFileConfig(raw: Record<string, unknown>): Config {
   const result = ConfigSchema.safeParse(raw);
   if (!result.success) {
-    process.stderr.write('[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n');
+    process.stderr.write(
+      '[warn] Config file has unrecognized keys or invalid values -- entire file ignored\n',
+    );
     for (const issue of result.error.issues) {
       const path = issue.path.join('.');
       process.stderr.write(`[warn] Invalid config at ${path}: ${issue.message}\n`);
@@ -125,7 +131,11 @@ export function loadConfig(): ResolvedConfig {
 
   return {
     retry: {
-      maxRetries: resolve('retry.maxRetries', fileConfig.retry?.maxRetries, DEFAULTS.retry.maxRetries),
+      maxRetries: resolve(
+        'retry.maxRetries',
+        fileConfig.retry?.maxRetries,
+        DEFAULTS.retry.maxRetries,
+      ),
       baseDelay: resolve('retry.baseDelay', fileConfig.retry?.baseDelay, DEFAULTS.retry.baseDelay),
       maxDelay: resolve('retry.maxDelay', fileConfig.retry?.maxDelay, DEFAULTS.retry.maxDelay),
       timeout: resolve('retry.timeout', fileConfig.retry?.timeout, DEFAULTS.retry.timeout),

@@ -73,7 +73,8 @@ describe('extractMarkdown', () => {
   });
 
   it('should produce ATX headings (# style, not setext underlines)', () => {
-    const articleText = 'Content paragraph with enough text for Readability to work properly. '.repeat(15);
+    const articleText =
+      'Content paragraph with enough text for Readability to work properly. '.repeat(15);
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head><title>ATX Test</title></head>
@@ -94,7 +95,8 @@ describe('extractMarkdown', () => {
   });
 
   it('should produce fenced code blocks (triple backtick style)', () => {
-    const articleText = 'Article body with enough text to satisfy Readability requirements. '.repeat(15);
+    const articleText =
+      'Article body with enough text to satisfy Readability requirements. '.repeat(15);
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head><title>Code Test</title></head>

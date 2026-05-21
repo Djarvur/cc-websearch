@@ -18,7 +18,12 @@ vi.mock('../src/lib/duckduckgo.js', () => ({
 
 vi.mock('../src/lib/retry.js', () => ({
   retryWithBackoff: (...args: any[]) => mockRetryWithBackoff(...args),
-  getRetryConfig: vi.fn(() => ({ maxRetries: 4, baseDelay: 1000, maxDelay: 16000, timeout: 30000 })),
+  getRetryConfig: vi.fn(() => ({
+    maxRetries: 4,
+    baseDelay: 1000,
+    maxDelay: 16000,
+    timeout: 30000,
+  })),
   isDDGTransientError: vi.fn(),
   configureLogger: vi.fn(),
 }));
@@ -161,7 +166,9 @@ describe('WebSearch single-provider DDG flow', () => {
 
     // validateDomainExclusivity throws
     mockValidateDomainExclusivity.mockImplementation(() => {
-      throw new Error('Cannot specify both allowed_domains and blocked_domains in the same request.');
+      throw new Error(
+        'Cannot specify both allowed_domains and blocked_domains in the same request.',
+      );
     });
 
     await import('../src/websearch.js');

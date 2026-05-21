@@ -16,6 +16,7 @@ echo '{"url":"URL","prompt":"QUESTION"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/w
 ```
 
 The script accepts JSON on stdin with this schema:
+
 - `url` (string, required, must be a valid URL): The URL of the page to fetch
 - `prompt` (string, required): The question to answer about the page content
 

@@ -32,8 +32,18 @@ describe('searchDDG', () => {
       noResults: false,
       vqd: 'test-vqd',
       results: [
-        { title: 'Result 1', url: 'https://example.com/1', hostname: 'example.com', description: 'desc 1' },
-        { title: 'Result 2', url: 'https://example.com/2', hostname: 'example.com', description: 'desc 2' },
+        {
+          title: 'Result 1',
+          url: 'https://example.com/1',
+          hostname: 'example.com',
+          description: 'desc 1',
+        },
+        {
+          title: 'Result 2',
+          url: 'https://example.com/2',
+          hostname: 'example.com',
+          description: 'desc 2',
+        },
       ],
     });
 
@@ -85,7 +95,12 @@ describe('searchDDG', () => {
       noResults: false,
       vqd: 'test-vqd',
       results: [
-        { title: 'Result', url: 'https://example.com', hostname: 'example.com', description: 'This is a <b>bold</b> term' },
+        {
+          title: 'Result',
+          url: 'https://example.com',
+          hostname: 'example.com',
+          description: 'This is a <b>bold</b> term',
+        },
       ],
     });
 
@@ -99,9 +114,7 @@ describe('searchDDG', () => {
     mockDdgSearch.mockResolvedValue({
       noResults: false,
       vqd: 'test-vqd',
-      results: [
-        { title: 'Result', url: 'https://example.com', hostname: 'example.com' },
-      ],
+      results: [{ title: 'Result', url: 'https://example.com', hostname: 'example.com' }],
     });
 
     const { searchDDG } = await import('../src/lib/duckduckgo.js');

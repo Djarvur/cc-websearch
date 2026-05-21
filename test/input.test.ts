@@ -25,9 +25,7 @@ describe('WebSearchInputSchema', () => {
   });
 
   it('should reject input with unknown extra fields', () => {
-    expect(() =>
-      WebSearchInputSchema.parse({ query: 'test', extra: 'field' })
-    ).toThrow();
+    expect(() => WebSearchInputSchema.parse({ query: 'test', extra: 'field' })).toThrow();
   });
 
   it('should reject input missing query field', () => {
@@ -41,20 +39,16 @@ describe('validateDomainExclusivity', () => {
       validateDomainExclusivity({
         allowed_domains: ['github.com'],
         blocked_domains: ['reddit.com'],
-      })
+      }),
     ).toThrow('Cannot specify both allowed_domains and blocked_domains in the same request.');
   });
 
   it('should not throw when only allowed_domains is provided', () => {
-    expect(() =>
-      validateDomainExclusivity({ allowed_domains: ['github.com'] })
-    ).not.toThrow();
+    expect(() => validateDomainExclusivity({ allowed_domains: ['github.com'] })).not.toThrow();
   });
 
   it('should not throw when only blocked_domains is provided', () => {
-    expect(() =>
-      validateDomainExclusivity({ blocked_domains: ['reddit.com'] })
-    ).not.toThrow();
+    expect(() => validateDomainExclusivity({ blocked_domains: ['reddit.com'] })).not.toThrow();
   });
 
   it('should not throw when neither is provided', () => {
@@ -62,14 +56,10 @@ describe('validateDomainExclusivity', () => {
   });
 
   it('should not throw when allowed_domains is empty array', () => {
-    expect(() =>
-      validateDomainExclusivity({ allowed_domains: [] })
-    ).not.toThrow();
+    expect(() => validateDomainExclusivity({ allowed_domains: [] })).not.toThrow();
   });
 
   it('should not throw when blocked_domains is empty array', () => {
-    expect(() =>
-      validateDomainExclusivity({ blocked_domains: [] })
-    ).not.toThrow();
+    expect(() => validateDomainExclusivity({ blocked_domains: [] })).not.toThrow();
   });
 });

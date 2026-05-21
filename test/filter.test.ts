@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  normalizeDomain,
-  matchesDomain,
-  filterByDomains,
-} from '../src/lib/filter.js';
+import { normalizeDomain, matchesDomain, filterByDomains } from '../src/lib/filter.js';
 import type { SearchResult } from '../src/types.js';
 
 describe('normalizeDomain', () => {
@@ -95,11 +91,11 @@ describe('filterByDomains', () => {
   });
 
   it('should return empty array when all results are blocked', () => {
-    const allBlocked = filterByDomains(
-      sampleResults,
-      undefined,
-      ['github.com', 'reddit.com', 'stackoverflow.com'],
-    );
+    const allBlocked = filterByDomains(sampleResults, undefined, [
+      'github.com',
+      'reddit.com',
+      'stackoverflow.com',
+    ]);
     expect(allBlocked).toEqual([]);
   });
 

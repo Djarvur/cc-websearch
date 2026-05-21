@@ -123,7 +123,9 @@ describe('WebFetch pipeline', () => {
     mockReadStdin.mockResolvedValue({ url: 'https://example.com/', prompt: 'summarize' });
     mockNormalizeUrl.mockReturnValue(testUrl);
 
-    mockFetchWithRedirects.mockRejectedValue(new Error('HTTP 404: Not Found at https://example.com/'));
+    mockFetchWithRedirects.mockRejectedValue(
+      new Error('HTTP 404: Not Found at https://example.com/'),
+    );
 
     await import('../src/webfetch.js');
     await new Promise((r) => setTimeout(r, 100));

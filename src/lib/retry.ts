@@ -31,14 +31,14 @@ function sleep(ms: number): Promise<void> {
 }
 
 async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
-  let timeoutId: ReturnType<typeof setTimeout>;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
   const timeoutPromise = new Promise<never>((_, reject) => {
     timeoutId = setTimeout(() => reject(new Error(`Operation timed out after ${ms}ms`)), ms);
   });
   try {
     return await Promise.race([promise, timeoutPromise]);
   } finally {
-    clearTimeout(timeoutId!);
+    if (timeoutId !== undefined) clearTimeout(timeoutId);
   }
 }
 
@@ -55,7 +55,7 @@ export async function retryWithBackoff<T>(
   options?: Partial<RetryConfig>,
 ): Promise<T> {
   const config = { ...DEFAULTS, ...options };
-  let lastError: Error;
+  let lastError: Error = new Error('unreachable');
 
   for (let attempt = 0; attempt <= config.maxRetries; attempt++) {
     try {
@@ -67,11 +67,16 @@ export async function retryWithBackoff<T>(
         throw err;
       }
 
-      const delay = Math.random() * Math.min(config.maxDelay, config.baseDelay * Math.pow(2, attempt));
-      logger.debug(`Retry ${attempt + 1}/${config.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`);
+      const delay =
+        Math.random() * Math.min(config.maxDelay, config.baseDelay * Math.pow(2, attempt));
+      logger.debug(
+        `Retry ${attempt + 1}/${config.maxRetries} after ${Math.round(delay)}ms: ${lastError.message}`,
+      );
       await sleep(delay);
     }
   }
 
-  throw lastError!;
+  // The loop always throws before reaching here (either via re-throw on last attempt
+  // or via the catch block above), but TypeScript needs an explicit throw for control flow.
+  throw lastError;
 }

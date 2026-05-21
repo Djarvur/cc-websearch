@@ -32,7 +32,10 @@ export function filterByDomains(
   blockedDomains?: string[],
 ): SearchResult[] {
   // No filtering needed
-  if ((!allowedDomains || allowedDomains.length === 0) && (!blockedDomains || blockedDomains.length === 0)) {
+  if (
+    (!allowedDomains || allowedDomains.length === 0) &&
+    (!blockedDomains || blockedDomains.length === 0)
+  ) {
     return results;
   }
 
@@ -45,8 +48,8 @@ export function filterByDomains(
 
   // Blocked domains: exclude matching results
   if (blockedDomains && blockedDomains.length > 0) {
-    return results.filter((result) =>
-      !blockedDomains.some((domain) => matchesDomain(result.url, domain)),
+    return results.filter(
+      (result) => !blockedDomains.some((domain) => matchesDomain(result.url, domain)),
     );
   }
 

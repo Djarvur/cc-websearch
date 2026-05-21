@@ -47,7 +47,9 @@ export async function fetchWithRedirects(
       await response.text().catch(() => {});
       const location = response.headers.get('location');
       if (!location) {
-        throw new Error(`Redirect (${response.status}) without Location header at ${currentUrl.href}`);
+        throw new Error(
+          `Redirect (${response.status}) without Location header at ${currentUrl.href}`,
+        );
       }
       const targetUrl = new URL(location, currentUrl);
 
