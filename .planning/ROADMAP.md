@@ -17,6 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Search Resilience** - DuckDuckGo fallback, domain filtering, and retry logic for rate limits (completed 2026-05-20)
 - [x] **Phase 3: WebFetch Content Pipeline** - Page fetching, content extraction, markdown conversion, and LLM summarization (completed 2026-05-20)
 - [x] **Phase 4: Config File and Logging** - Config file support with env override and configurable log levels (completed 2026-05-20)
+- [ ] **Phase 5: DDG-Only with Citations** - Remove Perplexity dependency, make DDG sole search provider, add citations to DDG results
 
 ## Phase Details
 
@@ -126,10 +127,34 @@ Plans:
 
 - [x] 04-03: Entry point wiring and bundle rebuild -- update websearch.ts/webfetch.ts to load config at startup, update entry point tests, rebuild bundles (completed 2026-05-20)
 
+### Phase 5: DDG-Only with Citations
+
+**Goal**: Remove Perplexity as a search provider (pricing no longer viable), make DuckDuckGo the sole search provider, and add citation URLs to DDG search results matching Claude Code's output format
+**Mode**: mvp
+**Depends on**: Phase 1, Phase 2
+**Requirements**: SRCH-01, SRCH-04
+**Success Criteria** (what must be TRUE):
+
+  1. Perplexity code, config, and dependencies are fully removed -- no perplexity.ts, no @perplexity-ai/perplexity_ai, no PPLX/WEBSEARCH_PERPLEXITY env vars
+  2. WebSearch uses DDG exclusively and returns results in Claude Code's exact format with citation URLs
+  3. WebFetch fetches pages directly (no summarization fallback via Perplexity) -- raw markdown or content extraction only
+  4. No API key is required for any functionality -- the plugin works out of the box with just DDG
+
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 05-01: Snippet support and Perplexity purge -- add snippet field to SearchResult, extract DDG descriptions, add <snippet> XML tags, remove provider comment, simplify config/retry/entry points, delete perplexity.ts, remove dependency
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 05-02: Test cleanup and bundle rebuild -- delete perplexity tests, update all test files for simplified flow, rebuild bundles, full suite green
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -137,3 +162,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 2. Search Resilience | 3/3 | Complete    | 2026-05-20 |
 | 3. WebFetch Content Pipeline | 2/2 | Complete   | 2026-05-20 |
 | 4. Config File and Logging | 3/3 | Complete | 2026-05-20 |
+| 5. DDG-Only with Citations | 0/2 | Planned | - |
