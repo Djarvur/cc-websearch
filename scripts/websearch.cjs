@@ -61051,7 +61051,9 @@ async function searchDDG(query) {
   }
   const html3 = await response.text();
   if (html3.includes("DDG.deep.anomalyDetectionBlock")) {
-    throw new Error("DDG detected an anomaly in the request, you are likely making requests too quickly.");
+    throw new Error(
+      "DDG detected an anomaly in the request, you are likely making requests too quickly."
+    );
   }
   const $4 = load(html3);
   const results = [];
@@ -61096,7 +61098,10 @@ function sleep(ms) {
 async function withTimeout(promise2, ms) {
   let timeoutId;
   const timeoutPromise = new Promise((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error(`Request timed out after ${ms}ms (ETIMEDOUT)`)), ms);
+    timeoutId = setTimeout(
+      () => reject(new Error(`Request timed out after ${ms}ms (ETIMEDOUT)`)),
+      ms
+    );
   });
   try {
     return await Promise.race([promise2, timeoutPromise]);
