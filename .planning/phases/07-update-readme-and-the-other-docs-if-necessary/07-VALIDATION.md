@@ -37,11 +37,11 @@ created: 2026-05-21
 
 | Task ID | Plan | Wave | Automated Command                                                                      | File Exists               | Status     |
 | ------- | ---- | ---- | -------------------------------------------------------------------------------------- | ------------------------- | ---------- | ---------- |
-| 07-01-1 | 01   | 1    | `grep -c 'webfetch\\.cjs' skills/webfetch/SKILL.md && npm test -- test/skills.test.ts` | ✅                        | ⬜ pending |
-| 07-01-2 | 01   | 1    | `grep -c 'WEBSEARCH_RETRY_MAX_RETRIES' .env.example && ... && ! grep -c -i 'PPLX\\     | PERPLEXITY' .env.example` | ⬜ W0      | ⬜ pending |
-| 07-01-3 | 01   | 1    | human review (checkpoint)                                                              | ⬜ W0                     | ⬜ pending |
-| 07-02-1 | 02   | 2    | `npm test -- test/skills.test.ts && npm test -- test/manifest.test.ts`                 | ✅                        | ⬜ pending |
-| 07-02-2 | 02   | 2    | `npm run check`                                                                        | ✅                        | ⬜ pending |
+| 07-01-1 | 01   | 1    | `grep -c 'webfetch\\.cjs' skills/webfetch/SKILL.md && npm test -- test/skills.test.ts` | ✅                        | ✅ green |
+| 07-01-2 | 01   | 1    | `grep -c 'WEBSEARCH_RETRY_MAX_RETRIES' .env.example && ... && ! grep -c -i 'PPLX\\     | PERPLEXITY' .env.example` | ⬜ W0      | ✅ green |
+| 07-01-3 | 01   | 1    | human review (checkpoint)                                                              | ⬜ W0                     | ✅ green |
+| 07-02-1 | 02   | 2    | `npm test -- test/skills.test.ts && npm test -- test/manifest.test.ts`                 | ✅                        | ✅ green |
+| 07-02-2 | 02   | 2    | `npm run check`                                                                        | ✅                        | ✅ green |
 
 _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
@@ -64,11 +64,11 @@ None — existing test infrastructure covers all phase requirements.
 
 ## Validation Sign-Off
 
-- [ ] All tasks have verification step (automated or checkpoint)
-- [ ] Sampling continuity: no 3 consecutive tasks without verification
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have verification step (automated or checkpoint)
+- [x] Sampling continuity: no 3 consecutive tasks without verification
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-21

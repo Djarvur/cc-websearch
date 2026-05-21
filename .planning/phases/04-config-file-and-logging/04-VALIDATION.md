@@ -38,10 +38,10 @@ created: 2026-05-20
 
 | Task ID  | Plan | Wave | Requirement      | Threat Ref | Secure Behavior                                                               | Test Type | Automated Command                                                                                  | File Exists | Status     |
 | -------- | ---- | ---- | ---------------- | ---------- | ----------------------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------------- | ----------- | ---------- |
-| 04-01-01 | 01   | 1    | CONF-02, CONF-03 | T-4-01     | Zod strictObject rejects unknown keys; malformed JSON warns and uses defaults | unit      | `npx vitest run test/config.test.ts --reporter=verbose`                                            | ✅          | ⬜ pending |
-| 04-01-02 | 01   | 1    | CONF-02, CONF-03 | —          | N/A                                                                           | unit      | `npx vitest run test/config.test.ts --reporter=verbose`                                            | ✅          | ⬜ pending |
-| 04-02-01 | 02   | 2    | D-08, D-09, D-10 | T-4-01     | API key from config not logged                                                | unit      | `npx vitest run test/logger.test.ts test/retry.test.ts test/perplexity.test.ts --reporter=verbose` | ✅          | ⬜ pending |
-| 04-02-02 | 02   | 2    | CONF-02, CONF-03 | —          | N/A                                                                           | unit      | `npx vitest run --reporter=verbose`                                                                | ✅          | ⬜ pending |
+| 04-01-01 | 01   | 1    | CONF-02, CONF-03 | T-4-01     | Zod strictObject rejects unknown keys; malformed JSON warns and uses defaults | unit      | `npx vitest run test/config.test.ts --reporter=verbose`                                            | ✅          | ✅ green |
+| 04-01-02 | 01   | 1    | CONF-02, CONF-03 | —          | N/A                                                                           | unit      | `npx vitest run test/config.test.ts --reporter=verbose`                                            | ✅          | ✅ green |
+| 04-02-01 | 02   | 2    | D-08, D-09, D-10 | T-4-01     | API key from config not logged                                                | unit      | `npx vitest run test/logger.test.ts test/retry.test.ts test/perplexity.test.ts --reporter=verbose` | ✅          | ✅ green |
+| 04-02-02 | 02   | 2    | CONF-02, CONF-03 | —          | N/A                                                                           | unit      | `npx vitest run --reporter=verbose`                                                                | ✅          | ✅ green |
 
 _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
@@ -75,4 +75,4 @@ _Existing infrastructure covers all phase requirements. Wave 0 is pre-satisfied.
 - [x] Feedback latency < 10s
 - [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-21

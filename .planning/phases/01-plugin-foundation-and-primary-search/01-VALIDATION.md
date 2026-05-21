@@ -38,16 +38,16 @@ created: 2026-05-20
 
 | Task ID  | Plan | Wave | Requirement | Threat Ref | Secure Behavior                     | Test Type   | Automated Command                           | File Exists | Status     |
 | -------- | ---- | ---- | ----------- | ---------- | ----------------------------------- | ----------- | ------------------------------------------- | ----------- | ---------- |
-| 01-01-01 | 01   | 1    | PLUG-01     | —          | N/A                                 | unit        | `npx vitest run test/manifest.test.ts`      | ❌ W0       | ⬜ pending |
-| 01-01-02 | 01   | 1    | PLUG-02     | —          | N/A                                 | unit        | `npx vitest run test/skills.test.ts`        | ❌ W0       | ⬜ pending |
-| 01-01-03 | 01   | 1    | PLUG-03     | —          | N/A                                 | unit        | `npx vitest run test/skills.test.ts`        | ❌ W0       | ⬜ pending |
-| 01-02-01 | 02   | 1    | PLUG-04     | T-1-01     | Zod rejects unexpected fields/types | unit        | `npx vitest run test/input.test.ts`         | ❌ W0       | ⬜ pending |
-| 01-02-02 | 02   | 1    | SRCH-01     | —          | N/A                                 | unit        | `npx vitest run test/input.test.ts`         | ❌ W0       | ⬜ pending |
-| 01-02-03 | 02   | 1    | SRCH-02     | T-1-02     | escapeXml() escapes &, <, >, "      | unit        | `npx vitest run test/output.test.ts`        | ❌ W0       | ⬜ pending |
-| 01-02-04 | 02   | 1    | PLUG-05     | —          | N/A                                 | unit        | `npx vitest run test/io-separation.test.ts` | ❌ W0       | ⬜ pending |
-| 01-02-05 | 02   | 1    | CONF-04     | —          | N/A                                 | unit        | `npx vitest run test/logger.test.ts`        | ❌ W0       | ⬜ pending |
-| 01-03-01 | 03   | 2    | CONF-01     | T-1-03     | API key never logged                | unit        | `npx vitest run test/config.test.ts`        | ❌ W0       | ⬜ pending |
-| 01-03-02 | 03   | 2    | SRCH-04     | —          | N/A                                 | integration | `npx vitest run test/perplexity.test.ts`    | ❌ W0       | ⬜ pending |
+| 01-01-01 | 01   | 1    | PLUG-01     | —          | N/A                                 | unit        | `npx vitest run test/manifest.test.ts`      | ❌ W0       | ✅ green |
+| 01-01-02 | 01   | 1    | PLUG-02     | —          | N/A                                 | unit        | `npx vitest run test/skills.test.ts`        | ❌ W0       | ✅ green |
+| 01-01-03 | 01   | 1    | PLUG-03     | —          | N/A                                 | unit        | `npx vitest run test/skills.test.ts`        | ❌ W0       | ✅ green |
+| 01-02-01 | 02   | 1    | PLUG-04     | T-1-01     | Zod rejects unexpected fields/types | unit        | `npx vitest run test/input.test.ts`         | ❌ W0       | ✅ green |
+| 01-02-02 | 02   | 1    | SRCH-01     | —          | N/A                                 | unit        | `npx vitest run test/input.test.ts`         | ❌ W0       | ✅ green |
+| 01-02-03 | 02   | 1    | SRCH-02     | T-1-02     | escapeXml() escapes &, <, >, "      | unit        | `npx vitest run test/output.test.ts`        | ❌ W0       | ✅ green |
+| 01-02-04 | 02   | 1    | PLUG-05     | —          | N/A                                 | unit        | `npx vitest run test/io-separation.test.ts` | ❌ W0       | ✅ green |
+| 01-02-05 | 02   | 1    | CONF-04     | —          | N/A                                 | unit        | `npx vitest run test/logger.test.ts`        | ❌ W0       | ✅ green |
+| 01-03-01 | 03   | 2    | CONF-01     | T-1-03     | API key never logged                | unit        | `npx vitest run test/config.test.ts`        | ❌ W0       | ✅ green |
+| 01-03-02 | 03   | 2    | SRCH-04     | —          | N/A                                 | integration | `npx vitest run test/perplexity.test.ts`    | ❌ W0       | ✅ green |
 
 _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
@@ -55,15 +55,15 @@ _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ## Wave 0 Requirements
 
-- [ ] `vitest.config.ts` — test framework configuration
-- [ ] `test/manifest.test.ts` — stubs for PLUG-01
-- [ ] `test/skills.test.ts` — stubs for PLUG-02, PLUG-03
-- [ ] `test/input.test.ts` — stubs for PLUG-04, SRCH-01
-- [ ] `test/output.test.ts` — stubs for SRCH-02
-- [ ] `test/io-separation.test.ts` — stubs for PLUG-05
-- [ ] `test/config.test.ts` — stubs for CONF-01
-- [ ] `test/logger.test.ts` — stubs for CONF-04
-- [ ] `test/perplexity.test.ts` — stubs for SRCH-04
+- [x] `vitest.config.ts` — test framework configuration
+- [x] `test/manifest.test.ts` — stubs for PLUG-01
+- [x] `test/skills.test.ts` — stubs for PLUG-02, PLUG-03
+- [x] `test/input.test.ts` — stubs for PLUG-04, SRCH-01
+- [x] `test/output.test.ts` — stubs for SRCH-02
+- [x] `test/io-separation.test.ts` — stubs for PLUG-05
+- [x] `test/config.test.ts` — stubs for CONF-01
+- [x] `test/logger.test.ts` — stubs for CONF-04
+- [x] `test/perplexity.test.ts` — stubs for SRCH-04
 
 ---
 
@@ -78,11 +78,11 @@ _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 10s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 10s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-21

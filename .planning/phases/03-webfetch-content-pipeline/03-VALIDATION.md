@@ -38,12 +38,12 @@ created: 2026-05-20
 
 | Task ID  | Plan | Wave | Requirement | Threat Ref | Secure Behavior                                           | Test Type | Automated Command                         | File Exists | Status     |
 | -------- | ---- | ---- | ----------- | ---------- | --------------------------------------------------------- | --------- | ----------------------------------------- | ----------- | ---------- |
-| 03-01-01 | 01   | 1    | FTEC-01     | —          | Zod schema validation on stdin input                      | unit      | `npx vitest run test/webfetch.test.ts -x` | ❌ W0       | ⬜ pending |
-| 03-01-02 | 01   | 1    | FTEC-02     | —          | HTTP→HTTPS upgrade                                        | unit      | `npx vitest run test/fetch.test.ts -x`    | ❌ W0       | ⬜ pending |
-| 03-01-03 | 01   | 1    | FTEC-05     | T-03-05    | Same-host redirects followed (max 10); cross-host blocked | unit      | `npx vitest run test/fetch.test.ts -x`    | ❌ W0       | ⬜ pending |
-| 03-02-01 | 02   | 2    | FTEC-03     | T-03-02    | Readability strips scripts; jsdom runScripts disabled     | unit      | `npx vitest run test/content.test.ts -x`  | ❌ W0       | ⬜ pending |
-| 03-02-02 | 02   | 2    | FTEC-04     | T-03-01    | Perplexity summarization with disable_search              | unit      | `npx vitest run test/webfetch.test.ts -x` | ❌ W0       | ⬜ pending |
-| 03-02-03 | 02   | 2    | FTEC-03     | —          | Readability null fallback to raw Turndown                 | unit      | `npx vitest run test/content.test.ts -x`  | ❌ W0       | ⬜ pending |
+| 03-01-01 | 01   | 1    | FTEC-01     | —          | Zod schema validation on stdin input                      | unit      | `npx vitest run test/webfetch.test.ts -x` | ❌ W0       | ✅ green |
+| 03-01-02 | 01   | 1    | FTEC-02     | —          | HTTP→HTTPS upgrade                                        | unit      | `npx vitest run test/fetch.test.ts -x`    | ❌ W0       | ✅ green |
+| 03-01-03 | 01   | 1    | FTEC-05     | T-03-05    | Same-host redirects followed (max 10); cross-host blocked | unit      | `npx vitest run test/fetch.test.ts -x`    | ❌ W0       | ✅ green |
+| 03-02-01 | 02   | 2    | FTEC-03     | T-03-02    | Readability strips scripts; jsdom runScripts disabled     | unit      | `npx vitest run test/content.test.ts -x`  | ❌ W0       | ✅ green |
+| 03-02-02 | 02   | 2    | FTEC-04     | T-03-01    | Perplexity summarization with disable_search              | unit      | `npx vitest run test/webfetch.test.ts -x` | ❌ W0       | ✅ green |
+| 03-02-03 | 02   | 2    | FTEC-03     | —          | Readability null fallback to raw Turndown                 | unit      | `npx vitest run test/content.test.ts -x`  | ❌ W0       | ✅ green |
 
 _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
@@ -51,9 +51,9 @@ _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ## Wave 0 Requirements
 
-- [ ] `test/fetch.test.ts` — stubs for FTEC-02 (URL normalization), FTEC-05 (redirect handling)
-- [ ] `test/content.test.ts` — stubs for FTEC-03 (Readability + Turndown, null fallback, truncation)
-- [ ] `test/webfetch.test.ts` — stubs for FTEC-01 (input validation), FTEC-04 (Perplexity summarize integration)
+- [x] `test/fetch.test.ts` — stubs for FTEC-02 (URL normalization), FTEC-05 (redirect handling)
+- [x] `test/content.test.ts` — stubs for FTEC-03 (Readability + Turndown, null fallback, truncation)
+- [x] `test/webfetch.test.ts` — stubs for FTEC-01 (input validation), FTEC-04 (Perplexity summarize integration)
 
 _If none: "Existing infrastructure covers all phase requirements."_
 
@@ -70,11 +70,11 @@ _If none: "Existing infrastructure covers all phase requirements."_
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 10s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 10s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-21

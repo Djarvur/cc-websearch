@@ -38,10 +38,10 @@ created: 2026-05-21
 
 | Task ID  | Plan | Wave | Requirement      | Threat Ref | Secure Behavior      | Test Type   | Automated Command | File Exists | Status     |
 | -------- | ---- | ---- | ---------------- | ---------- | -------------------- | ----------- | ----------------- | ----------- | ---------- |
-| 05-01-01 | 01   | 1    | SRCH-01, SRCH-04 | —          | N/A                  | unit        | `npm test`        | ✅          | ⬜ pending |
-| 05-01-02 | 01   | 1    | SRCH-04          | —          | escapeXml on snippet | unit        | `npm test`        | ✅          | ⬜ pending |
-| 05-02-01 | 02   | 2    | SRCH-04          | —          | N/A                  | unit        | `npm test`        | ✅          | ⬜ pending |
-| 05-02-02 | 02   | 2    | SRCH-04          | —          | N/A                  | integration | `npm test`        | ✅          | ⬜ pending |
+| 05-01-01 | 01   | 1    | SRCH-01, SRCH-04 | —          | N/A                  | unit        | `npm test`        | ✅          | ✅ green |
+| 05-01-02 | 01   | 1    | SRCH-04          | —          | escapeXml on snippet | unit        | `npm test`        | ✅          | ✅ green |
+| 05-02-01 | 02   | 2    | SRCH-04          | —          | N/A                  | unit        | `npm test`        | ✅          | ✅ green |
+| 05-02-02 | 02   | 2    | SRCH-04          | —          | N/A                  | integration | `npm test`        | ✅          | ✅ green |
 
 _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
@@ -68,4 +68,4 @@ All phase behaviors have automated verification.
 - [x] Feedback latency < 10s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-21

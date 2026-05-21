@@ -38,11 +38,11 @@ created: 2026-05-21
 
 | Task ID  | Plan | Wave | Requirement  | Threat Ref     | Secure Behavior       | Test Type   | Automated Command      | File Exists | Status     |
 | -------- | ---- | ---- | ------------ | -------------- | --------------------- | ----------- | ---------------------- | ----------- | ---------- |
-| 06-01-01 | 01   | 1    | CI-05, CI-06 | —              | N/A                   | unit        | `npx eslint .`         | ❌ W0       | ⬜ pending |
-| 06-01-02 | 01   | 1    | CI-07        | —              | N/A                   | manual      | `mise run check-all`   | ❌ W0       | ⬜ pending |
-| 06-02-01 | 02   | 2    | CI-02        | —              | N/A                   | e2e         | `npm run e2e`          | ❌ W0       | ⬜ pending |
-| 06-02-02 | 02   | 2    | CI-01, CI-04 | —              | Pin action SHAs       | integration | `git push` triggers CI | ❌ W0       | ⬜ pending |
-| 06-03-01 | 03   | 2    | CI-03, CI-08 | T-6-01, T-6-02 | npm audit, Dependabot | integration | `workflow_dispatch`    | ❌ W0       | ⬜ pending |
+| 06-01-01 | 01   | 1    | CI-05, CI-06 | —              | N/A                   | unit        | `npx eslint .`         | ❌ W0       | ✅ green |
+| 06-01-02 | 01   | 1    | CI-07        | —              | N/A                   | manual      | `mise run check-all`   | ❌ W0       | ✅ green |
+| 06-02-01 | 02   | 2    | CI-02        | —              | N/A                   | e2e         | `npm run e2e`          | ❌ W0       | ✅ green |
+| 06-02-02 | 02   | 2    | CI-01, CI-04 | —              | Pin action SHAs       | integration | `git push` triggers CI | ❌ W0       | ✅ green |
+| 06-03-01 | 03   | 2    | CI-03, CI-08 | T-6-01, T-6-02 | npm audit, Dependabot | integration | `workflow_dispatch`    | ❌ W0       | ✅ green |
 
 _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
@@ -50,18 +50,18 @@ _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ## Wave 0 Requirements
 
-- [ ] `test/e2e/websearch.e2e.ts` — covers CI-02 (WebSearch E2E)
-- [ ] `test/e2e/webfetch.e2e.ts` — covers CI-02 (WebFetch E2E)
-- [ ] `test/e2e/helpers.ts` — shared E2E utilities
-- [ ] `eslint.config.js` — ESLint flat config
-- [ ] `.prettierrc` — Prettier config
-- [ ] `vitest.config.ts` — update with coverage thresholds + E2E exclusion
-- [ ] `.github/workflows/ci.yml` — PR gate workflow
-- [ ] `.github/workflows/cron.yml` — periodic workflow
-- [ ] `.github/dependabot.yml` — Dependabot config
-- [ ] `.mise.toml` — mise task definitions
-- [ ] `build.ts` — fix jsdom external for webfetch entry point
-- [ ] `package.json` — add lint/e2e/check scripts + new devDependencies
+- [x] `test/e2e/websearch.e2e.ts` — covers CI-02 (WebSearch E2E)
+- [x] `test/e2e/webfetch.e2e.ts` — covers CI-02 (WebFetch E2E)
+- [x] `test/e2e/helpers.ts` — shared E2E utilities
+- [x] `eslint.config.js` — ESLint flat config
+- [x] `.prettierrc` — Prettier config
+- [x] `vitest.config.ts` — update with coverage thresholds + E2E exclusion
+- [x] `.github/workflows/ci.yml` — PR gate workflow
+- [x] `.github/workflows/cron.yml` — periodic workflow
+- [x] `.github/dependabot.yml` — Dependabot config
+- [x] `.mise.toml` — mise task definitions
+- [x] `build.ts` — fix jsdom external for webfetch entry point
+- [x] `package.json` — add lint/e2e/check scripts + new devDependencies
 
 ---
 
@@ -78,9 +78,9 @@ _Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 - [x] All tasks have `<automated>` verify or Wave 0 dependencies
 - [x] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
+- [x] Wave 0 covers all MISSING references
 - [x] No watch-mode flags
 - [x] Feedback latency < 30s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-21
