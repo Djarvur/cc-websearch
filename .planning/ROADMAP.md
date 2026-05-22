@@ -37,7 +37,7 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 | 6. CI Pipeline and E2E Tests | v1.0 | 3/3 | Complete | 2026-05-21 |
 | 7. Update README and verify plugin readiness | v1.0 | 2/2 | Complete | 2026-05-21 |
 | 8. Close tech debt | v1.0 | 4/4 | Complete | 2026-05-21 |
-| 9. Script relocation for plugin distribution | v1.1 | 0/0 | Planning | - |
+| 9. Script relocation for plugin distribution | v1.1 | 1/1 | Planned | - |
 
 ### 🚧 v1.1 Plugin Distribution (In Progress)
 
@@ -56,4 +56,8 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 4. All path-dependent tests pass with new locations
 5. `npm run lint && npm run build && npm test` all pass
 
-**Plans**: 1 plan (single wave)
+**Plans**: 1 plan
+
+Plans:
+
+- [ ] 09-01: Update build output paths, SKILL.md refs, tests, and remove old scripts/ dir
