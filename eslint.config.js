@@ -9,7 +9,14 @@ export default defineConfig(
   ...tseslint.configs.recommended,
   ...tseslint.configs.strict,
   {
-    ignores: ['scripts/**', 'node_modules/**', 'coverage/**', 'dist/**', '.claude/**'],
+    ignores: [
+      'scripts/**',
+      'skills/*/scripts/**',
+      'node_modules/**',
+      'coverage/**',
+      'dist/**',
+      '.claude/**',
+    ],
   },
   {
     files: ['test/**/*.ts'],

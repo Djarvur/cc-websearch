@@ -1,4 +1,5 @@
 scripts/
+skills/*/scripts/
 coverage/
 node_modules/
 dist/
