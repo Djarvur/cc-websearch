@@ -8,15 +8,15 @@ A Claude Code plugin providing two skills that replace the built-in WebSearch an
 
 Exact drop-in replacement for Claude Code's WebSearch and WebFetch — same interface, same output format, no behavior changes for the user.
 
-## Current Milestone: v1.1 Plugin Distribution
+## Current Milestone: v1.2 Replace Built-in WebSearch/WebFetch
 
-**Goal:** Compiled scripts distributed alongside skill definitions so `claude plugin install` copies everything automatically.
+**Goal:** Make the cc-websearch plugin replace Claude Code's built-in WebSearch and WebFetch tools for ALL providers — the plugin is always used regardless of whether the provider is Anthropic or not.
 
 **Target features:**
-- Bundles output to `skills/<name>/scripts/` instead of root `scripts/`
-- SKILL.md paths updated to use new locations
-- Old `scripts/` directory removed
-- All tests and CI updated for new paths
+- Investigate how Claude Code routes built-in tools vs plugin skills
+- Find mechanism to override/disable built-in WebSearch and WebFetch
+- Implement solution so plugin skills are always used instead of built-in tools
+- Works identically for all providers (Anthropic, OpenAI, self-hosted, etc.)
 
 ## Requirements
 
@@ -106,4 +106,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-*Last updated: 2026-05-22 after v1.1 milestone start*
+*Last updated: 2026-05-22 after v1.2 milestone start*

@@ -1,16 +1,15 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Plugin Distribution
-status: milestone_complete
-stopped_at: Milestone complete (Phase 09 was final phase)
-last_updated: 2026-05-22T10:15:33.673Z
-last_activity: 2026-05-22 -- Phase 09 execution started
+milestone: v1.2
+milestone_name: Replace Built-in WebSearch/WebFetch
+status: planning
+last_updated: "2026-05-22T19:26:10.900Z"
+last_activity: 2026-05-22
 progress:
-  total_phases: 1
+  total_phases: 0
   completed_phases: 0
-  total_plans: 1
-  completed_plans: 1
+  total_plans: 0
+  completed_plans: 0
   percent: 0
 ---
 
@@ -25,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-05-20)
 
 ## Current Position
 
-Phase: 09
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-05-22
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-22 — Milestone v1.2 started
 
 ## Performance Metrics
 
