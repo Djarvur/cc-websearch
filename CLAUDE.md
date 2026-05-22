@@ -100,7 +100,7 @@ A Claude Code plugin providing two skills that replace the built-in WebSearch an
 
 ## Plugin Distribution Architecture
 
-- Skills invoke scripts via `node "${CLAUDE_PLUGIN_ROOT}/scripts/websearch.ts"` -- but TypeScript files need compilation or a runtime like `tsx`
+- Skills invoke compiled bundles from their own subdirectory: `node "${CLAUDE_PLUGIN_ROOT}/skills/<name>/scripts/<bundle>.cjs"`
 - Use `${CLAUDE_PLUGIN_ROOT}` for all path references in skill definitions
 - Use `${CLAUDE_PLUGIN_DATA}` for persistent data (caches, node_modules across updates)
 - The `hooks/hooks.json` `SessionStart` hook pattern handles npm dependency installation on first run and after updates

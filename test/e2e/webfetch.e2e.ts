@@ -4,7 +4,7 @@ import { runScript, withRetry } from './helpers.js';
 describe('WebFetch E2E', () => {
   it('fetches real page and returns markdown', async () => {
     await withRetry(async () => {
-      const result = await runScript('scripts/webfetch.cjs', {
+      const result = await runScript('skills/webfetch/scripts/webfetch.cjs', {
         url: 'https://example.com',
         prompt: 'describe this page',
       });
@@ -20,7 +20,7 @@ describe('WebFetch E2E', () => {
   });
 
   it('returns error for bad URL', async () => {
-    const result = await runScript('scripts/webfetch.cjs', {
+    const result = await runScript('skills/webfetch/scripts/webfetch.cjs', {
       url: 'not-a-valid-url',
       prompt: 'test',
     });
