@@ -60,4 +60,4 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 
 Plans:
 
-- [ ] 09-01: Update build output paths, SKILL.md refs, tests, and remove old scripts/ dir
+- [x] 09-01: Update build output paths, SKILL.md refs, tests, and remove old scripts/ dir
