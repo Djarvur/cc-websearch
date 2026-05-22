@@ -68,24 +68,24 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HOOK-01 | — | Pending |
-| HOOK-02 | — | Pending |
-| HOOK-03 | — | Pending |
-| HOOK-04 | — | Pending |
-| RDIR-01 | — | Pending |
-| RDIR-02 | — | Pending |
-| RDIR-03 | — | Pending |
-| RDIR-04 | — | Pending |
-| OUTP-01 | — | Pending |
-| OUTP-02 | — | Pending |
-| OUTP-03 | — | Pending |
-| OUTP-04 | — | Pending |
+| HOOK-01 | Phase 10 | Pending |
+| HOOK-02 | Phase 10 | Pending |
+| HOOK-03 | Phase 10 | Pending |
+| HOOK-04 | Phase 10 | Pending |
+| RDIR-01 | Phase 11 | Pending |
+| RDIR-02 | Phase 11 | Pending |
+| RDIR-03 | Phase 11 | Pending |
+| RDIR-04 | Phase 11 | Pending |
+| OUTP-01 | Phase 12 | Pending |
+| OUTP-02 | Phase 12 | Pending |
+| OUTP-03 | Phase 12 | Pending |
+| OUTP-04 | Phase 12 | Pending |
 
 **Coverage:**
 - v1.2 requirements: 12 total
-- Mapped to phases: 0
-- Unmapped: 12 ⚠️
+- Mapped to phases: 12
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-05-22*
-*Last updated: 2026-05-22 after v1.2 milestone start*
+*Last updated: 2026-05-22 after v1.2 roadmap creation*

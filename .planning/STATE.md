@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Replace Built-in WebSearch/WebFetch
-status: planning
-last_updated: "2026-05-22T19:26:10.900Z"
+status: roadmap
+last_updated: "2026-05-22T22:41:00.000Z"
 last_activity: 2026-05-22
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,25 +17,26 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-20)
+See: .planning/PROJECT.md (updated 2026-05-22)
 
-**Core value:** DDG-powered drop-in replacement for Claude Code's WebSearch and WebFetch -- same interface, same output format, no behavior changes for the user. Zero API keys required.
-**Current focus:** Milestone complete
+**Core value:** DDG-powered drop-in replacement for Claude Code's WebSearch and WebFetch -- same interface, same output format, works on all providers. Zero API keys required.
+**Current focus:** Phase 10 - Hook Infrastructure
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 10 of 12 (Hook Infrastructure)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-05-22 — Milestone v1.2 started
+Status: Roadmap created, ready to plan
+Last activity: 2026-05-22 — v1.2 roadmap created (3 phases, 12 requirements)
+
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
-
-- Total plans completed: 21
+- Total plans completed: 22
 - Average duration: ~7min
-- Total execution time: ~1.7 hours
+- Total execution time: ~1.8 hours
 
 **By Phase:**
 
@@ -47,38 +48,26 @@ Last activity: 2026-05-22 — Milestone v1.2 started
 | 04    | 3/3   | 11min | 3.7min   |
 | 05    | 2/2   | 13min | 6.5min   |
 | 06    | 2/3   | 16min | 8min     |
-| 7 | 2 | - | - |
-| 08 | 4 | - | - |
-| 09 | 1 | - | - |
+| 07    | 2     | -     | -        |
+| 08    | 4     | -     | -        |
+| 09    | 1     | -     | -        |
 
 **Recent Trend:**
-
-- Last 5 plans: Phase 05-06
+- Last 5 plans: Phase 08-09
 - Trend: Stable
 
 _Updated after each plan completion_
 
 ## Accumulated Context
 
-### Roadmap Evolution
-
-- Phase 6 added: CI Pipeline and E2E Tests
-- Phase 7 added: update README and docs, check plugin readiness
-- Phase 8 added: Close tech debt: update REQUIREMENTS.md, fix SUMMARY gaps, finalize Nyquist
-
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- DDG-only search with citation snippets (Phase 05)
-- Snippet field uses HTML tag stripping via regex
-- Config simplified to {retry, logging} only
-- WebFetch is pure fetch-extract-markdown pipeline (no LLM)
-- ESLint strict mode with test file overrides for any types (Phase 06)
-- @vitest/coverage-v8@4.1.6 to match vitest peer dependency (Phase 06)
-- Cron workflow Monday 6 AM UTC with npm audit + E2E tests (Phase 06)
-- Dependabot for npm + github-actions weekly updates (Phase 06)
+- PreToolUse hooks chosen as the only viable mechanism to replace built-in tools (skills cannot shadow names, MCP naming convention prevents matching)
+- Denial reason is behavioral redirect, not structural replacement — model decides whether to follow the instruction
+- No new runtime dependencies for v1.2 — purely plugin configuration changes
 
 ### Pending Todos
 
@@ -86,27 +75,22 @@ None.
 
 ### Blockers/Concerns
 
-None -- jsdom bundle issue resolved in Plan 06-01.
+- Redirect reliability is untested — research confirms mechanism exists but no empirical success rate data. Phase 11 must test across diverse prompt patterns.
+- WebFetch output format needs empirical verification — Agent SDK types show structured JSON but actual conversation-visible output may differ. Phase 12 must test against real Claude Code.
 
 ## Deferred Items
 
-Items acknowledged and deferred at milestone close on 2026-05-22:
+Items acknowledged and carried forward from v1.1 milestone close:
 
-| Category | Item | Status |
-|----------|------|--------|
-| verification | Phase 05 - live DDG search verification | Resolved (code fix applied, DDG Lite endpoint) |
-| verification | Phase 06 - E2E tests against real network | Resolved (all 5 pass) |
-| verification | Phase 06 - GitHub Actions PR gate | Deferred (requires push to GitHub) |
-| verification | Phase 06 - Cron workflow and Dependabot | Deferred (requires push to GitHub) |
-| uat | Phase 06 - E2E tests (scenario 1) | Resolved (all 5 pass) |
-| uat | Phase 06 - GitHub Actions PR gate (scenario 2) | Deferred (requires push to GitHub) |
-| uat | Phase 06 - Cron/Dependabot (scenario 3) | Deferred (requires push to GitHub) |
+| Category | Item | Status | Deferred At |
+|----------|------|--------|-------------|
+| verification | Phase 06 - GitHub Actions PR gate | Deferred (requires push to GitHub) | 2026-05-22 |
+| verification | Phase 06 - Cron workflow and Dependabot | Deferred (requires push to GitHub) | 2026-05-22 |
+| uat | Phase 06 - GitHub Actions PR gate | Deferred (requires push to GitHub) | 2026-05-22 |
+| uat | Phase 06 - Cron/Dependabot | Deferred (requires push to GitHub) | 2026-05-22 |
 
 ## Session Continuity
 
-Last session: 2026-05-22T09:44:12.542Z
-Stopped at: Phase 9 context gathered
-
-## Operator Next Steps
-
-- Start the next milestone with /gsd-new-milestone
+Last session: 2026-05-22
+Stopped at: v1.2 roadmap created
+Resume file: None
