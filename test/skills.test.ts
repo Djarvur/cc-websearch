@@ -86,7 +86,8 @@ describe('SKILL.md script path references', () => {
   for (const { name, path } of skillFiles) {
     it(`${name} SKILL.md should reference a valid compiled script file`, () => {
       const content = readFileSync(path, 'utf8');
-      const scriptPattern = /\$\{CLAUDE_PLUGIN_ROOT\}\/skills\/(websearch|webfetch)\/scripts\/([^"]+)/;
+      const scriptPattern =
+        /\$\{CLAUDE_PLUGIN_ROOT\}\/skills\/(websearch|webfetch)\/scripts\/([^"]+)/;
       const match = content.match(scriptPattern);
 
       expect(match).not.toBeNull();
