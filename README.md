@@ -10,7 +10,11 @@ No API keys, no accounts, no subscriptions. Install the plugin and start searchi
 ## Quick Install
 
 ```bash
-claude plugin add https://github.com/your-org/cc-websearch
+# Local development:
+claude --plugin-dir /path/to/cc-websearch
+
+# From GitHub release (requires packaged .zip):
+claude --plugin-url https://github.com/your-org/cc-websearch/releases/download/v1.0/plugin.zip
 ```
 
 Compiled scripts are shipped in git (built via esbuild), so the plugin works immediately after install -- no build step is needed.
@@ -24,7 +28,7 @@ Both skills accept JSON input on stdin and write results to stdout. Errors and d
 Pipe a JSON object with a `query` field:
 
 ```bash
-echo '{"query":"latest ECMAScript specification"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/websearch.cjs"
+echo '{"query":"latest ECMAScript specification"}' | node "${CLAUDE_PLUGIN_ROOT}/skills/websearch/scripts/websearch.cjs"
 ```
 
 The script produces `<search_results>` XML on stdout:
@@ -51,7 +55,7 @@ Optional fields:
 Pipe a JSON object with a `url` and `prompt` field:
 
 ```bash
-echo '{"url":"https://example.com/article","prompt":"Summarize this article"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/webfetch.cjs"
+echo '{"url":"https://example.com/article","prompt":"Summarize this article"}' | node "${CLAUDE_PLUGIN_ROOT}/skills/webfetch/scripts/webfetch.cjs"
 ```
 
 The script fetches the page, extracts the main content using Mozilla's Readability library, converts it to markdown, and writes the result to stdout.
