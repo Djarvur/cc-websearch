@@ -8,6 +8,16 @@ A Claude Code plugin providing two skills that replace the built-in WebSearch an
 
 Exact drop-in replacement for Claude Code's WebSearch and WebFetch — same interface, same output format, no behavior changes for the user.
 
+## Current Milestone: v1.1 Plugin Distribution
+
+**Goal:** Compiled scripts distributed alongside skill definitions so `claude plugin install` copies everything automatically.
+
+**Target features:**
+- Bundles output to `skills/<name>/scripts/` instead of root `scripts/`
+- SKILL.md paths updated to use new locations
+- Old `scripts/` directory removed
+- All tests and CI updated for new paths
+
 ## Requirements
 
 ### Validated
@@ -27,6 +37,10 @@ Exact drop-in replacement for Claude Code's WebSearch and WebFetch — same inte
 
 ### Active
 
+- [ ] **DIST-01**: Bundles output to `skills/<name>/scripts/` with esbuild
+- [ ] **DIST-02**: SKILL.md references use `${CLAUDE_PLUGIN_ROOT}/skills/<name>/scripts/`
+- [ ] **DIST-03**: Old `scripts/` root directory removed
+- [ ] **DIST-04**: Path-dependent tests and CI updated
 - [ ] Optional caching — enabled via config, cache directory configurable, no cache when not configured
 - [ ] CLI flags for testing outside Claude Code (`--query`, `--url`, `--prompt`, `--allowed-domains`, `--blocked-domains`)
 
@@ -92,4 +106,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-*Last updated: 2026-05-22 after v1.0 milestone*
+*Last updated: 2026-05-22 after v1.1 milestone start*

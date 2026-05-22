@@ -12,7 +12,7 @@ Fetch web page content and return it for analysis.
 Run the fetch script with the URL and prompt as JSON stdin:
 
 ```bash
-echo '{"url":"URL","prompt":"QUESTION"}' | node "${CLAUDE_PLUGIN_ROOT}/scripts/webfetch.cjs"
+echo '{"url":"URL","prompt":"QUESTION"}' | node "${CLAUDE_PLUGIN_ROOT}/skills/webfetch/scripts/webfetch.cjs"
 ```
 
 The script accepts JSON on stdin with this schema:

@@ -4,7 +4,7 @@ import { runScript, withRetry } from './helpers.js';
 describe('WebSearch E2E', () => {
   it('returns search results in XML format', async () => {
     await withRetry(async () => {
-      const result = await runScript('scripts/websearch.cjs', {
+      const result = await runScript('skills/websearch/scripts/websearch.cjs', {
         query: 'example domain website',
       });
       expect(result.exitCode).toBe(0);
@@ -18,7 +18,7 @@ describe('WebSearch E2E', () => {
 
   it('filters results by allowed domains', async () => {
     await withRetry(async () => {
-      const result = await runScript('scripts/websearch.cjs', {
+      const result = await runScript('skills/websearch/scripts/websearch.cjs', {
         query: 'github',
         allowed_domains: ['github.com'],
       });
@@ -35,7 +35,7 @@ describe('WebSearch E2E', () => {
   });
 
   it('returns error for invalid input', async () => {
-    const result = await runScript('scripts/websearch.cjs', {});
+    const result = await runScript('skills/websearch/scripts/websearch.cjs', {});
     expect(result.exitCode).toBe(1);
     expect(result.stderr.length).toBeGreaterThan(0);
   });

@@ -13,12 +13,12 @@ await Promise.all([
   build({
     ...commonOptions,
     entryPoints: ['src/websearch.ts'],
-    outfile: 'scripts/websearch.cjs',
+    outfile: 'skills/websearch/scripts/websearch.cjs',
   }),
   build({
     ...commonOptions,
     entryPoints: ['src/webfetch.ts'],
-    outfile: 'scripts/webfetch.cjs',
+    outfile: 'skills/webfetch/scripts/webfetch.cjs',
     external: ['jsdom'], // jsdom must be external -- reads CSS via fs at runtime
   }),
 ]);

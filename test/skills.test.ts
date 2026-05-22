@@ -66,13 +66,13 @@ describe('WebFetch SKILL.md', () => {
 });
 
 describe('Compiled bundle existence', () => {
-  it('scripts/websearch.cjs should exist at the path referenced by SKILL.md', () => {
-    const websearchCjsPath = resolve(ROOT, 'scripts', 'websearch.cjs');
+  it('skills/websearch/scripts/websearch.cjs should exist at the path referenced by SKILL.md', () => {
+    const websearchCjsPath = resolve(ROOT, 'skills', 'websearch', 'scripts', 'websearch.cjs');
     expect(existsSync(websearchCjsPath)).toBe(true);
   });
 
-  it('scripts/webfetch.cjs should exist at the path referenced by SKILL.md', () => {
-    const webfetchCjsPath = resolve(ROOT, 'scripts', 'webfetch.cjs');
+  it('skills/webfetch/scripts/webfetch.cjs should exist at the path referenced by SKILL.md', () => {
+    const webfetchCjsPath = resolve(ROOT, 'skills', 'webfetch', 'scripts', 'webfetch.cjs');
     expect(existsSync(webfetchCjsPath)).toBe(true);
   });
 });
@@ -86,16 +86,16 @@ describe('SKILL.md script path references', () => {
   for (const { name, path } of skillFiles) {
     it(`${name} SKILL.md should reference a valid compiled script file`, () => {
       const content = readFileSync(path, 'utf8');
-      const scriptPattern = /\$\{CLAUDE_PLUGIN_ROOT\}\/scripts\/([^"]+)/;
+      const scriptPattern = /\$\{CLAUDE_PLUGIN_ROOT\}\/skills\/(websearch|webfetch)\/scripts\/([^"]+)/;
       const match = content.match(scriptPattern);
 
       expect(match).not.toBeNull();
       expect(match).toBeDefined();
       /* v8 ignore next 3 — TypeScript narrowing guard; match is always non-null after expect above */
-      const extractedFilename = match ? match[1] : '';
+      const extractedFilename = match ? match[2] : '';
       expect(extractedFilename.length).toBeGreaterThan(0);
 
-      const scriptPath = resolve(ROOT, 'scripts', extractedFilename);
+      const scriptPath = resolve(ROOT, 'skills', name, 'scripts', extractedFilename);
       expect(existsSync(scriptPath)).toBe(true);
     });
   }
