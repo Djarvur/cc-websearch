@@ -1,5 +1,15 @@
 # Milestones
 
+## 1.1 Plugin Distribution (Shipped: 2026-05-22)
+
+**Phases completed:** 1 phases, 1 plans, 4 tasks
+
+**Key accomplishments:**
+
+- esbuild output paths updated, SKILL.md/README/test paths updated, old scripts/ removed, lint ignores added — DIST-01 through DIST-06 complete
+
+---
+
 ## 1.0 MVP (Shipped: 2026-05-21)
 
 **Phases completed:** 8 phases, 21 plans, 37 tasks

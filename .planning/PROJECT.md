@@ -8,16 +8,6 @@ A Claude Code plugin providing two skills that replace the built-in WebSearch an
 
 Exact drop-in replacement for Claude Code's WebSearch and WebFetch — same interface, same output format, no behavior changes for the user.
 
-## Current Milestone: v1.1 Plugin Distribution
-
-**Goal:** Compiled scripts distributed alongside skill definitions so `claude plugin install` copies everything automatically.
-
-**Target features:**
-- Bundles output to `skills/<name>/scripts/` instead of root `scripts/`
-- SKILL.md paths updated to use new locations
-- Old `scripts/` directory removed
-- All tests and CI updated for new paths
-
 ## Requirements
 
 ### Validated
@@ -34,13 +24,10 @@ Exact drop-in replacement for Claude Code's WebSearch and WebFetch — same inte
 - ✓ CI toolchain with ESLint, Prettier, coverage enforcement, and mise task runner — v1.0
 - ✓ E2E test suite validating real DDG search and WebFetch — v1.0
 - ✓ GitHub Actions CI, cron workflow, and Dependabot — v1.0
+- ✓ Bundles shipped in `skills/<name>/scripts/` alongside skill definitions — v1.1
 
 ### Active
 
-- [ ] **DIST-01**: Bundles output to `skills/<name>/scripts/` with esbuild
-- [ ] **DIST-02**: SKILL.md references use `${CLAUDE_PLUGIN_ROOT}/skills/<name>/scripts/`
-- [ ] **DIST-03**: Old `scripts/` root directory removed
-- [ ] **DIST-04**: Path-dependent tests and CI updated
 - [ ] Optional caching — enabled via config, cache directory configurable, no cache when not configured
 - [ ] CLI flags for testing outside Claude Code (`--query`, `--url`, `--prompt`, `--allowed-domains`, `--blocked-domains`)
 
@@ -56,7 +43,8 @@ Exact drop-in replacement for Claude Code's WebSearch and WebFetch — same inte
 
 - Shipped v1.0 with ~3,000 LOC TypeScript, 142 tests, 14 test files
 - Tech stack: TypeScript, Node.js 20+, DuckDuckGo Lite HTML scraping via fetch + cheerio, Readability + Turndown for content extraction
-- DuckDuckGo Lite endpoint (`https://lite.duckduckgo.com/lite/`) provides stable search results without API keys — no rate limiting from the Lite endpoint
+- DuckDuckGo Lite endpoint (`https://lite.duckduckgo.com/lite/`) provides stable search results without API keys
+- Compiled bundles shipped in `skills/<name>/scripts/` — `claude plugin install` distributes everything automatically
 - E2E tests validate real DDG search and WebFetch behavior against live network
 - GitHub Actions CI runs lint, typecheck, test coverage, and build on every PR
 - Weekly cron workflow runs npm audit and E2E tests
@@ -106,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-*Last updated: 2026-05-22 after v1.1 milestone start*
+*Last updated: 2026-05-22 after v1.1 milestone*
