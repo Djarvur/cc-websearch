@@ -7,6 +7,7 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 ## Milestones
 
 - ✅ **v1.0 MVP** — Phases 1-8 (shipped 2026-05-22)
+- 🚧 **v1.1 Plugin Distribution** — Phase 9 (in progress)
 
 ## Phases
 
@@ -36,3 +37,23 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 | 6. CI Pipeline and E2E Tests | v1.0 | 3/3 | Complete | 2026-05-21 |
 | 7. Update README and verify plugin readiness | v1.0 | 2/2 | Complete | 2026-05-21 |
 | 8. Close tech debt | v1.0 | 4/4 | Complete | 2026-05-21 |
+| 9. Script relocation for plugin distribution | v1.1 | 0/0 | Planning | - |
+
+### 🚧 v1.1 Plugin Distribution (In Progress)
+
+### Phase 9: Script Relocation for Plugin Distribution
+
+**Goal**: Compiled scripts are distributed alongside skill definitions so `claude plugin install` copies everything needed automatically. No more `${CLAUDE_PLUGIN_ROOT}/scripts/` dependency — each skill is self-contained.
+
+**Mode**: mvp
+**Depends on**: Phase 7 (uses existing bundle structure)
+**Requirements**: DIST-01, DIST-02, DIST-03, DIST-04, DIST-05, DIST-06
+**Success Criteria** (what must be TRUE):
+
+1. `npm run build` outputs `skills/websearch/scripts/websearch.cjs` and `skills/webfetch/scripts/webfetch.cjs`
+2. SKILL.md commands reference `${CLAUDE_PLUGIN_ROOT}/skills/<name>/scripts/<bundle>.cjs`
+3. Old `scripts/` root directory deleted with no dangling references
+4. All path-dependent tests pass with new locations
+5. `npm run lint && npm run build && npm test` all pass
+
+**Plans**: 1 plan (single wave)
