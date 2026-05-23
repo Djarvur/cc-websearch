@@ -52,7 +52,10 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
   2. Installing the plugin causes all built-in WebFetch tool calls to be denied with a redirect reason
   3. Hook configuration is self-contained in plugin.json with no external shell scripts or jq dependency
   4. Hook matchers use exact case-sensitive tool names (WebSearch|WebFetch) — lowercase matchers are absent
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 10-01-PLAN.md — Create PreToolUse deny hooks for built-in WebSearch and WebFetch
 
 ### Phase 11: Redirect Reliability
 **Goal**: After built-in tools are denied, Claude reliably invokes the plugin skills instead of retrying, falling back to Bash, or asking the user
@@ -92,6 +95,6 @@ Phases execute in numeric order: 10 → 11 → 12
 | 7. Update README and verify plugin readiness | v1.0 | 2/2 | Complete | 2026-05-21 |
 | 8. Close tech debt | v1.0 | 4/4 | Complete | 2026-05-21 |
 | 9. Script Relocation for Plugin Distribution | v1.1 | 1/1 | Complete | 2026-05-22 |
-| 10. Hook Infrastructure | v1.2 | 0/? | Not started | - |
+| 10. Hook Infrastructure | v1.2 | 0/1 | Not started | - |
 | 11. Redirect Reliability | v1.2 | 0/? | Not started | - |
 | 12. Output & Compatibility | v1.2 | 0/? | Not started | - |
