@@ -37,7 +37,7 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 
 **Milestone Goal:** Plugin automatically intercepts built-in WebSearch and WebFetch tool calls via PreToolUse hooks, denies them, and redirects Claude to use the plugin skills instead. Works on all providers.
 
-- [ ] **Phase 10: Hook Infrastructure** - PreToolUse hooks in plugin.json deny built-in WebSearch and WebFetch
+- [x] **Phase 10: Hook Infrastructure** - PreToolUse hooks in plugin.json deny built-in WebSearch and WebFetch (completed 2026-05-23)
 - [ ] **Phase 11: Redirect Reliability** - Denial reasons and skill descriptions reliably redirect Claude to plugin skills
 - [ ] **Phase 12: Output & Compatibility** - Output format verified, content truncation matched, cross-provider validated
 
@@ -55,7 +55,7 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 **Plans**: 1 plan
 
 Plans:
-- [ ] 10-01-PLAN.md — Create PreToolUse deny hooks for built-in WebSearch and WebFetch
+- [x] 10-01-PLAN.md — Create PreToolUse deny hooks for built-in WebSearch and WebFetch
 
 ### Phase 11: Redirect Reliability
 **Goal**: After built-in tools are denied, Claude reliably invokes the plugin skills instead of retrying, falling back to Bash, or asking the user
@@ -95,6 +95,6 @@ Phases execute in numeric order: 10 → 11 → 12
 | 7. Update README and verify plugin readiness | v1.0 | 2/2 | Complete | 2026-05-21 |
 | 8. Close tech debt | v1.0 | 4/4 | Complete | 2026-05-21 |
 | 9. Script Relocation for Plugin Distribution | v1.1 | 1/1 | Complete | 2026-05-22 |
-| 10. Hook Infrastructure | v1.2 | 0/1 | Not started | - |
+| 10. Hook Infrastructure | v1.2 | 1/1 | Complete   | 2026-05-23 |
 | 11. Redirect Reliability | v1.2 | 0/? | Not started | - |
 | 12. Output & Compatibility | v1.2 | 0/? | Not started | - |
