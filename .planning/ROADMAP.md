@@ -66,7 +66,11 @@ Plans:
   2. Claude invokes the plugin's webfetch skill after built-in WebFetch is denied, across diverse fetch prompt patterns (URL-only, "read this page", "summarize this article", "check this documentation")
   3. WebSearch SKILL.md description explicitly states it is the replacement for built-in WebSearch when that tool is unavailable
   4. WebFetch SKILL.md description explicitly states it is the replacement for built-in WebFetch when that tool is unavailable
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Update denial reason text and skill descriptions for redirect reliability
+- [ ] 11-02-PLAN.md — Create and run redirect reliability e2e test harness
 
 ### Phase 12: Output & Compatibility
 **Goal**: Plugin output matches built-in tool output format and the plugin works identically across all Claude Code providers
@@ -96,5 +100,5 @@ Phases execute in numeric order: 10 → 11 → 12
 | 8. Close tech debt | v1.0 | 4/4 | Complete | 2026-05-21 |
 | 9. Script Relocation for Plugin Distribution | v1.1 | 1/1 | Complete | 2026-05-22 |
 | 10. Hook Infrastructure | v1.2 | 1/1 | Complete   | 2026-05-23 |
-| 11. Redirect Reliability | v1.2 | 0/? | Not started | - |
+| 11. Redirect Reliability | v1.2 | 0/2 | Not started | - |
 | 12. Output & Compatibility | v1.2 | 0/? | Not started | - |
