@@ -27,17 +27,17 @@ Requirements for replacing built-in WebSearch and WebFetch with plugin skills vi
 
 ### Redirect Reliability
 
-- [ ] **RDIR-01**: Denial reason text reliably redirects Claude to invoke the plugin's websearch skill across diverse prompt patterns
-- [ ] **RDIR-02**: Denial reason text reliably redirects Claude to invoke the plugin's webfetch skill across diverse prompt patterns
-- [ ] **RDIR-03**: WebSearch SKILL.md description reinforces skill availability and purpose when built-in tool is unavailable
-- [ ] **RDIR-04**: WebFetch SKILL.md description reinforces skill availability and purpose when built-in tool is unavailable
+- [x] **RDIR-01**: Denial reason text reliably redirects Claude to invoke the plugin's websearch skill across diverse prompt patterns
+- [x] **RDIR-02**: Denial reason text reliably redirects Claude to invoke the plugin's webfetch skill across diverse prompt patterns
+- [x] **RDIR-03**: WebSearch SKILL.md description reinforces skill availability and purpose when built-in tool is unavailable
+- [x] **RDIR-04**: WebFetch SKILL.md description reinforces skill availability and purpose when built-in tool is unavailable
 
 ### Output & Compatibility
 
-- [ ] **OUTP-01**: WebSearch skill output format verified to match built-in tool's XML format
-- [ ] **OUTP-02**: WebFetch skill output format verified to match built-in tool's output (markdown content, not structured JSON)
-- [ ] **OUTP-03**: Plugin works identically across all Claude Code providers (Anthropic, OpenAI-compatible, self-hosted)
-- [ ] **OUTP-04**: WebFetch implements content truncation at 100KB to match built-in tool behavior
+- [x] **OUTP-01**: WebSearch skill output format verified to match built-in tool's XML format
+- [x] **OUTP-02**: WebFetch skill output format verified to match built-in tool's output (markdown content, not structured JSON)
+- [x] **OUTP-03**: Plugin works identically across all Claude Code providers (Anthropic, OpenAI-compatible, self-hosted)
+- [x] **OUTP-04**: WebFetch implements content truncation at 100KB to match built-in tool behavior
 
 ## Future Requirements
 
@@ -72,14 +72,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HOOK-02 | Phase 10 | Pending |
 | HOOK-03 | Phase 10 | Pending |
 | HOOK-04 | Phase 10 | Pending |
-| RDIR-01 | Phase 11 | Pending |
-| RDIR-02 | Phase 11 | Pending |
-| RDIR-03 | Phase 11 | Pending |
-| RDIR-04 | Phase 11 | Pending |
-| OUTP-01 | Phase 12 | Pending |
-| OUTP-02 | Phase 12 | Pending |
-| OUTP-03 | Phase 12 | Pending |
-| OUTP-04 | Phase 12 | Pending |
+| RDIR-01 | Phase 11 | Complete |
+| RDIR-02 | Phase 11 | Complete |
+| RDIR-03 | Phase 11 | Complete |
+| RDIR-04 | Phase 11 | Complete |
+| OUTP-01 | Phase 12 | Complete |
+| OUTP-02 | Phase 12 | Complete |
+| OUTP-03 | Phase 12 | Complete |
+| OUTP-04 | Phase 12 | Complete |
 
 **Coverage:**
 - v1.2 requirements: 12 total
