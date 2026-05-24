@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Replace Built-in WebSearch/WebFetch
-status: ready_to_plan
-stopped_at: Phase 11 complete (2/2) — ready to discuss Phase 12
-last_updated: 2026-05-24T15:56:38.629Z
-last_activity: 2026-05-24 -- Phase 11 execution started
+status: planning
+stopped_at: Phase 12 context gathered
+last_updated: "2026-05-24T16:37:21.963Z"
+last_activity: 2026-05-24
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 3
   completed_plans: 3
-  percent: 33
+  percent: 67
 ---
 
 # Project State
@@ -95,6 +95,6 @@ Items acknowledged and carried forward from v1.1 milestone close:
 
 ## Session Continuity
 
-Last session: 2026-05-24T14:44:54.074Z
-Stopped at: Phase 11 context gathered
-Resume file: .planning/phases/11-redirect-reliability/11-CONTEXT.md
+Last session: 2026-05-24T16:37:21.949Z
+Stopped at: Phase 12 context gathered
+Resume file: .planning/phases/12-output-compatibility/12-CONTEXT.md
