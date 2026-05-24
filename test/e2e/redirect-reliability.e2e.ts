@@ -68,9 +68,7 @@ async function runClaude(prompt: string): Promise<{ toolNames: string[]; stderr:
 
       if (code !== 0) {
         reject(
-          new Error(
-            `claude CLI exited with code ${code}. Stderr: ${stderr.substring(0, 500)}`,
-          ),
+          new Error(`claude CLI exited with code ${code}. Stderr: ${stderr.substring(0, 500)}`),
         );
         return;
       }
@@ -119,119 +117,73 @@ describe('Redirect Reliability', () => {
   // Each verifies that after a built-in WebSearch denial, Claude invokes the
   // cc-websearch:websearch skill.
 
-  it(
-    'invokes websearch skill for "Search the web for: What is the capital of Australia?"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: What is the capital of Australia?',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes websearch skill for "Search the web for: What is the capital of Australia?"', async () => {
+    const result = await runClaude('Search the web for: What is the capital of Australia?');
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch'))).toBe(
+      true,
+    );
+  }, 180000);
 
-  it(
-    'invokes websearch skill for "Search the web for: latest AI news 2026"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: latest AI news 2026',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes websearch skill for "Search the web for: latest AI news 2026"', async () => {
+    const result = await runClaude('Search the web for: latest AI news 2026');
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch'))).toBe(
+      true,
+    );
+  }, 180000);
 
-  it(
-    'invokes websearch skill for "Search the web for: TypeScript release notes"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: TypeScript release notes',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes websearch skill for "Search the web for: TypeScript release notes"', async () => {
+    const result = await runClaude('Search the web for: TypeScript release notes');
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch'))).toBe(
+      true,
+    );
+  }, 180000);
 
-  it(
-    'invokes websearch skill for "Search the web for: PostgreSQL vs MongoDB comparison"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: PostgreSQL vs MongoDB comparison',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes websearch skill for "Search the web for: PostgreSQL vs MongoDB comparison"', async () => {
+    const result = await runClaude('Search the web for: PostgreSQL vs MongoDB comparison');
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch'))).toBe(
+      true,
+    );
+  }, 180000);
 
   // ── Fetch test cases ─────────────────────────────────────────────────────────
   // Each verifies that after a built-in WebFetch denial, Claude invokes the
   // cc-websearch:webfetch skill.
 
-  it(
-    'invokes webfetch skill for "Fetch the content at https://example.com"',
-    async () => {
-      const result = await runClaude(
-        'Fetch the content at https://example.com',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes webfetch skill for "Fetch the content at https://example.com"', async () => {
+    const result = await runClaude('Fetch the content at https://example.com');
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch'))).toBe(
+      true,
+    );
+  }, 180000);
 
-  it(
-    'invokes webfetch skill for "Read https://example.com and tell me what it contains"',
-    async () => {
-      const result = await runClaude(
-        'Read https://example.com and tell me what it contains',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes webfetch skill for "Read https://example.com and tell me what it contains"', async () => {
+    const result = await runClaude('Read https://example.com and tell me what it contains');
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch'))).toBe(
+      true,
+    );
+  }, 180000);
 
-  it(
-    'invokes webfetch skill for "Summarize the content at https://www.wikipedia.org"',
-    async () => {
-      const result = await runClaude(
-        'Summarize the content at https://www.wikipedia.org',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes webfetch skill for "Summarize the content at https://www.wikipedia.org"', async () => {
+    const result = await runClaude('Summarize the content at https://www.wikipedia.org');
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch'))).toBe(
+      true,
+    );
+  }, 180000);
 
-  it(
-    'invokes webfetch skill for "Check the API documentation at https://jsonplaceholder.typicode.com"',
-    async () => {
-      const result = await runClaude(
-        'Check the API documentation at https://jsonplaceholder.typicode.com',
-      );
-      expect(result.toolNames.length).toBeGreaterThan(0);
-      expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
-      ).toBe(true);
-    },
-    180000,
-  );
+  it('invokes webfetch skill for "Check the API documentation at https://jsonplaceholder.typicode.com"', async () => {
+    const result = await runClaude(
+      'Check the API documentation at https://jsonplaceholder.typicode.com',
+    );
+    expect(result.toolNames.length).toBeGreaterThan(0);
+    expect(result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch'))).toBe(
+      true,
+    );
+  }, 180000);
 });

@@ -89,9 +89,7 @@ async function runClaude(prompt: string): Promise<{ assistantText: string; stder
 
       if (code !== 0) {
         reject(
-          new Error(
-            `claude CLI exited with code ${code}. Stderr: ${stderr.substring(0, 500)}`,
-          ),
+          new Error(`claude CLI exited with code ${code}. Stderr: ${stderr.substring(0, 500)}`),
         );
         return;
       }
@@ -114,95 +112,49 @@ describe('Output Compatibility', () => {
   // Each verifies Claude cites search result URLs in its response, proving the
   // XML search results were parsed and consumed (D-07 pass threshold).
 
-  it(
-    'cites URLs when asked "Search the web for: What is the capital of Australia?"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: What is the capital of Australia?',
-      );
-      expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
-    },
-    180000,
-  );
+  it('cites URLs when asked "Search the web for: What is the capital of Australia?"', async () => {
+    const result = await runClaude('Search the web for: What is the capital of Australia?');
+    expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
+  }, 180000);
 
-  it(
-    'cites URLs when asked "Search the web for: latest AI news 2026"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: latest AI news 2026',
-      );
-      expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
-    },
-    180000,
-  );
+  it('cites URLs when asked "Search the web for: latest AI news 2026"', async () => {
+    const result = await runClaude('Search the web for: latest AI news 2026');
+    expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
+  }, 180000);
 
-  it(
-    'cites URLs when asked "Search the web for: TypeScript release notes"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: TypeScript release notes',
-      );
-      expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
-    },
-    180000,
-  );
+  it('cites URLs when asked "Search the web for: TypeScript release notes"', async () => {
+    const result = await runClaude('Search the web for: TypeScript release notes');
+    expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
+  }, 180000);
 
-  it(
-    'cites URLs when asked "Search the web for: PostgreSQL vs MongoDB comparison"',
-    async () => {
-      const result = await runClaude(
-        'Search the web for: PostgreSQL vs MongoDB comparison',
-      );
-      expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
-    },
-    180000,
-  );
+  it('cites URLs when asked "Search the web for: PostgreSQL vs MongoDB comparison"', async () => {
+    const result = await runClaude('Search the web for: PostgreSQL vs MongoDB comparison');
+    expect(result.assistantText).toMatch(/https?:\/\/[^\s)]+/);
+  }, 180000);
 
   // ── Fetch test cases ─────────────────────────────────────────────────────────
   // Each verifies Claude references page-specific content in its response,
   // proving the markdown output was consumed (OUTP-02 consumption proof).
 
-  it(
-    'references page content when asked "Fetch the content at https://example.com"',
-    async () => {
-      const result = await runClaude(
-        'Fetch the content at https://example.com',
-      );
-      expect(result.assistantText).toMatch(/Example Domain/i);
-    },
-    180000,
-  );
+  it('references page content when asked "Fetch the content at https://example.com"', async () => {
+    const result = await runClaude('Fetch the content at https://example.com');
+    expect(result.assistantText).toMatch(/Example Domain/i);
+  }, 180000);
 
-  it(
-    'references page content when asked "Read https://example.com and tell me what it contains"',
-    async () => {
-      const result = await runClaude(
-        'Read https://example.com and tell me what it contains',
-      );
-      expect(result.assistantText).toMatch(/Example Domain/i);
-    },
-    180000,
-  );
+  it('references page content when asked "Read https://example.com and tell me what it contains"', async () => {
+    const result = await runClaude('Read https://example.com and tell me what it contains');
+    expect(result.assistantText).toMatch(/Example Domain/i);
+  }, 180000);
 
-  it(
-    'references page content when asked "Summarize the content at https://www.wikipedia.org"',
-    async () => {
-      const result = await runClaude(
-        'Summarize the content at https://www.wikipedia.org',
-      );
-      expect(result.assistantText).toMatch(/Wikipedia/i);
-    },
-    180000,
-  );
+  it('references page content when asked "Summarize the content at https://www.wikipedia.org"', async () => {
+    const result = await runClaude('Summarize the content at https://www.wikipedia.org');
+    expect(result.assistantText).toMatch(/Wikipedia/i);
+  }, 180000);
 
-  it(
-    'references page content when asked "Check the API documentation at https://jsonplaceholder.typicode.com"',
-    async () => {
-      const result = await runClaude(
-        'Check the API documentation at https://jsonplaceholder.typicode.com',
-      );
-      expect(result.assistantText).toMatch(/JSON|placeholder|typicode|api/i);
-    },
-    180000,
-  );
+  it('references page content when asked "Check the API documentation at https://jsonplaceholder.typicode.com"', async () => {
+    const result = await runClaude(
+      'Check the API documentation at https://jsonplaceholder.typicode.com',
+    );
+    expect(result.assistantText).toMatch(/JSON|placeholder|typicode|api/i);
+  }, 180000);
 });
