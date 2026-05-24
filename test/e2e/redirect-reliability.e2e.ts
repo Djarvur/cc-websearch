@@ -107,7 +107,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('websearch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
       ).toBe(true);
     },
     180000,
@@ -121,7 +121,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('websearch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
       ).toBe(true);
     },
     180000,
@@ -135,7 +135,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('websearch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
       ).toBe(true);
     },
     180000,
@@ -149,7 +149,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('websearch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:websearch')),
       ).toBe(true);
     },
     180000,
@@ -167,7 +167,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('webfetch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
       ).toBe(true);
     },
     180000,
@@ -181,7 +181,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('webfetch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
       ).toBe(true);
     },
     180000,
@@ -195,7 +195,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('webfetch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
       ).toBe(true);
     },
     180000,
@@ -209,7 +209,7 @@ describe('Redirect Reliability', () => {
       );
       expect(result.toolNames.length).toBeGreaterThan(0);
       expect(
-        result.toolNames.some((n) => n.toLowerCase().includes('webfetch')),
+        result.toolNames.some((n) => n.toLowerCase().includes('cc-websearch:webfetch')),
       ).toBe(true);
     },
     180000,
