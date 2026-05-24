@@ -115,5 +115,5 @@ Phases execute in numeric order: 10 → 11 → 12
 | 8. Close tech debt | v1.0 | 4/4 | Complete | 2026-05-21 |
 | 9. Script Relocation for Plugin Distribution | v1.1 | 1/1 | Complete | 2026-05-22 |
 | 10. Hook Infrastructure | v1.2 | 1/1 | Complete   | 2026-05-23 |
-| 11. Redirect Reliability | v1.2 | 2/2 | Complete   | 2026-05-24 |
+| 11. Redirect Reliability | v1.2 | 2/2 | Complete    | 2026-05-24 |
 | 12. Output & Compatibility | v1.2 | 0/? | Not started | - |
