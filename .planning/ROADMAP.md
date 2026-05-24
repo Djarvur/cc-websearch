@@ -44,43 +44,58 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 ## Phase Details
 
 ### Phase 10: Hook Infrastructure
+
 **Goal**: Built-in WebSearch and WebFetch tool calls are automatically intercepted and denied when the plugin is installed
 **Depends on**: Phase 9 (plugin distribution structure)
 **Requirements**: HOOK-01, HOOK-02, HOOK-03, HOOK-04
 **Success Criteria** (what must be TRUE):
+
   1. Installing the plugin causes all built-in WebSearch tool calls to be denied with a redirect reason
   2. Installing the plugin causes all built-in WebFetch tool calls to be denied with a redirect reason
   3. Hook configuration is self-contained in plugin.json with no external shell scripts or jq dependency
   4. Hook matchers use exact case-sensitive tool names (WebSearch|WebFetch) — lowercase matchers are absent
+
 **Plans**: 1 plan
 
 Plans:
+
 - [x] 10-01-PLAN.md — Create PreToolUse deny hooks for built-in WebSearch and WebFetch
 
 ### Phase 11: Redirect Reliability
+
 **Goal**: After built-in tools are denied, Claude reliably invokes the plugin skills instead of retrying, falling back to Bash, or asking the user
 **Depends on**: Phase 10
 **Requirements**: RDIR-01, RDIR-02, RDIR-03, RDIR-04
 **Success Criteria** (what must be TRUE):
+
   1. Claude invokes the plugin's websearch skill after built-in WebSearch is denied, across diverse search prompt patterns (factual questions, current events, technical queries, comparison requests)
   2. Claude invokes the plugin's webfetch skill after built-in WebFetch is denied, across diverse fetch prompt patterns (URL-only, "read this page", "summarize this article", "check this documentation")
   3. WebSearch SKILL.md description explicitly states it is the replacement for built-in WebSearch when that tool is unavailable
   4. WebFetch SKILL.md description explicitly states it is the replacement for built-in WebFetch when that tool is unavailable
+
 **Plans**: 2 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 11-01-PLAN.md — Update denial reason text and skill descriptions for redirect reliability
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 11-02-PLAN.md — Create and run redirect reliability e2e test harness
 
 ### Phase 12: Output & Compatibility
+
 **Goal**: Plugin output matches built-in tool output format and the plugin works identically across all Claude Code providers
 **Depends on**: Phase 11
 **Requirements**: OUTP-01, OUTP-02, OUTP-03, OUTP-04
 **Success Criteria** (what must be TRUE):
+
   1. WebSearch skill output (XML with title, url, snippet) matches the format Claude expects after a built-in tool denial
   2. WebFetch skill output (markdown content) matches the format Claude expects after a built-in tool denial
   3. Plugin operates identically on Anthropic, OpenAI-compatible, and self-hosted providers — no provider-specific behavior
   4. WebFetch truncates fetched content at 100KB to match built-in tool behavior
+
 **Plans**: TBD
 
 ## Progress
