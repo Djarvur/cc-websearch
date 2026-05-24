@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Replace Built-in WebSearch/WebFetch
-status: milestone_complete
-stopped_at: Milestone complete (Phase 12 was final phase)
-last_updated: 2026-05-24T17:07:40.925Z
-last_activity: 2026-05-24 -- Phase 12 execution started
+status: "Phase 12 shipped — PR #10"
+stopped_at: Phase 12 context gathered
+last_updated: "2026-05-24T17:12:34.217Z"
+last_activity: 2026-05-24
 progress:
   total_phases: 3
   completed_phases: 2
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-22)
 
 Phase: 12
 Plan: Not started
-Status: Milestone complete
+Status: Phase 12 shipped — PR #10
 Last activity: 2026-05-24
 
 Progress: [████████░░] 83%
