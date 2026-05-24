@@ -96,7 +96,16 @@ Plans:
   3. Plugin operates identically on Anthropic, OpenAI-compatible, and self-hosted providers — no provider-specific behavior
   4. WebFetch truncates fetched content at 100KB to match built-in tool behavior
 
-**Plans**: TBD
+**Plans**: 2 plans (Wave 1 + Wave 2)
+
+Plans:
+**Wave 1**
+
+- [ ] 12-01-PLAN.md — Output format assertions (XML well-formedness), cross-provider code review, truncation confirmation
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 12-02-PLAN.md — Behavioral output consumption e2e harness (8 tests, 4 search + 4 fetch)
 
 ## Progress
 
@@ -116,4 +125,4 @@ Phases execute in numeric order: 10 → 11 → 12
 | 9. Script Relocation for Plugin Distribution | v1.1 | 1/1 | Complete | 2026-05-22 |
 | 10. Hook Infrastructure | v1.2 | 1/1 | Complete   | 2026-05-23 |
 | 11. Redirect Reliability | v1.2 | 2/2 | Complete    | 2026-05-24 |
-| 12. Output & Compatibility | v1.2 | 0/? | Not started | - |
+| 12. Output & Compatibility | v1.2 | 0/2 | Not started | - |
