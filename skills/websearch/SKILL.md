@@ -1,9 +1,11 @@
 ---
-description: Search the web using DuckDuckGo. Use this skill when the user needs current information, web search results, or to find web pages about a topic.
+description: Replacement for built-in WebSearch — Search the web using DuckDuckGo. Use this skill when the user needs current information, web search results, or to find web pages about a topic.
 allowed-tools: Bash(node *)
 ---
 
 # WebSearch
+
+This skill replaces the built-in WebSearch tool when unavailable.
 
 Execute a web search by piping JSON input to the search script.
 
