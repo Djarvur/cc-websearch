@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcess } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const pluginDir = resolve(__dirname, '../../.claude-plugin');
+
+const activeChildren = new Set<ChildProcess>();
 
 /**
  * Spawn claude CLI with the given prompt and parse NDJSON stream-json output
@@ -22,7 +24,7 @@ const pluginDir = resolve(__dirname, '../../.claude-plugin');
  * Requires --verbose flag when using --output-format stream-json with -p/--print
  * (claude CLI constraint).
  */
-async function runClaude(prompt: string): Promise<{ toolNames: string[] }> {
+async function runClaude(prompt: string): Promise<{ toolNames: string[]; stderr: string }> {
   return new Promise((resolvePromise, reject) => {
     let settled = false;
 
@@ -35,6 +37,7 @@ async function runClaude(prompt: string): Promise<{ toolNames: string[] }> {
       '--plugin-dir',
       pluginDir,
     ]);
+    activeChildren.add(child);
 
     let stdout = '';
     let stderr = '';
@@ -58,9 +61,19 @@ async function runClaude(prompt: string): Promise<{ toolNames: string[] }> {
       );
     });
 
-    child.on('close', () => {
+    child.on('close', (code: number | null) => {
+      activeChildren.delete(child);
       if (settled) return;
       settled = true;
+
+      if (code !== 0) {
+        reject(
+          new Error(
+            `claude CLI exited with code ${code}. Stderr: ${stderr.substring(0, 500)}`,
+          ),
+        );
+        return;
+      }
 
       const toolNames: string[] = [];
       const lines = stdout.split('\n');
@@ -89,12 +102,19 @@ async function runClaude(prompt: string): Promise<{ toolNames: string[] }> {
         }
       }
 
-      resolvePromise({ toolNames });
+      resolvePromise({ toolNames, stderr });
     });
   });
 }
 
 describe('Redirect Reliability', () => {
+  afterEach(() => {
+    for (const child of activeChildren) {
+      child.kill('SIGTERM');
+    }
+    activeChildren.clear();
+  });
+
   // ── Search test cases ────────────────────────────────────────────────────────
   // Each verifies that after a built-in WebSearch denial, Claude invokes the
   // cc-websearch:websearch skill.
