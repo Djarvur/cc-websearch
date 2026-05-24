@@ -76,4 +76,42 @@ describe('formatSearchResults', () => {
     const result = formatSearchResults([{ title: 'Test', url: 'https://example.com' }]);
     expect(result).not.toContain('<!-- provider:');
   });
+
+  it('should produce well-formed XML without raw text between tags, missing closing tags, or entity-breaking', () => {
+    const result = formatSearchResults([
+      { title: 'Item 1 & Co', url: 'https://example.com?a=1&b=2', snippet: 'test <snippet>' },
+      { title: 'Item 2', url: 'https://example.org', snippet: '' },
+    ]);
+
+    // Starts with <search_results> on its own line
+    expect(result.startsWith('<search_results>\n')).toBe(true);
+
+    // Ends with </search_results> on its own line
+    expect(result.trimEnd().endsWith('</search_results>')).toBe(true);
+
+    // Opening and closing <result> tags are balanced
+    const openResult = (result.match(/<result>/g) || []).length;
+    const closeResult = (result.match(/<\/result>/g) || []).length;
+    expect(openResult).toBe(closeResult);
+
+    // No raw text between tags: every non-empty line must start with '<'
+    for (const line of result.split('\n')) {
+      if (line.trim() !== '') {
+        expect(line.trim().startsWith('<')).toBe(true);
+      }
+    }
+
+    // No unescaped & outside XML entities
+    expect(result).not.toMatch(/&(?!amp;|lt;|gt;|quot;)/g);
+
+    // Tag order within each result block: title, url, snippet
+    for (const block of result.split('</result>')) {
+      if (!block.includes('<title>')) continue;
+      const titleIdx = block.indexOf('<title>');
+      const urlIdx = block.indexOf('<url>');
+      const snippetIdx = block.indexOf('<snippet>');
+      expect(urlIdx).toBeGreaterThan(titleIdx);
+      expect(snippetIdx).toBeGreaterThan(urlIdx);
+    }
+  });
 });
