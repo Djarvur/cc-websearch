@@ -1,7 +1,7 @@
 {
   "name": "cc-websearch",
   "displayName": "WebSearch",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code",
   "hooks": "./hooks/hooks.json"
 }
