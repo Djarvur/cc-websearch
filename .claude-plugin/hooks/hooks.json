@@ -1,11 +1,5 @@
 {
   "hooks": {
-    "SessionStart": [
-      {
-        "type": "command",
-        "command": "[ -d \"${CLAUDE_PLUGIN_ROOT}/node_modules\" ] || (cd \"${CLAUDE_PLUGIN_ROOT}\" && npm install --no-audit --no-fund 2>&1)"
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "WebSearch",
