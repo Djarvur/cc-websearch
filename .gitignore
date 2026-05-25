@@ -144,6 +144,3 @@ vite.config.ts.timestamp-*
 
 .claude/
 draft.txt
-
-# Build artifacts
-skills/*/scripts/*.cjs
