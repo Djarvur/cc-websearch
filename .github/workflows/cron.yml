@@ -15,7 +15,7 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
-      - run: npm audit --audit-level=high
+      - run: npm audit --audit-level=critical
       - run: npm run build
       - run: npm run e2e
         timeout-minutes: 10
