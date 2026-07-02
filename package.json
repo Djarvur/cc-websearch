@@ -15,7 +15,7 @@
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
     "cheerio": "^1.2.0",
-    "commander": "14.0.3",
+    "commander": "15.0.0",
     "duck-duck-scrape": "^2.2.7",
     "jsdom": "^29.1.1",
     "turndown": "^7.2.4",
