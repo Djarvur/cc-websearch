@@ -1,11 +1,11 @@
 version: 2
 updates:
-  - package-ecosystem: gomod
+  - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
       day: monday
-      time: '06:00'
+      time: '05:00'
       timezone: UTC
     open-pull-requests-limit: 5
     commit-message:
@@ -13,9 +13,9 @@ updates:
       include: scope
     labels:
       - dependencies
-      - go
+      - javascript
     groups:
-      all-go-deps:
+      all-npm-deps:
         patterns:
           - '*'
         update-types:
@@ -27,7 +27,7 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: '06:00'
+      time: '05:00'
       timezone: UTC
     open-pull-requests-limit: 5
     commit-message:
