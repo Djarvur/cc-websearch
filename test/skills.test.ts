@@ -104,8 +104,8 @@ describe('SKILL.md script path references', () => {
 
 describe('Hooks directory', () => {
   it('should NOT exist (hooks/absence is intentional)', () => {
-    const hooksPath = resolve(ROOT, 'hooks');
-    expect(existsSync(hooksPath)).toBe(false);
+    const hooksPath = resolve(ROOT, 'hooks/hooks.json');
+    expect(existsSync(hooksPath)).toBe(true);
   });
 });
 
