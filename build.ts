@@ -1,3 +1,4 @@
+import type { PluginBuild, OnLoadArgs } from 'esbuild';
 import { build } from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,12 +26,12 @@ const jsdomWorkerSrc = fs.readFileSync(
 
 const jsdomInlinePlugin = {
   name: 'inline-jsdom-fs-deps',
-  setup(build) {
+  setup(build: PluginBuild) {
     build.onLoad(
       {
         filter: /jsdom[\\/]lib[\\/]jsdom[\\/]living[\\/]helpers[\\/]style-rules\.js$/,
       },
-      (args) => {
+      (args: OnLoadArgs) => {
         let code = fs.readFileSync(args.path, 'utf8');
         code = code.replace(
           `const defaultStyleSheet = fs.readFileSync(\n  path.resolve(__dirname, "../../browser/default-stylesheet.css"),\n  { encoding: "utf-8" }\n);`,
@@ -44,7 +45,7 @@ const jsdomInlinePlugin = {
       {
         filter: /jsdom[\\/]lib[\\/]jsdom[\\/]living[\\/]xhr[\\/]XMLHttpRequest-impl\.js$/,
       },
-      (args) => {
+      (args: OnLoadArgs) => {
         let code = fs.readFileSync(args.path, 'utf8');
         code = code.replace(
           `const syncWorkerFile = require.resolve("./xhr-sync-worker.js");`,
@@ -65,7 +66,7 @@ const jsdomInlinePlugin = {
       {
         filter: /@acemir[\\/]cssom[\\/]lib[\\/]CSSStyleRule\.js$/,
       },
-      (args) => {
+      (args: OnLoadArgs) => {
         let code = fs.readFileSync(args.path, 'utf8');
         code = code.replace(`this.__style.parentRule = this;`, `this.__style._parentRule = this;`);
         return { contents: code, loader: 'js' };
