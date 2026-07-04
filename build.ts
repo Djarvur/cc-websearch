@@ -26,45 +26,51 @@ const jsdomWorkerSrc = fs.readFileSync(
 const jsdomInlinePlugin = {
   name: 'inline-jsdom-fs-deps',
   setup(build) {
-    build.onLoad({
-      filter: /jsdom[\\/]lib[\\/]jsdom[\\/]living[\\/]helpers[\\/]style-rules\.js$/,
-    }, (args) => {
-      let code = fs.readFileSync(args.path, 'utf8');
-      code = code.replace(
-        `const defaultStyleSheet = fs.readFileSync(\n  path.resolve(__dirname, "../../browser/default-stylesheet.css"),\n  { encoding: "utf-8" }\n);`,
-        `const defaultStyleSheet = ${JSON.stringify(jsdomCss)};`,
-      );
-      return { contents: code, loader: 'js' };
-    });
+    build.onLoad(
+      {
+        filter: /jsdom[\\/]lib[\\/]jsdom[\\/]living[\\/]helpers[\\/]style-rules\.js$/,
+      },
+      (args) => {
+        let code = fs.readFileSync(args.path, 'utf8');
+        code = code.replace(
+          `const defaultStyleSheet = fs.readFileSync(\n  path.resolve(__dirname, "../../browser/default-stylesheet.css"),\n  { encoding: "utf-8" }\n);`,
+          `const defaultStyleSheet = ${JSON.stringify(jsdomCss)};`,
+        );
+        return { contents: code, loader: 'js' };
+      },
+    );
 
-    build.onLoad({
-      filter: /jsdom[\\/]lib[\\/]jsdom[\\/]living[\\/]xhr[\\/]XMLHttpRequest-impl\.js$/,
-    }, (args) => {
-      let code = fs.readFileSync(args.path, 'utf8');
-      code = code.replace(
-        `const syncWorkerFile = require.resolve("./xhr-sync-worker.js");`,
-        `const syncWorkerSrc = ${JSON.stringify(jsdomWorkerSrc)};`,
-      );
-      code = code.replace(
-        `new Worker(syncWorkerFile)`,
-        `new Worker(syncWorkerSrc, { eval: true })`,
-      );
-      return { contents: code, loader: 'js' };
-    });
+    build.onLoad(
+      {
+        filter: /jsdom[\\/]lib[\\/]jsdom[\\/]living[\\/]xhr[\\/]XMLHttpRequest-impl\.js$/,
+      },
+      (args) => {
+        let code = fs.readFileSync(args.path, 'utf8');
+        code = code.replace(
+          `const syncWorkerFile = require.resolve("./xhr-sync-worker.js");`,
+          `const syncWorkerSrc = ${JSON.stringify(jsdomWorkerSrc)};`,
+        );
+        code = code.replace(
+          `new Worker(syncWorkerFile)`,
+          `new Worker(syncWorkerSrc, { eval: true })`,
+        );
+        return { contents: code, loader: 'js' };
+      },
+    );
 
     // @acemir/cssom CSSStyleRule sets parentRule via plain assignment (sloppy mode).
     // Bundled strict mode throws because cssstyle defines parentRule as getter-only.
     // Use _parentRule (cssstyle's internal backing field for the getter) instead.
-    build.onLoad({
-      filter: /@acemir[\\/]cssom[\\/]lib[\\/]CSSStyleRule\.js$/,
-    }, (args) => {
-      let code = fs.readFileSync(args.path, 'utf8');
-      code = code.replace(
-        `this.__style.parentRule = this;`,
-        `this.__style._parentRule = this;`,
-      );
-      return { contents: code, loader: 'js' };
-    });
+    build.onLoad(
+      {
+        filter: /@acemir[\\/]cssom[\\/]lib[\\/]CSSStyleRule\.js$/,
+      },
+      (args) => {
+        let code = fs.readFileSync(args.path, 'utf8');
+        code = code.replace(`this.__style.parentRule = this;`, `this.__style._parentRule = this;`);
+        return { contents: code, loader: 'js' };
+      },
+    );
   },
 };
 
