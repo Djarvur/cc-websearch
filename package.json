@@ -3,6 +3,9 @@
   "version": "1.2.4",
   "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code",
   "type": "module",
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
   "scripts": {
     "build": "tsx build.ts",
     "test": "vitest run --reporter=verbose",
