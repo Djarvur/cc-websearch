@@ -14,6 +14,13 @@ updates:
     labels:
       - dependencies
       - javascript
+    # typescript-eslint peers require typescript <6.1.0; TS 7 is not
+    # supported yet, so a bump to 7.x breaks `npm ci` (ERESOLVE).
+    # Re-enable once typescript-eslint supports TS 7.
+    ignore:
+      - dependency-name: typescript
+        versions:
+          - '>=7.0.0'
     groups:
       all-npm-deps:
         patterns:
