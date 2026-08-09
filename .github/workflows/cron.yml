@@ -17,5 +17,13 @@ jobs:
       - run: npm ci
       - run: npm audit --audit-level=critical
       - run: npm run build
-      - run: npm run e2e
+      # e2e spawns the local `claude` CLI, which is not installed on
+      # GitHub-hosted runners; skip (with a warning) when it is missing.
+      - name: Run e2e (skipped if claude CLI is unavailable)
+        run: |
+          if ! command -v claude >/dev/null 2>&1; then
+            echo "::warning::claude CLI not found on runner — skipping e2e (runs locally only)"
+            exit 0
+          fi
+          npm run e2e
         timeout-minutes: 10

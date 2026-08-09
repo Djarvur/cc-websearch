@@ -16,6 +16,7 @@ A Claude Code plugin providing two skills that replace the built-in WebSearch an
 - **Perplexity API**: Chat Completions endpoint
 - **DDG API**: DuckDuckGo Lite HTML scraping
 - **Config**: `~/.config/websearch/config.json` or environment variables
+
 <!-- GSD:project-end -->
 
 <!-- GSD:stack-start source:research/STACK.md -->
@@ -135,6 +136,7 @@ A Claude Code plugin providing two skills that replace the built-in WebSearch an
 - [vitest (npm)](https://www.npmjs.com/package/vitest) -- v4.1.6, testing framework. HIGH confidence.
 - [PkgPulse TypeScript Build Tools Guide](https://www.pkgpulse.com/guides/best-typescript-build-tools-2026) -- tsx vs tsup vs esbuild comparison. MEDIUM confidence.
 - Version numbers for turndown (7.2.0), Commander.js (13.x), and tsx (4.x) are based on npm registry data and web search results cross-referenced with official pages. Some exact patch versions may differ from latest by the time of implementation -- verify with `npm view <package> version`.
+
 <!-- GSD:stack-end -->
 
 <!-- GSD:conventions-start source:CONVENTIONS.md -->
