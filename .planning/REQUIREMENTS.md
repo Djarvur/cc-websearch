@@ -11,19 +11,19 @@
 - [x] **DIST-02**: SKILL.md command paths use `${CLAUDE_PLUGIN_ROOT}/skills/<name>/scripts/<bundle>.cjs`
 - [x] **DIST-03**: README examples and installation instructions reflect new script locations
 - [x] **DIST-04**: Path-dependent tests updated for new bundle locations
-- [x] **DIST-05**: Old `scripts/` root directory removed after bundles relocated
+- [ ] **DIST-05**: Old `scripts/` root directory removed after bundles relocated — NOT done. `scripts/websearch.cjs` and `scripts/webfetch.cjs` are still tracked in git; `build.ts` writes only to `skills/*/scripts/`, so they are stale orphans. Was marked complete in error.
 - [x] **DIST-06**: `npm run build` and `npm run check` pass clean
 
-## v1.2 Requirements
+## v1.2 Requirements (Shipped)
 
-Requirements for replacing built-in WebSearch and WebFetch with plugin skills via PreToolUse hooks.
+Requirements for replacing built-in WebSearch and WebFetch with plugin skills via PreToolUse hooks. All 12 complete; released as v1.2.4 on 2026-05-25.
 
 ### Hook Infrastructure
 
-- [ ] **HOOK-01**: Plugin registers PreToolUse hook that denies built-in WebSearch tool calls with a redirect reason instructing Claude to use the plugin skill
-- [ ] **HOOK-02**: Plugin registers PreToolUse hook that denies built-in WebFetch tool calls with a redirect reason instructing Claude to use the plugin skill
-- [ ] **HOOK-03**: Hook configuration is inline in plugin.json (no external shell scripts or jq dependency)
-- [ ] **HOOK-04**: Hook matcher uses exact case-sensitive tool names (`WebSearch|WebFetch`)
+- [x] **HOOK-01**: Plugin registers PreToolUse hook that denies built-in WebSearch tool calls with a redirect reason instructing Claude to use the plugin skill
+- [x] **HOOK-02**: Plugin registers PreToolUse hook that denies built-in WebFetch tool calls with a redirect reason instructing Claude to use the plugin skill
+- [x] **HOOK-03**: Hook configuration is inline in `hooks/hooks.json` (no external shell scripts or jq dependency). As built the file lives at the plugin root and is auto-discovered — it is deliberately NOT referenced from plugin.json, which would duplicate it and fail to load.
+- [x] **HOOK-04**: Hook matchers use exact case-sensitive tool names. As built these are two separate matchers, `WebSearch` and `WebFetch`, rather than one `WebSearch|WebFetch` alternation, so each deny reason can name its own skill.
 
 ### Redirect Reliability
 
@@ -68,10 +68,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HOOK-01 | Phase 10 | Pending |
-| HOOK-02 | Phase 10 | Pending |
-| HOOK-03 | Phase 10 | Pending |
-| HOOK-04 | Phase 10 | Pending |
+| HOOK-01 | Phase 10 | Complete |
+| HOOK-02 | Phase 10 | Complete |
+| HOOK-03 | Phase 10 | Complete |
+| HOOK-04 | Phase 10 | Complete |
 | RDIR-01 | Phase 11 | Complete |
 | RDIR-02 | Phase 11 | Complete |
 | RDIR-03 | Phase 11 | Complete |
@@ -85,7 +85,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v1.2 requirements: 12 total
 - Mapped to phases: 12
 - Unmapped: 0
+- Complete: 12
 
 ---
 *Requirements defined: 2026-05-22*
-*Last updated: 2026-05-22 after v1.2 roadmap creation*
+*Last updated: 2026-08-29 — v1.2 closed out, HOOK-01..04 marked complete, DIST-05 corrected to open*

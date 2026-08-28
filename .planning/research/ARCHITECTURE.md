@@ -2,6 +2,7 @@
 
 **Domain:** Claude Code plugin -- tool replacement architecture
 **Researched:** 2026-05-22
+**Updated:** 2026-08-29 -- reconciled with the shipped implementation (see "As-Built" notes)
 **Confidence:** HIGH
 
 ## System Overview
@@ -66,7 +67,7 @@ Claude Code (LLM)
          DDG Lite / HTTP fetch
 ```
 
-**Mechanism:** PreToolUse hooks in plugin.json intercept built-in tool calls and deny them with a reason that instructs Claude to invoke the plugin skill instead. The existing skill + CLI script pipeline remains unchanged.
+**Mechanism:** PreToolUse hooks in `hooks/hooks.json` intercept built-in tool calls and deny them with a reason that instructs Claude to invoke the plugin skill instead. The existing skill + CLI script pipeline remains unchanged.
 
 ### Rejected Alternative: MCP Server Approach
 
@@ -107,28 +108,29 @@ Claude Code (LLM)
 | `skills/websearch/SKILL.md` | Skill definition with Bash invocation | YES -- minor description update |
 | `skills/webfetch/SKILL.md` | Skill definition with Bash invocation | YES -- minor description update |
 | `build.ts` | esbuild bundling to skills/*/scripts/*.cjs | NO |
-| `.claude-plugin/plugin.json` | Plugin manifest | YES -- add hooks |
+| `.claude-plugin/plugin.json` | Plugin manifest | NO -- see As-built below |
 | `skills/*/scripts/*.cjs` | Bundled CLI scripts | NO (rebuilt from source) |
 
 ### New Components
 
 | Component | Responsibility | Type |
 |-----------|---------------|------|
-| `hooks/deny-builtins.sh` (or inline in plugin.json) | PreToolUse hook that denies WebSearch/WebFetch with redirect reason | Shell script or inline echo |
+| `hooks/hooks.json` | PreToolUse hooks that deny WebSearch/WebFetch with a redirect reason | Config file with inline `echo` commands |
 
 ### Modified Components
 
 | Component | Change | Why |
 |-----------|--------|-----|
-| `.claude-plugin/plugin.json` | Add `hooks` key with PreToolUse matchers for `WebSearch` and `WebFetch` | Intercept and deny built-in tool calls |
-| `skills/websearch/SKILL.md` | Update description to mention "Use when built-in WebSearch is unavailable" | Reinforce redirect behavior after deny |
-| `skills/webfetch/SKILL.md` | Update description to mention "Use when built-in WebFetch is unavailable" | Reinforce redirect behavior after deny |
+| `skills/websearch/SKILL.md` | Description opens with "Replacement for built-in WebSearch" | Reinforce redirect behavior after deny |
+| `skills/webfetch/SKILL.md` | Description opens with "Replacement for built-in WebFetch" | Reinforce redirect behavior after deny |
+
+**As-built:** `.claude-plugin/plugin.json` was not modified. The hooks live in the auto-discovered `hooks/hooks.json` at the plugin root, and adding a `hooks` key to the manifest as well makes Claude Code load the same file twice and fail with "Duplicate hooks file detected". No shell script was needed either -- each matcher runs an inline `echo`.
 
 ## Integration Points
 
-### 1. Plugin hooks in plugin.json (PRIMARY)
+### 1. Plugin hooks in hooks/hooks.json (PRIMARY)
 
-**Integration point:** The `hooks` key in plugin.json supports inline PreToolUse hook definitions.
+**Integration point:** `hooks/hooks.json` at the plugin root is loaded automatically and supports inline PreToolUse hook definitions.
 
 **Documented behavior (HIGH confidence, Context7 verified):**
 - `matcher` field accepts tool names: `WebSearch`, `WebFetch`
@@ -137,13 +139,9 @@ Claude Code (LLM)
 - `permissionDecisionReason` is shown to Claude as guidance for what to do instead
 - Plugin hooks fire automatically when plugin is enabled
 
-**Example plugin.json with hooks:**
+**As-built hooks/hooks.json:**
 ```json
 {
-  "name": "cc-websearch",
-  "displayName": "WebSearch",
-  "version": "0.2.0",
-  "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code",
   "hooks": {
     "PreToolUse": [
       {
@@ -151,7 +149,7 @@ Claude Code (LLM)
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"The built-in WebSearch tool is replaced by the cc-websearch plugin. Use the cc-websearch:websearch Skill instead with the same query.\"}}'"
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"WebSearch tool is unavailable. Use cc-websearch:websearch Skill instead.\"}}'"
           }
         ]
       },
@@ -160,7 +158,7 @@ Claude Code (LLM)
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"The built-in WebFetch tool is replaced by the cc-websearch plugin. Use the cc-websearch:webfetch Skill instead with the same url.\"}}'"
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"WebFetch tool is unavailable. Use cc-websearch:webfetch Skill instead.\"}}'"
           }
         ]
       }
@@ -168,6 +166,8 @@ Claude Code (LLM)
   }
 }
 ```
+
+The shipped wording is terser than the draft above it -- "WebSearch tool is unavailable" rather than "is replaced by the cc-websearch plugin" -- which matches Anti-Pattern 4 below.
 
 **Source:** Official Claude Code docs -- hooks reference, hooks guide, plugins reference. All verified via Context7. HIGH confidence.
 
@@ -201,7 +201,7 @@ This pipeline is stable and does not need modification for v1.2.
 
 **Why not used:**
 - `permissions.deny` in settings.json also blocks built-in tools, but requires user-side configuration
-- Plugin hooks in plugin.json are automatic -- no user action needed
+- Plugin hooks in `hooks/hooks.json` are automatic -- no user action needed
 - If plugin hooks prove unreliable, `permissions.deny` is a fallback requiring manual setup
 
 **Format for reference:**
@@ -302,7 +302,7 @@ This pipeline is stable and does not need modification for v1.2.
 
 **What:** Instructing users to add `permissions.deny` to their settings.json.
 **Why bad:** Plugin should work out of the box. Requiring manual configuration defeats the purpose of a plugin.
-**Instead:** Use plugin.json hooks for automatic interception.
+**Instead:** Use the plugin's `hooks/hooks.json` for automatic interception.
 
 ### Anti-Pattern 4: Over-Engineering the Denial Reason
 
@@ -314,9 +314,9 @@ This pipeline is stable and does not need modification for v1.2.
 
 ### Phase 1: Hook Implementation (Foundation)
 
-**What:** Add PreToolUse hooks to plugin.json.
+**What:** Add PreToolUse hooks to `hooks/hooks.json`.
 **Why first:** Everything else depends on the built-in tools being blocked. Without hooks, the replacement does not work.
-**Files changed:** `.claude-plugin/plugin.json`
+**Files changed:** `hooks/hooks.json` (new)
 **Dependencies:** None (self-contained).
 
 ### Phase 2: Denial Reason Engineering (Critical)

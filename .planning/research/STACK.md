@@ -2,21 +2,25 @@
 
 **Project:** cc-websearch
 **Researched:** 2026-05-22
+**Updated:** 2026-08-29 -- reconciled with the shipped implementation (see "As-Built" notes)
 **Focus:** Stack additions/changes for replacing Claude Code built-in WebSearch/WebFetch
 
 ## Recommended Stack Changes
 
 ### No New Runtime Dependencies Required
 
-The existing stack (TypeScript, Node.js 20+, cheerio, jsdom, Readability, Turndown, Commander) is complete for the v1.2 milestone. The tool replacement mechanism is purely a Claude Code configuration concern, not a code dependency.
+The existing stack (TypeScript, Node.js, cheerio, jsdom, Readability, Turndown) is complete for the v1.2 milestone. The tool replacement mechanism is purely a Claude Code configuration concern, not a code dependency.
 
-### What Changes: Plugin Configuration and Hook Script
+**As-built:** the runtime floor is now `^22.22.2 || ^24.15.0 || >=26.0.0` (`engines` in `package.json`), raised by jsdom 30; CI runs on Node 24. `commander` and `duck-duck-scrape` are still listed as dependencies but nothing imports them -- DDG Lite is scraped with the global `fetch` plus `cheerio`, and both CLI entry points read JSON from stdin rather than parsing flags. Both should be dropped.
+
+### What Changes: Plugin Configuration
 
 | Component | Version | Purpose | Why |
 |-----------|---------|---------|-----|
-| `hooks/hooks.json` (new) | N/A | Plugin-level PreToolUse hook to intercept built-in WebSearch/WebFetch | Claude Code plugins can declare hooks in their manifest. A PreToolUse hook matching `WebSearch\|WebFetch` can deny the built-in tool call and instruct Claude to use plugin skills instead. |
-| Hook script (new shell/Node) | N/A | Executed by PreToolUse hook, returns deny decision with redirect instruction | The hook receives tool input as JSON on stdin, outputs JSON with `permissionDecision: "deny"` and a `permissionDecisionReason` telling Claude to use the plugin skill. |
-| `plugin.json` (update) | N/A | Add `hooks` field pointing to hooks configuration | Enables the plugin to register its own hooks without requiring user manual configuration. |
+| `hooks/hooks.json` (new) | N/A | Plugin-level PreToolUse hook to intercept built-in WebSearch/WebFetch | Claude Code loads the standard `hooks/hooks.json` automatically. A PreToolUse hook matching the built-in tool can deny the call and instruct Claude to use the plugin skill instead. |
+| Inline `echo` command | N/A | Executed by PreToolUse hook, returns deny decision with redirect instruction | The hook writes a fixed JSON object with `permissionDecision: "deny"` and a `permissionDecisionReason` telling Claude to use the plugin skill. |
+
+**As-built:** the planned separate hook script was not needed. `hooks/hooks.json` declares two matchers -- `WebSearch` and `WebFetch` -- each running an inline `echo` of the deny JSON. No shell script, no `jq`, and no `hooks` field in `plugin.json`: the standard path is discovered automatically, and pointing the manifest at it as well produces a duplicate-hooks load error.
 
 ### Configuration Mechanisms (No New Dependencies)
 
@@ -24,7 +28,7 @@ The existing stack (TypeScript, Node.js 20+, cheerio, jsdom, Readability, Turndo
 |-----------|-------|--------------|-------------------|
 | `permissions.deny` in settings.json | User/Project/Managed | Bare tool names (e.g., `"WebSearch"`, `"WebFetch"`) remove the tool from the model's context entirely | Most reliable: the model never sees WebSearch/WebFetch as available tools, so it must use plugin skills. But requires user to configure settings.json -- not automatable from a plugin. |
 | `--disallowedTools` CLI flag | Session | `"WebSearch" "WebFetch"` as bare names removes from model context | Same effect as permissions.deny but per-invocation. Not persistent. |
-| Plugin `hooks/hooks.json` with PreToolUse | Plugin (automatic) | Matcher `"WebSearch\|WebFetch"` triggers a hook script that denies the call with a redirect reason | Plugin-controlled, no user configuration needed. The built-in tool still appears in the model's context, but the hook blocks every invocation and tells Claude to use the skill instead. |
+| Plugin `hooks/hooks.json` with PreToolUse | Plugin (automatic) | Matchers `WebSearch` and `WebFetch` each run an inline `echo` that denies the call with a redirect reason | Plugin-controlled, no user configuration needed. The built-in tool still appears in the model's context, but the hook blocks every invocation and tells Claude to use the skill instead. |
 | `--tools` CLI flag | Session | Whitelist approach: only list tools you want, omit WebSearch/WebFetch | Draconian: removes ALL unlisted built-in tools, not viable for general use. |
 
 ## Recommended Approach: Plugin PreToolUse Hook
@@ -32,7 +36,7 @@ The existing stack (TypeScript, Node.js 20+, cheerio, jsdom, Readability, Turndo
 ### Why This Approach
 
 1. **Plugin-controlled:** Works automatically when the plugin is installed. No user configuration of settings.json required.
-2. **Declarative:** The hook is defined in the plugin's `hooks/hooks.json`, referenced from `plugin.json`.
+2. **Declarative:** The hook is defined in the plugin's `hooks/hooks.json`, which Claude Code discovers on its own.
 3. **Graceful redirect:** The deny reason tells Claude to use the plugin skill instead, so Claude learns the correct behavior.
 4. **Idempotent:** If the user also configures `permissions.deny`, the hook simply never fires (the tool is already removed from context). No conflict.
 
@@ -41,15 +45,14 @@ The existing stack (TypeScript, Node.js 20+, cheerio, jsdom, Readability, Turndo
 When Claude attempts to call the built-in `WebSearch` or `WebFetch` tool:
 
 1. Claude emits a tool_use for `WebSearch` or `WebFetch`
-2. The PreToolUse hook fires (matcher: `"WebSearch|WebFetch"`)
-3. The hook script reads the tool input from stdin (JSON with query/url)
-4. The hook script outputs a deny decision with a redirect message:
+2. The PreToolUse hook fires (matcher: `WebSearch` or `WebFetch`)
+3. The hook ignores its stdin and writes a fixed deny decision:
    ```json
    {
      "hookSpecificOutput": {
        "hookEventName": "PreToolUse",
        "permissionDecision": "deny",
-       "permissionDecisionReason": "Built-in WebSearch is disabled. Use the websearch plugin skill instead: echo '{\"query\":\"YOUR_QUERY\"}' | node \"${CLAUDE_PLUGIN_ROOT}/skills/websearch/scripts/websearch.cjs\""
+       "permissionDecisionReason": "WebSearch tool is unavailable. Use cc-websearch:websearch Skill instead."
      }
    }
    ```
@@ -78,29 +81,30 @@ PostToolUse hooks with `updatedToolOutput` can replace a tool's output after exe
 
 ## Implementation Architecture
 
-### New Files
+### New Files (as built)
 
 ```
 cc-websearch/
   hooks/
-    hooks.json                    # Plugin hook configuration
-    intercept-web-tools.sh        # PreToolUse hook script
-  .claude-plugin/
-    plugin.json                   # Updated: add "hooks" field
+    hooks.json                    # Plugin hook configuration -- auto-discovered
 ```
 
+`.claude-plugin/plugin.json` was left unchanged: no `hooks` field is needed or wanted.
+
 ### hooks/hooks.json
+
+Two separate matchers rather than the alternation `"WebSearch|WebFetch"` originally sketched, because each tool needs its own skill name in the deny reason:
 
 ```json
 {
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "WebSearch|WebFetch",
+        "matcher": "WebSearch",
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/hooks/intercept-web-tools.sh"
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"WebSearch tool is unavailable. Use cc-websearch:websearch Skill instead.\"}}'"
           }
         ]
       }
@@ -109,51 +113,29 @@ cc-websearch/
 }
 ```
 
-### hooks/intercept-web-tools.sh
+The `WebFetch` matcher is identical apart from the tool and skill names. Because the command is a fixed `echo`, the hook never reads its stdin -- the query or URL is not echoed back, and the reason names the skill instead of a ready-made shell command.
 
-The script reads JSON stdin, identifies the tool, and returns a deny decision with the appropriate skill invocation command. Must be executable (`chmod +x`).
-
-Input (from Claude Code):
-```json
-{
-  "hook_event_name": "PreToolUse",
-  "tool_name": "WebSearch",
-  "tool_input": {
-    "query": "search terms"
-  }
-}
-```
-
-Output (from script):
-```json
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "Use the cc-websearch plugin skill instead: echo '{\"query\":\"search terms\"}' | node \"${CLAUDE_PLUGIN_ROOT}/skills/websearch/scripts/websearch.cjs\""
-  }
-}
-```
-
-### .claude-plugin/plugin.json (updated)
+### .claude-plugin/plugin.json (unchanged)
 
 ```json
 {
   "name": "cc-websearch",
   "displayName": "WebSearch",
-  "version": "0.2.0",
-  "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code",
-  "hooks": "./hooks/hooks.json"
+  "version": "1.2.4",
+  "description": "DDG-powered WebSearch and WebFetch replacement for Claude Code"
 }
 ```
+
+The `version` here is duplicated from `package.json` and the two must be bumped together.
 
 ## Stack NOT to Add
 
 | Avoid | Why | Use Instead |
 |-------|-----|-------------|
 | MCP server implementation | Project constraint: skills call CLI scripts directly. MCP tools use different routing (`mcp__server__tool`) and would not replace built-in tools named `WebSearch`/`WebFetch`. | PreToolUse hook + existing skill scripts |
-| Any new npm dependency | The hook script is a simple shell script that parses JSON with `jq` (standard on macOS/Linux) and outputs JSON. No Node.js needed for the hook itself. | `jq` (already standard CLI tool) or pure bash with heredoc |
+| Any new npm dependency | The hook emits a fixed JSON string. It does not parse its input, so it needs neither Node.js nor `jq`. | A single inline `echo` in `hooks/hooks.json` |
 | `permissions.deny` auto-configuration | A plugin cannot programmatically modify the user's settings.json. Claude Code has no plugin API for this. | PreToolUse hook (automatic) + documentation for manual `permissions.deny` |
+| `hooks` field in `plugin.json` | The standard `hooks/hooks.json` is loaded automatically. Declaring it in the manifest too resolves to the same file and fails with "Duplicate hooks file detected". | Rely on auto-discovery; leave the manifest alone |
 | Skill `disallowedTools` frontmatter | This field exists for subagents, not for the main conversation agent. It restricts tools for agents spawned BY the skill, not the skill's own conversation. | PreToolUse hook at plugin level |
 
 ## Token Cost Analysis
@@ -173,7 +155,7 @@ The token cost is minimal because Claude Code uses prompt caching -- the tool de
 |---------|------------|--------|
 | PreToolUse hooks match on WebSearch/WebFetch | HIGH | Context7: code.claude.com docs, hooks reference explicitly lists these tool names |
 | PreToolUse deny with reason causes Claude to adapt | HIGH | Context7: Official docs show deny + reason pattern |
-| Plugin can declare hooks via hooks.json in plugin.json | HIGH | Context7: plugins-reference shows `"hooks": "./hooks/hooks.json"` |
+| Plugin hooks load from `hooks/hooks.json` without a manifest entry | HIGH | As-built: the standard path is auto-discovered; a manifest `hooks` field duplicates it and errors |
 | Bare tool names in permissions.deny remove from context | HIGH | Context7: CLI reference and permissions docs confirm |
 | Plugin cannot programmatically modify settings.json | HIGH | Context7: No API for this; strictPluginOnlyCustomization exists for locking surfaces |
 | PostToolUse updatedToolOutput works for all tools | HIGH | Context7: Week 18 2026 changelog confirms this is now universal |

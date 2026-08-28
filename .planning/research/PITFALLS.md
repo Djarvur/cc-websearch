@@ -2,6 +2,7 @@
 
 **Domain:** Replacing built-in Claude Code WebSearch/WebFetch tools with plugin skills
 **Researched:** 2026-05-22
+**Updated:** 2026-08-29 -- reconciled with the shipped implementation
 **Confidence:** HIGH
 
 ## Critical Pitfalls
@@ -56,7 +57,7 @@ Claude Code's tool system distinguishes between built-in tools (WebSearch, WebFe
 Do not rely on name shadowing. Instead, use one of these actual override mechanisms:
 1. `--disallowedTools "WebSearch" "WebFetch"` CLI flag to remove built-in tools from model context
 2. `permissions.deny: ["WebSearch", "WebFetch"]` in settings.json
-3. PreToolUse hooks with matcher `WebSearch|WebFetch` that deny the call and provide a reason directing the model to use the plugin skill instead
+3. PreToolUse hooks matching `WebSearch` and `WebFetch` that deny the call and provide a reason directing the model to use the plugin skill instead (as built: two separate matchers, not one alternation)
 
 **Warning signs:**
 Model uses built-in WebSearch/WebFetch instead of the plugin skill. Or model uses both -- calling built-in WebSearch AND the plugin skill for the same query.
@@ -183,9 +184,9 @@ Post-MVP -- caching is explicitly deferred per PROJECT.md.
 | Mistake | Risk | Prevention |
 |---------|------|------------|
 | Plugin skill executes arbitrary URLs without validation | SSRF attacks if model is tricked into fetching internal URLs | Validate URL scheme (https only), reject private IP ranges, match built-in's domain deny-list behavior |
-| Exposing API keys in skill output | If Perplexity or other paid API keys are logged to stderr | Never log full API keys; mask in error messages; use stderr for diagnostics only |
+| Exposing API keys in skill output | Not applicable since Phase 5 -- the plugin uses no API keys at all. Kept as a guard against reintroducing a keyed provider | Never log full API keys; mask in error messages; use stderr for diagnostics only |
 | Allowing the model to inject arbitrary JSON into stdin | Malformed or malicious input crashing the script | Use Zod validation (already implemented); reject unexpected fields |
-| Plugin hooks running arbitrary commands | Compromise if hook scripts are modified | Use `chmod` and file permissions; hooks run unsandboxed at hook trust level |
+| Plugin hooks running arbitrary commands | Compromise if hook scripts are modified | As built there is no hook script -- `hooks/hooks.json` holds a fixed inline `echo` with no interpolation of tool input, so there is nothing to tamper with short of editing the plugin itself |
 
 ## UX Pitfalls
 

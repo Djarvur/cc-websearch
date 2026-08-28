@@ -2,6 +2,7 @@
 
 **Domain:** Claude Code plugin -- tool replacement via skills + hooks
 **Researched:** 2026-05-22
+**Updated:** 2026-08-29 -- reconciled with the shipped implementation
 **Confidence:** MEDIUM
 
 ## Key Constraint: No Direct Tool Replacement Mechanism Exists
@@ -117,7 +118,7 @@ Minimum features for "plugin replaces built-in WebSearch/WebFetch."
 
 ### Plugin hooks.json Structure
 
-The plugin should include a `hooks/hooks.json` file referenced from `plugin.json`:
+The plugin includes a `hooks/hooks.json` file at the plugin root. Claude Code discovers it automatically -- do not reference it from `plugin.json`, which loads it a second time and fails with "Duplicate hooks file detected":
 
 ```json
 {
