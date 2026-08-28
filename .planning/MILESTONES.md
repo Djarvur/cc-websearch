@@ -36,3 +36,34 @@
 - Four low-severity code debt items resolved: withTimeout ETIMEDOUT message, readStdin isTTY guard, normalizeUrl scheme validation, jsdom/@types/jsdom version alignment
 
 ---
+
+## 1.1 Plugin Distribution (Shipped: 2026-05-22)
+
+**Phases completed:** 1 phase (Phase 9), 1 plan
+
+**Key accomplishments:**
+
+- esbuild bundles relocated from the repository root to `skills/websearch/scripts/websearch.cjs` and `skills/webfetch/scripts/webfetch.cjs`, so each skill ships next to the script it invokes
+- SKILL.md command paths switched to `${CLAUDE_PLUGIN_ROOT}/skills/<name>/scripts/<bundle>.cjs`
+- Path-dependent tests and README examples updated for the new locations
+
+**Known gap at close:** DIST-05 ("old `scripts/` root directory removed") was marked complete but was not done -- `scripts/websearch.cjs` and `scripts/webfetch.cjs` remain tracked in git while nothing builds them.
+
+---
+
+## 1.2 Replace Built-in WebSearch/WebFetch (Shipped: 2026-05-24, released v1.2.4 on 2026-05-25)
+
+**Phases completed:** 3 phases (10-12), 5 plans
+
+**Key accomplishments:**
+
+- PreToolUse deny hooks that intercept the built-in WebSearch and WebFetch tools and redirect Claude to `cc-websearch:websearch` / `cc-websearch:webfetch`. Two separate matchers, each a fixed inline `echo` -- no shell script, no `jq`, and no reading of the tool input
+- Denial reason wording and SKILL.md descriptions tuned for redirect reliability, with `test/e2e/redirect-reliability.e2e.ts` measuring it across diverse prompt patterns
+- Output compatibility proven empirically by `test/e2e/output-compatibility.e2e.ts` (8 tests, 4 search + 4 fetch): WebSearch XML and WebFetch markdown are consumable by Claude after a denial
+- 100KB content truncation in `src/lib/content.ts` to match built-in WebFetch behavior
+- Works on every provider, since the hook does not depend on the built-in tool being present
+
+**Post-milestone correction:** the hook file was first created at `.claude-plugin/hooks/hooks.json` and referenced from `plugin.json`. That combination made Claude Code load the same file twice and fail with "Duplicate hooks file detected". Commit `f99c9d2` moved it to `hooks/hooks.json` at the repository root and dropped the manifest reference, relying on auto-discovery.
+
+---
+

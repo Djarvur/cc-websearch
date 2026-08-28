@@ -2,35 +2,35 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Replace Built-in WebSearch/WebFetch
-status: "Phase 12 shipped — PR #10"
-stopped_at: Phase 12 context gathered
-last_updated: "2026-05-24T17:12:34.217Z"
-last_activity: 2026-05-24
+status: "v1.2 complete — released v1.2.4"
+stopped_at: Milestone complete
+last_updated: "2026-08-29T00:00:00.000Z"
+last_activity: 2026-08-29
 progress:
   total_phases: 3
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 5
   completed_plans: 5
-  percent: 67
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-22)
+See: .planning/PROJECT.md (updated 2026-08-29)
 
 **Core value:** DDG-powered drop-in replacement for Claude Code's WebSearch and WebFetch -- same interface, same output format, works on all providers. Zero API keys required.
-**Current focus:** Milestone complete
+**Current focus:** Maintenance — no milestone active
 
 ## Current Position
 
-Phase: 12
-Plan: Not started
-Status: Phase 12 shipped — PR #10
-Last activity: 2026-05-24
+Phase: 12 (last)
+Plan: All complete
+Status: v1.2 complete — released v1.2.4 on 2026-05-25
+Last activity: 2026-08-29
 
-Progress: [████████░░] 83%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -76,26 +76,35 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None.
+No milestone work is queued. Four housekeeping items are open -- see Blockers/Concerns below.
 
 ### Blockers/Concerns
 
-- Redirect reliability is untested — research confirms mechanism exists but no empirical success rate data. Phase 11 must test across diverse prompt patterns.
-- WebFetch output format needs empirical verification — Agent SDK types show structured JSON but actual conversation-visible output may differ. Phase 12 must test against real Claude Code.
+Both v1.2 concerns are resolved:
+
+- ~~Redirect reliability is untested~~ — closed by Phase 11 (`test/e2e/redirect-reliability.e2e.ts`).
+- ~~WebFetch output format needs empirical verification~~ — closed by Phase 12 (`test/e2e/output-compatibility.e2e.ts`); raw markdown on stdout is correct.
+
+Open items carried forward:
+
+- `scripts/websearch.cjs` and `scripts/webfetch.cjs` are still tracked in git but nothing builds or ships them — DIST-05 was marked done in error.
+- `commander` and `duck-duck-scrape` are declared dependencies that nothing imports.
+- `src/lib/input.ts` tells the user to "use --query / --url flags" on empty input, but no such flags exist.
+- The committed bundles in `skills/*/scripts/` are stale: rebuilding on the current lockfile produces a large diff.
 
 ## Deferred Items
 
-Items acknowledged and carried forward from v1.1 milestone close:
+Items carried forward from the v1.1 milestone close, all since resolved by the repository going public:
 
 | Category | Item | Status | Deferred At |
 |----------|------|--------|-------------|
-| verification | Phase 06 - GitHub Actions PR gate | Deferred (requires push to GitHub) | 2026-05-22 |
-| verification | Phase 06 - Cron workflow and Dependabot | Deferred (requires push to GitHub) | 2026-05-22 |
-| uat | Phase 06 - GitHub Actions PR gate | Deferred (requires push to GitHub) | 2026-05-22 |
-| uat | Phase 06 - Cron/Dependabot | Deferred (requires push to GitHub) | 2026-05-22 |
+| verification | Phase 06 - GitHub Actions PR gate | Resolved — `.github/workflows/ci.yml` gates every PR | 2026-05-22 |
+| verification | Phase 06 - Cron workflow and Dependabot | Resolved — `periodic.yml` runs weekly; Dependabot opens grouped PRs | 2026-05-22 |
+| uat | Phase 06 - GitHub Actions PR gate | Resolved — observed on live PRs | 2026-05-22 |
+| uat | Phase 06 - Cron/Dependabot | Resolved — observed on live PRs | 2026-05-22 |
 
 ## Session Continuity
 
-Last session: 2026-05-24T16:37:21.949Z
-Stopped at: Phase 12 context gathered
-Resume file: .planning/phases/12-output-compatibility/12-CONTEXT.md
+Last session: 2026-08-29
+Stopped at: Milestone complete — nothing in flight
+Resume file: none

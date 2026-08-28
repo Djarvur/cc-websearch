@@ -2,13 +2,13 @@
 
 ## Overview
 
-Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch tools with DuckDuckGo as the sole search provider. The journey starts with a working plugin skeleton and Perplexity-powered search, adds resilience through DDG fallback and domain filtering, delivers the independent WebFetch content pipeline, adds config file support and configurable logging, transitions to DDG-only with citations, establishes CI and E2E tests, completes documentation, closes tech debt, relocates scripts for plugin distribution, and now intercepts built-in tool calls via PreToolUse hooks to redirect to plugin skills.
+Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch tools with DuckDuckGo as the sole search provider. The journey starts with a working plugin skeleton and Perplexity-powered search, adds resilience through DDG fallback and domain filtering, delivers the independent WebFetch content pipeline, adds config file support and configurable logging, transitions to DDG-only with citations, establishes CI and E2E tests, completes documentation, closes tech debt, relocates scripts for plugin distribution, and finally intercepts built-in tool calls via PreToolUse hooks to redirect to plugin skills. The Perplexity-powered start was removed in Phase 5; DDG has been the sole provider since.
 
 ## Milestones
 
 - ✅ **v1.0 MVP** — Phases 1-8 (shipped 2026-05-22)
 - ✅ **v1.1 Plugin Distribution** — Phase 9 (shipped 2026-05-22)
-- 🚧 **v1.2 Replace Built-in WebSearch/WebFetch** — Phases 10-12 (in progress)
+- ✅ **v1.2 Replace Built-in WebSearch/WebFetch** — Phases 10-12 (shipped 2026-05-24, released v1.2.4 on 2026-05-25)
 
 ## Phases
 
@@ -33,7 +33,7 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 
 </details>
 
-### 🚧 v1.2 Replace Built-in WebSearch/WebFetch (In Progress)
+### ✅ v1.2 Replace Built-in WebSearch/WebFetch — SHIPPED 2026-05-24
 
 **Milestone Goal:** Plugin automatically intercepts built-in WebSearch and WebFetch tool calls via PreToolUse hooks, denies them, and redirects Claude to use the plugin skills instead. Works on all providers.
 
@@ -52,8 +52,8 @@ Build a Claude Code plugin that replaces the built-in WebSearch and WebFetch too
 
   1. Installing the plugin causes all built-in WebSearch tool calls to be denied with a redirect reason
   2. Installing the plugin causes all built-in WebFetch tool calls to be denied with a redirect reason
-  3. Hook configuration is self-contained in plugin.json with no external shell scripts or jq dependency
-  4. Hook matchers use exact case-sensitive tool names (WebSearch|WebFetch) — lowercase matchers are absent
+  3. Hook configuration is self-contained with no external shell scripts or jq dependency — as built, an inline `echo` in `hooks/hooks.json`, not in plugin.json
+  4. Hook matchers use exact case-sensitive tool names — as built, two separate matchers `WebSearch` and `WebFetch`; lowercase matchers are absent
 
 **Plans**: 1 plan
 
@@ -126,3 +126,9 @@ Phases execute in numeric order: 10 → 11 → 12
 | 10. Hook Infrastructure | v1.2 | 1/1 | Complete   | 2026-05-23 |
 | 11. Redirect Reliability | v1.2 | 2/2 | Complete    | 2026-05-24 |
 | 12. Output & Compatibility | v1.2 | 2/2 | Complete    | 2026-05-24 |
+
+## Status
+
+All 12 phases across v1.0, v1.1 and v1.2 are complete. No milestone is currently active; the repository is in maintenance (dependency bumps and CI upkeep).
+
+*Last updated: 2026-08-29*
