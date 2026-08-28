@@ -9,15 +9,16 @@ No API keys, no accounts, no subscriptions. Install the plugin and start searchi
 
 ## Quick Install
 
-```bash
-# Local development:
-claude --plugin-dir /path/to/cc-websearch
+Clone the repository and point Claude Code at it:
 
-# From GitHub release (requires packaged .zip):
-claude --plugin-url https://github.com/your-org/cc-websearch/releases/download/v1.0/plugin.zip
+```bash
+git clone https://github.com/Djarvur/cc-websearch.git
+claude --plugin-dir /path/to/cc-websearch
 ```
 
-Compiled scripts are shipped in git (built via esbuild), so the plugin works immediately after install -- no build step is needed.
+Compiled scripts are shipped in git (built via esbuild), so the plugin works immediately after clone -- no build step is needed.
+
+`claude --plugin-url <url>` can load a packaged plugin `.zip` for a single session, but this repository does not currently publish one as a release asset.
 
 ## Usage
 
@@ -131,15 +132,15 @@ Precedence (highest to lowest):
 
 ### WebFetch
 
-| Feature             | Built-in WebFetch | cc-websearch WebFetch                               |
-| ------------------- | ----------------- | --------------------------------------------------- |
-| Content source      | Claude internal   | Fetch + Readability extraction                      |
-| API key required    | No                | No                                                  |
-| `url`               | Supported         | Supported                                           |
-| `prompt`            | Supported         | Supported                                           |
-| Output format       | Markdown text     | Markdown text                                       |
-| Redirect handling   | Follows redirects | HTTP-to-HTTPS upgrade, reports cross-host redirects |
-| Content type filter | HTML only         | HTML only (`text/html`, `application/xhtml`)        |
+| Feature             | Built-in WebFetch | cc-websearch WebFetch                                                                                                    |
+| ------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Content source      | Claude internal   | Fetch + Readability extraction                                                                                           |
+| API key required    | No                | No                                                                                                                       |
+| `url`               | Supported         | Supported                                                                                                                |
+| `prompt`            | Supported         | Supported                                                                                                                |
+| Output format       | Markdown text     | Markdown text                                                                                                            |
+| Redirect handling   | Follows redirects | HTTP-to-HTTPS upgrade; follows same-host redirects (max 10 hops); reports cross-host redirects instead of following them |
+| Content type filter | HTML only         | HTML only (`text/html`, `application/xhtml`)                                                                             |
 
 ## Architecture
 
@@ -148,10 +149,10 @@ cc-websearch uses DuckDuckGo as its sole search provider. There is no API key de
 ### WebSearch pipeline
 
 ```
-JSON input -> duck-duck-scrape (DDG Lite scraping) -> XML output with title, url, snippet
+JSON input -> fetch lite.duckduckgo.com -> cheerio parse -> XML output with title, url, snippet
 ```
 
-The websearch script sends a query to `lite.duckduckgo.com`, parses the HTML response, and formats results as `<search_results>` XML matching Claude Code's built-in output format. Citations are extracted from search result descriptions.
+The websearch script sends a query to `lite.duckduckgo.com`, parses the HTML response with cheerio, unwraps DuckDuckGo's `/l/?uddg=` redirect links to recover the real target URLs, and formats results as `<search_results>` XML matching Claude Code's built-in output format.
 
 ### WebFetch pipeline
 
@@ -165,7 +166,7 @@ WebFetch is a standalone content pipeline. It fetches the raw HTML, runs Mozilla
 
 - **No API keys** -- DuckDuckGo is free and requires no authentication
 - **No LLM in the pipeline** -- WebFetch extracts content, it does not analyze or summarize
-- **Plugin distribution** -- standard Claude Code plugin, installed via `claude plugin add`
+- **Plugin distribution** -- standard Claude Code plugin, loaded via `claude --plugin-dir`
 - **Scripts compiled to .cjs** -- esbuild bundles TypeScript into standalone Node.js executables
 
 ## Output Examples
@@ -205,7 +206,7 @@ are stripped during extraction.
 
 ### Prerequisites
 
-- Node.js 20 LTS or later
+- Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` (see `engines` in `package.json`; CI runs on Node 24)
 - npm (ships with Node.js)
 
 ### Setup
@@ -216,12 +217,12 @@ npm install
 
 ### Commands
 
-| Command              | Description                               |
-| -------------------- | ----------------------------------------- |
-| `npm run build`      | Compile scripts with esbuild to `.cjs`    |
-| `npm test`           | Run vitest unit tests                     |
-| `npm run typecheck`  | TypeScript type checking (`tsc --noEmit`) |
-| `npm run lint`       | ESLint + Prettier formatting check        |
-| `npm run e2e`        | Build + run end-to-end tests              |
-| `npm run check`      | Run lint + typecheck + test + build       |
-| `npm run test:watch` | Run tests in watch mode                   |
+| Command              | Description                                                     |
+| -------------------- | --------------------------------------------------------------- |
+| `npm run build`      | Compile scripts with esbuild to `.cjs`                          |
+| `npm test`           | Run vitest unit tests                                           |
+| `npm run typecheck`  | TypeScript type checking (`tsc --noEmit`)                       |
+| `npm run lint`       | ESLint + Prettier formatting check                              |
+| `npm run e2e`        | Build + run end-to-end tests (needs the `claude` CLI on `PATH`) |
+| `npm run check`      | Run lint + typecheck + test + build                             |
+| `npm run test:watch` | Run tests in watch mode                                         |
