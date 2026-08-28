@@ -17,7 +17,7 @@ export type WebFetchInput = z.infer<typeof WebFetchInputSchema>;
 
 export async function readStdin<T>(schema: z.ZodType<T>): Promise<T> {
   if (process.stdin.isTTY) {
-    throw new Error('No input provided. Pipe JSON to stdin or use --query / --url flags.');
+    throw new Error('No input provided. Pipe JSON to stdin.');
   }
   const chunks: Buffer[] = [];
   for await (const chunk of process.stdin) {
