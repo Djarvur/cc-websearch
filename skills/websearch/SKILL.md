@@ -1,4 +1,5 @@
 ---
+name: websearch
 description: Replacement for built-in WebSearch — Search the web using DuckDuckGo. Use this skill when the user needs current information, web search results, or to find web pages about a topic.
 allowed-tools: Bash(node *)
 ---

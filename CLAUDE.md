@@ -98,6 +98,7 @@ Neither ends up in the bundles. They only generate Dependabot noise and should b
 | `build.ts`              | esbuild bundling into `skills/*/scripts/*.cjs`                       |
 | `skills/*/SKILL.md`     | Skill definitions that shell out to the bundles                      |
 | `hooks/hooks.json`      | `PreToolUse` hooks denying the built-in WebSearch/WebFetch tools     |
+| `.plugin-scanner.toml`  | HOL Guard scanner config — suppresses findings in generated bundles  |
 
 ### Pipelines
 
@@ -173,3 +174,6 @@ Do not make direct repo edits outside a GSD workflow unless the user explicitly 
   what users actually run.
 - Dependabot PRs that have sat open for a while are branched from a stale `master` and will fail
   lint on unrelated files. Rebase them before judging the failure.
+- `.github/workflows/plugin-scan.yml` runs the HOL Guard plugin scanner and gates on
+  score >= 80/100 with no high/critical findings (currently 100/100). Third-party GitHub Actions
+  must stay pinned to full commit SHAs, or that job fails.

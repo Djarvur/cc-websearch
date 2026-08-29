@@ -1,4 +1,5 @@
 ---
+name: webfetch
 description: Replacement for built-in WebFetch — Fetch and summarize web page content. Use this skill when the user provides a URL and asks about its content.
 allowed-tools: Bash(node *)
 ---
