@@ -1,0 +1,20 @@
+# Configuration for the HOL Guard plugin scanner (https://github.com/hashgraph-online/hol-guard),
+# run by .github/workflows/plugin-scan.yml.
+
+[scanner]
+profile = "default"
+
+# The committed esbuild bundles are generated artifacts, not hand-written source: they inline every
+# runtime dependency, so the scanner's source-level rules report findings that belong to vendored
+# libraries rather than to this project.
+#
+# Concretely, DANGEROUS_DYNAMIC_EXECUTION fires on jsdom code inlined into webfetch.cjs:
+#   * `globalObject.eval("(async function* () {})")` -- webidl-conversions grabbing the
+#     AsyncGenerator prototype (x3),
+#   * `window.eval(scriptSource)` -- jsdom's script runner, which is unreachable here because
+#     src/lib/content.ts constructs `new JSDOM(html, { url })` without `runScripts`, leaving
+#     script execution disabled.
+#
+# The sources these bundles are built from (src/, build.ts) are still scanned normally, so a real
+# `eval` added to this project's own code would still be reported.
+ignore_paths = ["skills/*/scripts/*.cjs", "scripts/*.cjs"]

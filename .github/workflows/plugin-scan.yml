@@ -1,0 +1,41 @@
+# HOL Guard plugin scanner (https://github.com/hashgraph-online/hol-guard).
+#
+# Scores the repository as a Claude Code plugin: manifest shape, skill/hook parseability,
+# secret and dangerous-command patterns, and GitHub Actions supply-chain hygiene. The gate
+# is score >= 80/100 with no high or critical findings, which is also what the
+# awesome-ai-plugins listing re-checks. The repository currently scores 100/100.
+#
+# Scanner behaviour is configured by .plugin-scanner.toml at the repository root, which the
+# action picks up automatically.
+#
+# The action is pinned to an immutable commit SHA so a moved tag cannot change the code this
+# workflow executes. It needs no secrets and only contents: read.
+name: Plugin Security Scan
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    name: HOL Guard plugin scanner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: hashgraph-online/ai-plugin-scanner-action@7e420247177d5beebbd3747ed16e4b29a1e41f57 # v1.2.551
+        with:
+          plugin_dir: '.'
+          min_score: 80
+          fail_on_severity: high
